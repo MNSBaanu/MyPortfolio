@@ -3,7 +3,7 @@ import { about } from '../data/portfolio'
 
 export default function About() {
   return (
-    <section id="about" className="py-20 px-6 bg-gradient-to-b from-black to-darker-teal/20">
+    <section id="about" className="py-20 px-8 md:px-16 lg:px-24 bg-gradient-to-b from-black to-darker-teal/20">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

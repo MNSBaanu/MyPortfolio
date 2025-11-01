@@ -4,13 +4,13 @@ import { personalInfo } from '../data/portfolio'
 
 const Hero = () => {
   return (
-    <section className="min-h-screen flex items-center relative overflow-hidden bg-black pt-20">
+    <section className="min-h-screen flex items-center relative overflow-hidden bg-black pt-20 px-8 md:px-16 lg:px-24">
       {/* Vertical Social Icons - Right Side */}
       <motion.div
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
-        className="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-4"
+        className="fixed right-1/2 translate-x-1/2 bottom-8 z-50 flex flex-row gap-4 md:right-8 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 md:flex-col"
       >
         <motion.a
           href={personalInfo.social.github}
@@ -49,7 +49,7 @@ const Hero = () => {
       </motion.div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-        <div className="max-w-3xl">
+        <div className="grid lg:grid-cols-[1fr,auto] gap-12 items-center max-w-6xl">
           {/* Main Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -101,9 +101,24 @@ const Hero = () => {
               <ArrowRight size={20} />
             </motion.button>
           </motion.div>
+
+          {/* Profile Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.8, type: "spring" }}
+            className="hidden lg:flex justify-center"
+          >
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-teal-700 rounded-full blur-2xl opacity-40 animate-pulse"></div>
+              <img
+                src={personalInfo.profileImage}
+                alt={personalInfo.name}
+                className="relative w-64 h-64 xl:w-80 xl:h-80 rounded-full object-cover border-4 border-teal-700 shadow-2xl"
+              />
+            </div>
+          </motion.div>
         </div>
-
-
       </div>
     </section>
   )

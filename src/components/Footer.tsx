@@ -2,7 +2,7 @@ import { personalInfo } from '../data/portfolio'
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-teal-100 py-8 px-6 border-t border-dark-teal/30">
+    <footer className="bg-black text-teal-100 py-8 px-8 md:px-16 lg:px-24 border-t border-dark-teal/30">
       <div className="max-w-6xl mx-auto text-center">
         <p className="text-teal-200">
           © {new Date().getFullYear()} {personalInfo.name}. All rights reserved.

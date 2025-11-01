@@ -3,7 +3,7 @@ import { skills } from '../data/portfolio'
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-20 px-6 bg-darker-teal/30">
+    <section id="skills" className="py-20 px-8 md:px-16 lg:px-24 bg-darker-teal/30">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
