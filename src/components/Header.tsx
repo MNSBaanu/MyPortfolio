@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { personalInfo } from '../data/portfolio'
+import ThemeToggle from './ThemeToggle'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -38,7 +39,7 @@ const Header = () => {
       transition={{ duration: 0.8 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'header-light shadow-lg' 
+          ? 'bg-black/80 backdrop-blur-md shadow-lg border-b border-dark-teal/30' 
           : 'bg-transparent'
       }`}
     >
@@ -50,12 +51,12 @@ const Header = () => {
             className="text-2xl font-bold cursor-pointer"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
-            <span className="text-black">{personalInfo.name.split(' ')[0]}</span>
-            <span className="gradient-text">{personalInfo.name.split(' ')[1] || ''}</span>
+            <span className="text-teal-100">{personalInfo.name.split(' ')[0]}</span>
+            <span className="text-teal-400">{personalInfo.name.split(' ')[1] || ''}</span>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-12">
+          <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item, index) => (
               <motion.button
                 key={item.name}
@@ -63,20 +64,24 @@ const Header = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 + 0.3 }}
                 onClick={() => scrollToSection(item.href)}
-                className="nav-link"
+                className="text-gray-300 hover:text-teal-400 transition-colors duration-300 font-medium"
               >
                 {item.name}
               </motion.button>
             ))}
+            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-black"
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="md:hidden flex items-center gap-4">
+            <ThemeToggle />
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 text-teal-100"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -87,14 +92,14 @@ const Header = () => {
             opacity: isMobileMenuOpen ? 1 : 0
           }}
           transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden bg-white/95 nav-blur border-t border-gray-100"
+          className="md:hidden overflow-hidden bg-black/95 backdrop-blur-md border-t border-dark-teal/30"
         >
           <div className="py-6 space-y-4">
             {navItems.map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="block w-full text-left px-6 py-3 text-gray-700 hover:text-dark-green-700 hover:bg-gray-50 transition-colors duration-300"
+                className="block w-full text-left px-6 py-3 text-gray-300 hover:text-teal-400 hover:bg-dark-teal/20 transition-colors duration-300"
               >
                 {item.name}
               </button>

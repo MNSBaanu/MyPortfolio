@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-20 px-6 bg-gray-50">
+    <section id="contact" className="py-20 px-6 bg-darker-teal/30">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -10,47 +10,47 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-5xl font-bold mb-12 text-center">Get In Touch</h2>
-          <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+          <h2 className="text-5xl font-bold mb-12 text-center text-teal-100">Get In Touch</h2>
+          <div className="bg-dark-teal rounded-2xl shadow-lg p-8 md:p-12 border border-teal-700">
             <form className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium mb-2 text-teal-200">
                     Name
                   </label>
                   <input
                     type="text"
                     id="name"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-green-700 focus:ring-2 focus:ring-green-100 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg border border-teal-800 bg-black text-teal-100 focus:border-teal-600 focus:ring-2 focus:ring-teal-800 outline-none transition-all placeholder-gray-500"
                     placeholder="Your name"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium mb-2 text-teal-200">
                     Email
                   </label>
                   <input
                     type="email"
                     id="email"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-green-700 focus:ring-2 focus:ring-green-100 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-lg border border-teal-800 bg-black text-teal-100 focus:border-teal-600 focus:ring-2 focus:ring-teal-800 outline-none transition-all placeholder-gray-500"
                     placeholder="your@email.com"
                   />
                 </div>
               </div>
               <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
+                <label htmlFor="message" className="block text-sm font-medium mb-2 text-teal-200">
                   Message
                 </label>
                 <textarea
                   id="message"
                   rows={6}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-green-700 focus:ring-2 focus:ring-green-100 outline-none transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-lg border border-teal-800 bg-black text-teal-100 focus:border-teal-600 focus:ring-2 focus:ring-teal-800 outline-none transition-all resize-none placeholder-gray-500"
                   placeholder="Your message..."
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-black text-white py-4 rounded-lg font-semibold hover:bg-gray-900 transition-colors duration-300"
+                className="w-full bg-teal-800 text-teal-100 py-4 rounded-lg font-semibold hover:bg-teal-900 transition-all duration-300"
               >
                 Send Message
               </button>

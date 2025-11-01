@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,13 +8,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        'matrix-green': '#00ff41',
-        'terminal-green': '#39ff14',
-        'cyber-blue': '#00d4ff',
-        'neon-purple': '#b026ff',
-        'dark-void': '#000000',
-        'code-gray': '#1a1a1a',
-        'hologram': '#00ffff',
+        'teal': {
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',
+          600: '#0d9488',
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
+          950: '#1a4d4d',
+        },
+        'dark-teal': '#1a4d4d',
+        'darker-teal': '#0f3a3a',
       },
       fontFamily: {
         'mono': ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],

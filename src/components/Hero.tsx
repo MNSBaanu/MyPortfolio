@@ -4,7 +4,7 @@ import { personalInfo } from '../data/portfolio'
 
 const Hero = () => {
   return (
-    <section className="min-h-screen flex items-center relative overflow-hidden bg-gray-50 pt-20">
+    <section className="min-h-screen flex items-center relative overflow-hidden bg-black pt-20">
       {/* Vertical Social Icons - Right Side */}
       <motion.div
         initial={{ opacity: 0, x: 50 }}
@@ -17,7 +17,7 @@ const Hero = () => {
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.1, x: -5 }}
-          className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-black transition-all duration-300 shadow-lg hover:shadow-xl"
+          className="w-14 h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-teal-500/50"
         >
           <Github size={22} />
         </motion.a>
@@ -26,7 +26,7 @@ const Hero = () => {
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.1, x: -5 }}
-          className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-black transition-all duration-300 shadow-lg hover:shadow-xl"
+          className="w-14 h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-teal-500/50"
         >
           <Linkedin size={22} />
         </motion.a>
@@ -35,14 +35,14 @@ const Hero = () => {
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.1, x: -5 }}
-          className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-black transition-all duration-300 shadow-lg hover:shadow-xl"
+          className="w-14 h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-teal-500/50"
         >
           <Twitter size={22} />
         </motion.a>
         <motion.a
           href={`mailto:${personalInfo.email}`}
           whileHover={{ scale: 1.1, x: -5 }}
-          className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-black transition-all duration-300 shadow-lg hover:shadow-xl"
+          className="w-14 h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-teal-500/50"
         >
           <Mail size={22} />
         </motion.a>
@@ -62,7 +62,7 @@ const Hero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-gray-600 text-lg mb-4"
+                className="text-gray-400 text-lg mb-4"
               >
                 Hey, I'm {personalInfo.name.split(' ')[0]},
               </motion.p>
@@ -71,7 +71,7 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+                className="text-6xl lg:text-7xl font-bold mb-6 leading-tight text-teal-100"
               >
                 A FULL STACK
                 <br />
@@ -82,7 +82,7 @@ const Hero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
-                className="text-gray-600 text-lg leading-relaxed max-w-md mb-8"
+                className="text-gray-400 text-lg leading-relaxed max-w-md mb-8"
               >
                 {personalInfo.description}
               </motion.p>
@@ -95,7 +95,7 @@ const Hero = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-black text-white px-8 py-4 rounded-full font-medium flex items-center gap-3 hover:bg-gray-900 transition-colors duration-300"
+              className="bg-teal-800 text-teal-100 px-8 py-4 rounded-full font-medium flex items-center gap-3 hover:bg-teal-900 transition-all duration-300"
             >
               CONTACT ME
               <ArrowRight size={20} />
