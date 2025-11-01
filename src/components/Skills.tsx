@@ -1,13 +1,5 @@
 import { motion } from 'framer-motion'
-
-const skills = [
-  { name: 'React', level: 90 },
-  { name: 'TypeScript', level: 85 },
-  { name: 'Node.js', level: 80 },
-  { name: 'Tailwind CSS', level: 95 },
-  { name: 'Next.js', level: 85 },
-  { name: 'MongoDB', level: 75 },
-]
+import { skills } from '../data/portfolio'
 
 export default function Skills() {
   return (

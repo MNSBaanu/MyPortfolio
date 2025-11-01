@@ -1,25 +1,6 @@
 import { motion } from 'framer-motion'
-
-const projects = [
-  {
-    title: 'E-Commerce Platform',
-    description: 'A full-featured online shopping platform with cart, checkout, and payment integration.',
-    tech: ['React', 'Node.js', 'MongoDB'],
-    image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&q=80',
-  },
-  {
-    title: 'Task Management App',
-    description: 'Collaborative task manager with real-time updates and team features.',
-    tech: ['Next.js', 'TypeScript', 'Prisma'],
-    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80',
-  },
-  {
-    title: 'Weather Dashboard',
-    description: 'Beautiful weather app with forecasts, maps, and location-based alerts.',
-    tech: ['React', 'Tailwind', 'API Integration'],
-    image: 'https://images.unsplash.com/photo-1592210454359-9043f067919b?w=800&q=80',
-  },
-]
+import { ExternalLink, Github } from 'lucide-react'
+import { projects } from '../data/portfolio'
 
 export default function Projects() {
   return (

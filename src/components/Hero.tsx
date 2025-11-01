@@ -1,123 +1,109 @@
 import { motion } from 'framer-motion'
-import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
+import { ArrowRight, Github, Linkedin, Mail, Twitter } from 'lucide-react'
+import { personalInfo } from '../data/portfolio'
 
 const Hero = () => {
-  const scrollToAbout = () => {
-    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden hero-bg">
-      {/* Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-dark-green-100/30 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-dark-green-200/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-      </div>
+    <section className="min-h-screen flex items-center relative overflow-hidden bg-gray-50 pt-20">
+      {/* Vertical Social Icons - Right Side */}
+      <motion.div
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        className="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-4"
+      >
+        <motion.a
+          href={personalInfo.social.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.1, x: -5 }}
+          className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-black transition-all duration-300 shadow-lg hover:shadow-xl"
+        >
+          <Github size={22} />
+        </motion.a>
+        <motion.a
+          href={personalInfo.social.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.1, x: -5 }}
+          className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-black transition-all duration-300 shadow-lg hover:shadow-xl"
+        >
+          <Linkedin size={22} />
+        </motion.a>
+        <motion.a
+          href={personalInfo.social.twitter}
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.1, x: -5 }}
+          className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-black transition-all duration-300 shadow-lg hover:shadow-xl"
+        >
+          <Twitter size={22} />
+        </motion.a>
+        <motion.a
+          href={`mailto:${personalInfo.email}`}
+          whileHover={{ scale: 1.1, x: -5 }}
+          className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-black transition-all duration-300 shadow-lg hover:shadow-xl"
+        >
+          <Mail size={22} />
+        </motion.a>
+      </motion.div>
 
-      <div className="container-custom relative z-10">
-        <div className="text-center max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
+        <div className="max-w-3xl">
           {/* Main Content */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-8"
           >
-            <motion.p
+            <div>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="text-gray-600 text-lg mb-4"
+              >
+                Hey, I'm {personalInfo.name.split(' ')[0]},
+              </motion.p>
+              
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+              >
+                A FULL STACK
+                <br />
+                DEVELOPER
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="text-gray-600 text-lg leading-relaxed max-w-md mb-8"
+              >
+                {personalInfo.description}
+              </motion.p>
+            </div>
+
+            <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="text-dark-green-600 text-lg md:text-xl font-medium mb-6"
+              transition={{ delay: 0.8 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-black text-white px-8 py-4 rounded-full font-medium flex items-center gap-3 hover:bg-gray-900 transition-colors duration-300"
             >
-              Hello, I'm
-            </motion.p>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.8 }}
-              className="hero-text text-black mb-8"
-            >
-              Alex Johnson
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.8 }}
-              className="body-large text-gray-600 mb-12 max-w-3xl mx-auto"
-            >
-              Senior Full Stack Developer crafting exceptional digital experiences 
-              with clean code and modern technologies.
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1, duration: 0.8 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16"
-            >
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="apple-button"
-              >
-                View My Work
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="apple-button-outline"
-              >
-                Get In Touch
-              </motion.button>
-            </motion.div>
-
-            {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.3, duration: 0.8 }}
-              className="flex items-center justify-center space-x-8"
-            >
-              {[
-                { icon: Github, href: '#', label: 'GitHub' },
-                { icon: Linkedin, href: '#', label: 'LinkedIn' },
-                { icon: Mail, href: '#', label: 'Email' },
-              ].map(({ icon: Icon, href, label }) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  whileHover={{ scale: 1.2, y: -2 }}
-                  className="social-link"
-                  aria-label={label}
-                >
-                  <Icon size={24} />
-                </motion.a>
-              ))}
-            </motion.div>
+              CONTACT ME
+              <ArrowRight size={20} />
+            </motion.button>
           </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 0.8 }}
-            onClick={scrollToAbout}
-            className="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-gray-500 hover:text-dark-green-600 transition-colors duration-300"
-          >
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="flex flex-col items-center space-y-2"
-            >
-              <span className="text-sm font-medium">Scroll to explore</span>
-              <ArrowDown size={20} />
-            </motion.div>
-          </motion.button>
         </div>
+
+
       </div>
     </section>
   )

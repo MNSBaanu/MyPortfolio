@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
+import { personalInfo } from '../data/portfolio'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -46,10 +47,11 @@ const Header = () => {
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="text-2xl font-bold"
+            className="text-2xl font-bold cursor-pointer"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
-            <span className="text-black">Alex</span>
-            <span className="gradient-text">Johnson</span>
+            <span className="text-black">{personalInfo.name.split(' ')[0]}</span>
+            <span className="gradient-text">{personalInfo.name.split(' ')[1] || ''}</span>
           </motion.div>
 
           {/* Desktop Navigation */}
