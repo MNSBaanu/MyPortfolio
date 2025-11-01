@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { personalInfo } from '../data/portfolio'
-import ThemeToggle from './ThemeToggle'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -39,7 +38,7 @@ const Header = () => {
       transition={{ duration: 0.8 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-black/80 backdrop-blur-md shadow-lg border-b border-dark-teal/30' 
+          ? 'bg-black/80 backdrop-blur-md shadow-lg border-b border-teal-600/50' 
           : 'bg-transparent'
       }`}
     >
@@ -69,12 +68,10 @@ const Header = () => {
                 {item.name}
               </motion.button>
             ))}
-            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-4">
-            <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 text-teal-100"

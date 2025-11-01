@@ -2,7 +2,7 @@ export const personalInfo = {
   name: 'Your Name',
   title: 'Full Stack Developer',
   description: 'Crafting exceptional digital experiences with clean code and modern technologies.',
-  profileImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
+  profileImage: '/profile.png',
   email: 'your.email@example.com',
   social: {
     github: 'https://github.com/yourusername',

@@ -102,21 +102,18 @@ const Hero = () => {
             </motion.button>
           </motion.div>
 
-          {/* Profile Image */}
+          {/* Profile Image - Vertical Rectangle */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.8, type: "spring" }}
             className="hidden lg:flex justify-center"
           >
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-teal-700 rounded-full blur-2xl opacity-40 animate-pulse"></div>
-              <img
-                src={personalInfo.profileImage}
-                alt={personalInfo.name}
-                className="relative w-64 h-64 xl:w-80 xl:h-80 rounded-full object-cover border-4 border-teal-700 shadow-2xl"
-              />
-            </div>
+            <img
+              src={personalInfo.profileImage}
+              alt={personalInfo.name}
+              className="w-64 h-80 xl:w-72 xl:h-96 object-cover"
+            />
           </motion.div>
         </div>
       </div>

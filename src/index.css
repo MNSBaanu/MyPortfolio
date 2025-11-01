@@ -31,12 +31,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #15803d;
+  background: #0f766e;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #22c55e;
+  background: #14b8a6;
 }
 
 /* Apple-like smooth transitions */
@@ -46,11 +46,11 @@ body {
 
 /* Apple-style button */
 .apple-button {
-  @apply px-8 py-4 bg-green-700 text-white rounded-full font-medium transition-all duration-300 hover:bg-green-600 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl;
+  @apply px-8 py-4 bg-teal-700 text-white rounded-full font-medium transition-all duration-300 hover:bg-teal-600 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl;
 }
 
 .apple-button-outline {
-  @apply px-8 py-4 border-2 border-green-700 text-green-700 rounded-full font-medium transition-all duration-300 hover:bg-green-700 hover:text-white hover:scale-105 active:scale-95;
+  @apply px-8 py-4 border-2 border-teal-700 text-teal-700 rounded-full font-medium transition-all duration-300 hover:bg-teal-700 hover:text-white hover:scale-105 active:scale-95;
 }
 
 /* Apple-style card */
@@ -80,12 +80,12 @@ body {
 
 /* Apple-style focus states */
 .focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-offset-2 focus:ring-offset-white;
+  @apply focus:outline-none focus:ring-2 focus:ring-teal-700 focus:ring-offset-2 focus:ring-offset-black;
 }
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #22c55e, #15803d);
+  background: linear-gradient(135deg, #14b8a6, #0f766e);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -147,8 +147,8 @@ body {
 
 /* Apple-style selection */
 ::selection {
-  background: #22c55e;
-  color: #ffffff;
+  background: #14b8a6;
+  color: #000000;
 }
 
 /* Remove default button styles */
@@ -160,12 +160,12 @@ button {
 
 /* Apple-style input */
 .apple-input {
-  @apply w-full px-4 py-4 bg-gray-50 border border-gray-200 rounded-xl text-black placeholder-gray-500 focus:border-green-700 focus:bg-white focus:outline-none transition-colors duration-300;
+  @apply w-full px-4 py-4 bg-black border border-teal-800 rounded-xl text-teal-100 placeholder-gray-500 focus:border-teal-600 focus:bg-black focus:outline-none transition-colors duration-300;
 }
 
 /* Apple-style textarea */
 .apple-textarea {
-  @apply w-full px-4 py-4 bg-gray-50 border border-gray-200 rounded-xl text-black placeholder-gray-500 focus:border-green-700 focus:bg-white focus:outline-none transition-colors duration-300 resize-none;
+  @apply w-full px-4 py-4 bg-black border border-teal-800 rounded-xl text-teal-100 placeholder-gray-500 focus:border-teal-600 focus:bg-black focus:outline-none transition-colors duration-300 resize-none;
 }
 
 /* Smooth reveal animation */
@@ -229,7 +229,7 @@ button {
 
 /* Skill progress bar */
 .skill-progress {
-  @apply h-full bg-gradient-to-r from-green-600 to-green-500 rounded-full transition-all duration-1000 ease-out relative;
+  @apply h-full bg-gradient-to-r from-teal-600 to-teal-500 rounded-full transition-all duration-1000 ease-out relative;
 }
 
 .skill-progress::after {
@@ -245,17 +245,17 @@ button {
 
 /* Tech stack tags */
 .tech-tag {
-  @apply px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-green-100 hover:text-green-700 transition-colors duration-300;
+  @apply px-4 py-2 bg-teal-900/30 text-teal-300 rounded-full text-sm font-medium hover:bg-teal-900/50 hover:text-teal-200 transition-colors duration-300;
 }
 
 /* Social links */
 .social-link {
-  @apply p-4 bg-white rounded-full shadow-lg border border-gray-100 text-gray-600 hover:text-green-600 hover:shadow-xl hover:scale-110 transition-all duration-300;
+  @apply p-4 bg-dark-teal rounded-full shadow-lg border border-teal-700 text-teal-300 hover:text-teal-200 hover:shadow-xl hover:scale-110 transition-all duration-300;
 }
 
 /* Navigation styles */
 .nav-link {
-  @apply text-gray-700 hover:text-green-700 transition-colors duration-300 font-medium relative;
+  @apply text-teal-300 hover:text-teal-400 transition-colors duration-300 font-medium relative;
 }
 
 .nav-link::after {
@@ -265,7 +265,7 @@ button {
   left: 0;
   width: 0;
   height: 2px;
-  background: #15803d;
+  background: #14b8a6;
   transition: width 0.3s ease;
 }
 
