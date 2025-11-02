@@ -110,20 +110,17 @@ export default function Journey() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className={activeTab === 'certifications' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-6'}
+            className={activeTab === 'certifications' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6' : 'space-y-6'}
           >
             {activeTab === 'certifications' ? (
               // Certification Cards
               certificationsData.map((cert, index) => (
-                <motion.a
+                <motion.div
                   key={index}
-                  href={cert.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-gradient-to-br from-teal-900/20 to-black rounded-xl border border-teal-700/30 hover:border-teal-500/50 transition-all duration-300 overflow-hidden group cursor-pointer"
+                  className="bg-gradient-to-br from-teal-900/20 to-black rounded-xl border border-teal-700/30 hover:border-teal-500/50 transition-all duration-300 overflow-hidden group"
                 >
                   <div className="aspect-video bg-teal-900/10 overflow-hidden">
                     <img 
@@ -140,7 +137,7 @@ export default function Journey() {
                     <p className="text-teal-300 text-sm mb-2">{cert.issuer}</p>
                     <p className="text-gray-400 text-sm">{cert.date}</p>
                   </div>
-                </motion.a>
+                </motion.div>
               ))
             ) : (
               // Education and Experience Cards

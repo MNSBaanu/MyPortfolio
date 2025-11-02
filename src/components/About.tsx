@@ -11,24 +11,29 @@ export default function About() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-5xl font-bold mb-16 text-center text-teal-100">About Me</h2>
+          <h2 className="text-5xl font-bold mb-8 text-center text-teal-100">About Me</h2>
           
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-6 mb-16">
-            {about.stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center p-6 bg-black rounded-2xl shadow-lg border border-gray-800 hover:shadow-xl transition-all duration-300"
-              >
-                <div className="text-4xl md:text-5xl font-bold text-teal-400 mb-2">{stat.number}</div>
-                <div className="text-gray-400 font-medium">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
+          {/* Highlights */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="flex flex-wrap justify-center gap-4 mb-12"
+          >
+            <span className="px-6 py-2 rounded-full border-2 border-teal-600 text-teal-400 text-sm hover:bg-teal-600/10 transition-colors duration-300">
+              Software Engineering Student
+            </span>
+            <span className="px-6 py-2 rounded-full border-2 border-teal-600 text-teal-400 text-sm hover:bg-teal-600/10 transition-colors duration-300">
+              Tech Enthusiast
+            </span>
+            <span className="px-6 py-2 rounded-full border-2 border-teal-600 text-teal-400 text-sm hover:bg-teal-600/10 transition-colors duration-300">
+              Problem Solver
+            </span>
+            <span className="px-6 py-2 rounded-full border-2 border-teal-600 text-teal-400 text-sm hover:bg-teal-600/10 transition-colors duration-300">
+              Quick Learner
+            </span>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div
