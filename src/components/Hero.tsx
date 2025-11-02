@@ -4,13 +4,13 @@ import { personalInfo } from '../data/portfolio'
 
 const Hero = () => {
   return (
-    <section className="min-h-screen flex items-center relative overflow-hidden bg-black pt-20 px-8 md:px-16 lg:px-24">
+    <section className="min-h-screen flex items-center relative overflow-visible bg-black pt-20 px-8 md:px-16 lg:px-24">
       {/* Vertical Social Icons - Right Side */}
       <motion.div
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
-        className="fixed right-1/2 translate-x-1/2 bottom-8 z-50 flex flex-row gap-4 md:right-8 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 md:flex-col"
+        className="fixed right-8 top-[30%] z-50 flex flex-col gap-4"
       >
         <motion.a
           href={personalInfo.social.github}
@@ -49,13 +49,13 @@ const Hero = () => {
       </motion.div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-        <div className="grid lg:grid-cols-[1fr,auto] gap-12 items-center max-w-6xl">
+        <div className="flex items-center justify-between gap-8 max-w-6xl mx-auto">
           {/* Main Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-8 flex-shrink-0"
           >
             <div>
               <motion.p
@@ -102,19 +102,23 @@ const Hero = () => {
             </motion.button>
           </motion.div>
 
-          {/* Profile Image - Vertical Rectangle */}
+          {/* Profile Image - Centered */}
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.8, type: "spring" }}
-            className="hidden lg:flex justify-center"
+            className="hidden lg:flex justify-center items-center flex-shrink-0"
           >
+            {/* Profile Image */}
             <img
               src={personalInfo.profileImage}
               alt={personalInfo.name}
               className="w-64 h-80 xl:w-72 xl:h-96 object-cover"
             />
           </motion.div>
+          
+          {/* Spacer to balance layout */}
+          <div className="hidden lg:block flex-shrink-0 w-0"></div>
         </div>
       </div>
     </section>
