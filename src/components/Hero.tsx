@@ -1,8 +1,31 @@
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Twitter } from 'lucide-react'
+import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react'
 import { personalInfo } from '../data/portfolio'
+import { useState, useEffect } from 'react'
+import CVViewer from './CVViewer'
 
 const Hero = () => {
+  const [showBackToTop, setShowBackToTop] = useState(false)
+  const [showSidebar, setShowSidebar] = useState(true)
+  const [showCVViewer, setShowCVViewer] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      
+      // Show back to top after scrolling past hero section
+      setShowBackToTop(scrollY > windowHeight)
+      
+      // Hide sidebar when near footer (within 200px of bottom)
+      const distanceFromBottom = documentHeight - (scrollY + windowHeight)
+      setShowSidebar(distanceFromBottom > 200)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
   // Floating code snippets for full stack vibe
   const codeSnippets = [
     '{ API }',
@@ -24,7 +47,7 @@ const Hero = () => {
   ]
 
   return (
-    <section className="min-h-screen flex items-center relative overflow-visible bg-gradient-to-b from-teal-950/20 via-black to-black pt-32 pb-20 px-8 md:px-16 lg:px-24">
+    <section className="min-h-screen flex items-center relative overflow-visible bg-gradient-to-b from-teal-950/20 via-black to-black pt-32 pb-20 px-4 md:px-8 lg:px-12 pr-24 md:pr-28 lg:pr-32">
       {/* Vertical Social Icons - Right Side */}
       <motion.div
         initial={{ opacity: 0, x: 50 }}
@@ -37,7 +60,7 @@ const Hero = () => {
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.1, x: -5 }}
-          className="w-14 h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-teal-500/50"
+          className="w-14 h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300"
         >
           <Github size={22} />
         </motion.a>
@@ -46,26 +69,31 @@ const Hero = () => {
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.1, x: -5 }}
-          className="w-14 h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-teal-500/50"
+          className="w-14 h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300"
         >
           <Linkedin size={22} />
         </motion.a>
         <motion.a
-          href={personalInfo.social.twitter}
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.1, x: -5 }}
-          className="w-14 h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-teal-500/50"
-        >
-          <Twitter size={22} />
-        </motion.a>
-        <motion.a
           href={`mailto:${personalInfo.email}`}
           whileHover={{ scale: 1.1, x: -5 }}
-          className="w-14 h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-teal-500/50"
+          className="w-14 h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300"
         >
           <Mail size={22} />
         </motion.a>
+
+        {/* Back to Top Button - Only visible after hero section */}
+        {showBackToTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            whileHover={{ scale: 1.1, x: -5 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="w-14 h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300"
+          >
+            <ArrowUp size={22} />
+          </motion.button>
+        )}
       </motion.div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
@@ -133,13 +161,12 @@ const Hero = () => {
                 Contact
               </button>
               
-              <a
-                href="/cv.pdf"
-                download
+              <button
+                onClick={() => setShowCVViewer(true)}
                 className="bg-teal-800 text-teal-100 px-6 py-2.5 rounded-full font-medium hover:bg-teal-700 transition-colors"
               >
-                Download CV
-              </a>
+                View CV
+              </button>
             </div>
           </motion.div>
 
@@ -215,6 +242,9 @@ const Hero = () => {
           <div className="hidden lg:block flex-shrink-0 w-0"></div>
         </div>
       </div>
+
+      {/* CV Viewer Modal */}
+      <CVViewer isOpen={showCVViewer} onClose={() => setShowCVViewer(false)} />
     </section>
   )
 }

@@ -305,3 +305,70 @@ button {
 .animate-shine {
   animation: shine 3s ease-in-out infinite;
 }
+
+/* Print styles for A4 CV */
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Hide everything except CV content */
+  body * {
+    visibility: hidden;
+  }
+
+  #cv-content,
+  #cv-content * {
+    visibility: visible;
+  }
+
+  #cv-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: white;
+    padding: 0;
+  }
+
+  /* Ensure proper page breaks */
+  h2 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  .mb-6 {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Remove shadows and unnecessary styles for print */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Ensure links are visible */
+  a {
+    text-decoration: underline;
+  }
+
+  /* Optimize spacing for print */
+  .p-8 {
+    padding: 1rem !important;
+  }
+
+  .mb-6 {
+    margin-bottom: 1rem !important;
+  }
+
+  .mb-3 {
+    margin-bottom: 0.5rem !important;
+  }
+}

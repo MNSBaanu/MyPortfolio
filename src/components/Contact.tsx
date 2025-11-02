@@ -13,13 +13,13 @@ export default function Contact() {
     {
       icon: Phone,
       label: 'Phone',
-      value: '+1 (555) 123-4567',
-      href: 'tel:+15551234567',
+      value: personalInfo.phone,
+      href: `tel:${personalInfo.phone.replace(/\D/g, '')}`,
     },
     {
       icon: MapPin,
       label: 'Location',
-      value: 'Your City, Country',
+      value: personalInfo.location,
       href: '#',
     },
   ]
@@ -31,7 +31,7 @@ export default function Contact() {
   ]
 
   return (
-    <section id="contact" className="py-20 px-8 md:px-16 lg:px-24 bg-black">
+    <section id="contact" className="py-20 px-4 md:px-8 lg:px-12 pr-24 md:pr-28 lg:pr-32 bg-black">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -42,12 +42,12 @@ const Header = () => {
           : 'bg-black/60 backdrop-blur-lg border-b border-teal-600/20'
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
+      <nav className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
         <div className="flex items-center h-24 max-w-6xl mx-auto gap-8">
           {/* Logo - Always visible */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="cursor-pointer mr-8"
+            className="cursor-pointer mr-4 ml-4"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             <img 
