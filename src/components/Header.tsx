@@ -66,7 +66,7 @@ const Header = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 + 0.3 }}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-2 text-teal-300 hover:text-teal-100 transition-colors duration-300 font-semibold text-base uppercase"
+                className="px-4 py-2 text-teal-300 hover:text-teal-100 transition-colors duration-300 font-semibold text-base"
               >
                 {item.name}
               </motion.button>
@@ -76,7 +76,7 @@ const Header = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
               onClick={() => scrollToSection('#contact')}
-              className="ml-2 px-6 py-2 text-teal-300 hover:text-teal-100 font-semibold text-base transition-colors duration-300 uppercase"
+              className="ml-2 px-6 py-2 text-teal-300 hover:text-teal-100 font-semibold text-base transition-colors duration-300"
             >
               Contact
             </motion.button>
