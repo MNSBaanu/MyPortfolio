@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
 import { X, Download, Mail, Phone, MapPin, Github, Linkedin } from 'lucide-react'
-import { personalInfo, about, skills, projects } from '../data/portfolio'
+import { personalInfo, about, skills, professionalSkills, projects, experience, education, certifications } from '../data/portfolio'
 import { useEffect } from 'react'
+import html2pdf from 'html2pdf.js'
 
 interface CVViewerProps {
   isOpen: boolean
@@ -26,7 +27,29 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
   if (!isOpen) return null
 
   const handleDownload = () => {
-    window.print()
+    const element = document.getElementById('cv-content')
+    if (!element) return
+
+    const opt = {
+      margin: [10, 10, 10, 10],
+      filename: `${personalInfo.name}_CV.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { 
+        scale: 2, 
+        useCORS: true,
+        letterRendering: true,
+        logging: false
+      },
+      jsPDF: { 
+        unit: 'mm', 
+        format: 'a4', 
+        orientation: 'portrait',
+        compress: true
+      },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    }
+
+    html2pdf().set(opt).from(element).save()
   }
 
   return (
@@ -42,7 +65,8 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
+        className="bg-white rounded-lg shadow-2xl max-h-[90vh] overflow-y-auto relative"
+        style={{ width: '210mm', maxWidth: '95vw' }}
       >
         {/* Header Controls */}
         <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center print:hidden z-10">
@@ -65,110 +89,123 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
         </div>
 
         {/* CV Content */}
-        <div className="p-8 bg-white text-gray-900" id="cv-content">
+        <div className="p-8 bg-gray-50 text-gray-900" id="cv-content" style={{ fontFamily: 'Arial, sans-serif', fontSize: '11px', lineHeight: '1.4' }}>
           {/* Header */}
-          <div className="text-center mb-6 pb-6 border-b-2 border-teal-600">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">{personalInfo.name}</h1>
-            <p className="text-xl text-teal-600 font-semibold mb-4">{personalInfo.title}</p>
-            
-            {/* Contact Info */}
-            <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-              <div className="flex items-center gap-1">
-                <Mail size={14} />
-                <span>{personalInfo.email}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Phone size={14} />
-                <span>{personalInfo.phone}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <MapPin size={14} />
-                <span>{personalInfo.location}</span>
-              </div>
-            </div>
-            
-            {/* Social Links */}
-            <div className="flex justify-center gap-4 mt-3 text-sm">
-              <a href={personalInfo.social.github} className="flex items-center gap-1 text-teal-600 hover:underline">
-                <Github size={14} />
-                GitHub
-              </a>
-              <a href={personalInfo.social.linkedin} className="flex items-center gap-1 text-teal-600 hover:underline">
-                <Linkedin size={14} />
-                LinkedIn
-              </a>
+          <div className="mb-4">
+            <h1 className="text-4xl font-bold text-teal-600 mb-2 uppercase tracking-wide">{personalInfo.name}</h1>
+            <div className="flex flex-wrap gap-2 text-gray-700 border-b-2 border-gray-800 pb-3" style={{ fontSize: '10px' }}>
+              <span className="underline">{personalInfo.email}</span>
+              <span>|</span>
+              <span className="underline">LinkedIn</span>
+              <span>|</span>
+              <span>{personalInfo.phone}</span>
             </div>
           </div>
 
           {/* Summary */}
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3 border-b border-gray-300 pb-2">Professional Summary</h2>
-            <p className="text-gray-700 leading-relaxed">{personalInfo.description}</p>
+          <div className="mb-4">
+            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Summary</h2>
+            <p className="text-gray-800 leading-relaxed">{personalInfo.cvSummary}</p>
           </div>
 
-          {/* Skills */}
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3 border-b border-gray-300 pb-2">Technical Skills</h2>
-            <div className="flex flex-wrap gap-2">
-              {skills.map((skill) => (
-                <span
-                  key={skill.name}
-                  className="px-3 py-1 bg-teal-50 text-teal-700 rounded-md text-sm font-medium border border-teal-200"
-                >
-                  {skill.name}
-                </span>
+          {/* Experience */}
+          <div className="mb-4">
+            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Professional Experience</h2>
+            <div className="space-y-3">
+              {experience.map((exp) => (
+                <div key={exp.title + exp.company} style={{ pageBreakInside: 'avoid' }}>
+                  <div className="flex justify-between items-start mb-1">
+                    <div>
+                      <h3 className="font-bold text-gray-900">{exp.title}</h3>
+                      <p className="text-gray-700 italic">{exp.company}</p>
+                    </div>
+                    <span className="text-gray-700 font-semibold whitespace-nowrap ml-4">{exp.period}</span>
+                  </div>
+                  <ul className="ml-5 mt-1">
+                    <li className="text-gray-800 leading-relaxed list-disc">{exp.description}</li>
+                  </ul>
+                </div>
               ))}
             </div>
-          </div>
-
-          {/* Experience/Services */}
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3 border-b border-gray-300 pb-2">Expertise</h2>
-            <ul className="space-y-2">
-              {about.services.map((service) => (
-                <li key={service} className="flex items-start">
-                  <span className="text-teal-600 mr-2">•</span>
-                  <span className="text-gray-700">{service}</span>
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* Projects */}
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3 border-b border-gray-300 pb-2">Projects</h2>
-            <div className="space-y-4">
+          <div className="mb-4">
+            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Projects</h2>
+            <div className="space-y-3">
               {projects.map((project) => (
-                <div key={project.title} className="mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">{project.title}</h3>
-                  <p className="text-gray-700 mb-2">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-1">
-                    {project.tech.map((tech) => (
-                      <span key={tech} className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
-                        {tech}
-                      </span>
-                    ))}
+                <div key={project.title} style={{ pageBreakInside: 'avoid' }}>
+                  <div className="flex justify-between items-start mb-1">
+                    <h3 className="font-bold text-gray-900">{project.title} ({project.tech.join(', ')})</h3>
                   </div>
-                  <div className="text-sm text-teal-600">
-                    <a href={project.liveUrl} className="hover:underline mr-3">Live Demo</a>
-                    <a href={project.githubUrl} className="hover:underline">GitHub</a>
+                  <ul className="ml-5 mt-1">
+                    <li className="text-gray-800 leading-relaxed list-disc">{project.description}</li>
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Skills */}
+          <div className="mb-4">
+            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Soft Skills</h2>
+            <div className="grid grid-cols-3 gap-x-8 gap-y-1">
+              {professionalSkills.map((skill) => (
+                <div key={skill} className="text-gray-800">{skill}</div>
+              ))}
+            </div>
+          </div>
+
+          {/* Technical Skills */}
+          <div className="mb-4">
+            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Technical Skills</h2>
+            <p className="text-gray-800 leading-relaxed">
+              {skills.map(s => s.name).join(', ')}
+            </p>
+          </div>
+
+          {/* Education */}
+          <div className="mb-4">
+            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Education</h2>
+            <div className="space-y-2">
+              {education.map((edu) => (
+                <div key={edu.title + edu.institution} style={{ pageBreakInside: 'avoid' }}>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="font-bold text-gray-900">{edu.institution}</h3>
+                      <p className="text-gray-700">{edu.title}</p>
+                    </div>
+                    <span className="text-gray-700 font-semibold whitespace-nowrap ml-4">{edu.period}</span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Stats */}
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3 border-b border-gray-300 pb-2">Achievements</h2>
-            <div className="grid grid-cols-3 gap-4">
-              {about.stats.map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="text-2xl font-bold text-teal-600">{stat.number}</div>
-                  <div className="text-sm text-gray-600">{stat.label}</div>
+          {/* Certifications */}
+          <div className="mb-4">
+            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Certifications</h2>
+            <div className="space-y-2">
+              {certifications.slice(0, 6).map((cert) => (
+                <div key={cert.title + cert.issuer} style={{ pageBreakInside: 'avoid' }}>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="font-bold text-gray-900">{cert.title}</h3>
+                      <p className="text-gray-700">{cert.issuer}</p>
+                    </div>
+                    <span className="text-gray-700 font-semibold whitespace-nowrap ml-4">{cert.date}</span>
+                  </div>
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Additional Information */}
+          <div className="mb-4">
+            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Additional Information</h2>
+            <p className="text-gray-800">
+              <span className="font-bold">Languages:</span> English, Sinhala, Tamil
+            </p>
           </div>
         </div>
       </motion.div>

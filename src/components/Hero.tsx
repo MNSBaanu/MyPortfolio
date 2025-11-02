@@ -6,21 +6,14 @@ import CVViewer from './CVViewer'
 
 const Hero = () => {
   const [showBackToTop, setShowBackToTop] = useState(false)
-  const [showSidebar, setShowSidebar] = useState(true)
   const [showCVViewer, setShowCVViewer] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY
-      const windowHeight = window.innerHeight
-      const documentHeight = document.documentElement.scrollHeight
       
-      // Show back to top after scrolling past hero section
-      setShowBackToTop(scrollY > windowHeight)
-      
-      // Hide sidebar when near footer (within 200px of bottom)
-      const distanceFromBottom = documentHeight - (scrollY + windowHeight)
-      setShowSidebar(distanceFromBottom > 200)
+      // Show back to top after scrolling 500px (shows in About section)
+      setShowBackToTop(scrollY > 500)
     }
 
     window.addEventListener('scroll', handleScroll)

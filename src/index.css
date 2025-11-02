@@ -10,6 +10,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 100px; /* Offset for fixed header */
 }
 
 body {
@@ -316,6 +317,7 @@ button {
   body {
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
+    background: white !important;
   }
 
   /* Hide everything except CV content */
@@ -333,8 +335,14 @@ button {
     left: 0;
     top: 0;
     width: 100%;
-    background: white;
+    background: white !important;
     padding: 0;
+  }
+
+  /* Hide modal overlay and controls */
+  .fixed,
+  .print\\:hidden {
+    display: none !important;
   }
 
   /* Ensure proper page breaks */
@@ -352,11 +360,56 @@ button {
   * {
     box-shadow: none !important;
     text-shadow: none !important;
+    background: transparent !important;
+  }
+
+  /* Force white background for CV content */
+  #cv-content,
+  #cv-content > * {
+    background: white !important;
+  }
+
+  /* Ensure text colors are visible */
+  h1, h2, h3, h4, h5, h6, p, span, div, li {
+    color: black !important;
+  }
+
+  .text-teal-600,
+  .text-teal-700 {
+    color: #0f766e !important;
+  }
+
+  .text-gray-600,
+  .text-gray-700 {
+    color: #4b5563 !important;
+  }
+
+  /* Ensure borders are visible */
+  .border-teal-600 {
+    border-color: #0f766e !important;
+  }
+
+  .border-gray-300 {
+    border-color: #d1d5db !important;
+  }
+
+  .border-teal-200 {
+    border-color: #99f6e4 !important;
+  }
+
+  /* Ensure skill badges have background */
+  .bg-teal-50 {
+    background: #f0fdfa !important;
+  }
+
+  .bg-gray-100 {
+    background: #f3f4f6 !important;
   }
 
   /* Ensure links are visible */
   a {
     text-decoration: underline;
+    color: #0f766e !important;
   }
 
   /* Optimize spacing for print */
