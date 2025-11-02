@@ -14,18 +14,18 @@ export const personalInfo = {
 }
 
 export const about = {
-  description1: "I'm a Software Engineering student at ICBT Kandy, passionate about building innovative solutions through code. With experience in full-stack development and a growing interest in AI/ML, I'm constantly learning and applying new technologies to solve real-world problems.",
-  description2: 'Beyond coding, I have experience as a translator and student instructor, which has strengthened my communication skills and ability to work in diverse teams. I believe in continuous learning and contributing to meaningful projects.',
+  description1: "I'm a Software Engineering student with a passion for creating meaningful digital experiences. I believe in writing clean, efficient code and continuously pushing myself to learn and grow.",
+  description2: 'I\'m driven by challenges and motivated by the endless possibilities that technology offers to solve real-world problems.',
   stats: [
     { number: '7+', label: 'Certifications' },
     { number: '10+', label: 'Projects Completed' },
     { number: '5+', label: 'Technologies' },
   ],
   services: [
-    'Full-stack web development (MERN Stack)',
+    'Full-stack web development',
     'Responsive web design & UI/UX',
     'Database design & management',
-    'Translation services (Sinhala ↔ Tamil)',
+    'API development & integration',
   ],
 }
 

@@ -65,64 +65,64 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-lg shadow-2xl max-h-[90vh] overflow-y-auto relative"
-        style={{ width: '210mm', maxWidth: '95vw' }}
+        className="bg-white rounded-lg shadow-2xl max-h-[90vh] overflow-y-auto relative w-full max-w-[95vw] sm:max-w-[90vw] md:max-w-[210mm]"
       >
         {/* Header Controls */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center print:hidden z-10">
-          <h2 className="text-xl font-bold text-gray-800">Resume Preview</h2>
-          <div className="flex gap-2">
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-2 sm:p-3 md:p-4 flex justify-between items-center print:hidden z-10">
+          <h2 className="text-sm sm:text-base md:text-xl font-bold text-gray-800">Resume Preview</h2>
+          <div className="flex gap-1 sm:gap-2">
             <button
               onClick={handleDownload}
-              className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
             >
-              <Download size={18} />
-              Download PDF
+              <Download className="w-3 h-3 sm:w-4 sm:h-4 md:w-4.5 md:h-4.5" />
+              <span className="hidden sm:inline">Download PDF</span>
+              <span className="sm:hidden">PDF</span>
             </button>
             <button
               onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-1 sm:p-1.5 md:p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <X size={24} />
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           </div>
         </div>
 
         {/* CV Content */}
-        <div className="p-8 bg-gray-50 text-gray-900" id="cv-content" style={{ fontFamily: 'Arial, sans-serif', fontSize: '11px', lineHeight: '1.4' }}>
+        <div className="p-4 sm:p-6 md:p-8 bg-gray-50 text-gray-900" id="cv-content" style={{ fontFamily: 'Arial, sans-serif', fontSize: '11px', lineHeight: '1.4' }}>
           {/* Header */}
-          <div className="mb-4">
-            <h1 className="text-4xl font-bold text-teal-600 mb-2 uppercase tracking-wide">{personalInfo.name}</h1>
-            <div className="flex flex-wrap gap-2 text-gray-700 border-b-2 border-gray-800 pb-3" style={{ fontSize: '10px' }}>
-              <span className="underline">{personalInfo.email}</span>
+          <div className="mb-3 sm:mb-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide">{personalInfo.name}</h1>
+            <div className="flex flex-wrap gap-1 sm:gap-2 text-gray-700 border-b-2 border-gray-800 pb-2 sm:pb-3 text-xs sm:text-sm">
+              <span className="underline break-all">{personalInfo.email}</span>
               <span>|</span>
               <span className="underline">LinkedIn</span>
               <span>|</span>
-              <span>{personalInfo.phone}</span>
+              <span className="whitespace-nowrap">{personalInfo.phone}</span>
             </div>
           </div>
 
           {/* Summary */}
-          <div className="mb-4">
-            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Summary</h2>
-            <p className="text-gray-800 leading-relaxed">{personalInfo.cvSummary}</p>
+          <div className="mb-3 sm:mb-4">
+            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Summary</h2>
+            <p className="text-gray-800 leading-relaxed text-xs sm:text-sm">{personalInfo.cvSummary}</p>
           </div>
 
           {/* Experience */}
-          <div className="mb-4">
-            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Professional Experience</h2>
-            <div className="space-y-3">
+          <div className="mb-3 sm:mb-4">
+            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Professional Experience</h2>
+            <div className="space-y-2 sm:space-y-3">
               {experience.map((exp) => (
                 <div key={exp.title + exp.company} style={{ pageBreakInside: 'avoid' }}>
-                  <div className="flex justify-between items-start mb-1">
-                    <div>
-                      <h3 className="font-bold text-gray-900">{exp.title}</h3>
-                      <p className="text-gray-700 italic">{exp.company}</p>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1">
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-900 text-xs sm:text-sm">{exp.title}</h3>
+                      <p className="text-gray-700 italic text-xs sm:text-sm">{exp.company}</p>
                     </div>
-                    <span className="text-gray-700 font-semibold whitespace-nowrap ml-4">{exp.period}</span>
+                    <span className="text-gray-700 font-semibold whitespace-nowrap text-xs sm:text-sm sm:ml-4">{exp.period}</span>
                   </div>
-                  <ul className="ml-5 mt-1">
-                    <li className="text-gray-800 leading-relaxed list-disc">{exp.description}</li>
+                  <ul className="ml-4 sm:ml-5 mt-1">
+                    <li className="text-gray-800 leading-relaxed list-disc text-xs sm:text-sm">{exp.description}</li>
                   </ul>
                 </div>
               ))}
@@ -130,16 +130,14 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
           </div>
 
           {/* Projects */}
-          <div className="mb-4">
-            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Projects</h2>
-            <div className="space-y-3">
+          <div className="mb-3 sm:mb-4">
+            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Projects</h2>
+            <div className="space-y-2 sm:space-y-3">
               {projects.map((project) => (
                 <div key={project.title} style={{ pageBreakInside: 'avoid' }}>
-                  <div className="flex justify-between items-start mb-1">
-                    <h3 className="font-bold text-gray-900">{project.title} ({project.tech.join(', ')})</h3>
-                  </div>
-                  <ul className="ml-5 mt-1">
-                    <li className="text-gray-800 leading-relaxed list-disc">{project.description}</li>
+                  <h3 className="font-bold text-gray-900 text-xs sm:text-sm">{project.title} ({project.tech.join(', ')})</h3>
+                  <ul className="ml-4 sm:ml-5 mt-1">
+                    <li className="text-gray-800 leading-relaxed list-disc text-xs sm:text-sm">{project.description}</li>
                   </ul>
                 </div>
               ))}
@@ -147,9 +145,9 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
           </div>
 
           {/* Skills */}
-          <div className="mb-4">
-            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Soft Skills</h2>
-            <div className="grid grid-cols-3 gap-x-8 gap-y-1">
+          <div className="mb-3 sm:mb-4">
+            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Soft Skills</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 sm:gap-x-8 gap-y-1 text-xs sm:text-sm">
               {professionalSkills.map((skill) => (
                 <div key={skill} className="text-gray-800">{skill}</div>
               ))}
@@ -157,25 +155,25 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
           </div>
 
           {/* Technical Skills */}
-          <div className="mb-4">
-            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Technical Skills</h2>
-            <p className="text-gray-800 leading-relaxed">
+          <div className="mb-3 sm:mb-4">
+            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Technical Skills</h2>
+            <p className="text-gray-800 leading-relaxed text-xs sm:text-sm">
               {skills.map(s => s.name).join(', ')}
             </p>
           </div>
 
           {/* Education */}
-          <div className="mb-4">
-            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Education</h2>
+          <div className="mb-3 sm:mb-4">
+            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Education</h2>
             <div className="space-y-2">
               {education.map((edu) => (
                 <div key={edu.title + edu.institution} style={{ pageBreakInside: 'avoid' }}>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-bold text-gray-900">{edu.institution}</h3>
-                      <p className="text-gray-700">{edu.title}</p>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-900 text-xs sm:text-sm">{edu.institution}</h3>
+                      <p className="text-gray-700 text-xs sm:text-sm">{edu.title}</p>
                     </div>
-                    <span className="text-gray-700 font-semibold whitespace-nowrap ml-4">{edu.period}</span>
+                    <span className="text-gray-700 font-semibold whitespace-nowrap text-xs sm:text-sm sm:ml-4">{edu.period}</span>
                   </div>
                 </div>
               ))}
@@ -183,17 +181,17 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
           </div>
 
           {/* Certifications */}
-          <div className="mb-4">
-            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Certifications</h2>
+          <div className="mb-3 sm:mb-4">
+            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Certifications</h2>
             <div className="space-y-2">
               {certifications.slice(0, 6).map((cert) => (
                 <div key={cert.title + cert.issuer} style={{ pageBreakInside: 'avoid' }}>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-bold text-gray-900">{cert.title}</h3>
-                      <p className="text-gray-700">{cert.issuer}</p>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-900 text-xs sm:text-sm">{cert.title}</h3>
+                      <p className="text-gray-700 text-xs sm:text-sm">{cert.issuer}</p>
                     </div>
-                    <span className="text-gray-700 font-semibold whitespace-nowrap ml-4">{cert.date}</span>
+                    <span className="text-gray-700 font-semibold whitespace-nowrap text-xs sm:text-sm sm:ml-4">{cert.date}</span>
                   </div>
                 </div>
               ))}

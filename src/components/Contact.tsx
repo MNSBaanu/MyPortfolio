@@ -34,7 +34,7 @@ export default function Contact() {
   ]
 
   return (
-    <section id="contact" className="pt-8 pb-20 px-4 md:px-8 lg:px-12 pr-24 md:pr-28 lg:pr-32 bg-black">
+    <section id="contact" className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 px-4 md:px-8 lg:px-12 pr-12 sm:pr-14 md:pr-16 lg:pr-20 xl:pr-24 bg-black">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -42,10 +42,10 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-5xl font-bold mb-12 text-center text-gray-200">Contact</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 sm:mb-10 md:mb-12 text-center text-gray-200">Contact</h2>
           
           {/* Contact Details */}
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-8 sm:mb-10 md:mb-12">
             {contactDetails.map((detail, index) => {
               const Component = detail.clickable ? motion.a : motion.div
               return (
@@ -58,15 +58,15 @@ export default function Contact() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className={`bg-black border border-gray-800 rounded-2xl p-6 transition-all duration-300 text-center group ${
+                  className={`bg-black border border-gray-800 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 transition-all duration-300 text-center group ${
                     detail.clickable ? 'hover:border-teal-600 cursor-pointer' : 'cursor-default'
                   }`}
                 >
-                  <detail.icon className={`w-8 h-8 mx-auto mb-4 text-teal-400 transition-transform duration-300 ${
+                  <detail.icon className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 mx-auto mb-2 sm:mb-3 text-teal-400 transition-transform duration-300 ${
                     detail.clickable ? 'group-hover:scale-110' : ''
                   }`} />
-                  <h3 className="text-sm font-medium text-gray-400 mb-2">{detail.label}</h3>
-                  <p className="text-gray-200 break-words">{detail.value}</p>
+                  <h3 className="text-xs font-medium text-gray-400 mb-1">{detail.label}</h3>
+                  <p className="text-xs sm:text-sm text-gray-200 break-words">{detail.value}</p>
                 </Component>
               )
             })}

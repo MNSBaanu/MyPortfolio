@@ -73,7 +73,7 @@ export default function Journey() {
   }
 
   return (
-    <section id="journey" className="pt-8 pb-20 px-4 md:px-8 lg:px-12 pr-24 md:pr-28 lg:pr-32 bg-black">
+    <section id="journey" className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 px-4 md:px-8 lg:px-12 pr-12 sm:pr-14 md:pr-16 lg:pr-20 xl:pr-24 bg-black">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -81,20 +81,20 @@ export default function Journey() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-5xl font-bold text-teal-100 mb-8 text-center">Journey</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-teal-100 mb-6 sm:mb-8 text-center">Journey</h2>
 
           {/* Toggle Tabs */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10 md:mb-12">
             {tabs.map((tab) => {
               const Icon = tab.icon
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+                  className={`flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
                     activeTab === tab.id
-                      ? 'bg-teal-600 text-white'
-                      : 'bg-teal-900/20 text-teal-300 border border-teal-700/30 hover:border-teal-500/50 hover:text-teal-100'
+                      ? 'bg-teal-800 text-teal-100'
+                      : 'bg-black text-teal-300 border-2 border-teal-600 hover:bg-teal-600/10'
                   }`}
                 >
                   <Icon size={18} />
@@ -110,7 +110,7 @@ export default function Journey() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className={activeTab === 'certifications' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6' : 'space-y-6'}
+            className={activeTab === 'certifications' ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6' : 'space-y-4 sm:space-y-5 md:space-y-6'}
           >
             {activeTab === 'certifications' ? (
               // Certification Cards
@@ -132,10 +132,10 @@ export default function Journey() {
                       }}
                     />
                   </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold text-teal-100 mb-2 line-clamp-2">{cert.title}</h3>
-                    <p className="text-teal-300 text-sm mb-2">{cert.issuer}</p>
-                    <p className="text-gray-400 text-sm">{cert.date}</p>
+                  <div className="p-3 sm:p-4">
+                    <h3 className="text-sm sm:text-base md:text-lg font-semibold text-teal-100 mb-1.5 sm:mb-2 line-clamp-2">{cert.title}</h3>
+                    <p className="text-teal-300 text-xs sm:text-sm mb-1.5 sm:mb-2">{cert.issuer}</p>
+                    <p className="text-gray-400 text-xs sm:text-sm">{cert.date}</p>
                   </div>
                 </motion.div>
               ))
@@ -147,24 +147,24 @@ export default function Journey() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-gradient-to-br from-teal-900/20 to-black p-6 rounded-xl border border-teal-700/30 hover:border-teal-500/50 transition-all duration-300"
+                  className="bg-gradient-to-br from-teal-900/20 to-black p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl border border-teal-700/30 hover:border-teal-500/50 transition-all duration-300"
                 >
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-2 sm:mb-3">
                     <div className="flex-1">
-                      <h3 className="text-xl font-semibold text-teal-100 mb-1">{item.title}</h3>
-                      <p className="text-teal-300 font-medium">{item.organization}</p>
+                      <h3 className="text-base sm:text-lg md:text-xl font-semibold text-teal-100 mb-1">{item.title}</h3>
+                      <p className="text-sm sm:text-base text-teal-300 font-medium">{item.organization}</p>
                     </div>
-                    <span className="text-gray-400 text-sm mt-2 md:mt-0 whitespace-nowrap">{item.period}</span>
+                    <span className="text-gray-400 text-xs sm:text-sm mt-1.5 sm:mt-2 md:mt-0 whitespace-nowrap">{item.period}</span>
                   </div>
                   
                   {item.description && (
-                    <p className="text-gray-300 mb-3">{item.description}</p>
+                    <p className="text-sm sm:text-base text-gray-300 mb-2 sm:mb-3">{item.description}</p>
                   )}
                   
                   {item.details && (
-                    <ul className="space-y-2">
+                    <ul className="space-y-1.5 sm:space-y-2">
                       {item.details.map((detail, idx) => (
-                        <li key={idx} className="flex items-start text-gray-400">
+                        <li key={idx} className="flex items-start text-gray-400 text-sm sm:text-base">
                           <span className="text-teal-400 mr-2">•</span>
                           <span>{detail}</span>
                         </li>

@@ -43,22 +43,22 @@ const Header = () => {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
-        <div className="flex items-center h-24 max-w-6xl mx-auto gap-8">
+        <div className="flex items-center justify-between h-16 sm:h-20 md:h-24 max-w-6xl mx-auto">
           {/* Logo - Always visible */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="cursor-pointer mr-4 ml-4"
+            className="cursor-pointer"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             <img 
               src="/assets/Logo.png" 
               alt="Logo" 
-              className="h-12 w-12 object-contain"
+              className="h-10 w-10 sm:h-12 sm:w-12 object-contain"
             />
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1 ml-auto">
+          <div className="hidden md:flex items-center space-x-1">
             {navItems.slice(0, 3).map((item, index) => (
               <motion.button
                 key={item.name}
@@ -82,13 +82,13 @@ const Header = () => {
             </motion.button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-4">
+          {/* Mobile Menu Button - Right Corner */}
+          <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-teal-100"
+              className="p-1.5 sm:p-2 text-teal-100"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
             </button>
           </div>
         </div>
@@ -103,12 +103,12 @@ const Header = () => {
           transition={{ duration: 0.3 }}
           className="md:hidden overflow-hidden bg-black/95 backdrop-blur-md border-t border-dark-teal/30"
         >
-          <div className="py-6 space-y-4">
+          <div className="py-3 sm:py-4 space-y-2 sm:space-y-3">
             {navItems.map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="block w-full text-left px-6 py-3 text-gray-300 hover:text-teal-400 hover:bg-dark-teal/20 transition-colors duration-300"
+                className="block w-full text-left px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base text-gray-300 hover:text-teal-400 hover:bg-dark-teal/20 transition-colors duration-300"
               >
                 {item.name}
               </button>
