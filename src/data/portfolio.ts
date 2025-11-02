@@ -1,7 +1,7 @@
 export const personalInfo = {
-  name: 'Your Name',
+  name: 'MNSBaanu',
   title: 'Full Stack Developer',
-  description: 'Crafting exceptional digital experiences with clean code and modern technologies.',
+  description: 'Mastering the full spectrum: From what users see to what makes it breathe.',
   profileImage: '/assets/profile.png',
   email: 'your.email@example.com',
   social: {

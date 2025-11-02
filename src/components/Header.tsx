@@ -38,36 +38,48 @@ const Header = () => {
       transition={{ duration: 0.8 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-black/80 backdrop-blur-md shadow-lg border-b border-teal-600/50' 
-          : 'bg-transparent'
+          ? 'bg-black/95 backdrop-blur-md border-b border-teal-600/40 shadow-lg shadow-teal-900/20' 
+          : 'bg-black/60 backdrop-blur-lg border-b border-teal-600/20'
       }`}
     >
-      <nav className="container-custom">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+      <nav className="max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
+        <div className="flex items-center h-24 max-w-6xl mx-auto gap-8">
+          {/* Logo - Always visible */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="text-2xl font-bold cursor-pointer"
+            className="cursor-pointer mr-8"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
-            <span className="text-teal-100">{personalInfo.name.split(' ')[0]}</span>
-            <span className="text-teal-400">{personalInfo.name.split(' ')[1] || ''}</span>
+            <img 
+              src="/assets/Logo.png" 
+              alt="Logo" 
+              className="h-12 w-12 object-contain"
+            />
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item, index) => (
+          <div className="hidden md:flex items-center space-x-1 ml-auto">
+            {navItems.slice(0, 3).map((item, index) => (
               <motion.button
                 key={item.name}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 + 0.3 }}
                 onClick={() => scrollToSection(item.href)}
-                className="text-gray-300 hover:text-teal-400 transition-colors duration-300 font-medium"
+                className="px-4 py-2 text-teal-300 hover:text-teal-100 transition-colors duration-300 font-semibold text-base uppercase"
               >
                 {item.name}
               </motion.button>
             ))}
+            <motion.button
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              onClick={() => scrollToSection('#contact')}
+              className="ml-2 px-6 py-2 text-teal-300 hover:text-teal-100 font-semibold text-base transition-colors duration-300 uppercase"
+            >
+              Contact
+            </motion.button>
           </div>
 
           {/* Mobile Menu Button */}
