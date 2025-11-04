@@ -58,7 +58,7 @@ export default function About() {
               className="bg-black py-4 sm:py-5 md:py-6 pl-4 sm:pl-6 md:pl-8 pr-6 sm:pr-8 md:pr-12 rounded-xl sm:rounded-2xl shadow-lg border border-gray-800 w-fit ml-0 sm:ml-4 md:ml-8"
             >
               <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 md:mb-6 text-teal-400">What I Do</h3>
-              <ul className="space-y-2 sm:space-y-3 md:space-y-4">
+              <ul className="space-y-1.5 sm:space-y-2 md:space-y-3">
                 {about.services.map((service) => (
                   <li key={service} className="flex items-start group">
                     <span className="text-teal-400 mr-2 sm:mr-3 text-base sm:text-lg md:text-xl group-hover:scale-125 transition-transform duration-300">✓</span>

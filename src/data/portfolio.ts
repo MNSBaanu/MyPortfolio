@@ -22,10 +22,11 @@ export const about = {
     { number: '5+', label: 'Technologies' },
   ],
   services: [
-    'Full-stack web development',
-    'Responsive web design & UI/UX',
-    'Database design & management',
-    'API development & integration',
+    'Frontend Development',
+    'Backend Development',
+    'Mobile Application Development',
+    'API Development',
+    'Database Design & Management',
   ],
 }
 
