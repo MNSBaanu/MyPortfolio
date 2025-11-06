@@ -62,11 +62,11 @@ export default function Contact() {
                     detail.clickable ? 'hover:border-teal-600 cursor-pointer' : 'cursor-default'
                   }`}
                 >
-                  <detail.icon className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 mx-auto mb-2 sm:mb-3 text-teal-400 transition-transform duration-300 ${
+                  <detail.icon className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 mx-auto mb-2 sm:mb-3 text-teal-400 transition-transform duration-300 ${
                     detail.clickable ? 'group-hover:scale-110' : ''
                   }`} />
-                  <h3 className="text-xs font-medium text-gray-400 mb-1">{detail.label}</h3>
-                  <p className="text-xs sm:text-sm text-gray-200 break-words">{detail.value}</p>
+                  <h3 className="text-sm sm:text-base font-medium text-gray-400 mb-1 sm:mb-2">{detail.label}</h3>
+                  <p className="text-sm sm:text-base md:text-lg text-gray-200 break-words">{detail.value}</p>
                 </Component>
               )
             })}
