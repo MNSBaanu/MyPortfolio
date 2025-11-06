@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Toaster } from 'react-hot-toast'
 import { ThemeProvider } from './context/ThemeContext'
 import LoadingScreen from './components/LoadingScreen'
 import Header from './components/Header'
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <ThemeProvider>
+      <Toaster position="top-right" />
       <AnimatePresence mode="wait">
         {isLoading ? (
           <LoadingScreen key="loading" onLoadingComplete={() => setIsLoading(false)} />
