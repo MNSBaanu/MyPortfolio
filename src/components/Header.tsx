@@ -47,7 +47,7 @@ const Header = () => {
           {/* Logo - Always visible */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="cursor-pointer"
+            className="cursor-pointer ml-2 sm:ml-4"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             <img 

@@ -94,9 +94,17 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
           <div className="mb-3 sm:mb-4">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide">{personalInfo.name}</h1>
             <div className="flex flex-wrap gap-1 sm:gap-2 text-gray-700 border-b-2 border-gray-800 pb-2 sm:pb-3 text-xs sm:text-sm">
-              <span className="underline break-all">{personalInfo.email}</span>
+              <a href={`mailto:${personalInfo.email}`} className="underline break-all text-teal-700 hover:text-teal-900">
+                {personalInfo.email}
+              </a>
               <span>|</span>
-              <span className="underline">LinkedIn</span>
+              <a href={personalInfo.social.linkedin} target="_blank" rel="noopener noreferrer" className="underline text-teal-700 hover:text-teal-900">
+                LinkedIn
+              </a>
+              <span>|</span>
+              <a href={personalInfo.social.github} target="_blank" rel="noopener noreferrer" className="underline text-teal-700 hover:text-teal-900">
+                GitHub
+              </a>
               <span>|</span>
               <span className="whitespace-nowrap">{personalInfo.phone}</span>
             </div>

@@ -112,7 +112,6 @@ export const professionalSkills = [
   'Time Management',
   'Leadership',
   'Decision Making',
-  'Organization'
 ]
 
 export const education = [

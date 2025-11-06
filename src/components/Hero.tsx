@@ -103,9 +103,9 @@ const Hero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-gray-400 text-sm sm:text-base lg:text-lg mb-3 sm:mb-4"
+                className="text-gray-400 text-base sm:text-lg lg:text-xl mb-3 sm:mb-4"
               >
-                Hey, I'm <span className="text-teal-300 font-semibold">{personalInfo.name}</span>
+                Hello, I'm <span className="text-teal-300 font-semibold text-lg sm:text-xl lg:text-2xl">{personalInfo.name}</span>
               </motion.p>
               
               <motion.h1
