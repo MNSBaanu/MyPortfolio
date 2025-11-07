@@ -119,6 +119,15 @@ const Hero = () => {
                 <span className="text-teal-300">DEVELOPER</span>
               </motion.h1>
               
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.45 }}
+                className="text-gray-500 text-sm sm:text-base mb-3 sm:mb-4"
+              >
+                Based in Kandy, Sri Lanka
+              </motion.p>
+              
               {/* Tech Stack Tags */}
               <motion.div
                 initial={{ opacity: 0 }}

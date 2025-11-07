@@ -73,7 +73,7 @@ export default function Journey() {
   }
 
   return (
-    <section id="journey" className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 px-4 md:px-8 lg:px-12 pr-12 sm:pr-14 md:pr-16 lg:pr-20 xl:pr-24 bg-black">
+    <section id="journey" className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 pl-6 sm:pl-8 md:pl-12 lg:pl-16 xl:pl-20 pr-16 sm:pr-20 md:pr-24 lg:pr-28 xl:pr-32 bg-black">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -151,7 +151,14 @@ export default function Journey() {
                 >
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-2 sm:mb-3">
                     <div className="flex-1">
-                      <h3 className="text-base sm:text-lg md:text-xl font-semibold text-teal-100 mb-1">{item.title}</h3>
+                      <h3 className="text-base sm:text-lg md:text-xl font-semibold text-teal-100 mb-1">
+                        {item.title.split('\n').map((line, i) => (
+                          <span key={i}>
+                            {line}
+                            {i < item.title.split('\n').length - 1 && <br />}
+                          </span>
+                        ))}
+                      </h3>
                       <p className="text-sm sm:text-base text-teal-300 font-medium">{item.organization}</p>
                     </div>
                     <span className="text-gray-400 text-xs sm:text-sm mt-1.5 sm:mt-2 md:mt-0 whitespace-nowrap">{item.period}</span>
