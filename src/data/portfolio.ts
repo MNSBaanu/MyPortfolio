@@ -232,7 +232,7 @@ export const certifications = [
 export const projects = [
   {
     title: 'ShareLanka',
-    description: 'A community-driven platform for sharing resources and connecting people across Sri Lanka.',
+    description: 'Group project: A free community platform for donating items, requesting goods, browsing by location and category, with real-time chat and secure authentication.',
     tech: ['MERN', 'Tailwind CSS', 'Firebase', 'Cloudinary', 'Socket.IO', 'GitHub'],
     period: 'Jul - Oct 2025',
     images: [
@@ -245,7 +245,7 @@ export const projects = [
   },
   {
     title: 'GadgetHub',
-    description: 'E-commerce platform for buying and selling electronic gadgets with secure payment integration.',
+    description: 'The Gadget Hub is an online platform that streamlines gadget purchases by comparing distributor quotations, selecting the best deals, and managing customer orders and notifications efficiently.',
     tech: ['C#', 'ASP.NET Web API', 'ASP.NET Razor', 'SQL Server'],
     period: 'Aug - Oct 2025',
     images: [
@@ -258,7 +258,7 @@ export const projects = [
   },
   {
     title: 'GreenLife',
-    description: 'Eco-friendly lifestyle app promoting sustainable living and environmental awareness.',
+    description: 'The website promotes holistic health by offering wellness information, online appointment booking, client–therapist communication, and secure access for clients, therapists, and administrators.',
     tech: ['HTML5', 'CSS3', 'JavaScript', 'PHP', 'MySQL'],
     period: 'May - Jul 2025',
     images: [
@@ -272,7 +272,7 @@ export const projects = [
   },
   {
     title: 'LuxeVista',
-    description: 'Luxury hotel booking platform with elegant UI and seamless reservation system.',
+    description: 'Mobile app for LuxeVista Resort: personalized guest accounts, browse and book rooms, reserve spa and activities, manage bookings, and receive offers plus local concierge recommendations.',
     tech: ['Java'],
     period: 'May - Jul 2025',
     images: [
@@ -285,7 +285,7 @@ export const projects = [
   },
   {
     title: 'The Pawsshop',
-    description: 'Pet care e-commerce platform offering products and services for pet owners.',
+    description: 'A system developed to manage pet supply transactions efficiently, enabling product management, category-based search, and secure multi-level user access for cashiers and managers.',
     tech: ['Java', 'OOP', 'Firebase'],
     period: 'Sep - Dec 2024',
     images: [
@@ -298,7 +298,7 @@ export const projects = [
   },
   {
     title: 'OrchiFlora',
-    description: 'Online plant nursery with care guides and delivery services for plant enthusiasts.',
+    description: 'A system designed to record and analyze temperature variations, calculate fluctuations, and determine the most suitable conditions for healthy orchid growth and flowering.',
     tech: ['C++'],
     period: 'Sep - Dec 2024',
     images: [

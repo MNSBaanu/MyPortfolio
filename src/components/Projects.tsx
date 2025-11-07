@@ -151,7 +151,7 @@ export default function Projects() {
                       </motion.a>
                     </div>
                   </div>
-                  <p className="text-xs sm:text-sm text-gray-400 mb-2 sm:mb-3 line-clamp-2">{project.description}</p>
+                  <p className="text-xs sm:text-sm text-gray-400 mb-2 sm:mb-3">{project.description}</p>
                   <div className="flex flex-wrap gap-1 sm:gap-1.5">
                     {project.tech.map((tech) => (
                       <span
