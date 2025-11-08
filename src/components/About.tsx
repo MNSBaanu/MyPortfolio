@@ -55,7 +55,7 @@ export default function About() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="bg-black py-4 sm:py-5 md:py-6 pl-4 sm:pl-6 md:pl-8 pr-6 sm:pr-8 md:pr-12 rounded-xl sm:rounded-2xl shadow-lg border border-gray-800 w-fit ml-0 sm:ml-4 md:ml-8"
+              className="bg-black py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 rounded-xl sm:rounded-2xl shadow-lg border border-gray-800 max-w-md mx-auto md:max-w-none md:mx-0 md:ml-8 md:w-fit"
             >
               <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 md:mb-6 text-teal-400">What I Do</h3>
               <ul className="space-y-1.5 sm:space-y-2 md:space-y-3">

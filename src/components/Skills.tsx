@@ -24,8 +24,8 @@ export default function Skills() {
                 onClick={() => setActiveCategory(category.category)}
                 className={`px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
                   activeCategory === category.category
-                    ? 'bg-teal-800 text-teal-100'
-                    : 'bg-black text-teal-300 border-2 border-teal-600 hover:bg-teal-600/10'
+                    ? 'bg-teal-700 text-white border-2 border-teal-700'
+                    : 'bg-teal-900/30 text-teal-300 border-2 border-teal-700/50 hover:bg-teal-900/50'
                 }`}
               >
                 {category.category}
