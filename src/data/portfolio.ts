@@ -123,7 +123,7 @@ export const education = [
   {
     title: 'HD in Computing & Software Engineering',
     institution: 'ICBT Kandy (Affiliated with Cardiff Metropolitan University, UK)',
-    period: 'May 2024 - Nov 2025',
+    period: 'May 2024 - Oct 2025',
     description: 'Specialized in full-stack development and software engineering principles',
   },
   {
