@@ -302,7 +302,7 @@ export const projects = [
     tech: ['C++'],
     period: 'Sep - Dec 2024',
     images: [
-      '/assets/OrchiFlora.png',
+      '/assets/orchiflora.png',
     ],
     liveUrl: '#',
     githubUrl: 'https://github.com/MNSBaanu/OrchiFlora',
