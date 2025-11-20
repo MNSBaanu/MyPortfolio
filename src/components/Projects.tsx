@@ -68,7 +68,7 @@ export default function Projects() {
                       alt={`${project.title} - Image ${(imageIndices[project.title] || 0) + 1}`}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       onError={(e) => {
-                        e.currentTarget.src = 'https://via.placeholder.com/600x400/0f766e/ffffff?text=' + project.title
+                        e.currentTarget.src = `https://placehold.co/600x400/0f766e/ffffff?text=${encodeURIComponent(project.title)}`
                       }}
                     />
                   </AnimatePresence>
