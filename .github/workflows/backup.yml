@@ -1,0 +1,40 @@
+name: Backup Portfolio
+
+on:
+  schedule:
+    # Run every Sunday at 00:00 UTC
+    - cron: '0 0 * * 0'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history
+      
+      - name: Create backup branch
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          git checkout -b backup-$DATE
+          git push origin backup-$DATE
+      
+      - name: Create release backup
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: backup-${{ github.run_number }}
+          release_name: Backup ${{ github.run_number }}
+          body: |
+            Automated backup created on $(date)
+            
+            This backup includes:
+            - All source code
+            - All assets and images
+            - Configuration files
+            - Documentation
+          draft: false
+          prerelease: false
