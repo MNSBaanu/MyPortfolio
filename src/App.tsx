@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async'
 import { ThemeProvider } from './context/ThemeContext'
 import LoadingScreen from './components/LoadingScreen'
 import SEO from './components/SEO'
+import OfflineIndicator from './components/OfflineIndicator'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -39,6 +40,7 @@ function App() {
       <ThemeProvider>
         <SEO />
         <Toaster position="top-right" />
+        <OfflineIndicator />
         <AnimatePresence mode="wait">
           {isLoading ? (
             <LoadingScreen key="loading" onLoadingComplete={() => setIsLoading(false)} />
