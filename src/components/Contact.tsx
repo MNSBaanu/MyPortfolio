@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send } from 'lucide-react'
+import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, Clock } from 'lucide-react'
 import { personalInfo } from '../data/portfolio'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -109,9 +109,13 @@ export default function Contact() {
             >
               <div className="mb-6">
                 <h3 className="text-xl sm:text-2xl font-semibold text-teal-100 mb-3">Get In Touch</h3>
-                <p className="text-gray-400 text-sm sm:text-base">
+                <p className="text-gray-400 text-sm sm:text-base mb-4">
                   Feel free to reach out for opportunities, collaborations, or just to say hello!
                 </p>
+                <div className="flex items-center gap-2 text-teal-400 bg-teal-900/20 border border-teal-700/30 rounded-lg px-3 py-2">
+                  <Clock className="w-4 h-4 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm font-medium">Response time: Within 24 hours</span>
+                </div>
               </div>
               
               {/* All Contact Details Stacked Vertically */}
