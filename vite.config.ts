@@ -29,8 +29,23 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp}'],
+        globPatterns: ['**/*.{js,css,html,ico,svg}'],
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB
         runtimeCaching: [
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|webp|gif)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images-cache',
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          },
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: 'CacheFirst',
