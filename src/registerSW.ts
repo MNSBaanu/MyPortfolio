@@ -9,11 +9,7 @@ const updateSW = registerSW({
   },
   onOfflineReady() {
     console.log('App ready to work offline')
-    // Optional: Show a toast notification
-    if (typeof window !== 'undefined') {
-      const event = new CustomEvent('sw-offline-ready')
-      window.dispatchEvent(event)
-    }
+    // Offline notification removed as per user request
   },
   onRegistered(registration) {
     console.log('Service Worker registered:', registration)
