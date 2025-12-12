@@ -18,6 +18,19 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element
+      if (isMobileMenuOpen && !target.closest('header')) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [isMobileMenuOpen])
+
   const navItems = [
     { name: 'About', href: '#about' },
     { name: 'Skills', href: '#skills' },
@@ -26,11 +39,21 @@ const Header = () => {
   ]
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
+    // Close mobile menu first
     setIsMobileMenuOpen(false)
+    
+    // Small delay to allow menu to close, then scroll
+    setTimeout(() => {
+      const element = document.querySelector(href)
+      if (element) {
+        const headerHeight = 80 // Account for fixed header
+        const elementPosition = element.offsetTop - headerHeight
+        window.scrollTo({
+          top: elementPosition,
+          behavior: 'smooth'
+        })
+      }
+    }, 100)
   }
 
   return (
@@ -103,14 +126,16 @@ const Header = () => {
             opacity: isMobileMenuOpen ? 1 : 0
           }}
           transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden bg-black/95 backdrop-blur-md border-t border-dark-teal/30"
+          className={`md:hidden overflow-hidden bg-black/95 backdrop-blur-md border-t border-teal-600/30 ${
+            isMobileMenuOpen ? 'block' : 'hidden'
+          }`}
         >
           <div className="py-3 sm:py-4 space-y-2 sm:space-y-3">
             {navItems.map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="block w-full text-left px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base text-gray-300 hover:text-teal-400 hover:bg-dark-teal/20 transition-colors duration-300"
+                className="block w-full text-left px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base text-gray-300 hover:text-teal-400 hover:bg-teal-900/20 transition-colors duration-300"
               >
                 {item.name}
               </button>
