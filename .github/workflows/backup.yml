@@ -15,21 +15,34 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history
       
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      
       - name: Create backup branch
         run: |
           DATE=$(date +%Y-%m-%d)
-          git checkout -b backup-$DATE
-          git push origin backup-$DATE
+          BRANCH_NAME="backup-$DATE"
+          
+          # Check if branch already exists
+          if git ls-remote --heads origin $BRANCH_NAME | grep -q $BRANCH_NAME; then
+            echo "Branch $BRANCH_NAME already exists, skipping branch creation"
+          else
+            git checkout -b $BRANCH_NAME
+            git push origin $BRANCH_NAME
+            echo "Created backup branch: $BRANCH_NAME"
+          fi
       
       - name: Create release backup
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: backup-${{ github.run_number }}
-          release_name: Backup ${{ github.run_number }}
+          name: Backup ${{ github.run_number }}
           body: |
-            Automated backup created on $(date)
+            Automated backup created on $(date +"%Y-%m-%d %H:%M:%S UTC")
             
             This backup includes:
             - All source code
