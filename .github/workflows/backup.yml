@@ -9,45 +9,39 @@ on:
 jobs:
   backup:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all history
       
-      - name: Configure Git
+      - name: Generate backup info
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-      
-      - name: Create backup branch
-        run: |
-          DATE=$(date +%Y-%m-%d)
-          BRANCH_NAME="backup-$DATE"
-          
-          # Check if branch already exists
-          if git ls-remote --heads origin $BRANCH_NAME | grep -q $BRANCH_NAME; then
-            echo "Branch $BRANCH_NAME already exists, skipping branch creation"
-          else
-            git checkout -b $BRANCH_NAME
-            git push origin $BRANCH_NAME
-            echo "Created backup branch: $BRANCH_NAME"
-          fi
+          DATE=$(date +%Y-%m-%d-%H%M%S)
+          TAG_NAME="backup-$DATE"
+          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+          echo "BACKUP_DATE=$(date +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_ENV
       
       - name: Create release backup
         uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: backup-${{ github.run_number }}
-          name: Backup ${{ github.run_number }}
+          tag_name: ${{ env.TAG_NAME }}
+          name: Portfolio Backup ${{ env.TAG_NAME }}
           body: |
-            Automated backup created on $(date +"%Y-%m-%d %H:%M:%S UTC")
+            🔄 Automated backup created on ${{ env.BACKUP_DATE }}
             
-            This backup includes:
+            📦 This backup includes:
             - All source code
-            - All assets and images
+            - All assets and images  
             - Configuration files
             - Documentation
+            
+            📝 Commit: ${{ github.sha }}
+            🏷️ Tag: ${{ env.TAG_NAME }}
           draft: false
           prerelease: false
+          generate_release_notes: true
