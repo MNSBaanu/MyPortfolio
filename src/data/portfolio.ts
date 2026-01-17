@@ -50,11 +50,18 @@ export const skillCategories = [
     category: 'Frameworks & Libraries',
     skills: [
       { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+      { name: 'React Native', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
       { name: 'Next.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
       { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
       { name: 'Express', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg' },
       { name: '.NET', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg' },
       { name: 'Tailwind CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' },
+    ]
+  },
+  {
+    category: 'Cloud & Services',
+    skills: [
+      { name: 'AWS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg' },
     ]
   },
   {
@@ -147,6 +154,14 @@ export const education = [
 ]
 
 export const experience = [
+  {
+    title: 'Software Engineer Intern',
+    company: 'Vision Designing - Sarasota, Florida, US',
+    period: 'Dec 2025 - Present',
+    type: 'Full-time (Onsite)',
+    description: 'Contributing to ongoing web and mobile application projects under senior developer guidance. Assisting with frontend and backend development tasks, supporting API integration and testing processes. Actively participating in UI/UX improvements while gaining hands-on experience with production-level development workflows and industry best practices.',
+    tech: ['React Native', 'Next.js', 'AWS', '.NET'],
+  },
   {
     title: 'Committee Member',
     company: 'ICBT Student Council, ICBT Kandy',

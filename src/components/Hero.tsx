@@ -123,27 +123,10 @@ const Hero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.45 }}
-                className="text-gray-500 text-sm sm:text-base mb-3 sm:mb-4"
+                className="text-gray-500 text-sm sm:text-base mb-6 sm:mb-8"
               >
                 Based in Kandy, Sri Lanka
               </motion.p>
-              
-              {/* Tech Stack Tags */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="flex flex-wrap gap-2 mb-4 sm:mb-6 justify-center lg:justify-start"
-              >
-                {['Frontend', 'Backend', 'Database', 'DevOps'].map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-2 sm:px-3 py-1 bg-teal-900/30 border border-teal-700/50 rounded-full text-teal-300 text-xs sm:text-sm font-mono"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </motion.div>
 
               <motion.p
                 initial={{ opacity: 0 }}
@@ -158,14 +141,14 @@ const Hero = () => {
             <div className="flex flex-wrap gap-2 sm:gap-3 justify-center lg:justify-start">
               <button
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-teal-800 text-teal-100 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium hover:bg-teal-700 transition-colors"
+                className="bg-teal-900/30 text-teal-300 border-2 border-teal-700/50 hover:bg-teal-900/50 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300"
               >
                 Contact
               </button>
               
               <button
                 onClick={() => setShowCVViewer(true)}
-                className="bg-teal-800 text-teal-100 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium hover:bg-teal-700 transition-colors"
+                className="bg-teal-900/30 text-teal-300 border-2 border-teal-700/50 hover:bg-teal-900/50 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300"
               >
                 View CV
               </button>
@@ -228,14 +211,14 @@ const Hero = () => {
                 className="w-48 h-60 sm:w-56 sm:h-72 md:w-64 md:h-80 xl:w-72 xl:h-96 object-cover"
               />
               
-              {/* Available for Internship Badge - Box */}
+              {/* Available for Opportunities Badge - Box */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2 }}
                 className="px-4 sm:px-6 md:px-8 py-2 md:py-3 bg-black rounded-md border-2 border-teal-500 whitespace-nowrap shadow-2xl shadow-teal-500/30"
               >
-                <span className="text-teal-100 font-bold text-xs sm:text-sm tracking-widest">AVAILABLE FOR INTERNSHIP</span>
+                <span className="text-teal-100 font-bold text-xs sm:text-sm tracking-widest">AVAILABLE FOR OPPORTUNITIES</span>
               </motion.div>
             </div>
           </motion.div>

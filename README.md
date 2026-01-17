@@ -12,7 +12,7 @@ I'm **MNSBaanu**, a Software Engineering student at ICBT Kandy (affiliated with 
 
 - 📍 Based in Kandy, Sri Lanka
 - 🎓 HD in Computing & Software Engineering (May 2024 - Oct 2025)
-- 💼 Available for internship opportunities (Kandy / Remote preferred)
+- 💼 Available for opportunities (Kandy / Remote preferred)
 - 🌱 Currently working on full-stack projects using MERN stack
 
 ## ✨ Features
