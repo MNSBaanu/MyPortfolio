@@ -114,9 +114,9 @@ const Hero = () => {
                 transition={{ delay: 0.4 }}
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 leading-tight"
               >
-                <span className="text-teal-100">A FULL STACK</span>
+                <span className="text-teal-100 drop-shadow-[0_0_15px_rgba(20,184,166,0.5)]">A FULL STACK</span>
                 <br />
-                <span className="text-teal-300">DEVELOPER</span>
+                <span className="text-teal-300 drop-shadow-[0_0_20px_rgba(94,234,212,0.6)]">DEVELOPER</span>
               </motion.h1>
               
               <motion.p
