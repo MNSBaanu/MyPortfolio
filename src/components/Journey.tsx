@@ -73,7 +73,7 @@ export default function Journey() {
   }
 
   return (
-    <section id="journey" className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 pl-6 sm:pl-8 md:pl-12 lg:pl-16 xl:pl-20 pr-16 sm:pr-20 md:pr-24 lg:pr-28 xl:pr-32 bg-black">
+    <section id="journey" className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 pl-6 sm:pl-8 md:pl-12 lg:pl-16 xl:pl-20 pr-16 sm:pr-20 md:pr-24 lg:pr-28 xl:pr-32 bg-white">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -81,7 +81,7 @@ export default function Journey() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-teal-100 mb-6 sm:mb-8 text-center">Journey</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6 sm:mb-8 text-center">Journey</h2>
 
           {/* Toggle Tabs */}
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10 md:mb-12">
@@ -93,8 +93,8 @@ export default function Journey() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
                     activeTab === tab.id
-                      ? 'bg-teal-700 text-white border-2 border-teal-700'
-                      : 'bg-teal-900/30 text-teal-300 border-2 border-teal-700/50 hover:bg-teal-900/50'
+                      ? 'bg-black text-white border-2 border-black'
+                      : 'bg-white text-black border-2 border-gray-300 hover:bg-gray-50'
                   }`}
                 >
                   <Icon size={18} />
@@ -120,22 +120,22 @@ export default function Journey() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-gradient-to-br from-teal-900/20 to-black rounded-xl border border-teal-700/30 hover:border-teal-500/50 transition-all duration-300 overflow-hidden group"
+                  className="bg-white rounded-xl border border-gray-200 hover:border-gray-400 transition-all duration-300 overflow-hidden group shadow-sm hover:shadow-md"
                 >
-                  <div className="aspect-video bg-teal-900/10 overflow-hidden">
+                  <div className="aspect-video bg-gray-100 overflow-hidden">
                     <img 
                       src={cert.image} 
                       alt={cert.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       onError={(e) => {
-                        e.currentTarget.src = 'https://via.placeholder.com/400x300/0f766e/ffffff?text=Certificate'
+                        e.currentTarget.src = 'https://via.placeholder.com/400x300/f3f4f6/1f2937?text=Certificate'
                       }}
                     />
                   </div>
                   <div className="p-3 sm:p-4">
-                    <h3 className="text-sm sm:text-base md:text-lg font-semibold text-teal-100 mb-1.5 sm:mb-2 line-clamp-2">{cert.title}</h3>
-                    <p className="text-teal-300 text-xs sm:text-sm mb-1.5 sm:mb-2">{cert.issuer}</p>
-                    <p className="text-gray-400 text-xs sm:text-sm">{cert.date}</p>
+                    <h3 className="text-sm sm:text-base md:text-lg font-semibold text-black mb-1.5 sm:mb-2 line-clamp-2">{cert.title}</h3>
+                    <p className="text-gray-800 text-xs sm:text-sm mb-1.5 sm:mb-2">{cert.issuer}</p>
+                    <p className="text-gray-600 text-xs sm:text-sm">{cert.date}</p>
                   </div>
                 </motion.div>
               ))
@@ -147,11 +147,11 @@ export default function Journey() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-gradient-to-br from-teal-900/20 to-black p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl border border-teal-700/30 hover:border-teal-500/50 transition-all duration-300"
+                  className="bg-white p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl border border-gray-200 hover:border-gray-400 transition-all duration-300 shadow-sm hover:shadow-md"
                 >
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-2 sm:mb-3">
                     <div className="flex-1">
-                      <h3 className="text-base sm:text-lg md:text-xl font-semibold text-teal-100 mb-1">
+                      <h3 className="text-base sm:text-lg md:text-xl font-semibold text-black mb-1">
                         {item.title.split('\n').map((line, i) => (
                           <span key={i}>
                             {line}
@@ -159,20 +159,20 @@ export default function Journey() {
                           </span>
                         ))}
                       </h3>
-                      <p className="text-sm sm:text-base text-teal-300 font-medium">{item.organization}</p>
+                      <p className="text-sm sm:text-base text-gray-800 font-medium">{item.organization}</p>
                     </div>
-                    <span className="text-gray-400 text-xs sm:text-sm mt-1.5 sm:mt-2 md:mt-0 whitespace-nowrap">{item.period}</span>
+                    <span className="text-gray-600 text-xs sm:text-sm mt-1.5 sm:mt-2 md:mt-0 whitespace-nowrap">{item.period}</span>
                   </div>
                   
                   {item.description && (
-                    <p className="text-sm sm:text-base text-gray-300 mb-2 sm:mb-3">{item.description}</p>
+                    <p className="text-sm sm:text-base text-gray-700 mb-2 sm:mb-3">{item.description}</p>
                   )}
                   
                   {item.details && (
                     <ul className="space-y-1.5 sm:space-y-2">
                       {item.details.map((detail, idx) => (
-                        <li key={idx} className="flex items-start text-gray-400 text-sm sm:text-base">
-                          <span className="text-teal-400 mr-2">•</span>
+                        <li key={idx} className="flex items-start text-gray-600 text-sm sm:text-base">
+                          <span className="text-black mr-2">•</span>
                           <span>{detail}</span>
                         </li>
                       ))}
@@ -185,7 +185,7 @@ export default function Journey() {
             {/* Empty State */}
             {getActiveData().length === 0 && certificationsData.length === 0 && (
               <div className="text-center py-12 col-span-full">
-                <p className="text-gray-400">No {activeTab} added yet.</p>
+                <p className="text-gray-600">No {activeTab} added yet.</p>
               </div>
             )}
           </motion.div>

@@ -40,7 +40,7 @@ const Hero = () => {
   ]
 
   return (
-    <section className="min-h-screen flex items-center relative overflow-visible bg-gradient-to-b from-teal-950/20 via-black to-black pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 md:px-8 lg:px-12 pr-12 sm:pr-14 md:pr-16 lg:pr-20 xl:pr-24">
+    <section className="min-h-screen flex items-center relative overflow-visible bg-gradient-to-b from-gray-50 via-white to-white pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 md:px-8 lg:px-12 pr-12 sm:pr-14 md:pr-16 lg:pr-20 xl:pr-24">
       {/* Vertical Social Icons - Right Side */}
       <motion.div
         initial={{ opacity: 0, x: 50 }}
@@ -53,7 +53,7 @@ const Hero = () => {
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.1, x: -5 }}
-          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300"
+          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-black flex items-center justify-center text-white hover:bg-gray-800 transition-all duration-300"
         >
           <Github className="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 lg:w-5.5 lg:h-5.5" />
         </motion.a>
@@ -62,14 +62,14 @@ const Hero = () => {
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.1, x: -5 }}
-          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300"
+          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-black flex items-center justify-center text-white hover:bg-gray-800 transition-all duration-300"
         >
           <Linkedin className="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 lg:w-5.5 lg:h-5.5" />
         </motion.a>
         <motion.a
           href={`mailto:${personalInfo.email}`}
           whileHover={{ scale: 1.1, x: -5 }}
-          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300"
+          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-black flex items-center justify-center text-white hover:bg-gray-800 transition-all duration-300"
         >
           <Mail className="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 lg:w-5.5 lg:h-5.5" />
         </motion.a>
@@ -82,7 +82,7 @@ const Hero = () => {
             exit={{ opacity: 0, scale: 0 }}
             whileHover={{ scale: 1.1, x: -5 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-dark-teal flex items-center justify-center text-teal-300 hover:text-teal-200 transition-all duration-300"
+            className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-black flex items-center justify-center text-white hover:bg-gray-800 transition-all duration-300"
           >
             <ArrowUp className="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 lg:w-5.5 lg:h-5.5" />
           </motion.button>
@@ -103,9 +103,9 @@ const Hero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-gray-400 text-base sm:text-lg lg:text-xl mb-3 sm:mb-4"
+                className="text-gray-600 text-base sm:text-lg lg:text-xl mb-3 sm:mb-4"
               >
-                Hello, I'm <span className="text-teal-300 font-semibold text-lg sm:text-xl lg:text-2xl">{personalInfo.name}</span>
+                Hello, I'm <span className="text-black font-semibold text-lg sm:text-xl lg:text-2xl">{personalInfo.name}</span>
               </motion.p>
               
               <motion.h1
@@ -114,9 +114,9 @@ const Hero = () => {
                 transition={{ delay: 0.4 }}
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 leading-tight"
               >
-                <span className="text-teal-100 drop-shadow-[0_0_15px_rgba(20,184,166,0.5)]">A FULL STACK</span>
+                <span className="text-black">A FULL STACK</span>
                 <br />
-                <span className="text-teal-300 drop-shadow-[0_0_20px_rgba(94,234,212,0.6)]">DEVELOPER</span>
+                <span className="text-gray-800">DEVELOPER</span>
               </motion.h1>
               
               <motion.p
@@ -132,7 +132,7 @@ const Hero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
-                className="text-gray-400 text-sm sm:text-base lg:text-lg leading-relaxed max-w-md mb-6 sm:mb-8"
+                className="text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed max-w-md mb-6 sm:mb-8"
               >
                 {personalInfo.description}
               </motion.p>
@@ -141,14 +141,14 @@ const Hero = () => {
             <div className="flex flex-wrap gap-2 sm:gap-3 justify-center lg:justify-start">
               <button
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-teal-900/30 text-teal-300 border-2 border-teal-700/50 hover:bg-teal-900/50 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300"
+                className="bg-black text-white border-2 border-black hover:bg-gray-800 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300"
               >
                 Contact
               </button>
               
               <button
                 onClick={() => setShowCVViewer(true)}
-                className="bg-teal-900/30 text-teal-300 border-2 border-teal-700/50 hover:bg-teal-900/50 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300"
+                className="bg-white text-black border-2 border-black hover:bg-gray-50 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300"
               >
                 View CV
               </button>
@@ -195,7 +195,7 @@ const Hero = () => {
                     repeat: Infinity,
                     delay: index * 0.4,
                   }}
-                  className="absolute text-teal-400/30 font-mono text-sm font-semibold pointer-events-none z-0"
+                  className="absolute text-gray-400/40 font-mono text-sm font-semibold pointer-events-none z-0"
                   style={positions[index]}
                 >
                   {snippet}
@@ -216,9 +216,9 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2 }}
-                className="px-4 sm:px-6 md:px-8 py-2 md:py-3 bg-black rounded-md border-2 border-teal-500 whitespace-nowrap shadow-2xl shadow-teal-500/30"
+                className="px-4 sm:px-6 md:px-8 py-2 md:py-3 bg-black rounded-md border-2 border-gray-800 whitespace-nowrap shadow-lg"
               >
-                <span className="text-teal-100 font-bold text-xs sm:text-sm tracking-widest">AVAILABLE FOR OPPORTUNITIES</span>
+                <span className="text-white font-bold text-xs sm:text-sm tracking-widest">AVAILABLE FOR OPPORTUNITIES</span>
               </motion.div>
             </div>
           </motion.div>

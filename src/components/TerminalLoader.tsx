@@ -52,12 +52,12 @@ const TerminalLoader = ({ onComplete }: TerminalLoaderProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 flex items-center justify-center bg-dark-void z-50"
+      className="fixed inset-0 flex items-center justify-center bg-white z-50"
     >
-      <div className="terminal-window p-8 max-w-2xl w-full mx-4">
+      <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-8 max-w-2xl w-full mx-4">
         <div className="mt-8">
-          <div className="text-terminal-green mb-4">
-            <span className="text-cyber-blue">[SYSTEM]</span> Developer Portfolio v2.0.1
+          <div className="text-black mb-4">
+            <span className="text-gray-600">[SYSTEM]</span> Developer Portfolio v2.0.1
           </div>
           
           <div className="space-y-2 mb-8">
@@ -66,31 +66,31 @@ const TerminalLoader = ({ onComplete }: TerminalLoaderProps) => {
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="text-matrix-green"
+                className="text-gray-800"
               >
-                <span className="text-hologram">{'>'}</span> {line}
+                <span className="text-black">{'>'}</span> {line}
               </motion.div>
             ))}
             
             {currentLine < bootSequence.length && (
-              <div className="text-matrix-green">
-                <span className="text-hologram">{'>'}</span> {displayText}
-                <span className="animate-terminal-cursor">█</span>
+              <div className="text-gray-800">
+                <span className="text-black">{'>'}</span> {displayText}
+                <span className="animate-pulse">█</span>
               </div>
             )}
           </div>
 
           {/* Progress Bar */}
-          <div className="w-full bg-code-gray border border-matrix-green">
+          <div className="w-full bg-gray-200 border border-gray-300 rounded">
             <motion.div
-              className="h-2 bg-gradient-to-r from-matrix-green to-cyber-blue"
+              className="h-2 bg-gradient-to-r from-black to-gray-700 rounded"
               initial={{ width: 0 }}
               animate={{ width: `${(currentLine / bootSequence.length) * 100}%` }}
               transition={{ duration: 0.3 }}
             />
           </div>
           
-          <div className="text-right text-sm text-cyber-blue mt-2">
+          <div className="text-right text-sm text-gray-600 mt-2">
             {Math.round((currentLine / bootSequence.length) * 100)}% Complete
           </div>
         </div>

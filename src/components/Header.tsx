@@ -63,8 +63,8 @@ const Header = () => {
       transition={{ duration: 0.8 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-black/95 backdrop-blur-md border-b border-teal-600/40 shadow-lg shadow-teal-900/20' 
-          : 'bg-black/60 backdrop-blur-lg border-b border-teal-600/20'
+          ? 'bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-lg' 
+          : 'bg-white/80 backdrop-blur-lg border-b border-gray-100'
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
@@ -91,7 +91,7 @@ const Header = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 + 0.3 }}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-2 text-teal-300 hover:text-teal-100 transition-colors duration-300 font-semibold text-base"
+                className="px-4 py-2 text-gray-700 hover:text-black transition-colors duration-300 font-semibold text-base"
               >
                 {item.name}
               </motion.button>
@@ -101,7 +101,7 @@ const Header = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
               onClick={() => scrollToSection('#contact')}
-              className="ml-2 px-6 py-2 text-teal-300 hover:text-teal-100 font-semibold text-base transition-colors duration-300"
+              className="ml-2 px-6 py-2 text-gray-700 hover:text-black font-semibold text-base transition-colors duration-300"
             >
               Contact
             </motion.button>
@@ -111,7 +111,7 @@ const Header = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-1.5 sm:p-2 text-teal-100"
+              className="p-1.5 sm:p-2 text-black"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
             </button>
@@ -126,7 +126,7 @@ const Header = () => {
             opacity: isMobileMenuOpen ? 1 : 0
           }}
           transition={{ duration: 0.3 }}
-          className={`md:hidden overflow-hidden bg-black/95 backdrop-blur-md border-t border-teal-600/30 ${
+          className={`md:hidden overflow-hidden bg-white/95 backdrop-blur-md border-t border-gray-200 ${
             isMobileMenuOpen ? 'block' : 'hidden'
           }`}
         >
@@ -135,7 +135,7 @@ const Header = () => {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="block w-full text-left px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base text-gray-300 hover:text-teal-400 hover:bg-teal-900/20 transition-colors duration-300"
+                className="block w-full text-left px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base text-gray-700 hover:text-black hover:bg-gray-100 transition-colors duration-300"
               >
                 {item.name}
               </button>

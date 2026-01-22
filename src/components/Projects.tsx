@@ -27,7 +27,7 @@ export default function Projects() {
   }
 
   return (
-    <section id="projects" className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 pl-6 sm:pl-8 md:pl-12 lg:pl-16 xl:pl-20 pr-16 sm:pr-20 md:pr-24 lg:pr-28 xl:pr-32 bg-black">
+    <section id="projects" className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 pl-6 sm:pl-8 md:pl-12 lg:pl-16 xl:pl-20 pr-16 sm:pr-20 md:pr-24 lg:pr-28 xl:pr-32 bg-white">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -35,7 +35,7 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-10 sm:mb-12 md:mb-16 text-center text-teal-100">Projects</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-10 sm:mb-12 md:mb-16 text-center text-black">Projects</h2>
           
           <AnimatePresence mode="wait">
             <motion.div
@@ -53,10 +53,10 @@ export default function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group bg-gradient-to-br from-teal-900/20 to-black rounded-xl sm:rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-800 hover:border-teal-600 relative"
+                className="group bg-gradient-to-br from-gray-50 to-white rounded-xl sm:rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-gray-400 relative"
               >
                 {/* Project Image Carousel */}
-                <div className="relative h-52 sm:h-64 md:h-72 bg-teal-900/10 overflow-hidden group/image">
+                <div className="relative h-52 sm:h-64 md:h-72 bg-gray-100 overflow-hidden group/image">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={imageIndices[project.title] || 0}
@@ -110,7 +110,7 @@ export default function Projects() {
                             }}
                             className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
                               (imageIndices[project.title] || 0) === imgIndex
-                                ? 'bg-teal-400 w-4'
+                                ? 'bg-black w-4'
                                 : 'bg-white/50 hover:bg-white/80'
                             }`}
                           />
@@ -123,8 +123,8 @@ export default function Projects() {
                 <div className="p-3 sm:p-4">
                   <div className="flex justify-between items-start mb-2 sm:mb-3">
                     <div>
-                      <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-200 group-hover:text-teal-400 transition-colors duration-300">{project.title}</h3>
-                      <p className="text-xs text-teal-400 mt-1">{project.period}</p>
+                      <h3 className="text-base sm:text-lg md:text-xl font-semibold text-black group-hover:text-gray-800 transition-colors duration-300">{project.title}</h3>
+                      <p className="text-xs text-gray-600 mt-1">{project.period}</p>
                     </div>
                     <div className="flex gap-2">
                       <motion.button
@@ -135,7 +135,7 @@ export default function Projects() {
                         }}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        className="text-gray-400 hover:text-teal-400 transition-colors duration-300"
+                        className="text-gray-600 hover:text-black transition-colors duration-300"
                       >
                         <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
                       </motion.button>
@@ -145,18 +145,18 @@ export default function Projects() {
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        className="text-gray-400 hover:text-teal-400 transition-colors duration-300"
+                        className="text-gray-600 hover:text-black transition-colors duration-300"
                       >
                         <Github className="w-4 h-4 sm:w-5 sm:h-5" />
                       </motion.a>
                     </div>
                   </div>
-                  <p className="text-xs sm:text-sm text-gray-400 mb-2 sm:mb-3">{project.description}</p>
+                  <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3">{project.description}</p>
                   <div className="flex flex-wrap gap-1 sm:gap-1.5">
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-0.5 bg-teal-900/30 border border-teal-700/50 text-teal-300 rounded-full text-xs font-medium transition-colors duration-300"
+                        className="px-2 py-0.5 bg-gray-100 border border-gray-300 text-gray-800 rounded-full text-xs font-medium transition-colors duration-300"
                       >
                         {tech}
                       </span>
@@ -178,10 +178,10 @@ export default function Projects() {
                       transition={{ type: "spring", duration: 0.5 }}
                       className="text-center px-4"
                     >
-                      <h3 className="text-lg sm:text-xl font-bold text-teal-400 mb-2">
+                      <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
                         Coming Soon
                       </h3>
-                      <p className="text-xs sm:text-sm text-gray-300">
+                      <p className="text-xs sm:text-sm text-gray-200">
                         Live demo will be available soon
                       </p>
                     </motion.div>
@@ -201,8 +201,8 @@ export default function Projects() {
               whileTap={{ scale: currentPage === 0 ? 1 : 0.9 }}
               className={`p-3 rounded-full border transition-all duration-300 ${
                 currentPage === 0
-                  ? 'border-gray-800 text-gray-600 cursor-not-allowed'
-                  : 'border-teal-500 text-teal-400 hover:bg-teal-500/20'
+                  ? 'border-gray-300 text-gray-400 cursor-not-allowed'
+                  : 'border-black text-black hover:bg-gray-100'
               }`}
             >
               <ChevronLeft className="w-5 h-5" />
@@ -217,8 +217,8 @@ export default function Projects() {
                   whileTap={{ scale: 0.9 }}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     currentPage === index
-                      ? 'bg-teal-500 w-8'
-                      : 'bg-gray-700 hover:bg-teal-500/50'
+                      ? 'bg-black w-8'
+                      : 'bg-gray-300 hover:bg-gray-500'
                   }`}
                 />
               ))}
@@ -231,8 +231,8 @@ export default function Projects() {
               whileTap={{ scale: currentPage === totalPages - 1 ? 1 : 0.9 }}
               className={`p-3 rounded-full border transition-all duration-300 ${
                 currentPage === totalPages - 1
-                  ? 'border-gray-800 text-gray-600 cursor-not-allowed'
-                  : 'border-teal-500 text-teal-400 hover:bg-teal-500/20'
+                  ? 'border-gray-300 text-gray-400 cursor-not-allowed'
+                  : 'border-black text-black hover:bg-gray-100'
               }`}
             >
               <ChevronRight className="w-5 h-5" />
@@ -240,7 +240,7 @@ export default function Projects() {
           </div>
 
           {/* Page Counter */}
-          <div className="text-center mt-4 text-gray-400 text-sm">
+          <div className="text-center mt-4 text-gray-600 text-sm">
             Page {currentPage + 1} of {totalPages}
           </div>
         </motion.div>
