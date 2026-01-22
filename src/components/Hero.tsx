@@ -211,14 +211,16 @@ const Hero = () => {
                 className="w-48 h-60 sm:w-56 sm:h-72 md:w-64 md:h-80 xl:w-72 xl:h-96 object-cover"
               />
               
-              {/* Available for Opportunities Badge - Box */}
+              {/* Available for Opportunities Badge - Fully Responsive */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2 }}
-                className="px-4 sm:px-6 md:px-8 py-2 md:py-3 bg-black rounded-md border-2 border-gray-800 whitespace-nowrap shadow-lg"
+                className="px-1.5 py-0.5 xs:px-2 xs:py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-black rounded border border-gray-800 whitespace-nowrap shadow-sm max-w-[200px] xs:max-w-[220px] sm:max-w-[250px] md:max-w-none"
               >
-                <span className="text-white font-bold text-xs sm:text-sm tracking-widest">AVAILABLE FOR OPPORTUNITIES</span>
+                <span className="text-white font-medium text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs tracking-tighter xs:tracking-tight sm:tracking-normal">
+                  AVAILABLE FOR OPPORTUNITIES
+                </span>
               </motion.div>
             </div>
           </motion.div>
