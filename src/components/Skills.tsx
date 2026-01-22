@@ -1,97 +1,72 @@
 import { motion } from 'framer-motion'
 import { skillCategories } from '../data/portfolio'
-import { useState } from 'react'
 
 export default function Skills() {
-  const [activeCategory, setActiveCategory] = useState<string>('Languages')
+  // Flatten all skills from all categories into one array
+  const allSkills = skillCategories.flatMap(category => [
+    ...category.skills,
+    ...(category.subcategories?.flatMap(sub => sub.skills) || [])
+  ])
+
+  // Duplicate skills for seamless loop
+  const duplicatedSkills = [...allSkills, ...allSkills]
 
   return (
-    <section id="skills" className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 pl-6 sm:pl-8 md:pl-12 lg:pl-16 xl:pl-20 pr-16 sm:pr-20 md:pr-24 lg:pr-28 xl:pr-32 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
+    <section id="skills" className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 bg-gray-50 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6 sm:mb-8 text-center">Skills</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-8 sm:mb-12 text-center">Skills</h2>
           
-          {/* Category Toggle Buttons */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10 md:mb-12">
-            {skillCategories.map((category) => (
-              <button
-                key={category.category}
-                onClick={() => setActiveCategory(category.category)}
-                className={`px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
-                  activeCategory === category.category
-                    ? 'bg-black text-white border-2 border-black'
-                    : 'bg-white text-black border-2 border-gray-300 hover:bg-gray-50'
-                }`}
-              >
-                {category.category}
-              </button>
-            ))}
-          </div>
-          
-          {/* Display Active Category Skills */}
-          {skillCategories
-            .filter((category) => category.category === activeCategory)
-            .map((category) => (
+          {/* Continuous Scrolling Skills Ticker */}
+          <div className="relative">
+            {/* Gradient overlays for smooth edges */}
+            <div className="absolute left-0 top-0 w-20 h-full bg-gradient-to-r from-gray-50 to-transparent z-10"></div>
+            <div className="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-gray-50 to-transparent z-10"></div>
+            
+            {/* Scrolling container */}
+            <div className="flex overflow-hidden">
               <motion.div
-                key={category.category}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="space-y-8"
+                className="flex gap-4 sm:gap-6"
+                animate={{
+                  x: [0, -50 * allSkills.length]
+                }}
+                transition={{
+                  x: {
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    duration: allSkills.length * 2, // Adjust speed here
+                    ease: "linear",
+                  },
+                }}
               >
-                {/* Main Skills */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-                  {category.skills.map((skill, index) => (
-                    <motion.div
-                      key={skill.name}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3, delay: index * 0.05 }}
-                      whileHover={{ scale: 1.05, y: -5 }}
-                      className="bg-gradient-to-br from-gray-100 to-white p-2.5 sm:p-3 md:p-4 rounded-lg sm:rounded-xl border border-gray-200 hover:border-gray-400 transition-all duration-300 flex flex-col items-center justify-center gap-1.5 sm:gap-2 md:gap-3 group"
-                    >
-                      {skill.icon && (
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center">
-                          <img 
-                            src={skill.icon} 
-                            alt={skill.name}
-                            className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                            style={['GitHub', 'Express', 'Time Management'].includes(skill.name) ? { filter: 'brightness(0) invert(1)' } : {}}
-                          />
-                        </div>
-                      )}
-                      <span className="font-semibold text-xs sm:text-sm text-black text-center">{skill.name}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                {/* Subcategories */}
-                {category.subcategories?.map((subcategory) => (
-                  <div key={subcategory.name} className="mt-6 sm:mt-8">
-                    <h3 className="text-lg sm:text-xl font-semibold text-black mb-3 sm:mb-4">{subcategory.name}</h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-                      {subcategory.skills.map((skill, index) => (
-                        <motion.div
-                          key={skill.name}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.3, delay: index * 0.05 }}
-                          whileHover={{ scale: 1.05, y: -5 }}
-                          className="bg-gradient-to-br from-gray-100 to-white p-2.5 sm:p-3 md:p-4 rounded-lg sm:rounded-xl border border-gray-200 hover:border-gray-400 transition-all duration-300 flex items-center justify-center"
-                        >
-                          <span className="font-semibold text-xs sm:text-sm text-black text-center">{skill.name}</span>
-                        </motion.div>
-                      ))}
-                    </div>
+                {duplicatedSkills.map((skill, index) => (
+                  <div
+                    key={`${skill.name}-${index}`}
+                    className="flex-shrink-0 bg-gradient-to-br from-gray-100 to-white p-4 sm:p-5 md:p-6 rounded-lg hover:shadow-md transition-all duration-300 flex flex-col items-center justify-center gap-3 group min-w-[100px] sm:min-w-[120px] md:min-w-[140px] lg:min-w-[160px]"
+                  >
+                    {skill.icon && (
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 flex items-center justify-center">
+                        <img 
+                          src={skill.icon} 
+                          alt={skill.name}
+                          className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                          style={['GitHub', 'Express', 'Time Management'].includes(skill.name) ? { filter: 'brightness(0) invert(1)' } : {}}
+                        />
+                      </div>
+                    )}
+                    <span className="font-semibold text-sm sm:text-base md:text-lg text-black text-center leading-tight">
+                      {skill.name}
+                    </span>
                   </div>
                 ))}
               </motion.div>
-            ))}
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
