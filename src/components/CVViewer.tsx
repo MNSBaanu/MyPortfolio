@@ -73,7 +73,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
           <div className="flex gap-1 sm:gap-2">
             <button
               onClick={handleDownload}
-              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
             >
               <Download className="w-3 h-3 sm:w-4 sm:h-4 md:w-4.5 md:h-4.5" />
               <span className="hidden sm:inline">Download PDF</span>
@@ -92,17 +92,17 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
         <div className="p-4 sm:p-6 md:p-8 bg-gray-50 text-gray-900" id="cv-content" style={{ fontFamily: 'Arial, sans-serif', fontSize: '11px', lineHeight: '1.4' }}>
           {/* Header */}
           <div className="mb-3 sm:mb-4">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide">{personalInfo.name}</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-1 sm:mb-2 uppercase tracking-wide">{personalInfo.name}</h1>
             <div className="flex flex-wrap gap-1 sm:gap-2 text-gray-700 border-b-2 border-gray-800 pb-2 sm:pb-3 text-xs sm:text-sm">
-              <a href={`mailto:${personalInfo.email}`} className="underline break-all text-teal-700 hover:text-teal-900">
+              <a href={`mailto:${personalInfo.email}`} className="underline break-all text-black hover:text-gray-700">
                 {personalInfo.email}
               </a>
               <span>|</span>
-              <a href={personalInfo.social.linkedin} target="_blank" rel="noopener noreferrer" className="underline text-teal-700 hover:text-teal-900">
+              <a href={personalInfo.social.linkedin} target="_blank" rel="noopener noreferrer" className="underline text-black hover:text-gray-700">
                 LinkedIn
               </a>
               <span>|</span>
-              <a href={personalInfo.social.github} target="_blank" rel="noopener noreferrer" className="underline text-teal-700 hover:text-teal-900">
+              <a href={personalInfo.social.github} target="_blank" rel="noopener noreferrer" className="underline text-black hover:text-gray-700">
                 GitHub
               </a>
               <span>|</span>
@@ -112,13 +112,13 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
 
           {/* Summary */}
           <div className="mb-3 sm:mb-4">
-            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Summary</h2>
+            <h2 className="text-sm sm:text-base font-bold text-black mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-black pb-1">Summary</h2>
             <p className="text-gray-800 leading-relaxed text-xs sm:text-sm">{personalInfo.cvSummary}</p>
           </div>
 
           {/* Experience */}
           <div className="mb-3 sm:mb-4">
-            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Professional Experience</h2>
+            <h2 className="text-sm sm:text-base font-bold text-black mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-black pb-1">Professional Experience</h2>
             <div className="space-y-2 sm:space-y-3">
               {experience.map((exp) => (
                 <div key={exp.title + exp.company} style={{ pageBreakInside: 'avoid' }}>
@@ -139,7 +139,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
 
           {/* Projects */}
           <div className="mb-3 sm:mb-4">
-            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Projects</h2>
+            <h2 className="text-sm sm:text-base font-bold text-black mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-black pb-1">Projects</h2>
             <div className="space-y-2 sm:space-y-3">
               {projects.map((project) => (
                 <div key={project.title} style={{ pageBreakInside: 'avoid' }}>
@@ -154,7 +154,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
 
           {/* Skills */}
           <div className="mb-3 sm:mb-4">
-            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Soft Skills</h2>
+            <h2 className="text-sm sm:text-base font-bold text-black mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-black pb-1">Soft Skills</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 sm:gap-x-8 gap-y-1 text-xs sm:text-sm">
               {professionalSkills.map((skill) => (
                 <div key={skill} className="text-gray-800">{skill}</div>
@@ -164,7 +164,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
 
           {/* Technical Skills */}
           <div className="mb-3 sm:mb-4">
-            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Technical Skills</h2>
+            <h2 className="text-sm sm:text-base font-bold text-black mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-black pb-1">Technical Skills</h2>
             <p className="text-gray-800 leading-relaxed text-xs sm:text-sm">
               {skills.map(s => s.name).join(', ')}
             </p>
@@ -172,7 +172,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
 
           {/* Education */}
           <div className="mb-3 sm:mb-4">
-            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Education</h2>
+            <h2 className="text-sm sm:text-base font-bold text-black mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-black pb-1">Education</h2>
             <div className="space-y-2">
               {education.map((edu) => (
                 <div key={edu.title + edu.institution} style={{ pageBreakInside: 'avoid' }}>
@@ -190,7 +190,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
 
           {/* Certifications */}
           <div className="mb-3 sm:mb-4">
-            <h2 className="text-sm sm:text-base font-bold text-teal-600 mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Certifications</h2>
+            <h2 className="text-sm sm:text-base font-bold text-black mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-black pb-1">Certifications</h2>
             <div className="space-y-2">
               {certifications.slice(0, 6).map((cert) => (
                 <div key={cert.title + cert.issuer} style={{ pageBreakInside: 'avoid' }}>
@@ -208,7 +208,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
 
           {/* Additional Information */}
           <div className="mb-4">
-            <h2 className="text-base font-bold text-teal-600 mb-2 uppercase tracking-wide border-b-2 border-teal-600 pb-1">Additional Information</h2>
+            <h2 className="text-base font-bold text-black mb-2 uppercase tracking-wide border-b-2 border-black pb-1">Additional Information</h2>
             <p className="text-gray-800">
               <span className="font-bold">Languages:</span> English, Sinhala, Tamil
             </p>

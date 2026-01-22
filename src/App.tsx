@@ -47,8 +47,8 @@ function App() {
               key="content"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="min-h-screen bg-black text-teal-100"
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="min-h-screen bg-white text-gray-900"
             >
               <Header />
               <main>

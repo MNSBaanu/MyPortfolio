@@ -61,33 +61,33 @@ export default function PWAInstallPrompt() {
         exit={{ y: 100, opacity: 0 }}
         className="fixed bottom-4 right-4 z-50 max-w-sm"
       >
-        <div className="bg-gradient-to-br from-teal-900/90 to-black/90 backdrop-blur-lg border border-teal-600 rounded-xl p-4 shadow-2xl">
+        <div className="bg-white/95 backdrop-blur-lg border border-gray-200 rounded-xl p-4 shadow-lg">
           <button
             onClick={handleDismiss}
-            className="absolute top-2 right-2 text-gray-400 hover:text-white transition-colors"
+            className="absolute top-2 right-2 text-gray-600 hover:text-black transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
           
           <div className="flex items-start gap-3">
-            <div className="bg-teal-600 p-2 rounded-lg">
+            <div className="bg-black p-2 rounded-lg">
               <Download className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1">
-              <h3 className="text-white font-semibold mb-1">Install Portfolio</h3>
-              <p className="text-gray-300 text-sm mb-3">
+              <h3 className="text-black font-semibold mb-1">Install Portfolio</h3>
+              <p className="text-gray-700 text-sm mb-3">
                 Install this portfolio for quick access and offline viewing
               </p>
               <div className="flex gap-2">
                 <button
                   onClick={handleInstall}
-                  className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-medium transition-colors"
+                  className="px-4 py-2 bg-black hover:bg-gray-800 text-white rounded-lg text-sm font-medium transition-colors"
                 >
                   Install
                 </button>
                 <button
                   onClick={handleDismiss}
-                  className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm font-medium transition-colors"
+                  className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-black rounded-lg text-sm font-medium transition-colors"
                 >
                   Not Now
                 </button>

@@ -23,8 +23,8 @@ export default function LoadingScreen({ onLoadingComplete }: { onLoadingComplete
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+      transition={{ duration: 0.3 }}
+      className="fixed inset-0 z-[100] bg-white flex items-center justify-center"
     >
       {/* Logo with draw/trace effect from left to right */}
       <div className="relative w-40 h-40 md:w-48 md:h-48 overflow-hidden">
