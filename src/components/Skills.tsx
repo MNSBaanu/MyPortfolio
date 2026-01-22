@@ -20,7 +20,7 @@ export default function Skills() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-8 sm:mb-12 text-center">Skills</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-6 sm:mb-10 text-center">Skills</h2>
           
           {/* Continuous Scrolling Skills Ticker */}
           <div className="relative">

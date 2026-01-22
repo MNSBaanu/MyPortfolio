@@ -80,11 +80,7 @@ export default function Contact() {
     },
   ]
 
-  const socialLinks = [
-    { icon: Github, label: 'GitHub', href: personalInfo.social.github },
-    { icon: Linkedin, label: 'LinkedIn', href: personalInfo.social.linkedin },
-    { icon: Twitter, label: 'Twitter', href: personalInfo.social.twitter },
-  ]
+
 
   return (
     <section id="contact" className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 px-4 md:px-8 lg:px-12 pr-12 sm:pr-14 md:pr-16 lg:pr-20 xl:pr-24 bg-gray-50">
@@ -95,7 +91,7 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 sm:mb-10 md:mb-12 text-center text-black">Contact</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 md:mb-10 text-center text-black">Contact</h2>
           
           {/* Layout: Contact Details + Form */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 px-4 sm:px-6 lg:px-8">
@@ -108,7 +104,7 @@ export default function Contact() {
               className="space-y-4"
             >
               <div className="mb-6">
-                <h3 className="text-xl sm:text-2xl font-semibold text-black mb-3">Get In Touch</h3>
+                <h3 className="text-lg sm:text-xl font-semibold text-black mb-3">Get In Touch</h3>
                 <p className="text-gray-600 text-sm sm:text-base mb-4">
                   Feel free to reach out for opportunities, collaborations, or just to say hello!
                 </p>
@@ -147,101 +143,103 @@ export default function Contact() {
               })}
             </motion.div>
 
-            {/* Right Side - Contact Form (2 columns width) */}
+            {/* Right Side - Chat-Style Contact Form (2 columns width) */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
-              className="lg:col-span-2 bg-white dark:bg-white border border-gray-300 dark:border-gray-300 rounded-xl p-5 sm:p-6 lg:p-7"
+              className="lg:col-span-2"
             >
-            <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-black mb-4 sm:mb-5">Send Me a Message</h3>
-            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                <div>
-                  <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-700 mb-1.5">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-50 border border-gray-300 dark:border-gray-300 rounded-lg text-[15px] text-gray-900 dark:text-gray-900 placeholder-gray-500 focus:border-black focus:outline-none transition-colors duration-300"
-                    placeholder="Your name"
-                  />
+              {/* Chat Card Container */}
+              <div className="bg-white border border-gray-300 rounded-lg shadow-lg max-w-md mx-auto">
+                {/* Chat Header */}
+                <div className="bg-gray-800 text-white px-4 py-3 text-lg font-medium rounded-t-lg">
+                  Send Message
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-700 mb-1.5">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-50 border border-gray-300 dark:border-gray-300 rounded-lg text-[15px] text-gray-900 dark:text-gray-900 placeholder-gray-500 focus:border-black focus:outline-none transition-colors duration-300"
-                    placeholder="your.email@example.com"
-                  />
+                
+                {/* Chat Window - Form Fields */}
+                <div className="h-80 overflow-y-auto p-4 space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:border-gray-800 focus:outline-none transition-colors duration-300"
+                        placeholder="Your name"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:border-gray-800 focus:outline-none transition-colors duration-300"
+                        placeholder="your.email@example.com"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:border-gray-800 focus:outline-none transition-colors duration-300"
+                        placeholder="What's this about?"
+                      />
+                    </div>
+                    <div>
+                      <textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        rows={4}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:border-gray-800 focus:outline-none transition-colors duration-300 resize-none"
+                        placeholder="Your message..."
+                      />
+                    </div>
+                  </form>
+                </div>
+
+                {/* Chat Input - Send Button */}
+                <div className="flex items-center p-4 border-t border-gray-300">
+                  <div className="flex-1 text-sm text-gray-600">
+                    Ready to send your message?
+                  </div>
+                  <motion.button
+                    type="submit"
+                    onClick={handleSubmit}
+                    disabled={isSubmitting}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="ml-3 px-4 py-2 bg-gray-800 text-white text-sm font-medium rounded cursor-pointer border-none outline-none transition-all duration-300 hover:bg-white hover:text-black hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        Send
+                      </>
+                    )}
+                  </motion.button>
                 </div>
               </div>
-              <div>
-                <label htmlFor="subject" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-700 mb-1.5">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-50 border border-gray-300 dark:border-gray-300 rounded-lg text-[15px] text-gray-900 dark:text-gray-900 placeholder-gray-500 focus:border-black focus:outline-none transition-colors duration-300"
-                  placeholder="What's this about?"
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-700 mb-1.5">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={4}
-                  className="w-full px-3 py-2 bg-gray-50 dark:bg-gray-50 border border-gray-300 dark:border-gray-300 rounded-lg text-[15px] text-gray-900 dark:text-gray-900 placeholder-gray-500 focus:border-black focus:outline-none transition-colors duration-300 resize-none"
-                  placeholder="Your message..."
-                />
-              </div>
-              <div className="flex justify-center">
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="px-6 py-2.5 bg-black text-white rounded-lg text-[15px] font-medium hover:bg-gray-800 transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-5 h-5" />
-                    Send Message
-                  </>
-                )}
-              </motion.button>
-              </div>
-            </form>
-          </motion.div>
+            </motion.div>
           </div>
 
         </motion.div>

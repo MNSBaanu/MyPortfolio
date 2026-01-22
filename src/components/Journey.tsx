@@ -81,7 +81,7 @@ export default function Journey() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6 sm:mb-8 text-center">Journey</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-5 sm:mb-6 text-center">Journey</h2>
 
           {/* Toggle Tabs */}
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10 md:mb-12">
