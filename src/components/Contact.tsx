@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, Clock } from 'lucide-react'
+import { Mail, Phone, MapPin, Send, Clock } from 'lucide-react'
 import { personalInfo } from '../data/portfolio'
 import { useState } from 'react'
 import toast from 'react-hot-toast'

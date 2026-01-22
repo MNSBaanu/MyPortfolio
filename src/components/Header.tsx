@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Menu, X, Sun, Moon } from 'lucide-react'
-import { useTheme } from '../context/ThemeContext'
-import { personalInfo } from '../data/portfolio'
+import { Menu, X } from 'lucide-react'
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,7 +44,7 @@ const Header = () => {
       const element = document.querySelector(href)
       if (element) {
         const headerHeight = 80 // Account for fixed header
-        const elementPosition = element.offsetTop - headerHeight
+        const elementPosition = (element as HTMLElement).offsetTop - headerHeight
         window.scrollTo({
           top: elementPosition,
           behavior: 'smooth'
