@@ -41,51 +41,77 @@ const Hero = () => {
 
   return (
     <section className="min-h-screen flex items-center relative overflow-visible bg-gradient-to-b from-gray-50 via-white to-white pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 md:px-8 lg:px-12 pr-12 sm:pr-14 md:pr-16 lg:pr-20 xl:pr-24">
-      {/* Vertical Social Icons - Right Side */}
+      {/* Vertical Social Icons - Right Side with New Tooltip Style */}
       <motion.div
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.5 }}
-        className="fixed right-1 sm:right-2 md:right-4 lg:right-6 xl:right-8 top-[30%] z-50 flex flex-col gap-1.5 sm:gap-2 md:gap-3"
+        className="fixed right-4 sm:right-6 md:right-8 top-[30%] z-50 flex flex-col gap-6"
       >
-        <motion.a
-          href={personalInfo.social.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.1, x: -5 }}
-          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-black flex items-center justify-center text-white hover:bg-gray-800 transition-all duration-300"
-        >
-          <Github className="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 lg:w-5.5 lg:h-5.5" />
-        </motion.a>
-        <motion.a
-          href={personalInfo.social.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.1, x: -5 }}
-          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-black flex items-center justify-center text-white hover:bg-gray-800 transition-all duration-300"
-        >
-          <Linkedin className="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 lg:w-5.5 lg:h-5.5" />
-        </motion.a>
-        <motion.a
-          href={`mailto:${personalInfo.email}`}
-          whileHover={{ scale: 1.1, x: -5 }}
-          className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-black flex items-center justify-center text-white hover:bg-gray-800 transition-all duration-300"
-        >
-          <Mail className="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 lg:w-5.5 lg:h-5.5" />
-        </motion.a>
+        <div className="group flex justify-center">
+          <motion.a
+            href={personalInfo.social.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group flex justify-center p-3 rounded-md drop-shadow-xl bg-black text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:bg-gray-800 relative"
+          >
+            <Github className="w-5 h-5" />
+            <span className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-sm group-hover:-translate-y-10 duration-700 bg-white px-2 py-1 rounded whitespace-nowrap">
+              GitHub
+            </span>
+          </motion.a>
+        </div>
+
+        <div className="group flex justify-center">
+          <motion.a
+            href={personalInfo.social.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group flex justify-center p-3 rounded-md drop-shadow-xl bg-black text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:bg-gray-800 relative"
+          >
+            <Linkedin className="w-5 h-5" />
+            <span className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-sm group-hover:-translate-y-10 duration-700 bg-white px-2 py-1 rounded whitespace-nowrap">
+              LinkedIn
+            </span>
+          </motion.a>
+        </div>
+
+        <div className="group flex justify-center">
+          <motion.a
+            href={`mailto:${personalInfo.email}`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group flex justify-center p-3 rounded-md drop-shadow-xl bg-black text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:bg-gray-800 relative"
+          >
+            <Mail className="w-5 h-5" />
+            <span className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-sm group-hover:-translate-y-10 duration-700 bg-white px-2 py-1 rounded whitespace-nowrap">
+              Email
+            </span>
+          </motion.a>
+        </div>
 
         {/* Back to Top Button - Only visible after hero section */}
         {showBackToTop && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            whileHover={{ scale: 1.1, x: -5 }}
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-black flex items-center justify-center text-white hover:bg-gray-800 transition-all duration-300"
-          >
-            <ArrowUp className="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 lg:w-5.5 lg:h-5.5" />
-          </motion.button>
+          <div className="group flex justify-center">
+            <motion.button
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="group flex justify-center p-3 rounded-md drop-shadow-xl bg-black text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:bg-gray-800 relative"
+            >
+              <ArrowUp className="w-5 h-5" />
+              <span className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-sm group-hover:-translate-y-10 duration-700 bg-white px-2 py-1 rounded whitespace-nowrap">
+                Back to Top
+              </span>
+            </motion.button>
+          </div>
         )}
       </motion.div>
 
@@ -105,7 +131,9 @@ const Hero = () => {
                 transition={{ delay: 0.3 }}
                 className="text-gray-600 text-base sm:text-lg lg:text-xl mb-3 sm:mb-4"
               >
-                Hello, I'm <span className="text-black font-semibold text-lg sm:text-xl lg:text-2xl">{personalInfo.name}</span>
+                <span className="text-black font-semibold text-lg sm:text-xl lg:text-2xl border-b-2 border-black">
+                  Baanu Here
+                </span>
               </motion.p>
               
               <motion.h1
@@ -205,11 +233,20 @@ const Hero = () => {
             
             {/* Profile Image */}
             <div className="relative z-10 flex flex-col items-center gap-4">
-              <img
-                src={personalInfo.profileImage}
-                alt={personalInfo.name}
-                className="w-48 h-60 sm:w-56 sm:h-72 md:w-64 md:h-80 xl:w-72 xl:h-96 object-cover"
-              />
+              <div className="relative group cursor-pointer">
+                <img
+                  src={personalInfo.profileImage}
+                  alt={personalInfo.name}
+                  className="w-48 h-60 sm:w-56 sm:h-72 md:w-64 md:h-80 xl:w-72 xl:h-96 object-cover"
+                />
+                
+                {/* Tooltip same style as Baanu */}
+                <span className="absolute top-5 left-1/2 transform -translate-x-1/2 px-3 py-1 opacity-0 pointer-events-none transition-all duration-300 text-white bg-black rounded group-hover:top-[-10%] group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto whitespace-nowrap">
+                  Hello, I'm Baanu
+                  {/* Tooltip arrow */}
+                  <span className="absolute bottom-[-0.2rem] left-1/2 transform -translate-x-1/2 rotate-45 w-2 h-2 bg-black"></span>
+                </span>
+              </div>
               
               {/* Available for Opportunities Badge - Fully Responsive */}
               <motion.div

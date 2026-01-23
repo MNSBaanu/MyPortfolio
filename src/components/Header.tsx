@@ -1,54 +1,21 @@
-import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Home, User, Cpu, FolderOpen, Mail } from 'lucide-react'
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // Close mobile menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element
-      if (isMobileMenuOpen && !target.closest('header')) {
-        setIsMobileMenuOpen(false)
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [isMobileMenuOpen])
-
-  const navItems = [
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
-  ]
-
   const scrollToSection = (href: string) => {
-    // Close mobile menu first
-    setIsMobileMenuOpen(false)
-    
-    // Small delay to allow menu to close, then scroll
     setTimeout(() => {
-      const element = document.querySelector(href)
-      if (element) {
-        const headerHeight = 80 // Account for fixed header
-        const elementPosition = (element as HTMLElement).offsetTop - headerHeight
-        window.scrollTo({
-          top: elementPosition,
-          behavior: 'smooth'
-        })
+      if (href === '#home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      } else {
+        const element = document.querySelector(href)
+        if (element) {
+          const headerHeight = 120
+          const elementPosition = (element as HTMLElement).offsetTop - headerHeight
+          window.scrollTo({
+            top: elementPosition,
+            behavior: 'smooth'
+          })
+        }
       }
     }, 100)
   }
@@ -58,88 +25,84 @@ const Header = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled 
-          ? 'bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-lg' 
-          : 'bg-white/80 backdrop-blur-lg border-b border-gray-100'
-      }`}
+      className="fixed top-6 left-6 z-50"
     >
-      <nav className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
-        <div className="flex items-center justify-between h-16 sm:h-20 md:h-24 max-w-6xl mx-auto">
-          {/* Logo - Always visible */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="cursor-pointer ml-2 sm:ml-4"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          >
-            <img 
-              src="/assets/Logo.png" 
-              alt="Logo" 
-              className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 object-contain"
-            />
-          </motion.div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navItems.slice(0, 3).map((item, index) => (
-              <motion.button
-                key={item.name}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 + 0.3 }}
-                onClick={() => scrollToSection(item.href)}
-                className="px-4 py-2 text-gray-700 hover:text-black transition-colors duration-300 font-semibold text-base"
-              >
-                {item.name}
-              </motion.button>
-            ))}
-            <motion.button
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              onClick={() => scrollToSection('#contact')}
-              className="ml-2 px-6 py-2 text-gray-700 hover:text-black font-semibold text-base transition-colors duration-300"
-            >
-              Contact
-            </motion.button>
-          </div>
-
-          {/* Mobile Menu Button - Right Corner */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-1.5 sm:p-2 text-black"
-            >
-              {isMobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        <motion.div
-          initial={false}
-          animate={{ 
-            height: isMobileMenuOpen ? 'auto' : 0,
-            opacity: isMobileMenuOpen ? 1 : 0
-          }}
-          transition={{ duration: 0.3 }}
-          className={`md:hidden overflow-hidden bg-white/95 backdrop-blur-md border-t border-gray-200 ${
-            isMobileMenuOpen ? 'block' : 'hidden'
-          }`}
+      <div className="menu p-2 bg-white relative flex justify-center rounded-2xl shadow-lg">
+        <motion.button
+          onClick={() => scrollToSection('#home')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="link group inline-flex justify-center items-center w-16 h-12 rounded-lg relative z-10 overflow-hidden transition-all duration-200 ease-in hover:w-32 focus:w-32 focus:outline-none"
         >
-          <div className="py-3 sm:py-4 space-y-2 sm:space-y-3">
-            {navItems.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                className="block w-full text-left px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base text-gray-700 hover:text-black hover:bg-gray-100 transition-colors duration-300"
-              >
-                {item.name}
-              </button>
-            ))}
-          </div>
-        </motion.div>
-      </nav>
+          <div className="absolute z-[-1] block rounded-lg w-full h-full top-0 transform translate-x-full transition-transform duration-200 ease-in bg-gray-100 group-hover:translate-x-0 group-focus:translate-x-0"></div>
+          
+          <Home className="w-7 h-7 block flex-shrink-0 absolute left-4" />
+          
+          <span className="transform translate-x-full transition-transform duration-200 ease-in block text-center text-sm font-medium w-full text-gray-700 group-hover:translate-x-0 group-focus:translate-x-0 group-hover:opacity-100 group-focus:opacity-100 opacity-0 pl-7">
+            Home
+          </span>
+        </motion.button>
+
+        <motion.button
+          onClick={() => scrollToSection('#about')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="link group inline-flex justify-center items-center w-16 h-12 rounded-lg relative z-10 overflow-hidden transition-all duration-200 ease-in hover:w-32 focus:w-32 focus:outline-none"
+        >
+          <div className="absolute z-[-1] block rounded-lg w-full h-full top-0 transform translate-x-full transition-transform duration-200 ease-in bg-gray-100 group-hover:translate-x-0 group-focus:translate-x-0"></div>
+          
+          <User className="w-7 h-7 block flex-shrink-0 absolute left-4" />
+          
+          <span className="transform translate-x-full transition-transform duration-200 ease-in block text-center text-sm font-medium w-full text-gray-700 group-hover:translate-x-0 group-focus:translate-x-0 group-hover:opacity-100 group-focus:opacity-100 opacity-0 pl-7">
+            About
+          </span>
+        </motion.button>
+
+        <motion.button
+          onClick={() => scrollToSection('#skills')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="link group inline-flex justify-center items-center w-16 h-12 rounded-lg relative z-10 overflow-hidden transition-all duration-200 ease-in hover:w-32 focus:w-32 focus:outline-none"
+        >
+          <div className="absolute z-[-1] block rounded-lg w-full h-full top-0 transform translate-x-full transition-transform duration-200 ease-in bg-gray-100 group-hover:translate-x-0 group-focus:translate-x-0"></div>
+          
+          <Cpu className="w-7 h-7 block flex-shrink-0 absolute left-4" />
+          
+          <span className="transform translate-x-full transition-transform duration-200 ease-in block text-center text-sm font-medium w-full text-gray-700 group-hover:translate-x-0 group-focus:translate-x-0 group-hover:opacity-100 group-focus:opacity-100 opacity-0 pl-7">
+            Skills
+          </span>
+        </motion.button>
+
+        <motion.button
+          onClick={() => scrollToSection('#projects')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="link group inline-flex justify-center items-center w-16 h-12 rounded-lg relative z-10 overflow-hidden transition-all duration-200 ease-in hover:w-32 focus:w-32 focus:outline-none"
+        >
+          <div className="absolute z-[-1] block rounded-lg w-full h-full top-0 transform translate-x-full transition-transform duration-200 ease-in bg-gray-100 group-hover:translate-x-0 group-focus:translate-x-0"></div>
+          
+          <FolderOpen className="w-7 h-7 block flex-shrink-0 absolute left-4" />
+          
+          <span className="transform translate-x-full transition-transform duration-200 ease-in block text-center text-sm font-medium w-full text-gray-700 group-hover:translate-x-0 group-focus:translate-x-0 group-hover:opacity-100 group-focus:opacity-100 opacity-0 pl-7">
+            Projects
+          </span>
+        </motion.button>
+
+        <motion.button
+          onClick={() => scrollToSection('#contact')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="link group inline-flex justify-center items-center w-16 h-12 rounded-lg relative z-10 overflow-hidden transition-all duration-200 ease-in hover:w-32 focus:w-32 focus:outline-none"
+        >
+          <div className="absolute z-[-1] block rounded-lg w-full h-full top-0 transform translate-x-full transition-transform duration-200 ease-in bg-gray-100 group-hover:translate-x-0 group-focus:translate-x-0"></div>
+          
+          <Mail className="w-7 h-7 block flex-shrink-0 absolute left-4" />
+          
+          <span className="transform translate-x-full transition-transform duration-200 ease-in block text-center text-sm font-medium w-full text-gray-700 group-hover:translate-x-0 group-focus:translate-x-0 group-hover:opacity-100 group-focus:opacity-100 opacity-0 pl-7">
+            Contact
+          </span>
+        </motion.button>
+      </div>
     </motion.header>
   )
 }

@@ -6,7 +6,7 @@ export default function Skills() {
   const allSkills = skillCategories.flatMap(category => [
     ...category.skills,
     ...(category.subcategories?.flatMap(sub => sub.skills) || [])
-  ])
+  ]) as Array<{ name: string; icon?: string }>
 
   // Duplicate skills for seamless loop
   const duplicatedSkills = [...allSkills, ...allSkills]
