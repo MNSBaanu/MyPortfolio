@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
-import { X, Download, Mail, Phone, MapPin, Github, Linkedin } from 'lucide-react'
-import { personalInfo, about, skills, professionalSkills, projects, experience, education, certifications } from '../data/portfolio'
+import { X, Download } from 'lucide-react'
+import { personalInfo, skills, professionalSkills, projects, experience, education, certifications } from '../data/portfolio'
 import { useEffect } from 'react'
 import html2pdf from 'html2pdf.js'
 
@@ -31,19 +31,19 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
     if (!element) return
 
     const opt = {
-      margin: [10, 10, 10, 10],
+      margin: [10, 10, 10, 10] as [number, number, number, number],
       filename: `${personalInfo.name}_CV.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { 
-        scale: 2, 
+      image: { type: 'jpeg' as const, quality: 0.98 },
+      html2canvas: {
+        scale: 2,
         useCORS: true,
         letterRendering: true,
         logging: false
       },
-      jsPDF: { 
-        unit: 'mm', 
-        format: 'a4', 
-        orientation: 'portrait',
+      jsPDF: {
+        unit: 'mm',
+        format: 'a4',
+        orientation: 'portrait' as const,
         compress: true
       },
       pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }

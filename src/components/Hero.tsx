@@ -11,7 +11,7 @@ const Hero = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY
-      
+
       // Show back to top after scrolling 500px (shows in About section)
       setShowBackToTop(scrollY > 500)
     }
@@ -40,7 +40,7 @@ const Hero = () => {
   ]
 
   return (
-    <section className="min-h-screen flex items-center relative overflow-visible bg-gradient-to-b from-gray-50 via-white to-white pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 md:px-8 lg:px-12 pr-12 sm:pr-14 md:pr-16 lg:pr-20 xl:pr-24">
+    <section id="home" className="min-h-screen flex items-center relative overflow-visible bg-gradient-to-b from-gray-50 via-white to-white pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 md:px-8 lg:px-12 pr-12 sm:pr-14 md:pr-16 lg:pr-20 xl:pr-24">
       {/* Vertical Social Icons - Right Side with New Tooltip Style */}
       <motion.div
         initial={{ opacity: 0, x: 50 }}
@@ -125,17 +125,8 @@ const Hero = () => {
             className="space-y-6 flex-shrink-0 text-center lg:text-left"
           >
             <div>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                className="text-gray-600 text-base sm:text-lg lg:text-xl mb-3 sm:mb-4"
-              >
-                <span className="text-black font-semibold text-lg sm:text-xl lg:text-2xl border-b-2 border-black">
-                  Baanu Here
-                </span>
-              </motion.p>
-              
+
+
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -146,7 +137,7 @@ const Hero = () => {
                 <br />
                 <span className="text-gray-800">DEVELOPER</span>
               </motion.h1>
-              
+
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -173,7 +164,7 @@ const Hero = () => {
               >
                 Contact
               </button>
-              
+
               <button
                 onClick={() => setShowCVViewer(true)}
                 className="bg-white text-black border-2 border-black hover:bg-gray-50 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300"
@@ -214,7 +205,7 @@ const Hero = () => {
                 <motion.div
                   key={index}
                   initial={{ opacity: 0 }}
-                  animate={{ 
+                  animate={{
                     opacity: [0.2, 0.35, 0.2],
                     y: [0, -10, 0],
                   }}
@@ -230,7 +221,7 @@ const Hero = () => {
                 </motion.div>
               )
             })}
-            
+
             {/* Profile Image */}
             <div className="relative z-10 flex flex-col items-center gap-4">
               <div className="relative group cursor-pointer">
@@ -239,7 +230,7 @@ const Hero = () => {
                   alt={personalInfo.name}
                   className="w-48 h-60 sm:w-56 sm:h-72 md:w-64 md:h-80 xl:w-72 xl:h-96 object-cover"
                 />
-                
+
                 {/* Tooltip same style as Baanu */}
                 <span className="absolute top-5 left-1/2 transform -translate-x-1/2 px-3 py-1 opacity-0 pointer-events-none transition-all duration-300 text-white bg-black rounded group-hover:top-[-10%] group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto whitespace-nowrap">
                   Hello, I'm Baanu
@@ -247,7 +238,7 @@ const Hero = () => {
                   <span className="absolute bottom-[-0.2rem] left-1/2 transform -translate-x-1/2 rotate-45 w-2 h-2 bg-black"></span>
                 </span>
               </div>
-              
+
               {/* Available for Opportunities Badge - Fully Responsive */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -261,7 +252,7 @@ const Hero = () => {
               </motion.div>
             </div>
           </motion.div>
-          
+
           {/* Spacer to balance layout */}
           <div className="hidden lg:block flex-shrink-0 w-0"></div>
         </div>
