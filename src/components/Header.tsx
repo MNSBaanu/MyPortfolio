@@ -67,7 +67,7 @@ const Header = () => {
         >
           <span className="text-2xl font-bold tracking-tighter text-black">
             {personalInfo.name}
-            <span className="text-teal-600">.</span>
+            <span className="text-black">.</span>
           </span>
         </motion.div>
 
