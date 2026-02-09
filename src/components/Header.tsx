@@ -52,9 +52,9 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-        ? 'bg-white/90 backdrop-blur-md shadow-sm py-4 border-b border-gray-100'
-        : 'bg-transparent py-6'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black/10 backdrop-blur-md border-b border-black/20 ${isScrolled
+        ? 'py-4 shadow-sm'
+        : 'py-6'
         }`}
     >
       <div className="max-w-7xl mx-auto px-10 sm:px-16 md:px-24 flex items-center justify-between">
@@ -105,7 +105,7 @@ const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-gray-100 overflow-hidden shadow-xl"
+            className="md:hidden bg-black/10 backdrop-blur-lg border-b border-black/20 overflow-hidden shadow-xl"
           >
             <nav className="container-custom flex flex-col py-8 gap-6 px-6">
               {navLinks.map((link) => (

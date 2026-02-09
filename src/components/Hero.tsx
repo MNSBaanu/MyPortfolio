@@ -167,7 +167,7 @@ const Hero = () => {
 
               <button
                 onClick={() => setShowCVViewer(true)}
-                className="bg-white text-black border-2 border-black hover:bg-gray-50 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300"
+                className="bg-black/10 backdrop-blur-md text-black border-2 border-black/20 hover:bg-black/20 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-medium transition-all duration-300 shadow-sm"
               >
                 View CV
               </button>
