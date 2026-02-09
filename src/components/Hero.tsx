@@ -55,7 +55,7 @@ const Hero = () => {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group flex justify-center p-3 rounded-md drop-shadow-xl bg-black text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:bg-gray-800 relative"
+            className="group flex justify-center p-3 rounded-md drop-shadow-xl bg-black/95 backdrop-blur-md text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:bg-black border border-white/10 relative"
           >
             <Github className="w-5 h-5" />
             <span className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-sm group-hover:-translate-y-10 duration-700 bg-white px-2 py-1 rounded whitespace-nowrap">
@@ -71,7 +71,7 @@ const Hero = () => {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group flex justify-center p-3 rounded-md drop-shadow-xl bg-black text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:bg-gray-800 relative"
+            className="group flex justify-center p-3 rounded-md drop-shadow-xl bg-black/95 backdrop-blur-md text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:bg-black border border-white/10 relative"
           >
             <Linkedin className="w-5 h-5" />
             <span className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-sm group-hover:-translate-y-10 duration-700 bg-white px-2 py-1 rounded whitespace-nowrap">
@@ -85,7 +85,7 @@ const Hero = () => {
             href={`mailto:${personalInfo.email}`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group flex justify-center p-3 rounded-md drop-shadow-xl bg-black text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:bg-gray-800 relative"
+            className="group flex justify-center p-3 rounded-md drop-shadow-xl bg-black/95 backdrop-blur-md text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:bg-black border border-white/10 relative"
           >
             <Mail className="w-5 h-5" />
             <span className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-sm group-hover:-translate-y-10 duration-700 bg-white px-2 py-1 rounded whitespace-nowrap">
@@ -104,7 +104,7 @@ const Hero = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="group flex justify-center p-3 rounded-md drop-shadow-xl bg-black text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:bg-gray-800 relative"
+              className="group flex justify-center p-3 rounded-md drop-shadow-xl bg-black/95 backdrop-blur-md text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:bg-black border border-white/10 relative"
             >
               <ArrowUp className="w-5 h-5" />
               <span className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-sm group-hover:-translate-y-10 duration-700 bg-white px-2 py-1 rounded whitespace-nowrap">
@@ -244,9 +244,9 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2 }}
-                className="px-1.5 py-0.5 xs:px-2 xs:py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-black rounded border border-gray-800 whitespace-nowrap shadow-sm max-w-[200px] xs:max-w-[220px] sm:max-w-[250px] md:max-w-none"
+                className="px-3 py-1 xs:px-4 xs:py-1.5 sm:px-5 sm:py-2 bg-black rounded border border-white/20 whitespace-nowrap shadow-sm max-w-[200px] xs:max-w-[220px] sm:max-w-[250px] md:max-w-none"
               >
-                <span className="text-white font-medium text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs tracking-tighter xs:tracking-tight sm:tracking-normal">
+                <span className="text-white font-semibold text-[10px] xs:text-[11px] sm:text-xs md:text-sm tracking-wide">
                   AVAILABLE FOR OPPORTUNITIES
                 </span>
               </motion.div>
