@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 export default function LoadingScreen({ onLoadingComplete }: { onLoadingComplete: () => void }) {
-  const [progress, setProgress] = useState(0)
+  const [, setProgress] = useState(0)
 
   useEffect(() => {
     const timer = setInterval(() => {
