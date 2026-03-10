@@ -244,10 +244,10 @@ const Hero = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1, duration: 0.6 }}
-                  className="px-6 py-3 bg-black text-white rounded-full shadow-xl border border-gray-800"
+                  className="px-6 py-3 bg-gradient-to-r from-[#103257] to-[#0d4a6b] text-white rounded-full shadow-xl"
                 >
-                  <span className="text-sm font-medium tracking-wide">
-                    AVAILABLE FOR OPPORTUNITIES
+                  <span className="text-sm font-semibold tracking-wide">
+                    OPEN TO NEW OPPORTUNITIES
                   </span>
                 </motion.div>
               </div>

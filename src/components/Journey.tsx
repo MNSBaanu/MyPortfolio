@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { GraduationCap, Briefcase, Award } from 'lucide-react'
-import { experience as experienceData, certifications as certificationsData } from '../data/portfolio'
+import { experience as experienceData, certifications as certificationsData, education as educationData } from '../data/portfolio'
 
 interface JourneyItem {
   title: string
@@ -16,36 +16,12 @@ interface JourneyItem {
 export default function Journey() {
   const [activeTab, setActiveTab] = useState<'education' | 'experience' | 'certifications'>('experience')
 
-  const education: JourneyItem[] = [
-    {
-      title: 'HD in Computing & Software Engineering',
-      organization: 'ICBT Kandy (Affiliated with Cardiff Metropolitan University, UK)',
-      period: 'May 2024 - Nov 2025',
-      details: [
-        'Specialized in full-stack development and software engineering principles'
-      ]
-    },
-    {
-      title: 'Certificate of Efficiency as a Pharmacist',
-      organization: 'PharmAdya (Awarded by Sri Lanka Medical Council)',
-      period: 'Nov 2023 - Feb 2026',
-      details: [
-        'Comprehensive training in pharmacy operations and patient care'
-      ]
-    },
-    {
-      title: 'G.C.E. Advanced Level - Biological Science',
-      organization: 'Kandy Girls\' High School',
-      period: '2019 - 2023',
-      description: 'Completed A/L examination in Biological Science stream with 3 Passes in Physics, Chemistry, Biology'
-    },
-    {
-      title: 'G.C.E. Ordinary Level',
-      organization: 'Viharamahadevi Girls\' College Kandy',
-      period: 'Grade 6 - 11',
-      description: 'Excellent academic performance in O/L examination with 8 A\'s and 1 B'
-    }
-  ]
+  const education: JourneyItem[] = educationData.map(edu => ({
+    title: edu.title,
+    organization: edu.institution,
+    period: edu.period,
+    description: edu.description
+  }))
 
   const experience: JourneyItem[] = experienceData.map(exp => ({
     title: exp.title,
@@ -102,9 +78,9 @@ export default function Journey() {
                 onClick={() => setActiveTab(tab.id)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
                   activeTab === tab.id
-                    ? 'bg-black text-white shadow-lg'
+                    ? 'bg-gradient-to-r from-[#103257] to-[#0d4a6b] text-white shadow-lg'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -131,15 +107,28 @@ export default function Journey() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="bg-white rounded-2xl border border-gray-200 hover:border-gray-300 transition-all duration-500 overflow-hidden group shadow-sm hover:shadow-xl hover:-translate-y-1"
+                className="bg-white rounded-2xl border border-gray-200 hover:border-[#103257] transition-all duration-500 overflow-hidden group shadow-sm hover:shadow-2xl hover:-translate-y-2"
               >
-                <div className="aspect-video bg-gray-100 overflow-hidden">
+                <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden relative">
                   <img
                     src={cert.image}
                     alt={cert.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {
-                      e.currentTarget.src = 'https://via.placeholder.com/400x300/f3f4f6/1f2937?text=Certificate'
+                      const target = e.currentTarget;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent && !parent.querySelector('.fallback-content')) {
+                        const fallback = document.createElement('div');
+                        fallback.className = 'fallback-content absolute inset-0 flex flex-col items-center justify-center p-4 text-center';
+                        fallback.innerHTML = `
+                          <svg class="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                          </svg>
+                          <p class="text-xs font-medium text-gray-500">Will be uploaded soon</p>
+                        `;
+                        parent.appendChild(fallback);
+                      }
                     }}
                   />
                 </div>
@@ -158,7 +147,7 @@ export default function Journey() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-                className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-gray-300 transition-all duration-500 shadow-sm hover:shadow-xl hover:-translate-y-1"
+                className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-[#103257] transition-all duration-500 shadow-sm hover:shadow-2xl hover:-translate-y-2"
               >
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-2">
                   <div className="flex-1">
@@ -172,7 +161,7 @@ export default function Journey() {
                     </h3>
                     <p className="text-base text-gray-700 font-medium">{item.organization}</p>
                   </div>
-                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm font-medium whitespace-nowrap">
+                  <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-r from-[#103257] to-[#0d4a6b] text-white text-sm font-medium whitespace-nowrap shadow-md">
                     {item.period}
                   </span>
                 </div>
@@ -200,7 +189,7 @@ export default function Journey() {
                   <ul className="space-y-2">
                     {item.details.map((detail, idx) => (
                       <li key={idx} className="flex items-start text-gray-600 text-base leading-relaxed">
-                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-black mt-2 mr-3 flex-shrink-0"></span>
+                        <span className="inline-block w-2 h-2 rounded-full bg-[#103257] mt-2 mr-3 flex-shrink-0"></span>
                         <span>{detail}</span>
                       </li>
                     ))}

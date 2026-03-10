@@ -18,7 +18,7 @@ export const about = {
   description1: "I'm a Software Engineering student with a passion for creating meaningful digital experiences. I believe in writing clean, efficient code and continuously pushing myself to learn and grow.",
   description2: 'I\'m driven by challenges and motivated by the endless possibilities that technology offers to solve real-world problems.',
   stats: [
-    { number: '7+', label: 'Certifications' },
+    { number: '10+', label: 'Certifications' },
     { number: '10+', label: 'Projects Completed' },
     { number: '5+', label: 'Technologies' },
   ],
@@ -128,7 +128,13 @@ export const professionalSkills = [
 
 export const education = [
   {
-    title: 'HD in Computing & Software Engineering',
+    title: 'BEng (Hons) in Software Engineering',
+    institution: 'ESU Kandy (Affiliated with London Metropolitan University, UK)',
+    period: 'Mar 2026 - Present',
+    description: 'Pursuing Bachelor of Engineering (Honours) in Software Engineering',
+  },
+  {
+    title: 'HD in Computing & Software Engineering - Distinction',
     institution: 'ICBT Kandy (Affiliated with Cardiff Metropolitan University, UK)',
     period: 'May 2024 - Oct 2025',
     description: 'Specialized in full-stack development and software engineering principles',
@@ -136,17 +142,17 @@ export const education = [
   {
     title: 'Certificate of Efficiency as a Pharmacist',
     institution: 'PharmAdya (Awarded by Sri Lanka Medical Council)',
-    period: 'Nov 2023 - Feb 2026',
+    period: 'Nov 2023 - Present',
     description: 'Comprehensive training in pharmacy operations and patient care',
   },
   {
-    title: 'G.C.E. Advanced Level - Biological Science',
+    title: 'G.C.E. Advanced Level - Biological Science - 3S',
     institution: 'Kandy Girls\' High School',
     period: '2019 - 2023',
     description: 'Completed A/L examination in Biological Science stream with 3 Passes in Physics, Chemistry, Biology',
   },
   {
-    title: 'G.C.E. Ordinary Level',
+    title: 'G.C.E. Ordinary Level - 8A 1B',
     institution: 'Viharamahadevi Girls\' College Kandy',
     period: 'Grade 6 - 11',
     description: 'Excellent academic performance in O/L examination with 8 A\'s and 1 B',
@@ -193,6 +199,27 @@ export const experience = [
 ]
 
 export const certifications = [
+  {
+    title: 'Learn Vibe Coding: Building Apps',
+    issuer: 'LinkedIn',
+    date: 'Feb 2026',
+    link: '#',
+    image: '/assets/linkedin-vibe-coding.png',
+  },
+  {
+    title: 'Career Essentials in Generative AI',
+    issuer: 'Microsoft',
+    date: 'Feb 2026',
+    link: '#',
+    image: '/assets/GenAIMS.png',
+  },
+  {
+    title: 'Postman API Fundamentals Student Expert',
+    issuer: 'Postman',
+    date: 'Jan 2026',
+    link: '#',
+    image: '/assets/Postman.png',
+  },
   {
     title: 'Responsive Web Design',
     issuer: 'freeCodeCamp',

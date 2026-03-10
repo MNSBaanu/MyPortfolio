@@ -61,40 +61,6 @@ export default function About() {
               ))}
             </div>
           </motion.div>
-
-          {/* What I Do */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="border-t border-gray-200 pt-12"
-          >
-            <h3 className="text-xl sm:text-2xl font-bold text-black mb-8">
-              What I Do
-            </h3>
-            <div className="grid sm:grid-cols-2 gap-6 max-w-4xl">
-              {about.services.map((service, index) => (
-                <motion.div
-                  key={service}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="flex items-start gap-4 group"
-                >
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-black flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-base text-gray-700 group-hover:text-black transition-colors duration-300 leading-relaxed">
-                    {service}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
         </div>
       </div>
     </section>
