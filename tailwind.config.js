@@ -26,6 +26,7 @@ export default {
         },
         'dark-teal': '#1a4d4d',
         'darker-teal': '#0f3a3a',
+        'saree-blue': '#103257',
       },
       fontFamily: {
         'mono': ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],

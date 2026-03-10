@@ -190,9 +190,9 @@ textarea {
   }
 }
 
-/* Airbnb-style selection */
+/* Selection style with teal blue */
 ::selection {
-  background: #FF385C;
+  background: #103257;
   color: #ffffff;
 }
 
