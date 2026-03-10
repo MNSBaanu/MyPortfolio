@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Airbnb Cereal VF', 'Circular', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
   line-height: 1.6;
   font-weight: 400;
   letter-spacing: -0.011em;
@@ -44,12 +44,12 @@ body {
   background: #333333;
 }
 
-/* Apple-like smooth transitions */
+/* Airbnb-like smooth transitions */
 .smooth-transition {
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Apple-style button */
+/* Airbnb-style button */
 .apple-button {
   @apply px-8 py-4 bg-black text-white rounded-full font-medium transition-all duration-300 hover:bg-gray-800 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl;
 }
@@ -58,14 +58,14 @@ body {
   @apply px-8 py-4 border-2 border-black text-black rounded-full font-medium transition-all duration-300 hover:bg-black hover:text-white hover:scale-105 active:scale-95;
 }
 
-/* Apple-style card */
+/* Airbnb-style card */
 .apple-card {
   @apply bg-white rounded-2xl border border-gray-100 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02];
 }
 
-/* Inter Font Text Styles */
+/* Airbnb Font Text Styles */
 .hero-text {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Airbnb Cereal VF', 'Circular', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
   font-size: 4rem;
   font-weight: 700;
   line-height: 1.1;
@@ -74,7 +74,7 @@ body {
 }
 
 .section-title {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Airbnb Cereal VF', 'Circular', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
   font-size: 2.5rem;
   font-weight: 600;
   line-height: 1.2;
@@ -83,7 +83,7 @@ body {
 }
 
 .body-large {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Airbnb Cereal VF', 'Circular', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
   font-size: 1.25rem;
   line-height: 1.5;
   font-weight: 400;
@@ -91,7 +91,7 @@ body {
   color: #1d1d1f;
 }
 
-/* Apple-style focus states */
+/* Airbnb-style focus states */
 .focus-ring {
   @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white;
 }
@@ -104,31 +104,31 @@ body {
   background-clip: text;
 }
 
-/* Apple-style navigation */
+/* Airbnb-style navigation */
 .nav-blur {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
 
-/* Inter Font Classes */
+/* Airbnb Font Classes */
 .inter-font {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Airbnb Cereal VF', 'Circular', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
-/* All elements use Inter font */
+/* All elements use Airbnb font */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Airbnb Cereal VF', 'Circular', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
-/* Body text uses Inter */
+/* Body text uses Airbnb font */
 p,
 span,
 div,
@@ -137,7 +137,7 @@ a,
 button,
 input,
 textarea {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Airbnb Cereal VF', 'Circular', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
 /* Section spacing */
@@ -150,7 +150,7 @@ textarea {
   @apply max-w-7xl mx-auto px-6 lg:px-8;
 }
 
-/* Apple-style animations */
+/* Airbnb-style animations */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -167,7 +167,7 @@ textarea {
   animation: fadeInUp 0.8s ease-out;
 }
 
-/* Apple-style grid */
+/* Airbnb-style grid */
 .apple-grid {
   display: grid;
   gap: 2rem;
@@ -189,7 +189,7 @@ textarea {
   }
 }
 
-/* Apple-style selection */
+/* Airbnb-style selection */
 ::selection {
   background: #007aff;
   color: #ffffff;
@@ -202,12 +202,12 @@ button {
   cursor: pointer;
 }
 
-/* Apple-style input */
+/* Airbnb-style input */
 .apple-input {
   @apply w-full px-4 py-4 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:bg-white focus:outline-none transition-colors duration-300;
 }
 
-/* Apple-style textarea */
+/* Airbnb-style textarea */
 .apple-textarea {
   @apply w-full px-4 py-4 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:bg-white focus:outline-none transition-colors duration-300 resize-none;
 }
@@ -224,7 +224,7 @@ button {
   transform: translateY(0);
 }
 
-/* Apple-style hover effects */
+/* Airbnb-style hover effects */
 .hover-lift {
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -233,7 +233,7 @@ button {
   transform: translateY(-8px);
 }
 
-/* Apple-style shadows */
+/* Airbnb-style shadows */
 .apple-shadow {
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
@@ -271,7 +271,7 @@ button {
   @apply bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100;
 }
 
-/* Skill progress bar - Apple style */
+/* Skill progress bar - Airbnb style */
 .skill-progress {
   @apply h-full bg-gradient-to-r from-black to-gray-700 rounded-full transition-all duration-1000 ease-out relative;
 }
@@ -287,17 +287,17 @@ button {
   border-radius: 2px;
 }
 
-/* Tech stack tags - Apple style */
+/* Tech stack tags - Airbnb style */
 .tech-tag {
   @apply px-4 py-2 bg-gray-100 text-gray-800 rounded-full text-sm font-medium hover:bg-gray-200 hover:text-gray-900 transition-colors duration-300;
 }
 
-/* Social links - Apple style */
+/* Social links - Airbnb style */
 .social-link {
   @apply p-4 bg-gray-100 rounded-full shadow-sm border border-gray-200 text-gray-700 hover:text-gray-900 hover:shadow-md hover:scale-110 transition-all duration-300;
 }
 
-/* Navigation styles - Apple style */
+/* Navigation styles - Airbnb style */
 .nav-link {
   @apply text-gray-700 hover:text-black transition-colors duration-300 font-medium relative;
 }

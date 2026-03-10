@@ -224,19 +224,12 @@ const Hero = () => {
 
             {/* Profile Image */}
             <div className="relative z-10 flex flex-col items-center gap-4">
-              <div className="relative group cursor-pointer">
+              <div className="relative">
                 <img
                   src={personalInfo.profileImage}
                   alt={personalInfo.name}
-                  className="w-48 h-60 sm:w-56 sm:h-72 md:w-64 md:h-80 xl:w-72 xl:h-96 object-cover"
+                  className="w-64 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 xl:w-96 xl:h-96 object-cover"
                 />
-
-                {/* Tooltip same style as Baanu */}
-                <span className="absolute top-5 left-1/2 transform -translate-x-1/2 px-3 py-1 opacity-0 pointer-events-none transition-all duration-300 text-white bg-black rounded group-hover:top-[-10%] group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto whitespace-nowrap">
-                  Hello, I'm Baanu
-                  {/* Tooltip arrow */}
-                  <span className="absolute bottom-[-0.2rem] left-1/2 transform -translate-x-1/2 rotate-45 w-2 h-2 bg-black"></span>
-                </span>
               </div>
 
               {/* Available for Opportunities Badge - Fully Responsive */}
