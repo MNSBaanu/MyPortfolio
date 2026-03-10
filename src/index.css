@@ -19,29 +19,30 @@ body {
   line-height: 1.6;
   font-weight: 400;
   letter-spacing: -0.011em;
-  color: #1d1d1f;
+  color: #222222;
   background-color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Airbnb style */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f8f9fa;
+  background: #f7f7f7;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #000000;
-  border-radius: 3px;
+  background: #222222;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #333333;
+  background: #484848;
 }
 
 /* Airbnb-like smooth transitions */
@@ -191,7 +192,7 @@ textarea {
 
 /* Airbnb-style selection */
 ::selection {
-  background: #007aff;
+  background: #FF385C;
   color: #ffffff;
 }
 

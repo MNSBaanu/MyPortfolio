@@ -10,10 +10,11 @@ interface JourneyItem {
   description?: string
   details?: string[]
   link?: string
+  tech?: string[]
 }
 
 export default function Journey() {
-  const [activeTab, setActiveTab] = useState<'education' | 'experience' | 'certifications'>('education')
+  const [activeTab, setActiveTab] = useState<'education' | 'experience' | 'certifications'>('experience')
 
   const education: JourneyItem[] = [
     {
@@ -50,14 +51,15 @@ export default function Journey() {
     title: exp.title,
     organization: exp.company,
     period: exp.period,
-    description: exp.description
+    description: exp.description,
+    tech: exp.tech
   }))
 
 
 
   const tabs = [
-    { id: 'education' as const, label: 'Education', icon: GraduationCap },
     { id: 'experience' as const, label: 'Experience', icon: Briefcase },
+    { id: 'education' as const, label: 'Education', icon: GraduationCap },
     { id: 'certifications' as const, label: 'Certifications', icon: Award },
   ]
 
@@ -73,121 +75,147 @@ export default function Journey() {
   }
 
   return (
-    <section id="journey" className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 pl-6 sm:pl-8 md:pl-12 lg:pl-16 xl:pl-20 pr-16 sm:pr-20 md:pr-24 lg:pr-28 xl:pr-32 bg-white">
-      <div className="max-w-6xl mx-auto">
+    <section id="journey" className="py-16 sm:py-20 md:py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
+          className="text-center mb-16"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-5 sm:mb-6 text-center">Journey</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 tracking-tight">
+            My Journey
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Education, experience, and continuous learning
+          </p>
+        </motion.div>
 
-          {/* Toggle Tabs */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10 md:mb-12">
-            {tabs.map((tab) => {
-              const Icon = tab.icon
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${activeTab === tab.id
-                    ? 'bg-black text-white border-2 border-black'
-                    : 'bg-black/10 backdrop-blur-md text-black border-2 border-black/20 hover:bg-black/20'
-                    }`}
-                >
-                  <Icon size={18} />
-                  {tab.label}
-                </button>
-              )
-            })}
-          </div>
+        {/* Toggle Tabs */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {tabs.map((tab) => {
+            const Icon = tab.icon
+            return (
+              <motion.button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+                  activeTab === tab.id
+                    ? 'bg-black text-white shadow-lg'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <Icon size={18} strokeWidth={2.5} />
+                {tab.label}
+              </motion.button>
+            )
+          })}
+        </div>
 
-          {/* Content */}
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className={activeTab === 'certifications' ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6' : 'space-y-4 sm:space-y-5 md:space-y-6'}
-          >
-            {activeTab === 'certifications' ? (
-              // Certification Cards
-              certificationsData.map((cert, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-white rounded-xl border border-gray-200 hover:border-gray-400 transition-all duration-300 overflow-hidden group shadow-sm hover:shadow-md"
-                >
-                  <div className="aspect-video bg-gray-100 overflow-hidden">
-                    <img
-                      src={cert.image}
-                      alt={cert.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      onError={(e) => {
-                        e.currentTarget.src = 'https://via.placeholder.com/400x300/f3f4f6/1f2937?text=Certificate'
-                      }}
-                    />
-                  </div>
-                  <div className="p-3 sm:p-4">
-                    <h3 className="text-sm sm:text-base md:text-lg font-semibold text-black mb-1.5 sm:mb-2 line-clamp-2">{cert.title}</h3>
-                    <p className="text-gray-800 text-xs sm:text-sm mb-1.5 sm:mb-2">{cert.issuer}</p>
-                    <p className="text-gray-600 text-xs sm:text-sm">{cert.date}</p>
-                  </div>
-                </motion.div>
-              ))
-            ) : (
-              // Education and Experience Cards
-              getActiveData().map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-white p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl border border-gray-200 hover:border-gray-400 transition-all duration-300 shadow-sm hover:shadow-md"
-                >
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-2 sm:mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-base sm:text-lg md:text-xl font-semibold text-black mb-1">
-                        {item.title.split('\n').map((line, i) => (
-                          <span key={i}>
-                            {line}
-                            {i < item.title.split('\n').length - 1 && <br />}
-                          </span>
-                        ))}
-                      </h3>
-                      <p className="text-sm sm:text-base text-gray-800 font-medium">{item.organization}</p>
-                    </div>
-                    <span className="text-gray-600 text-xs sm:text-sm mt-1.5 sm:mt-2 md:mt-0 whitespace-nowrap">{item.period}</span>
-                  </div>
-
-                  {item.description && (
-                    <p className="text-sm sm:text-base text-gray-700 mb-2 sm:mb-3">{item.description}</p>
-                  )}
-
-                  {item.details && (
-                    <ul className="space-y-1.5 sm:space-y-2">
-                      {item.details.map((detail, idx) => (
-                        <li key={idx} className="flex items-start text-gray-600 text-sm sm:text-base">
-                          <span className="text-black mr-2">•</span>
-                          <span>{detail}</span>
-                        </li>
+        {/* Content */}
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className={activeTab === 'certifications' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' : 'space-y-6 max-w-5xl mx-auto'}
+        >
+          {activeTab === 'certifications' ? (
+            // Certification Cards
+            certificationsData.map((cert, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+                className="bg-white rounded-2xl border border-gray-200 hover:border-gray-300 transition-all duration-500 overflow-hidden group shadow-sm hover:shadow-xl hover:-translate-y-1"
+              >
+                <div className="aspect-video bg-gray-100 overflow-hidden">
+                  <img
+                    src={cert.image}
+                    alt={cert.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://via.placeholder.com/400x300/f3f4f6/1f2937?text=Certificate'
+                    }}
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="text-base font-semibold text-black mb-2 line-clamp-2 leading-snug">{cert.title}</h3>
+                  <p className="text-gray-700 text-sm mb-2 font-medium">{cert.issuer}</p>
+                  <p className="text-gray-500 text-sm">{cert.date}</p>
+                </div>
+              </motion.div>
+            ))
+          ) : (
+            // Education and Experience Cards
+            getActiveData().map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+                className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-gray-300 transition-all duration-500 shadow-sm hover:shadow-xl hover:-translate-y-1"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-2">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-black mb-2 leading-tight">
+                      {item.title.split('\n').map((line, i) => (
+                        <span key={i}>
+                          {line}
+                          {i < item.title.split('\n').length - 1 && <br />}
+                        </span>
                       ))}
-                    </ul>
-                  )}
-                </motion.div>
-              ))
-            )}
+                    </h3>
+                    <p className="text-base text-gray-700 font-medium">{item.organization}</p>
+                  </div>
+                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm font-medium whitespace-nowrap">
+                    {item.period}
+                  </span>
+                </div>
 
-            {/* Empty State */}
-            {getActiveData().length === 0 && certificationsData.length === 0 && (
-              <div className="text-center py-12 col-span-full">
-                <p className="text-gray-600">No {activeTab} added yet.</p>
-              </div>
-            )}
-          </motion.div>
+                {item.description && (
+                  <p className="text-base text-gray-600 mb-4 leading-relaxed">{item.description}</p>
+                )}
+
+                {item.tech && item.tech.length > 0 && (
+                  <div className="mb-4">
+                    <div className="flex flex-wrap gap-2">
+                      {item.tech.map((tech, techIdx) => (
+                        <span
+                          key={techIdx}
+                          className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors duration-300"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {item.details && (
+                  <ul className="space-y-2">
+                    {item.details.map((detail, idx) => (
+                      <li key={idx} className="flex items-start text-gray-600 text-base leading-relaxed">
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-black mt-2 mr-3 flex-shrink-0"></span>
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </motion.div>
+            ))
+          )}
+
+          {/* Empty State */}
+          {getActiveData().length === 0 && certificationsData.length === 0 && (
+            <div className="text-center py-20 col-span-full">
+              <p className="text-gray-500 text-lg">No {activeTab} added yet.</p>
+            </div>
+          )}
         </motion.div>
       </div>
     </section>

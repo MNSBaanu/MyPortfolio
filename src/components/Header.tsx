@@ -52,35 +52,36 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black/10 backdrop-blur-md border-b border-black/20 ${isScrolled
-        ? 'py-4 shadow-sm'
-        : 'py-6'
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled
+          ? 'py-3 bg-white/95 backdrop-blur-xl shadow-sm border-b border-gray-100'
+          : 'py-5 bg-transparent'
+      }`}
     >
-      <div className="max-w-7xl mx-auto px-10 sm:px-16 md:px-24 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 flex items-center justify-between">
         {/* Logo */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="relative group cursor-pointer"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
-          <span className="text-2xl font-bold tracking-tighter text-black">
+          <span className="text-xl sm:text-2xl font-bold tracking-tight text-black hover:text-gray-700 transition-colors duration-300">
             {personalInfo.name}
-            <span className="text-black">.</span>
           </span>
         </motion.div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-1">
           {navLinks.map((link, index) => (
             <motion.button
               key={link.name}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.08, duration: 0.5 }}
               onClick={() => scrollToSection(link.href)}
-              className="text-sm font-medium text-gray-600 hover:text-black transition-colors relative"
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-black hover:bg-gray-50 rounded-full transition-all duration-300"
             >
               {link.name}
             </motion.button>
@@ -91,7 +92,7 @@ const Header = () => {
         <div className="md:hidden">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 text-gray-600 hover:text-black transition-colors"
+            className="p-2 text-gray-700 hover:text-black hover:bg-gray-50 rounded-full transition-all duration-300"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -105,14 +106,14 @@ const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-black/10 backdrop-blur-lg border-b border-black/20 overflow-hidden shadow-xl"
+            className="md:hidden bg-white/98 backdrop-blur-xl border-b border-gray-100 overflow-hidden"
           >
-            <nav className="container-custom flex flex-col py-8 gap-6 px-6">
+            <nav className="flex flex-col py-6 gap-2 px-6">
               {navLinks.map((link) => (
                 <button
                   key={link.name}
                   onClick={() => scrollToSection(link.href)}
-                  className="text-2xl font-semibold text-gray-800 hover:text-black transition-colors text-left"
+                  className="text-lg font-medium text-gray-800 hover:text-black hover:bg-gray-50 py-3 px-4 rounded-xl transition-all duration-300 text-left"
                 >
                   {link.name}
                 </button>

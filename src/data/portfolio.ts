@@ -160,7 +160,7 @@ export const experience = [
     period: 'Dec 2025 - Present',
     type: 'Full-time (Onsite)',
     description: 'Contributing to ongoing web and mobile application projects under senior developer guidance. Assisting with frontend and backend development tasks, supporting API integration and testing processes. Actively participating in UI/UX improvements while gaining hands-on experience with production-level development workflows and industry best practices.',
-    tech: ['React Native', 'Next.js', 'AWS', '.NET'],
+    tech: ['.NET', 'C#', 'React Native', 'Next.js', 'AWS', 'Electron'],
   },
   {
     title: 'Committee Member',
