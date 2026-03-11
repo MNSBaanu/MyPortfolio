@@ -22,13 +22,6 @@ export const about = {
     { number: '10+', label: 'Projects Completed' },
     { number: '5+', label: 'Technologies' },
   ],
-  services: [
-    'Frontend Development',
-    'Backend Development',
-    'Mobile Application Development',
-    'API Development',
-    'Database Design & Management',
-  ],
 }
 
 export const skillCategories = [
