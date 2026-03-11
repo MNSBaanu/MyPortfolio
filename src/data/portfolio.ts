@@ -1,7 +1,7 @@
 export const personalInfo = {
   name: 'MNSBaanu',
-  title: 'Full Stack Developer',
-  description: 'Mastering the full spectrum: From what users see to what makes it breathe.',
+  title: 'Aspiring Software Engineer',
+  description: 'Full-stack developer crafting end-to-end solutions. Passionate about building scalable applications and leveraging AI to solve real-world problems.',
   cvSummary: 'Highly motivated and detail-oriented individual with strong problem-solving skills and a passion for technology. Adept at learning new concepts quickly and working in dynamic environments. Seeking opportunities to apply skills, contribute to projects, and grow professionally. Looking for opportunities near Kandy or Remote.',
   profileImage: '/assets/profile.png',
   email: 'sbaanukghsbio21@gmail.com',

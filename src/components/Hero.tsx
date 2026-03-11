@@ -7,6 +7,17 @@ import CVViewer from './CVViewer'
 const Hero = () => {
   const [showBackToTop, setShowBackToTop] = useState(false)
   const [showCVViewer, setShowCVViewer] = useState(false)
+  const [currentTagline, setCurrentTagline] = useState(0)
+  const [displayedText, setDisplayedText] = useState({ line1: '', line2: '', tagline: '' })
+  const [isTyping, setIsTyping] = useState(true)
+
+  const taglines = [
+    { line1: 'Aspiring Software', line2: 'Engineer', tagline: 'Building the Future' },
+    { line1: 'Full-Stack', line2: 'Developer', tagline: 'End-to-End Solutions' },
+    { line1: 'AI & Tech', line2: 'Enthusiast', tagline: 'Exploring Innovation' },
+    { line1: 'Problem', line2: 'Solver', tagline: 'Creating Impact' },
+    { line1: 'Software Engineering', line2: 'Student', tagline: 'Learning & Growing' }
+  ]
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,23 +29,59 @@ const Hero = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    const currentText = taglines[currentTagline]
+    let charIndex = 0
+    let currentLine = 'line1'
+    
+    setDisplayedText({ line1: '', line2: '', tagline: '' })
+    setIsTyping(true)
+
+    const typingInterval = setInterval(() => {
+      if (currentLine === 'line1' && charIndex < currentText.line1.length) {
+        setDisplayedText(prev => ({ ...prev, line1: currentText.line1.slice(0, charIndex + 1) }))
+        charIndex++
+      } else if (currentLine === 'line1') {
+        currentLine = 'line2'
+        charIndex = 0
+      } else if (currentLine === 'line2' && charIndex < currentText.line2.length) {
+        setDisplayedText(prev => ({ ...prev, line2: currentText.line2.slice(0, charIndex + 1) }))
+        charIndex++
+      } else if (currentLine === 'line2') {
+        currentLine = 'tagline'
+        charIndex = 0
+      } else if (currentLine === 'tagline' && charIndex < currentText.tagline.length) {
+        setDisplayedText(prev => ({ ...prev, tagline: currentText.tagline.slice(0, charIndex + 1) }))
+        charIndex++
+      } else {
+        clearInterval(typingInterval)
+        setIsTyping(false)
+        setTimeout(() => {
+          setCurrentTagline((prev) => (prev + 1) % taglines.length)
+        }, 2500)
+      }
+    }, 80)
+
+    return () => clearInterval(typingInterval)
+  }, [currentTagline])
+
   const codeSnippets = [
-    '{ API }',
+    '{ code }',
     '</> React',
     'Node.js',
-    'MongoDB',
+    'AI/ML',
     'TypeScript',
+    'Python',
+    'Next.js',
+    'MongoDB',
     'Express',
-    'GraphQL',
+    'TensorFlow',
     'Docker',
     'AWS',
-    'Redux',
-    'Next.js',
-    'PostgreSQL',
     'Tailwind',
     'Git',
-    'REST',
-    'JWT'
+    'API',
+    'PostgreSQL'
   ]
 
   return (
@@ -114,28 +161,36 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="space-y-8 text-center lg:text-left order-2 lg:order-1"
+            className="space-y-6 text-center lg:text-left order-2 lg:order-1"
           >
             <div className="space-y-6">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-              >
-                <span className="inline-block px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium mb-6">
-                  Baanu Here
-                </span>
-              </motion.div>
-
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight"
+                className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-8"
+                style={{ minHeight: '200px' }}
               >
-                <span className="text-black">Full Stack</span>
-                <br />
-                <span className="text-gray-600">Developer</span>
+                <div className="space-y-2">
+                  <div className="text-black">
+                    {displayedText.line1}
+                    {isTyping && displayedText.line2 === '' && displayedText.tagline === '' && (
+                      <span className="inline-block w-0.5 h-12 bg-black ml-1 animate-pulse"></span>
+                    )}
+                  </div>
+                  <div className="text-black">
+                    {displayedText.line2}
+                    {isTyping && displayedText.line2 !== '' && displayedText.tagline === '' && (
+                      <span className="inline-block w-0.5 h-12 bg-black ml-1 animate-pulse"></span>
+                    )}
+                  </div>
+                  <div className="bg-gradient-to-r from-[#103257] to-[#0d4a6b] bg-clip-text text-transparent text-3xl sm:text-4xl md:text-5xl">
+                    {displayedText.tagline}
+                    {isTyping && displayedText.tagline !== '' && (
+                      <span className="inline-block w-0.5 h-10 bg-[#103257] ml-1 animate-pulse"></span>
+                    )}
+                  </div>
+                </div>
               </motion.h1>
 
               <motion.p
@@ -166,16 +221,16 @@ const Hero = () => {
             >
               <button
                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-7 py-3 bg-black text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                className="px-7 py-3 bg-gradient-to-r from-[#103257] to-[#0d4a6b] text-white rounded-full text-sm font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
               >
-                Get in Touch
+                Let's Connect
               </button>
 
               <button
                 onClick={() => setShowCVViewer(true)}
-                className="px-7 py-3 bg-white text-black rounded-full text-sm font-medium hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl border border-gray-200 hover:border-gray-300 hover:scale-105"
+                className="px-7 py-3 bg-white text-gray-800 rounded-full text-sm font-semibold hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-gray-200 hover:border-[#103257] hover:scale-105"
               >
-                View Resume
+                View My Resume
               </button>
             </motion.div>
           </motion.div>
@@ -235,7 +290,7 @@ const Hero = () => {
                   <img
                     src={personalInfo.profileImage}
                     alt={personalInfo.name}
-                    className="w-80 h-80 sm:w-96 sm:h-96 object-cover"
+                    className="w-80 h-80 sm:w-[26rem] sm:h-[26rem] md:w-[28rem] md:h-[28rem] object-cover"
                   />
                 </div>
 
@@ -244,10 +299,14 @@ const Hero = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1, duration: 0.6 }}
-                  className="px-6 py-3 bg-gradient-to-r from-[#103257] to-[#0d4a6b] text-white rounded-full shadow-xl"
+                  className="flex items-center gap-2 text-gray-600"
                 >
-                  <span className="text-sm font-semibold tracking-wide">
-                    OPEN TO NEW OPPORTUNITIES
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#103257] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-[#103257]"></span>
+                  </span>
+                  <span className="text-sm font-medium uppercase tracking-wide">
+                    Open for Opportunities
                   </span>
                 </motion.div>
               </div>
