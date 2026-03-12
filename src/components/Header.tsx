@@ -52,10 +52,10 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
         isScrolled
-          ? 'py-3 bg-white/95 backdrop-blur-xl shadow-sm border-b border-gray-100'
-          : 'py-5 bg-transparent'
+          ? 'py-4 bg-white/80 backdrop-blur-2xl shadow-sm border-b border-gray-100'
+          : 'py-6 bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 flex items-center justify-between">
@@ -63,62 +63,79 @@ const Header = () => {
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative group cursor-pointer"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
-          <span className="text-xl sm:text-2xl font-bold tracking-tight text-black hover:text-gray-700 transition-colors duration-300">
-            {personalInfo.name}
+          <span className="text-xl sm:text-2xl font-bold tracking-tighter text-black flex items-center gap-2">
+            <span>{personalInfo.name}</span>
           </span>
         </motion.div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-2 bg-gray-50/50 p-1 rounded-full border border-gray-100 backdrop-blur-sm">
           {navLinks.map((link, index) => (
             <motion.button
               key={link.name}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.08, duration: 0.5 }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
               onClick={() => scrollToSection(link.href)}
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-black hover:bg-gray-50 rounded-full transition-all duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-5 py-2 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black transition-all duration-300 rounded-full"
             >
               {link.name}
             </motion.button>
           ))}
         </nav>
 
-        {/* Mobile Menu Toggle */}
-        <div className="md:hidden">
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 text-gray-700 hover:text-black hover:bg-gray-50 rounded-full transition-all duration-300"
+        {/* Action Button */}
+        <div className="flex items-center gap-4">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => scrollToSection('#contact')}
+            className="hidden sm:flex px-6 py-2.5 bg-black text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            Hire Me
+          </motion.button>
+
+          {/* Mobile Menu Toggle */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-3 bg-gray-50 text-gray-700 hover:text-black rounded-full transition-all duration-300"
+            >
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Nav Overlay */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white/98 backdrop-blur-xl border-b border-gray-100 overflow-hidden"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-full left-0 right-0 bg-white border-b border-gray-100 shadow-2xl p-6 md:hidden overflow-hidden"
           >
-            <nav className="flex flex-col py-6 gap-2 px-6">
-              {navLinks.map((link) => (
-                <button
+            <div className="flex flex-col gap-4">
+              {navLinks.map((link, i) => (
+                <motion.button
                   key={link.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
                   onClick={() => scrollToSection(link.href)}
-                  className="text-lg font-medium text-gray-800 hover:text-black hover:bg-gray-50 py-3 px-4 rounded-xl transition-all duration-300 text-left"
+                  className="text-2xl font-bold text-left text-gray-400 hover:text-black transition-colors"
                 >
                   {link.name}
-                </button>
+                </motion.button>
               ))}
-            </nav>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
