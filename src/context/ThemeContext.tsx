@@ -13,13 +13,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('dark')
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme
-    if (savedTheme) {
+    const savedTheme = localStorage.getItem('theme') as Theme | null
+
+    if (savedTheme === 'light' || savedTheme === 'dark') {
       setTheme(savedTheme)
-    } else {
-      // Set dark as default for first-time visitors
-      setTheme('dark')
+      return
     }
+
+    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches
+    setTheme(prefersDark ? 'dark' : 'light')
   }, [])
 
   useEffect(() => {

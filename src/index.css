@@ -20,12 +20,10 @@
     line-height: 1.6;
     font-weight: 400;
     letter-spacing: -0.011em;
-    color: #222222;
-    background-color: #ffffff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
-    @apply no-scrollbar;
+    @apply no-scrollbar bg-white text-gray-900 dark:bg-slate-950 dark:text-gray-100;
   }
 }
 

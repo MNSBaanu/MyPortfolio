@@ -70,14 +70,18 @@
     </style>
     <style>
       html, body {
-        background: #ffffff !important;
         overflow-x: hidden;
         margin: 0;
         padding: 0;
       }
       #root {
-        background: #ffffff;
         min-height: 100vh;
+      }
+      html, body, #root {
+        background: #ffffff;
+      }
+      html.dark, html.dark body, html.dark #root {
+        background: #020617 !important; /* slate-950 */
       }
     </style>
   </head>

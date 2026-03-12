@@ -83,7 +83,7 @@ export default function Contact() {
 
 
   return (
-    <div className="py-24 sm:py-32 bg-gray-100 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] shadow-[0_-30px_60px_rgba(0,0,0,0.15)] border-t border-gray-100 min-h-screen">
+    <div className="py-24 sm:py-32 bg-slate-100 dark:bg-slate-950 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-slate-800 min-h-screen">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -91,7 +91,7 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 md:mb-10 text-center text-black">Contact</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 md:mb-10 text-center text-black dark:text-slate-100">Contact</h2>
           
           {/* Layout: Contact Details + Form */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 px-4 sm:px-6 lg:px-8">
@@ -104,11 +104,11 @@ export default function Contact() {
               className="space-y-4"
             >
               <div className="mb-6">
-                <h3 className="text-lg sm:text-xl font-semibold text-black mb-3">Get In Touch</h3>
-                <p className="text-gray-600 text-sm sm:text-base mb-4">
+                <h3 className="text-lg sm:text-xl font-semibold text-black dark:text-slate-100 mb-3">Get In Touch</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base mb-4">
                   Feel free to reach out for opportunities, collaborations, or just to say hello!
                 </p>
-                <div className="flex items-center gap-2 text-black bg-gray-100 border border-gray-300 rounded-lg px-3 py-2">
+                <div className="flex items-center gap-2 text-black dark:text-white bg-gray-100 dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-lg px-3 py-2">
                   <Clock className="w-4 h-4 flex-shrink-0" />
                   <span className="text-xs sm:text-sm font-medium">Response time: Within 24 hours</span>
                 </div>
@@ -127,7 +127,7 @@ export default function Contact() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className={`bg-white dark:bg-white border border-gray-300 dark:border-gray-300 rounded-lg p-4 sm:p-5 transition-all duration-300 flex items-center gap-4 group ${
+                    className={`bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-lg p-4 sm:p-5 transition-all duration-300 flex items-center gap-4 group ${
                       detail.clickable ? 'hover:border-black cursor-pointer' : 'cursor-default'
                     }`}
                   >
@@ -135,8 +135,8 @@ export default function Contact() {
                       detail.clickable ? 'group-hover:scale-110' : ''
                     }`} />
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-medium text-gray-600 dark:text-gray-600 mb-1">{detail.label}</h4>
-                      <p className="text-sm sm:text-base text-gray-900 dark:text-gray-900 break-words">{detail.value}</p>
+                      <h4 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">{detail.label}</h4>
+                      <p className="text-sm sm:text-base text-gray-900 dark:text-gray-100 break-words">{detail.value}</p>
                     </div>
                   </Component>
                 )
@@ -152,7 +152,7 @@ export default function Contact() {
               className="lg:col-span-2"
             >
               {/* Chat Card Container */}
-              <div className="bg-white border border-gray-300 rounded-lg shadow-lg max-w-md mx-auto">
+              <div className="bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-lg max-w-md mx-auto">
                 {/* Chat Header */}
                 <div className="bg-gray-800 text-white px-4 py-3 text-lg font-medium rounded-t-lg">
                   Send Message
@@ -169,7 +169,7 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:border-gray-800 focus:outline-none transition-colors duration-300"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-500 bg-white dark:bg-slate-900 focus:border-gray-800 dark:focus:border-slate-400 focus:outline-none transition-colors duration-300"
                         placeholder="Your name"
                       />
                     </div>
@@ -181,7 +181,7 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:border-gray-800 focus:outline-none transition-colors duration-300"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-500 bg-white dark:bg-slate-900 focus:border-gray-800 dark:focus:border-slate-400 focus:outline-none transition-colors duration-300"
                         placeholder="your.email@example.com"
                       />
                     </div>
@@ -193,7 +193,7 @@ export default function Contact() {
                         value={formData.subject}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:border-gray-800 focus:outline-none transition-colors duration-300"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-500 bg-white dark:bg-slate-900 focus:border-gray-800 dark:focus:border-slate-400 focus:outline-none transition-colors duration-300"
                         placeholder="What's this about?"
                       />
                     </div>
@@ -205,7 +205,7 @@ export default function Contact() {
                         onChange={handleChange}
                         required
                         rows={4}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-500 focus:border-gray-800 focus:outline-none transition-colors duration-300 resize-none"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-slate-700 rounded-lg text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-500 bg-white dark:bg-slate-900 focus:border-gray-800 dark:focus:border-slate-400 focus:outline-none transition-colors duration-300 resize-none"
                         placeholder="Your message..."
                       />
                     </div>

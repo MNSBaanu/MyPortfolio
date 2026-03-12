@@ -4,7 +4,7 @@ import { about } from '../data/portfolio'
 export default function About() {
   return (
     <div 
-      className="py-24 sm:py-32 bg-slate-100 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] shadow-[0_-30px_60px_rgba(0,0,0,0.15)] border-t border-gray-200 min-h-screen"
+      className="py-24 sm:py-32 bg-slate-100 dark:bg-slate-950 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-200 dark:border-slate-800 min-h-screen"
     >
       <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <motion.div
@@ -14,10 +14,10 @@ export default function About() {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-slate-100 mb-6 tracking-tight">
             About Me
           </h2>
-          <div className="w-16 h-1 bg-black"></div>
+          <div className="w-16 h-1 bg-black dark:bg-slate-100"></div>
         </motion.div>
 
         {/* Main Content */}
@@ -30,10 +30,10 @@ export default function About() {
             viewport={{ once: true }}
             className="max-w-4xl space-y-6"
           >
-            <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
               {about.description1}
             </p>
-            <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
               {about.description2}
             </p>
           </motion.div>
@@ -45,7 +45,7 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
+            <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
               Highlights
             </h3>
             <div className="flex flex-wrap gap-3">
@@ -56,7 +56,7 @@ export default function About() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.4 + index * 0.05 }}
                   viewport={{ once: true }}
-                  className="px-4 py-2 rounded-full bg-gray-100 text-gray-800 text-sm font-medium hover:bg-gray-200 transition-colors duration-300 cursor-default"
+                  className="px-4 py-2 rounded-full bg-gray-100 dark:bg-slate-900 text-gray-800 dark:text-gray-100 text-sm font-medium hover:bg-gray-200 dark:hover:bg-slate-800 transition-colors duration-300 cursor-default"
                 >
                   {tag}
                 </motion.span>

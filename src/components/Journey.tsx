@@ -51,7 +51,7 @@ export default function Journey() {
   }
 
   return (
-    <div className="py-24 sm:py-32 bg-gray-100 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] shadow-[0_-30px_60px_rgba(0,0,0,0.15)] border-t border-gray-100 min-h-screen">
+    <div className="py-24 sm:py-32 bg-gray-50 dark:bg-slate-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-slate-800 min-h-screen">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -60,10 +60,10 @@ export default function Journey() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-slate-100 mb-4 tracking-tight">
             My Journey
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Education, experience, and continuous learning
           </p>
         </motion.div>
@@ -81,7 +81,7 @@ export default function Journey() {
                 className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
                   activeTab === tab.id
                     ? 'bg-gradient-to-r from-[#103257] to-[#0d4a6b] text-white shadow-lg'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    : 'bg-gray-100 dark:bg-slate-900 text-gray-700 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-slate-800'
                 }`}
               >
                 <Icon size={18} strokeWidth={2.5} />
@@ -107,9 +107,13 @@ export default function Journey() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="bg-white rounded-2xl border border-gray-200 hover:border-[#103257] transition-all duration-500 overflow-hidden group shadow-sm hover:shadow-2xl hover:-translate-y-2"
+                className={`rounded-2xl border border-gray-200 dark:border-slate-800 transition-all duration-300 overflow-hidden group ${
+                  index % 2 === 0
+                    ? 'bg-white dark:bg-slate-900'
+                    : 'bg-gray-50 dark:bg-slate-800'
+                }`}
               >
-                <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden relative">
+                <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-slate-800 dark:to-slate-700 overflow-hidden relative">
                   <img
                     src={cert.image}
                     alt={cert.title}
@@ -133,9 +137,9 @@ export default function Journey() {
                   />
                 </div>
                 <div className="p-5">
-                  <h3 className="text-base font-semibold text-black mb-2 line-clamp-2 leading-snug">{cert.title}</h3>
-                  <p className="text-gray-700 text-sm mb-2 font-medium">{cert.issuer}</p>
-                  <p className="text-gray-500 text-sm">{cert.date}</p>
+                  <h3 className="text-base font-semibold text-black dark:text-slate-100 mb-2 line-clamp-2 leading-snug">{cert.title}</h3>
+                  <p className="text-gray-700 dark:text-gray-200 text-sm mb-2 font-medium">{cert.issuer}</p>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">{cert.date}</p>
                 </div>
               </motion.div>
             ))
@@ -147,11 +151,15 @@ export default function Journey() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-                className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-[#103257] transition-all duration-500 shadow-sm hover:shadow-2xl hover:-translate-y-2"
+                className={`p-8 rounded-2xl border border-gray-200 dark:border-slate-800 transition-all duration-300 ${
+                  index % 2 === 0
+                    ? 'bg-white dark:bg-slate-900'
+                    : 'bg-gray-50 dark:bg-slate-800'
+                }`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-2">
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-black mb-2 leading-tight">
+                    <h3 className="text-xl font-bold text-black dark:text-slate-100 mb-2 leading-tight">
                       {item.title.split('\n').map((line, i) => (
                         <span key={i}>
                           {line}
@@ -159,7 +167,7 @@ export default function Journey() {
                         </span>
                       ))}
                     </h3>
-                    <p className="text-base text-gray-700 font-medium">{item.organization}</p>
+                    <p className="text-base text-gray-700 dark:text-gray-200 font-medium">{item.organization}</p>
                   </div>
                   <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-r from-[#103257] to-[#0d4a6b] text-white text-sm font-medium whitespace-nowrap shadow-md">
                     {item.period}
@@ -167,7 +175,7 @@ export default function Journey() {
                 </div>
 
                 {item.description && (
-                  <p className="text-base text-gray-600 mb-4 leading-relaxed">{item.description}</p>
+                  <p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">{item.description}</p>
                 )}
 
                 {item.tech && item.tech.length > 0 && (
@@ -176,7 +184,7 @@ export default function Journey() {
                       {item.tech.map((tech, techIdx) => (
                         <span
                           key={techIdx}
-                          className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors duration-300"
+                          className="px-3 py-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-100 rounded-full text-xs font-medium hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors duration-300"
                         >
                           {tech}
                         </span>
@@ -188,7 +196,7 @@ export default function Journey() {
                 {item.details && (
                   <ul className="space-y-2">
                     {item.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-start text-gray-600 text-base leading-relaxed">
+                      <li key={idx} className="flex items-start text-gray-600 dark:text-gray-300 text-base leading-relaxed">
                         <span className="inline-block w-2 h-2 rounded-full bg-[#103257] mt-2 mr-3 flex-shrink-0"></span>
                         <span>{detail}</span>
                       </li>

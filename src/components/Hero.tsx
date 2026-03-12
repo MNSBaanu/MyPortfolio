@@ -73,7 +73,10 @@ const Hero = () => {
   ]
 
   return (
-    <section id="home" className="min-h-screen flex items-center relative overflow-visible bg-gradient-to-br from-gray-50 via-white to-gray-50 pt-32 px-6 sm:px-8 md:px-12 lg:px-16">
+    <section
+      id="home"
+      className="min-h-screen flex items-center relative overflow-visible bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pt-32 px-6 sm:px-8 md:px-12 lg:px-16"
+    >
       {/* Subtle dot pattern overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(#00000008_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
       
@@ -95,13 +98,13 @@ const Hero = () => {
                 style={{ minHeight: '200px' }}
               >
                 <div className="space-y-2">
-                  <div className="text-black">
+                  <div className="text-black dark:text-slate-100">
                     {displayedText.line1}
                     {isTyping && displayedText.line2 === '' && displayedText.tagline === '' && (
                       <span className="inline-block w-0.5 h-12 bg-black ml-1 animate-pulse"></span>
                     )}
                   </div>
-                  <div className="text-black">
+                  <div className="text-black dark:text-slate-100">
                     {displayedText.line2}
                     {isTyping && displayedText.line2 !== '' && displayedText.tagline === '' && (
                       <span className="inline-block w-0.5 h-12 bg-black ml-1 animate-pulse"></span>
@@ -120,7 +123,7 @@ const Hero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
-                className="text-gray-500 text-sm flex items-center justify-center lg:justify-start gap-2"
+                className="text-gray-500 dark:text-gray-400 text-sm flex items-center justify-center lg:justify-start gap-2"
               >
                 <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
                 Based in Kandy, Sri Lanka
@@ -130,7 +133,7 @@ const Hero = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
-                className="text-gray-600 text-base sm:text-lg leading-relaxed max-w-xl"
+                className="text-gray-600 dark:text-gray-300 text-base sm:text-lg leading-relaxed max-w-xl"
               >
                 {personalInfo.description}
               </motion.p>
@@ -151,7 +154,7 @@ const Hero = () => {
 
               <button
                 onClick={() => setShowCVViewer(true)}
-                className="px-7 py-3 bg-white text-gray-800 rounded-full text-sm font-semibold hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-gray-200 hover:border-[#103257] hover:scale-105"
+                className="px-7 py-3 bg-white text-gray-800 dark:bg-slate-900 dark:text-gray-100 rounded-full text-sm font-semibold hover:bg-gray-50 dark:hover:bg-slate-800 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-gray-200 dark:border-slate-700 hover:border-[#103257] hover:scale-105"
               >
                 View My Resume
               </button>
@@ -199,7 +202,7 @@ const Hero = () => {
                       repeat: Infinity,
                       delay: index * 0.2,
                     }}
-                    className="absolute text-gray-300 font-mono text-xs font-medium pointer-events-none"
+                    className="absolute text-gray-400 dark:text-gray-500 font-mono text-xs font-medium pointer-events-none"
                     style={positions[index]}
                   >
                     {snippet}
