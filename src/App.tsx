@@ -6,6 +6,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import LoadingScreen from './components/LoadingScreen'
 import SEO from './components/SEO'
 import Header from './components/Header'
+import SocialSidebar from './components/SocialSidebar'
 import Hero from './components/Hero'
 import About from './components/About'
 import Journey from './components/Journey'
@@ -51,13 +52,28 @@ function App() {
               className="min-h-screen bg-white text-gray-900"
             >
               <Header />
-              <main>
-                <Hero />
-                <About />
-                <Journey />
-                <Skills />
-                <Projects />
-                <Contact />
+              <SocialSidebar />
+              <main className="relative bg-gray-50">
+                <section className="sticky top-0 h-screen z-0">
+                  <Hero />
+                </section>
+                <div className="relative z-10 space-y-0">
+                  <section id="about" className="sticky top-0 z-20">
+                    <About />
+                  </section>
+                  <section id="journey" className="sticky top-0 z-30">
+                    <Journey />
+                  </section>
+                  <section id="skills" className="sticky top-0 z-40">
+                    <Skills />
+                  </section>
+                  <section id="projects" className="sticky top-0 z-50">
+                    <Projects />
+                  </section>
+                  <section id="contact" className="sticky top-0 z-[60]">
+                    <Contact />
+                  </section>
+                </div>
               </main>
               <Footer />
             </motion.div>

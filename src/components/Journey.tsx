@@ -51,7 +51,7 @@ export default function Journey() {
   }
 
   return (
-    <section id="journey" className="py-16 sm:py-20 md:py-24 bg-white">
+    <div className="py-24 sm:py-32 bg-gray-50 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] shadow-[0_-30px_60px_rgba(0,0,0,0.1)] border-t border-gray-100 min-h-screen">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -207,6 +207,6 @@ export default function Journey() {
           )}
         </motion.div>
       </div>
-    </section>
+    </div>
   )
 }

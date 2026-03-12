@@ -1,11 +1,9 @@
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react'
 import { personalInfo } from '../data/portfolio'
 import { useState, useEffect } from 'react'
 import CVViewer from './CVViewer'
 
 const Hero = () => {
-  const [showBackToTop, setShowBackToTop] = useState(false)
   const [showCVViewer, setShowCVViewer] = useState(false)
   const [currentTagline, setCurrentTagline] = useState(0)
   const [displayedText, setDisplayedText] = useState({ line1: '', line2: '', tagline: '' })
@@ -18,16 +16,6 @@ const Hero = () => {
     { line1: 'Problem', line2: 'Solver', tagline: 'Creating Impact' },
     { line1: 'Software Engineering', line2: 'Student', tagline: 'Learning & Growing' }
   ]
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY
-      setShowBackToTop(scrollY > 500)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   useEffect(() => {
     const currentText = taglines[currentTagline]
@@ -89,71 +77,6 @@ const Hero = () => {
       {/* Subtle dot pattern overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(#00000008_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
       
-      {/* Vertical Social Icons - Right Side */}
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-        className="fixed right-6 md:right-8 top-[35%] z-50 flex flex-col gap-4"
-      >
-        <motion.a
-          href={personalInfo.social.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.1, y: -2 }}
-          whileTap={{ scale: 0.95 }}
-          className="group flex justify-center p-3.5 rounded-full bg-white text-gray-700 hover:text-black shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-gray-300 relative"
-        >
-          <Github className="w-5 h-5" strokeWidth={2} />
-          <span className="absolute right-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap pointer-events-none">
-            GitHub
-          </span>
-        </motion.a>
-
-        <motion.a
-          href={personalInfo.social.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.1, y: -2 }}
-          whileTap={{ scale: 0.95 }}
-          className="group flex justify-center p-3.5 rounded-full bg-white text-gray-700 hover:text-black shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-gray-300 relative"
-        >
-          <Linkedin className="w-5 h-5" strokeWidth={2} />
-          <span className="absolute right-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap pointer-events-none">
-            LinkedIn
-          </span>
-        </motion.a>
-
-        <motion.a
-          href={`mailto:${personalInfo.email}`}
-          whileHover={{ scale: 1.1, y: -2 }}
-          whileTap={{ scale: 0.95 }}
-          className="group flex justify-center p-3.5 rounded-full bg-white text-gray-700 hover:text-black shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-gray-300 relative"
-        >
-          <Mail className="w-5 h-5" strokeWidth={2} />
-          <span className="absolute right-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap pointer-events-none">
-            Email
-          </span>
-        </motion.a>
-
-        {showBackToTop && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            whileHover={{ scale: 1.1, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="group flex justify-center p-3.5 rounded-full bg-white text-gray-700 hover:text-black shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-gray-300 relative"
-          >
-            <ArrowUp className="w-5 h-5" strokeWidth={2} />
-            <span className="absolute right-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black text-white text-xs px-3 py-1.5 rounded-lg whitespace-nowrap pointer-events-none">
-              Back to Top
-            </span>
-          </motion.button>
-        )}
-      </motion.div>
-
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Main Content */}
