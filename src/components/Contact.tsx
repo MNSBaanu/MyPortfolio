@@ -83,7 +83,7 @@ export default function Contact() {
 
 
   return (
-    <div className="py-24 sm:py-32 bg-white relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] shadow-[0_-30px_60px_rgba(0,0,0,0.1)] border-t border-gray-100 min-h-screen">
+    <div className="py-24 sm:py-32 bg-gray-100 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] shadow-[0_-30px_60px_rgba(0,0,0,0.15)] border-t border-gray-100 min-h-screen">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

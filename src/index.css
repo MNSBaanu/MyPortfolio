@@ -8,22 +8,35 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 100px;
-  /* Offset for fixed header */
+@layer base {
+  html {
+    @apply scroll-smooth no-scrollbar;
+    scroll-padding-top: 100px;
+    /* Offset for fixed header */
+  }
+
+  body {
+    font-family: 'Airbnb Cereal VF', 'Circular', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    font-weight: 400;
+    letter-spacing: -0.011em;
+    color: #222222;
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    @apply no-scrollbar;
+  }
 }
 
-body {
-  font-family: 'Airbnb Cereal VF', 'Circular', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', sans-serif;
-  line-height: 1.6;
-  font-weight: 400;
-  letter-spacing: -0.011em;
-  color: #222222;
-  background-color: #ffffff;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 /* Custom scrollbar - Airbnb style */
