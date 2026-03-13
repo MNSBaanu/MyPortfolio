@@ -13,6 +13,7 @@ import Journey from './components/Journey'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
+import ContactForm from './components/ContactForm'
 import Footer from './components/Footer'
 
 function App() {
@@ -70,8 +71,11 @@ function App() {
                   <section id="projects" className="sticky top-0 z-50">
                     <Projects />
                   </section>
-                  <section id="contact" className="relative z-[60]">
+                  <section id="contact" className="sticky top-0 z-[60]">
                     <Contact />
+                  </section>
+                  <section id="contact-form" className="sticky top-0 z-[70]">
+                    <ContactForm />
                   </section>
                   <Footer />
                 </div>

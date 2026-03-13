@@ -51,8 +51,14 @@ export default function Journey() {
   }
 
   return (
-    <div className="py-24 sm:py-32 bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
+    <div
+      className="box-border px-6 sm:px-8 bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 overflow-hidden"
+      style={{
+        height: '100vh',
+        paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
+      }}
+    >
+      <div className="h-full max-w-7xl mx-auto flex flex-col">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -78,11 +84,10 @@ export default function Journey() {
                 onClick={() => setActiveTab(tab.id)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
-                  activeTab === tab.id
+                className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${activeTab === tab.id
                     ? 'bg-gradient-to-r from-[#103257] to-[#0d4a6b] text-white shadow-lg'
                     : 'bg-gray-100 dark:bg-neutral-900 text-gray-700 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-neutral-800'
-                }`}
+                  }`}
               >
                 <Icon size={18} strokeWidth={2.5} />
                 {tab.label}
@@ -107,11 +112,10 @@ export default function Journey() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                className={`rounded-2xl border border-gray-200 dark:border-neutral-800 transition-all duration-300 overflow-hidden group ${
-                  index % 2 === 0
+                className={`rounded-2xl border border-gray-200 dark:border-neutral-800 transition-all duration-300 overflow-hidden group ${index % 2 === 0
                     ? 'bg-white dark:bg-neutral-950'
                     : 'bg-gray-50 dark:bg-neutral-900'
-                }`}
+                  }`}
               >
                 <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-neutral-900 dark:to-neutral-800 overflow-hidden relative">
                   <img
@@ -151,11 +155,10 @@ export default function Journey() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-                className={`p-8 rounded-2xl border border-gray-200 dark:border-neutral-800 transition-all duration-300 ${
-                  index % 2 === 0
+                className={`p-8 rounded-2xl border border-gray-200 dark:border-neutral-800 transition-all duration-300 ${index % 2 === 0
                     ? 'bg-white dark:bg-neutral-950'
                     : 'bg-gray-50 dark:bg-neutral-900'
-                }`}
+                  }`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-2">
                   <div className="flex-1">

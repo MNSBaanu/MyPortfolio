@@ -66,9 +66,8 @@ function SkillCard({
   return (
     <motion.div
       style={{ scale, rotateX, rotateY, z, transformStyle: 'preserve-3d' }}
-      className={`flex-shrink-0 p-6 sm:p-7 md:p-8 rounded-2xl transition-shadow duration-300 flex flex-col items-center justify-center gap-4 group min-w-[140px] sm:min-w-[160px] md:min-w-[180px] border border-gray-100 dark:border-neutral-800 shadow-sm hover:shadow-lg ${
-        index % 2 === 0 ? 'bg-gray-50 dark:bg-black' : 'bg-gray-100 dark:bg-black'
-      }`}
+      className={`flex-shrink-0 p-6 sm:p-7 md:p-8 rounded-2xl transition-shadow duration-300 flex flex-col items-center justify-center gap-4 group min-w-[140px] sm:min-w-[160px] md:min-w-[180px] border border-gray-100 dark:border-neutral-800 shadow-sm hover:shadow-lg ${index % 2 === 0 ? 'bg-gray-50 dark:bg-black' : 'bg-gray-100 dark:bg-black'
+        }`}
     >
       {skill.icon && (
         <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center">
@@ -146,8 +145,14 @@ export default function Skills() {
   }, [allSkills.length, loopDistance, x])
 
   return (
-    <div className="py-24 sm:py-32 bg-white dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
+    <div
+      className="box-border px-6 sm:px-8 bg-white dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
+      style={{
+        height: '100vh',
+        paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
+      }}
+    >
+      <div className="h-full max-w-7xl mx-auto flex flex-col justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -162,7 +167,7 @@ export default function Skills() {
             A curated collection of tools and technologies I work with
           </p>
         </motion.div>
-        
+
         {/* Continuous Scrolling Skills Ticker */}
         <div className="relative -mx-6 sm:-mx-8 md:-mx-12 lg:-mx-16">
           {/* Scrolling container */}

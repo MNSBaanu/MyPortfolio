@@ -3,10 +3,14 @@ import { about } from '../data/portfolio'
 
 export default function About() {
   return (
-    <div 
-      className="py-24 sm:py-32 bg-slate-100 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-200 dark:border-neutral-800 min-h-screen"
+    <div
+      className="box-border px-6 sm:px-8 bg-slate-100 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-200 dark:border-neutral-800"
+      style={{
+        height: '100vh',
+        paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
+      }}
     >
-      <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
+      <div className="h-full max-w-6xl mx-auto flex flex-col justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
