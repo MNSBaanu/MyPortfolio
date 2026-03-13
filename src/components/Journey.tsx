@@ -1,222 +1,209 @@
-import { motion } from 'framer-motion'
-import { useState } from 'react'
-import { GraduationCap, Briefcase, Award } from 'lucide-react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef, useMemo } from 'react'
 import { experience as experienceData, certifications as certificationsData, education as educationData } from '../data/portfolio'
 
 interface JourneyItem {
+  id: string
   title: string
-  organization: string
-  period: string
+  organization?: string
+  period?: string
   description?: string
-  details?: string[]
-  link?: string
   tech?: string[]
+  image?: string
+  type: 'experience' | 'education' | 'certifications'
+  sectionKey: string
+  indexInSection: number
 }
 
 export default function Journey() {
-  const [activeTab, setActiveTab] = useState<'education' | 'experience' | 'certifications'>('experience')
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  const education: JourneyItem[] = educationData.map(edu => ({
-    title: edu.title,
-    organization: edu.institution,
-    period: edu.period,
-    description: edu.description
-  }))
+  const { items, sections } = useMemo(() => {
+    const allItems: JourneyItem[] = []
+    const sectionMetadata: { [key: string]: { start: number; end: number; title: string; count: number } } = {}
 
-  const experience: JourneyItem[] = experienceData.map(exp => ({
-    title: exp.title,
-    organization: exp.company,
-    period: exp.period,
-    description: exp.description,
-    tech: exp.tech
-  }))
-
-
-
-  const tabs = [
-    { id: 'experience' as const, label: 'Experience', icon: Briefcase },
-    { id: 'education' as const, label: 'Education', icon: GraduationCap },
-    { id: 'certifications' as const, label: 'Certifications', icon: Award },
-  ]
-
-  const getActiveData = () => {
-    switch (activeTab) {
-      case 'education':
-        return education
-      case 'experience':
-        return experience
-      case 'certifications':
-        return []
+    const addSection = (key: string, title: string, data: any[], type: 'experience' | 'education' | 'certifications') => {
+      const start = allItems.length
+      data.forEach((d, idx) => {
+        allItems.push({
+          id: `${key}-${idx}`,
+          title: d.title,
+          organization: d.company || d.institution || d.issuer,
+          period: d.period || d.date,
+          description: d.description,
+          tech: d.tech,
+          image: d.image,
+          type,
+          sectionKey: key,
+          indexInSection: idx
+        })
+      })
+      sectionMetadata[key] = { start, end: allItems.length - 1, title, count: data.length }
     }
-  }
+
+    addSection('experience', 'Work Experience', experienceData, 'experience')
+    addSection('education', 'Education', educationData, 'education')
+    addSection('certifications', 'Certifications', certificationsData, 'certifications')
+
+    return { items: allItems, sections: sectionMetadata }
+  }, [])
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  })
+
+  const sectionKeys = Object.keys(sections)
 
   return (
     <div
-      className="box-border px-6 sm:px-8 bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 overflow-hidden"
-      style={{
-        height: '100vh',
-        paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
-      }}
+      ref={containerRef}
+      className="relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 bg-gray-50 dark:bg-black"
+      style={{ height: `${sectionKeys.length * 400}vh` }} // More scroll depth for horizontal movement
     >
-      <div className="h-full max-w-7xl mx-auto flex flex-col">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight">
-            My Journey
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Education, experience, and continuous learning
-          </p>
-        </motion.div>
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col items-center justify-center">
+        <div className="max-w-full w-full h-full relative flex flex-col items-center">
+          
+          {/* SECTIONS */}
+          {sectionKeys.map((key, sIdx) => {
+            const section = sections[key]
+            const sectionStart = sIdx / sectionKeys.length
+            const sectionEnd = (sIdx + 1) / sectionKeys.length
+            
+            // Section visibility & Movement
+            const sectionOpacity = useTransform(scrollYProgress, 
+              [sectionStart, sectionStart + 0.05], 
+              [0, 1]
+            )
 
-        {/* Toggle Tabs */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {tabs.map((tab) => {
-            const Icon = tab.icon
+            const sectionY = useTransform(scrollYProgress,
+              [sectionEnd - 0.1, sectionEnd],
+              [0, -1000] // Move up out of view
+            )
+
+            // Horizontal Scroll Progress for THIS section
+            // We give 10% for entrance, 70% for horizontal scroll, 20% for rest/transition
+            const horizontalScrollStart = sectionStart + 0.1
+            const horizontalScrollEnd = sectionEnd - 0.1
+
             return (
-              <motion.button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${activeTab === tab.id
-                    ? 'bg-gradient-to-r from-[#103257] to-[#0d4a6b] text-white shadow-lg'
-                    : 'bg-gray-100 dark:bg-neutral-900 text-gray-700 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-neutral-800'
-                  }`}
+              <motion.div
+                key={key}
+                style={{ 
+                  opacity: sectionOpacity,
+                  y: sectionY,
+                  display: useTransform(scrollYProgress, p => (p >= sectionStart - 0.02 && p <= sectionEnd + 0.05) ? 'flex' : 'none')
+                }}
+                className="absolute inset-0 flex flex-col items-center justify-center w-full h-full"
               >
-                <Icon size={18} strokeWidth={2.5} />
-                {tab.label}
-              </motion.button>
+                {/* Topic (Center Top) */}
+                <div className="absolute top-20 w-full text-center z-20">
+                   <motion.h2 
+                    style={{
+                      y: useTransform(scrollYProgress, [sectionStart, sectionStart + 0.08], [sIdx === 0 ? 100 : 50, 0]),
+                      opacity: useTransform(scrollYProgress, [sectionStart, sectionStart + 0.08], [0, 1])
+                    }}
+                    className="text-4xl sm:text-6xl lg:text-7xl font-black text-black dark:text-gray-100 tracking-tighter leading-tight"
+                   >
+                     {section.title}
+                   </motion.h2>
+                   <motion.div 
+                    style={{ scaleX: useTransform(scrollYProgress, [sectionStart, sectionStart + 0.08], [0, 1]) }}
+                    className="w-16 h-1.5 bg-[#103257] dark:bg-blue-600 mx-auto mt-4 rounded-full" 
+                   />
+                </div>
+
+                {/* Horizontal Cards Container */}
+                <div className="w-full flex items-center justify-start overflow-visible h-[500px] px-[10vw]">
+                  {items.filter(it => it.sectionKey === key).map((item, idx) => {
+                    const cardWidth = 350
+                    const gap = 30
+                    const totalWidth = section.count * (cardWidth + gap)
+                    
+                    // Entrance: Cards fly in from the right one by one
+                    const entranceStart = sectionStart + (idx / section.count) * 0.1
+                    const entranceEnd = entranceStart + 0.05
+                    
+                    // Horizontal Movement: All cards move left as shared track
+                    const scrollDistance = totalWidth - (window.innerWidth * 0.8)
+                    const xOffset = useTransform(
+                      scrollYProgress,
+                      [horizontalScrollStart, horizontalScrollEnd],
+                      [0, -Math.max(0, scrollDistance)]
+                    )
+
+                    // Individual Card Animation
+                    const opacity = useTransform(scrollYProgress, [entranceStart, entranceEnd], [0, 1])
+                    const scale = useTransform(scrollYProgress, [entranceStart, entranceEnd], [0.8, 1])
+                    const yEntrance = useTransform(scrollYProgress, [entranceStart, entranceEnd], [100, 0])
+                    
+                    // Base X position in the horizontal line
+                    const baseX = idx * (cardWidth + gap)
+
+                    return (
+                      <motion.div
+                        key={item.id}
+                        style={{
+                          opacity,
+                          scale,
+                          x: xOffset,
+                          y: yEntrance,
+                          left: baseX + (window.innerWidth * 0.1), // Offset by start padding
+                          width: cardWidth,
+                          position: 'absolute'
+                        }}
+                        className="flex-shrink-0"
+                      >
+                         <div className={`p-6 rounded-[2rem] border border-gray-200 dark:border-neutral-800 bg-white/95 dark:bg-neutral-950/95 backdrop-blur-md shadow-2xl h-[450px] flex flex-col`}>
+                            <div className="flex justify-between items-center mb-4">
+                               <span className="text-[10px] font-black uppercase text-gray-400 tracking-widest">{item.type}</span>
+                               <span className="text-[10px] font-bold bg-black text-white dark:bg-white dark:text-black px-3 py-1 rounded-full">{item.period}</span>
+                            </div>
+                            
+                            <h3 className="text-xl font-black text-black dark:text-gray-100 leading-tight mb-2">{item.title}</h3>
+                            <p className="text-base font-bold text-[#103257] dark:text-blue-400 mb-4">{item.organization}</p>
+                            
+                            {item.description && (
+                              <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-6 line-clamp-4">
+                                {item.description}
+                              </p>
+                            )}
+
+                            <div className="mt-auto">
+                               {item.image ? (
+                                 <div className="w-full h-32 rounded-xl overflow-hidden border border-gray-100 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-900">
+                                   <img src={item.image} alt="" className="w-full h-full object-cover" />
+                                 </div>
+                               ) : (
+                                 <div className="flex flex-wrap gap-1.5">
+                                    {item.tech?.slice(0, 6).map((t, i) => (
+                                      <span key={i} className="px-2 py-0.5 bg-gray-100 dark:bg-neutral-800 text-gray-500 dark:text-gray-400 rounded-md text-[9px] font-bold uppercase">
+                                        {t}
+                                      </span>
+                                    ))}
+                                 </div>
+                               )}
+                            </div>
+                         </div>
+                      </motion.div>
+                    )
+                  })}
+                </div>
+
+                {/* Scroll Indicator (Bottom) */}
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
+                >
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">Scroll to Explore</span>
+                  <div className="w-[1px] h-10 bg-gradient-to-b from-blue-600 to-transparent" />
+                </motion.div>
+
+              </motion.div>
             )
           })}
         </div>
-
-        {/* Content */}
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className={activeTab === 'certifications' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' : 'space-y-6 max-w-5xl mx-auto'}
-        >
-          {activeTab === 'certifications' ? (
-            // Certification Cards
-            certificationsData.map((cert, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                className={`rounded-2xl border border-gray-200 dark:border-neutral-800 transition-all duration-300 overflow-hidden group ${index % 2 === 0
-                    ? 'bg-white dark:bg-neutral-950'
-                    : 'bg-gray-50 dark:bg-neutral-900'
-                  }`}
-              >
-                <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-neutral-900 dark:to-neutral-800 overflow-hidden relative">
-                  <img
-                    src={cert.image}
-                    alt={cert.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    onError={(e) => {
-                      const target = e.currentTarget;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent && !parent.querySelector('.fallback-content')) {
-                        const fallback = document.createElement('div');
-                        fallback.className = 'fallback-content absolute inset-0 flex flex-col items-center justify-center p-4 text-center';
-                        fallback.innerHTML = `
-                          <svg class="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
-                          </svg>
-                          <p class="text-xs font-medium text-gray-500">Will be uploaded soon</p>
-                        `;
-                        parent.appendChild(fallback);
-                      }
-                    }}
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="text-base font-semibold text-black dark:text-gray-100 mb-2 line-clamp-2 leading-snug">{cert.title}</h3>
-                  <p className="text-gray-700 dark:text-gray-200 text-sm mb-2 font-medium">{cert.issuer}</p>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">{cert.date}</p>
-                </div>
-              </motion.div>
-            ))
-          ) : (
-            // Education and Experience Cards
-            getActiveData().map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-                className={`p-8 rounded-2xl border border-gray-200 dark:border-neutral-800 transition-all duration-300 ${index % 2 === 0
-                    ? 'bg-white dark:bg-neutral-950'
-                    : 'bg-gray-50 dark:bg-neutral-900'
-                  }`}
-              >
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-2">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-black dark:text-gray-100 mb-2 leading-tight">
-                      {item.title.split('\n').map((line, i) => (
-                        <span key={i}>
-                          {line}
-                          {i < item.title.split('\n').length - 1 && <br />}
-                        </span>
-                      ))}
-                    </h3>
-                    <p className="text-base text-gray-700 dark:text-gray-200 font-medium">{item.organization}</p>
-                  </div>
-                  <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-gradient-to-r from-[#103257] to-[#0d4a6b] text-white text-sm font-medium whitespace-nowrap shadow-md">
-                    {item.period}
-                  </span>
-                </div>
-
-                {item.description && (
-                  <p className="text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">{item.description}</p>
-                )}
-
-                {item.tech && item.tech.length > 0 && (
-                  <div className="mb-4">
-                    <div className="flex flex-wrap gap-2">
-                      {item.tech.map((tech, techIdx) => (
-                        <span
-                          key={techIdx}
-                          className="px-3 py-1 bg-gray-100 dark:bg-neutral-900 text-gray-700 dark:text-gray-100 rounded-full text-xs font-medium hover:bg-gray-200 dark:hover:bg-neutral-800 transition-colors duration-300"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {item.details && (
-                  <ul className="space-y-2">
-                    {item.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-start text-gray-600 dark:text-gray-300 text-base leading-relaxed">
-                        <span className="inline-block w-2 h-2 rounded-full bg-[#103257] mt-2 mr-3 flex-shrink-0"></span>
-                        <span>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </motion.div>
-            ))
-          )}
-
-          {/* Empty State */}
-          {getActiveData().length === 0 && certificationsData.length === 0 && (
-            <div className="text-center py-20 col-span-full">
-              <p className="text-gray-500 text-lg">No {activeTab} added yet.</p>
-            </div>
-          )}
-        </motion.div>
       </div>
     </div>
   )

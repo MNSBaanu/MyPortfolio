@@ -89,7 +89,7 @@ export default function ContactForm() {
                                         value={formData.name}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-neutral-900 focus:ring-2 focus:ring-[#103257] focus:border-transparent outline-none transition-all duration-300"
+                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-[#103257] focus:border-transparent outline-none transition-all duration-300"
                                         placeholder="Your full name"
                                     />
                                     <input
@@ -99,7 +99,7 @@ export default function ContactForm() {
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-neutral-900 focus:ring-2 focus:ring-[#103257] focus:border-transparent outline-none transition-all duration-300"
+                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-[#103257] focus:border-transparent outline-none transition-all duration-300"
                                         placeholder="your.email@example.com"
                                     />
                                 </div>
@@ -110,7 +110,7 @@ export default function ContactForm() {
                                     value={formData.subject}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-neutral-900 focus:ring-2 focus:ring-[#103257] focus:border-transparent outline-none transition-all duration-300"
+                                    className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-[#103257] focus:border-transparent outline-none transition-all duration-300"
                                     placeholder="What is this about?"
                                 />
                                 <textarea
@@ -120,7 +120,7 @@ export default function ContactForm() {
                                     onChange={handleChange}
                                     required
                                     rows={4}
-                                    className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-neutral-900 focus:ring-2 focus:ring-[#103257] focus:border-transparent outline-none transition-all duration-300 resize-none"
+                                    className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-[#103257] focus:border-transparent outline-none transition-all duration-300 resize-none"
                                     placeholder="Your detailed message..."
                                 />
 

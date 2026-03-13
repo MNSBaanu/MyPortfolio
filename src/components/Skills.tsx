@@ -146,7 +146,7 @@ export default function Skills() {
 
   return (
     <div
-      className="box-border px-6 sm:px-8 bg-white dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
+      className="box-border px-6 sm:px-8 bg-white dark:bg-neutral-900 relative z-40 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.05)]"
       style={{
         height: '100vh',
         paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
