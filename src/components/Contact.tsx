@@ -83,7 +83,10 @@ export default function Contact() {
 
 
   return (
-    <div className="py-24 sm:py-32 bg-gray-50 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 min-h-screen">
+    <div
+      className="py-24 sm:py-32 bg-gray-50 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
+      style={{ minHeight: 'calc(100vh - var(--header-height, 0px))' }}
+    >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -27,14 +27,17 @@ export default function Projects() {
   }
 
   return (
-    <div className="py-24 sm:py-32 bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
+    <div
+      className="box-border py-12 sm:py-14 bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
+      style={{ height: 'calc(100vh - var(--header-height, 0px))' }}
+    >
+      <div className="h-full max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 flex flex-col">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight">
             Featured Projects
@@ -51,7 +54,7 @@ export default function Projects() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
           >
             {currentProjects.map((project, index) => (
               <motion.div
@@ -67,7 +70,7 @@ export default function Projects() {
                 }`}
               >
                 {/* Project Image Carousel */}
-                <div className="relative h-48 sm:h-56 md:h-64 bg-gray-100 dark:bg-neutral-900 overflow-hidden group/image">
+                <div className="relative h-40 sm:h-44 md:h-48 bg-gray-100 dark:bg-neutral-900 overflow-hidden group/image">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={imageIndices[project.title] || 0}
@@ -131,7 +134,7 @@ export default function Projects() {
                   )}
                 </div>
 
-                <div className="p-5 sm:p-6">
+                <div className="p-4 sm:p-5">
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex-1">
                       <h3 className="text-lg sm:text-xl font-bold text-black dark:text-gray-100 mb-1 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">

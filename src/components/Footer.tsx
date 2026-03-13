@@ -2,7 +2,7 @@ import { personalInfo } from '../data/portfolio'
 
 export default function Footer() {
   return (
-    <footer className="bg-white dark:bg-black py-12 px-6 sm:px-8 md:px-12 lg:px-16 border-t border-gray-100 dark:border-neutral-800">
+    <footer className="relative z-[70] bg-white dark:bg-black py-12 px-6 sm:px-8 md:px-12 lg:px-16 border-t border-gray-100 dark:border-neutral-800">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <p className="text-xl sm:text-2xl font-bold tracking-tighter text-black dark:text-gray-100">

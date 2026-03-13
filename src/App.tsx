@@ -67,15 +67,23 @@ function App() {
                   <section id="skills" className="sticky top-0 z-40">
                     <Skills />
                   </section>
-                  <section id="projects" className="sticky top-0 z-50">
+                  <section
+                    id="projects"
+                    className="sticky z-50"
+                    style={{ top: 'var(--header-height, 0px)' }}
+                  >
                     <Projects />
                   </section>
-                  <section id="contact" className="sticky top-0 z-[60]">
+                  <section
+                    id="contact"
+                    className="sticky z-[60]"
+                    style={{ top: 'var(--header-height, 0px)' }}
+                  >
                     <Contact />
                   </section>
+                  <Footer />
                 </div>
               </main>
-              <Footer />
             </motion.div>
           )}
         </AnimatePresence>

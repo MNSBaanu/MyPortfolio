@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, Sun, Moon, X } from 'lucide-react'
 import { personalInfo } from '../data/portfolio'
@@ -17,6 +17,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
+  const headerRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +26,19 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useLayoutEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+
+    const update = () => {
+      document.documentElement.style.setProperty('--header-height', `${el.offsetHeight}px`)
+    }
+
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [isScrolled, isMobileMenuOpen])
 
   const scrollToSection = (href: string) => {
     setIsMobileMenuOpen(false)
@@ -54,6 +68,7 @@ const Header = () => {
 
   return (
     <header
+      ref={headerRef}
       className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ${
         isScrolled
           ? 'py-4 bg-white/80 dark:bg-black/80 backdrop-blur-2xl shadow-sm'
