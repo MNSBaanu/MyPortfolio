@@ -84,8 +84,11 @@ export default function Contact() {
 
   return (
     <div
-      className="py-24 sm:py-32 bg-gray-50 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
-      style={{ minHeight: 'calc(100vh - var(--header-height, 0px))' }}
+      className="box-border pb-24 sm:pb-28 bg-gray-50 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
+      style={{
+        height: '100vh',
+        paddingTop: 'calc(var(--header-height, 0px) + 3rem)',
+      }}
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <motion.div
@@ -94,7 +97,12 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 md:mb-10 text-center text-black dark:text-gray-100">Contact</h2>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight text-center">
+            Contact
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-center mb-10">
+            Let’s connect for opportunities, collaborations, or just to say hello
+          </p>
           
           {/* Layout: Contact Details + Form */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 px-4 sm:px-6 lg:px-8">

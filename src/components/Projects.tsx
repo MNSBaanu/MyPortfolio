@@ -28,8 +28,11 @@ export default function Projects() {
 
   return (
     <div
-      className="box-border py-12 sm:py-14 bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
-      style={{ height: 'calc(100vh - var(--header-height, 0px))' }}
+      className="box-border pb-12 sm:pb-14 bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
+      style={{
+        height: '100vh',
+        paddingTop: 'calc(var(--header-height, 0px) + 3rem)',
+      }}
     >
       <div className="h-full max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 flex flex-col">
         <motion.div
