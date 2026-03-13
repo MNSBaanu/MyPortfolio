@@ -69,11 +69,10 @@ const Header = () => {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ${
-        isScrolled
-          ? 'py-4 bg-white/80 dark:bg-black/80 backdrop-blur-2xl shadow-sm'
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ${isScrolled
+          ? 'py-4 bg-gray-100/90 dark:bg-black/80 backdrop-blur-2xl shadow-sm'
           : 'py-6 bg-transparent'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 flex items-center justify-between">
         {/* Logo */}
@@ -90,7 +89,7 @@ const Header = () => {
         </motion.div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-2 bg-gray-50/50 dark:bg-black/60 p-1 rounded-full border border-gray-100 dark:border-neutral-800 backdrop-blur-sm">
+        <nav className="hidden md:flex items-center gap-2 bg-gray-200/50 dark:bg-black/60 p-1 rounded-full border border-gray-200 dark:border-neutral-800 backdrop-blur-sm">
           {navLinks.map((link, index) => (
             <motion.button
               key={link.name}
@@ -100,7 +99,7 @@ const Header = () => {
               onClick={() => scrollToSection(link.href)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-5 py-2 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black dark:text-gray-300 dark:hover:text-white transition-all duration-300 rounded-full"
+              className="px-5 py-2 text-xs font-bold uppercase tracking-widest text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white transition-all duration-300 rounded-full"
             >
               {link.name}
             </motion.button>

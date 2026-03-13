@@ -32,10 +32,10 @@ export default function Contact() {
       className="box-border px-6 sm:px-8 bg-gray-50 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
       style={{
         height: '100vh',
-        paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
+        paddingTop: 'calc(var(--header-height, 0px) + 1rem)',
       }}
     >
-      <div className="h-full max-w-7xl mx-auto flex flex-col justify-center">
+      <div className="h-full max-w-7xl mx-auto flex flex-col justify-center pb-16 sm:pb-24">
         <div className="flex flex-col">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
