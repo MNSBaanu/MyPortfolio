@@ -11,10 +11,10 @@ const updateSW = registerSW({
     console.log('App ready to work offline')
     // Offline notification removed as per user request
   },
-  onRegistered(registration) {
+  onRegistered(registration: ServiceWorkerRegistration | undefined) {
     console.log('Service Worker registered:', registration)
   },
-  onRegisterError(error) {
+  onRegisterError(error: unknown) {
     console.error('Service Worker registration error:', error)
   },
 })

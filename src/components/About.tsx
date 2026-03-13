@@ -4,7 +4,7 @@ import { about } from '../data/portfolio'
 export default function About() {
   return (
     <div 
-      className="py-24 sm:py-32 bg-slate-100 dark:bg-slate-950 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-200 dark:border-slate-800 min-h-screen"
+      className="py-24 sm:py-32 bg-slate-100 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-200 dark:border-neutral-800 min-h-screen"
     >
       <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <motion.div
@@ -14,10 +14,10 @@ export default function About() {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-slate-100 mb-6 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-6 tracking-tight">
             About Me
           </h2>
-          <div className="w-16 h-1 bg-black dark:bg-slate-100"></div>
+          <div className="w-16 h-1 bg-black dark:bg-gray-100"></div>
         </motion.div>
 
         {/* Main Content */}
@@ -56,7 +56,7 @@ export default function About() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.4 + index * 0.05 }}
                   viewport={{ once: true }}
-                  className="px-4 py-2 rounded-full bg-gray-100 dark:bg-slate-900 text-gray-800 dark:text-gray-100 text-sm font-medium hover:bg-gray-200 dark:hover:bg-slate-800 transition-colors duration-300 cursor-default"
+                  className="px-4 py-2 rounded-full bg-gray-100 dark:bg-neutral-900 text-gray-800 dark:text-gray-100 text-sm font-medium hover:bg-gray-200 dark:hover:bg-neutral-800 transition-colors duration-300 cursor-default"
                 >
                   {tag}
                 </motion.span>

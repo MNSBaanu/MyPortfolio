@@ -75,7 +75,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center relative overflow-visible bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 pt-32 px-6 sm:px-8 md:px-12 lg:px-16"
+      className="min-h-screen flex items-center relative overflow-visible bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-black dark:via-neutral-950 dark:to-black pt-32 px-6 sm:px-8 md:px-12 lg:px-16"
     >
       {/* Subtle dot pattern overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(#00000008_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
@@ -98,13 +98,13 @@ const Hero = () => {
                 style={{ minHeight: '200px' }}
               >
                 <div className="space-y-2">
-                  <div className="text-black dark:text-slate-100">
+                  <div className="text-black dark:text-gray-100">
                     {displayedText.line1}
                     {isTyping && displayedText.line2 === '' && displayedText.tagline === '' && (
                       <span className="inline-block w-0.5 h-12 bg-black ml-1 animate-pulse"></span>
                     )}
                   </div>
-                  <div className="text-black dark:text-slate-100">
+                  <div className="text-black dark:text-gray-100">
                     {displayedText.line2}
                     {isTyping && displayedText.line2 !== '' && displayedText.tagline === '' && (
                       <span className="inline-block w-0.5 h-12 bg-black ml-1 animate-pulse"></span>
@@ -154,7 +154,7 @@ const Hero = () => {
 
               <button
                 onClick={() => setShowCVViewer(true)}
-                className="px-7 py-3 bg-white text-gray-800 dark:bg-slate-900 dark:text-gray-100 rounded-full text-sm font-semibold hover:bg-gray-50 dark:hover:bg-slate-800 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-gray-200 dark:border-slate-700 hover:border-[#103257] hover:scale-105"
+                className="px-7 py-3 bg-white text-gray-800 dark:bg-black dark:text-gray-100 rounded-full text-sm font-semibold hover:bg-gray-50 dark:hover:bg-neutral-900 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-gray-200 dark:border-neutral-800 hover:border-[#103257] hover:scale-105"
               >
                 View My Resume
               </button>
@@ -225,7 +225,7 @@ const Hero = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1, duration: 0.6 }}
-                  className="flex items-center gap-2 text-gray-600"
+                  className="flex items-center gap-2 text-gray-600 dark:text-gray-300"
                 >
                   <span className="relative flex h-3 w-3">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#103257] opacity-75"></span>

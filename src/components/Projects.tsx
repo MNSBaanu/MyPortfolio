@@ -27,7 +27,7 @@ export default function Projects() {
   }
 
   return (
-    <div className="py-24 sm:py-32 bg-gray-50 dark:bg-slate-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-slate-800 min-h-screen">
+    <div className="py-24 sm:py-32 bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 min-h-screen">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -36,7 +36,7 @@ export default function Projects() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-slate-100 mb-4 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight">
             Featured Projects
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
@@ -60,14 +60,14 @@ export default function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
                 viewport={{ once: true }}
-                className={`group rounded-3xl overflow-hidden transition-all duration-300 border border-gray-200 dark:border-slate-800 relative ${
+                className={`group rounded-3xl overflow-hidden transition-all duration-300 border border-gray-200 dark:border-neutral-800 relative ${
                   index % 2 === 0
-                    ? 'bg-white dark:bg-slate-900'
-                    : 'bg-gray-50 dark:bg-slate-800'
+                    ? 'bg-white dark:bg-neutral-950'
+                    : 'bg-gray-50 dark:bg-neutral-900'
                 }`}
               >
                 {/* Project Image Carousel */}
-                <div className="relative h-48 sm:h-56 md:h-64 bg-gray-100 dark:bg-slate-800 overflow-hidden group/image">
+                <div className="relative h-48 sm:h-56 md:h-64 bg-gray-100 dark:bg-neutral-900 overflow-hidden group/image">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={imageIndices[project.title] || 0}
@@ -94,7 +94,7 @@ export default function Projects() {
                           const newIndex = currentIndex === 0 ? project.images.length - 1 : currentIndex - 1
                           setImageIndices({ ...imageIndices, [project.title]: newIndex })
                         }}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-900 text-black dark:text-slate-100 rounded-full opacity-0 group-hover/image:opacity-100 transition-all duration-300 z-10 shadow-lg"
+                        className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 dark:bg-black/90 hover:bg-white dark:hover:bg-black text-black dark:text-gray-100 rounded-full opacity-0 group-hover/image:opacity-100 transition-all duration-300 z-10 shadow-lg"
                       >
                         <ChevronLeft className="w-5 h-5" strokeWidth={2.5} />
                       </button>
@@ -105,7 +105,7 @@ export default function Projects() {
                           const newIndex = (currentIndex + 1) % project.images.length
                           setImageIndices({ ...imageIndices, [project.title]: newIndex })
                         }}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-900 text-black dark:text-slate-100 rounded-full opacity-0 group-hover/image:opacity-100 transition-all duration-300 z-10 shadow-lg"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 dark:bg-black/90 hover:bg-white dark:hover:bg-black text-black dark:text-gray-100 rounded-full opacity-0 group-hover/image:opacity-100 transition-all duration-300 z-10 shadow-lg"
                       >
                         <ChevronRight className="w-5 h-5" strokeWidth={2.5} />
                       </button>
@@ -121,8 +121,8 @@ export default function Projects() {
                             }}
                             className={`h-2 rounded-full transition-all duration-300 ${
                               (imageIndices[project.title] || 0) === imgIndex
-                                ? 'bg-white dark:bg-slate-200 w-8'
-                                : 'bg-white/50 dark:bg-slate-700 hover:bg-white/80 dark:hover:bg-slate-500 w-2'
+                                ? 'bg-white dark:bg-gray-200 w-8'
+                                : 'bg-white/50 dark:bg-neutral-700 hover:bg-white/80 dark:hover:bg-neutral-500 w-2'
                             }`}
                           />
                         ))}
@@ -134,7 +134,7 @@ export default function Projects() {
                 <div className="p-5 sm:p-6">
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex-1">
-                      <h3 className="text-lg sm:text-xl font-bold text-black dark:text-slate-100 mb-1 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
+                      <h3 className="text-lg sm:text-xl font-bold text-black dark:text-gray-100 mb-1 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
                         {project.title}
                       </h3>
                       <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{project.period}</p>
@@ -148,7 +148,7 @@ export default function Projects() {
                         }}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        className="p-2 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full transition-all duration-300"
+                        className="p-2 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-neutral-900 rounded-full transition-all duration-300"
                       >
                         <ExternalLink className="w-4 h-4" strokeWidth={2} />
                       </motion.button>
@@ -158,7 +158,7 @@ export default function Projects() {
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        className="p-2 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full transition-all duration-300"
+                        className="p-2 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-neutral-900 rounded-full transition-all duration-300"
                       >
                         <Github className="w-4 h-4" strokeWidth={2} />
                       </motion.a>
@@ -173,7 +173,7 @@ export default function Projects() {
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2.5 py-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-100 rounded-full text-xs font-medium hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors duration-300"
+                        className="px-2.5 py-1 bg-gray-100 dark:bg-neutral-900 text-gray-700 dark:text-gray-100 rounded-full text-xs font-medium hover:bg-gray-200 dark:hover:bg-neutral-800 transition-colors duration-300"
                       >
                         {tech}
                       </span>
@@ -219,8 +219,8 @@ export default function Projects() {
               whileTap={{ scale: currentPage === 0 ? 1 : 0.95 }}
               className={`p-3 rounded-full transition-all duration-300 ${
                 currentPage === 0
-                  ? 'bg-gray-100 dark:bg-slate-800 text-gray-400 cursor-not-allowed'
-                  : 'bg-white dark:bg-slate-900 text-black dark:text-slate-100 hover:bg-gray-100 dark:hover:bg-slate-800 shadow-md hover:shadow-lg border border-gray-200 dark:border-slate-700'
+                  ? 'bg-gray-100 dark:bg-neutral-900 text-gray-400 cursor-not-allowed'
+                  : 'bg-white dark:bg-black text-black dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-neutral-900 shadow-md hover:shadow-lg border border-gray-200 dark:border-neutral-800'
               }`}
             >
               <ChevronLeft className="w-6 h-6" strokeWidth={2.5} />
@@ -235,8 +235,8 @@ export default function Projects() {
                   whileTap={{ scale: 0.9 }}
                   className={`h-2 rounded-full transition-all duration-300 ${
                     currentPage === index
-                      ? 'bg-black dark:bg-slate-200 w-10'
-                      : 'bg-gray-300 dark:bg-slate-700 hover:bg-gray-400 dark:hover:bg-slate-500 w-2'
+                      ? 'bg-black dark:bg-gray-200 w-10'
+                      : 'bg-gray-300 dark:bg-neutral-700 hover:bg-gray-400 dark:hover:bg-neutral-500 w-2'
                   }`}
                 />
               ))}
@@ -249,8 +249,8 @@ export default function Projects() {
               whileTap={{ scale: currentPage === totalPages - 1 ? 1 : 0.95 }}
               className={`p-3 rounded-full transition-all duration-300 ${
                 currentPage === totalPages - 1
-                  ? 'bg-gray-100 dark:bg-slate-800 text-gray-400 cursor-not-allowed'
-                  : 'bg-white dark:bg-slate-900 text-black dark:text-slate-100 hover:bg-gray-100 dark:hover:bg-slate-800 shadow-md hover:shadow-lg border border-gray-200 dark:border-slate-700'
+                  ? 'bg-gray-100 dark:bg-neutral-900 text-gray-400 cursor-not-allowed'
+                  : 'bg-white dark:bg-black text-black dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-neutral-900 shadow-md hover:shadow-lg border border-gray-200 dark:border-neutral-800'
               }`}
             >
               <ChevronRight className="w-6 h-6" strokeWidth={2.5} />
