@@ -98,7 +98,7 @@ const Hero = () => {
           <img
             src={personalInfo.profileImage}
             alt={personalInfo.name}
-            className="w-48 xs:w-56 sm:w-64 h-60 xs:h-72 sm:h-80 object-cover object-top rounded-2xl shadow-xl"
+            className="w-48 xs:w-56 sm:w-64 h-60 xs:h-72 sm:h-80 object-cover object-top"
           />
         </motion.div>
 

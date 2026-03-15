@@ -64,13 +64,13 @@ function App() {
                   <section id="about" className="sticky top-0 z-20">
                     <About />
                   </section>
-                  <section id="experience" className="relative z-30">
+                  <section id="experience" className="sticky top-0 z-30 lg:relative lg:z-30">
                     <Experience />
                   </section>
-                  <section id="education" className="relative z-30">
+                  <section id="education" className="sticky top-0 z-[35] lg:relative lg:z-[35]">
                     <Education />
                   </section>
-                  <section id="certifications" className="relative z-30">
+                  <section id="certifications" className="sticky top-0 z-[38] lg:relative lg:z-[38]">
                     <Certifications />
                   </section>
                   <section id="skills" className="sticky top-0 z-40">
