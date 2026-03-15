@@ -107,7 +107,7 @@ const Header = () => {
         </nav>
 
         {/* Action Button */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 pl-4 sm:pl-6">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -121,7 +121,11 @@ const Header = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => scrollToSection('#contact')}
-            className="hidden sm:flex px-6 py-2.5 bg-black text-white text-xs font-bold uppercase tracking-widest rounded-full shadow-lg hover:shadow-xl transition-all duration-300 dark:bg-white dark:text-black"
+            className={`hidden sm:flex px-6 py-2.5 text-xs font-bold uppercase tracking-widest rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${
+              isScrolled
+                ? 'bg-black text-white dark:bg-white dark:text-black'
+                : 'bg-white text-black dark:bg-white dark:text-black'
+            }`}
           >
             Hire Me
           </motion.button>

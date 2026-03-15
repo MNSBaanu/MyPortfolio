@@ -3,241 +3,196 @@ import { personalInfo } from '../data/portfolio'
 import { useState, useEffect } from 'react'
 import CVViewer from './CVViewer'
 
+const taglines = [
+  { role: 'Characters', name: 'Aspiring Software Engineer', desc: 'Full-stack developer crafting end-to-end solutions. Passionate about building scalable applications and leveraging AI to solve real-world problems.' },
+  { role: 'Developer', name: 'Full-Stack Developer', desc: 'Building robust web applications from database to UI. Experienced with React, Node.js, and modern cloud infrastructure.' },
+  { role: 'Enthusiast', name: 'AI & Tech Enthusiast', desc: 'Exploring the intersection of artificial intelligence and software engineering to create intelligent, impactful solutions.' },
+  { role: 'Student', name: 'Software Engineering Student', desc: 'Pursuing BEng (Hons) in Software Engineering, continuously learning and growing through real-world projects.' },
+]
+
 const Hero = () => {
   const [showCVViewer, setShowCVViewer] = useState(false)
-  const [currentTagline, setCurrentTagline] = useState(0)
-  const [displayedText, setDisplayedText] = useState({ line1: '', line2: '', tagline: '' })
-  const [isTyping, setIsTyping] = useState(true)
+  const [current, setCurrent] = useState(0)
 
-  const taglines = [
-    { line1: 'Aspiring Software', line2: 'Engineer', tagline: 'Building the Future' },
-    { line1: 'Full-Stack', line2: 'Developer', tagline: 'End-to-End Solutions' },
-    { line1: 'AI & Tech', line2: 'Enthusiast', tagline: 'Exploring Innovation' },
-    { line1: 'Problem', line2: 'Solver', tagline: 'Creating Impact' },
-    { line1: 'Software Engineering', line2: 'Student', tagline: 'Learning & Growing' }
-  ]
+  const next = () => setCurrent((c) => (c + 1) % taglines.length)
 
   useEffect(() => {
-    const currentText = taglines[currentTagline]
-    let charIndex = 0
-    let currentLine = 'line1'
-    
-    setDisplayedText({ line1: '', line2: '', tagline: '' })
-    setIsTyping(true)
+    const timer = setInterval(next, 5000)
+    return () => clearInterval(timer)
+  }, [])
 
-    const typingInterval = setInterval(() => {
-      if (currentLine === 'line1' && charIndex < currentText.line1.length) {
-        setDisplayedText(prev => ({ ...prev, line1: currentText.line1.slice(0, charIndex + 1) }))
-        charIndex++
-      } else if (currentLine === 'line1') {
-        currentLine = 'line2'
-        charIndex = 0
-      } else if (currentLine === 'line2' && charIndex < currentText.line2.length) {
-        setDisplayedText(prev => ({ ...prev, line2: currentText.line2.slice(0, charIndex + 1) }))
-        charIndex++
-      } else if (currentLine === 'line2') {
-        currentLine = 'tagline'
-        charIndex = 0
-      } else if (currentLine === 'tagline' && charIndex < currentText.tagline.length) {
-        setDisplayedText(prev => ({ ...prev, tagline: currentText.tagline.slice(0, charIndex + 1) }))
-        charIndex++
-      } else {
-        clearInterval(typingInterval)
-        setIsTyping(false)
-        setTimeout(() => {
-          setCurrentTagline((prev) => (prev + 1) % taglines.length)
-        }, 2500)
-      }
-    }, 80)
 
-    return () => clearInterval(typingInterval)
-  }, [currentTagline])
 
-  const codeSnippets = [
-    '{ code }',
-    '</> React',
-    'Node.js',
-    'AI/ML',
-    'TypeScript',
-    'Python',
-    'Next.js',
-    'MongoDB',
-    'Express',
-    'TensorFlow',
-    'Docker',
-    'AWS',
-    'Tailwind',
-    'Git',
-    'API',
-    'PostgreSQL'
-  ]
+
 
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center relative overflow-visible bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-black dark:via-neutral-950 dark:to-black pt-32 px-6 sm:px-8 md:px-12 lg:px-16"
+      className="min-h-screen relative overflow-hidden bg-white dark:bg-black flex items-center"
     >
-      {/* Subtle dot pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(#00000008_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
-      
-      <div className="max-w-7xl mx-auto w-full relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Main Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+      {/* === Layer 1 — back card === */}
+      <motion.div
+        className="absolute inset-y-0 right-0 w-[55%] hidden lg:block pointer-events-none z-[1]"
+        style={{
+          clipPath: 'polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%)',
+          filter: 'drop-shadow(-8px 0px 12px rgba(0,0,0,0.18))',
+        }}
+        initial={{ x: 120, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+      >
+        <div className="dark:hidden w-full h-full bg-slate-200/70 backdrop-blur-sm" />
+        <div className="hidden dark:block w-full h-full bg-neutral-800" />
+      </motion.div>
+
+      {/* === Layer 2 — mid card === */}
+      <motion.div
+        className="absolute inset-y-0 right-0 w-[42%] hidden lg:block pointer-events-none z-[2]"
+        style={{
+          clipPath: 'polygon(16% 0%, 100% 0%, 100% 100%, 0% 100%)',
+          filter: 'drop-shadow(-12px 0px 18px rgba(0,0,0,0.28))',
+        }}
+        initial={{ x: 180, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
+      >
+        <div className="dark:hidden w-full h-full bg-slate-400/60 backdrop-blur-md" />
+        <div className="hidden dark:block w-full h-full bg-neutral-900" />
+      </motion.div>
+
+      {/* === Layer 3 — front card === */}
+      <motion.div
+        className="absolute inset-y-0 right-0 w-[28%] hidden lg:block pointer-events-none z-[3]"
+        style={{
+          clipPath: 'polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)',
+          filter: 'drop-shadow(-16px 0px 24px rgba(0,0,0,0.45))',
+        }}
+        initial={{ x: 240, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+      >
+        <div className="dark:hidden w-full h-full bg-[#1e293b]" />
+        <div className="hidden dark:block w-full h-full bg-neutral-950" />
+      </motion.div>
+
+      {/* === Gradient overlay === */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-[4]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+      >
+        <div className="dark:hidden absolute inset-0" style={{ background: 'linear-gradient(to left, transparent 28%, #e2e8f0 55%, #cbd5e1 70%, transparent 100%)' }} />
+        <div className="hidden dark:block absolute inset-0" style={{ background: 'linear-gradient(to left, transparent 28%, #171717 50%, #262626 68%, transparent 100%)' }} />
+      </motion.div>
+
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-24 pb-12 flex flex-col lg:flex-row items-center gap-10 lg:gap-0 min-h-screen">
+
+        {/* Left: Content */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center gap-6 lg:pr-10">
+
+          <motion.p
+            key={current + '-role'}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4 }}
+            className="text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 flex items-center gap-2"
+          >
+            <span className="w-4 h-px bg-gray-400 dark:bg-gray-500 inline-block"></span>
+            {taglines[current].role}
+          </motion.p>
+
+          <motion.h1
+            key={current + '-name'}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="space-y-6 text-center lg:text-left order-2 lg:order-1"
+            transition={{ duration: 0.5 }}
+            className="text-4xl sm:text-5xl md:text-6xl font-black uppercase leading-tight tracking-tight text-black dark:text-white"
           >
-            <div className="space-y-6">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-8"
-                style={{ minHeight: '200px' }}
-              >
-                <div className="space-y-2">
-                  <div className="text-black dark:text-gray-100">
-                    {displayedText.line1}
-                    {isTyping && displayedText.line2 === '' && displayedText.tagline === '' && (
-                      <span className="inline-block w-0.5 h-12 bg-black ml-1 animate-pulse"></span>
-                    )}
-                  </div>
-                  <div className="text-black dark:text-gray-100">
-                    {displayedText.line2}
-                    {isTyping && displayedText.line2 !== '' && displayedText.tagline === '' && (
-                      <span className="inline-block w-0.5 h-12 bg-black ml-1 animate-pulse"></span>
-                    )}
-                  </div>
-                  <div className="bg-gradient-to-r from-[#103257] to-[#0d4a6b] bg-clip-text text-transparent text-3xl sm:text-4xl md:text-5xl">
-                    {displayedText.tagline}
-                    {isTyping && displayedText.tagline !== '' && (
-                      <span className="inline-block w-0.5 h-10 bg-[#103257] ml-1 animate-pulse"></span>
-                    )}
-                  </div>
-                </div>
-              </motion.h1>
+            {taglines[current].name}
+          </motion.h1>
 
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-                className="text-gray-500 dark:text-gray-400 text-sm flex items-center justify-center lg:justify-start gap-2"
-              >
-                <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
-                Based in Kandy, Sri Lanka
-              </motion.p>
+          <motion.p
+            key={current + '-desc'}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed max-w-sm"
+          >
+            {taglines[current].desc}
+          </motion.p>
 
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-                className="text-gray-600 dark:text-gray-300 text-base sm:text-lg leading-relaxed max-w-xl"
-              >
-                {personalInfo.description}
-              </motion.p>
-            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.6 }}
-              className="flex flex-wrap gap-4 justify-center lg:justify-start"
+          <div className="flex flex-wrap gap-3 mt-2">
+            <button
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="flex items-center gap-2 px-6 py-2.5 bg-black dark:bg-white text-white dark:text-black text-sm font-semibold rounded-full hover:opacity-80 transition-opacity duration-200"
             >
-              <button
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-7 py-3 bg-gradient-to-r from-[#103257] to-[#0d4a6b] text-white rounded-full text-sm font-semibold hover:shadow-2xl transition-all duration-300 shadow-lg hover:scale-105"
-              >
-                Let's Connect
-              </button>
+              Let's Connect
+            </button>
+            <button
+              onClick={() => setShowCVViewer(true)}
+              className="px-6 py-2.5 border border-gray-300 dark:border-neutral-700 text-black dark:text-white text-sm font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-neutral-900 transition-colors duration-200"
+            >
+              View Resume
+            </button>
+          </div>
 
-              <button
-                onClick={() => setShowCVViewer(true)}
-                className="px-7 py-3 bg-white text-gray-800 dark:bg-black dark:text-gray-100 rounded-full text-sm font-semibold hover:bg-gray-50 dark:hover:bg-neutral-900 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-gray-200 dark:border-neutral-800 hover:border-[#103257] hover:scale-105"
-              >
-                View My Resume
-              </button>
-            </motion.div>
-          </motion.div>
-
-          {/* Profile Image Section */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-            className="relative order-1 lg:order-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mt-1"
           >
-            <div className="relative max-w-md mx-auto lg:max-w-none">
-              {/* Floating Code Elements */}
-              {codeSnippets.map((snippet, index) => {
-                const positions = [
-                  { left: '5%', top: '5%' },
-                  { right: '5%', top: '10%' },
-                  { left: '0%', top: '30%' },
-                  { right: '0%', top: '35%' },
-                  { left: '5%', top: '55%' },
-                  { right: '5%', top: '60%' },
-                  { left: '0%', top: '80%' },
-                  { right: '0%', top: '85%' },
-                  { left: '15%', top: '15%' },
-                  { right: '15%', top: '45%' },
-                  { left: '10%', top: '70%' },
-                  { right: '10%', top: '25%' },
-                  { left: '20%', top: '90%' },
-                  { right: '20%', top: '5%' },
-                  { left: '5%', bottom: '5%' },
-                  { right: '5%', bottom: '10%' }
-                ]
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0 }}
-                    animate={{
-                      opacity: [0.15, 0.3, 0.15],
-                      y: [0, -8, 0],
-                    }}
-                    transition={{
-                      duration: 4 + index * 0.3,
-                      repeat: Infinity,
-                      delay: index * 0.2,
-                    }}
-                    className="absolute text-gray-400 dark:text-gray-500 font-mono text-xs font-medium pointer-events-none"
-                    style={positions[index]}
-                  >
-                    {snippet}
-                  </motion.div>
-                )
-              })}
-
-              {/* Profile Image */}
-              <div className="relative z-10 flex flex-col items-center gap-6">
-                <div className="relative">
-                  <img
-                    src={personalInfo.profileImage}
-                    alt={personalInfo.name}
-                    className="w-80 h-80 sm:w-[26rem] sm:h-[26rem] md:w-[28rem] md:h-[28rem] object-cover"
-                  />
-                </div>
-
-                {/* Badge */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1, duration: 0.6 }}
-                  className="flex items-center gap-2 text-gray-600 dark:text-gray-300"
-                >
-                  <span className="relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#103257] opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-[#103257]"></span>
-                  </span>
-                  <span className="text-sm font-medium uppercase tracking-wide">
-                    Open for Opportunities
-                  </span>
-                </motion.div>
-              </div>
-            </div>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            Open for Opportunities · Kandy, Sri Lanka
           </motion.div>
+        </div>
+
+        {/* Right: Profile image */}
+        <motion.div
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.5 }}
+          className="absolute inset-y-0 right-0 w-[52%] hidden lg:flex items-end justify-center z-[6] pointer-events-none"
+        >
+          <img
+            src={personalInfo.profileImage}
+            alt={personalInfo.name}
+            className="h-[78%] w-auto object-cover object-top"
+            style={{ marginRight: '22%' }}
+          />
+        </motion.div>
+
+        {/* Mobile image */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7 }}
+          className="lg:hidden flex justify-center w-full"
+        >
+          <img
+            src={personalInfo.profileImage}
+            alt={personalInfo.name}
+            className="w-64 sm:w-72 h-80 sm:h-96 object-cover object-top rounded-2xl"
+          />
+        </motion.div>
+
+
+
+        {/* Slide dots */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          {taglines.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              aria-label={`Slide ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'w-6 bg-black dark:bg-white' : 'w-1.5 bg-gray-300 dark:bg-neutral-600'}`}
+            />
+          ))}
         </div>
       </div>
 
