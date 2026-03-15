@@ -86,17 +86,31 @@ const Hero = () => {
         <div className="hidden dark:block absolute inset-0" style={{ background: 'linear-gradient(to left, transparent 28%, #171717 50%, #262626 68%, transparent 100%)' }} />
       </motion.div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-24 pb-12 flex flex-col lg:flex-row items-center gap-10 lg:gap-0 min-h-screen">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-20 pb-10 flex flex-col lg:flex-row items-center lg:gap-0 min-h-screen">
+
+        {/* Mobile: image on top */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="lg:hidden flex justify-center w-full pt-4 pb-6"
+        >
+          <img
+            src={personalInfo.profileImage}
+            alt={personalInfo.name}
+            className="w-48 xs:w-56 sm:w-64 h-60 xs:h-72 sm:h-80 object-cover object-top rounded-2xl shadow-xl"
+          />
+        </motion.div>
 
         {/* Left: Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center gap-6 lg:pr-10">
+        <div className="w-full lg:w-1/2 flex flex-col justify-center gap-4 lg:gap-6 lg:pr-10">
 
           <motion.p
             key={current + '-role'}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 flex items-center gap-2"
+            className="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 flex items-center gap-2"
           >
             <span className="w-4 h-px bg-gray-400 dark:bg-gray-500 inline-block"></span>
             {taglines[current].role}
@@ -107,7 +121,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-black uppercase leading-tight tracking-tight text-black dark:text-white"
+            className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-black uppercase leading-tight tracking-tight text-black dark:text-white"
           >
             {taglines[current].name}
           </motion.h1>
@@ -117,22 +131,21 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed max-w-sm"
+            className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed max-w-sm"
           >
             {taglines[current].desc}
           </motion.p>
 
-
-          <div className="flex flex-wrap gap-3 mt-2">
+          <div className="flex flex-wrap gap-3 mt-1">
             <button
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="flex items-center gap-2 px-6 py-2.5 bg-black dark:bg-white text-white dark:text-black text-sm font-semibold rounded-full hover:opacity-80 transition-opacity duration-200"
+              className="flex items-center gap-2 px-5 sm:px-6 py-2 sm:py-2.5 bg-black dark:bg-white text-white dark:text-black text-xs sm:text-sm font-semibold rounded-full hover:opacity-80 transition-opacity duration-200"
             >
               Let's Connect
             </button>
             <button
               onClick={() => setShowCVViewer(true)}
-              className="px-6 py-2.5 border border-gray-300 dark:border-neutral-700 text-black dark:text-white text-sm font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-neutral-900 transition-colors duration-200"
+              className="px-5 sm:px-6 py-2 sm:py-2.5 border border-gray-300 dark:border-neutral-700 text-black dark:text-white text-xs sm:text-sm font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-neutral-900 transition-colors duration-200"
             >
               View Resume
             </button>
@@ -142,7 +155,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mt-1"
+            className="flex items-center gap-2 text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -152,7 +165,7 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Right: Profile image */}
+        {/* Desktop: Profile image */}
         <motion.div
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
@@ -167,24 +180,8 @@ const Hero = () => {
           />
         </motion.div>
 
-        {/* Mobile image */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7 }}
-          className="lg:hidden flex justify-center w-full"
-        >
-          <img
-            src={personalInfo.profileImage}
-            alt={personalInfo.name}
-            className="w-64 sm:w-72 h-80 sm:h-96 object-cover object-top rounded-2xl"
-          />
-        </motion.div>
-
-
-
         {/* Slide dots */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+        <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-20">
           {taglines.map((_, i) => (
             <button
               key={i}
