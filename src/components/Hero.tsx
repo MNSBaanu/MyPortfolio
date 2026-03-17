@@ -31,60 +31,46 @@ const Hero = () => {
       className="min-h-screen relative overflow-hidden bg-white dark:bg-black flex items-center"
     >
       {/* === Layer 1 — back card === */}
-      <motion.div
+      <div
         className="absolute inset-y-0 right-0 w-[55%] hidden lg:block pointer-events-none z-[1]"
         style={{
           clipPath: 'polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%)',
           filter: 'drop-shadow(-8px 0px 12px rgba(0,0,0,0.18))',
         }}
-        initial={{ x: 120, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
       >
         <div className="dark:hidden w-full h-full bg-slate-200/70 backdrop-blur-sm" />
         <div className="hidden dark:block w-full h-full bg-neutral-800" />
-      </motion.div>
+      </div>
 
       {/* === Layer 2 — mid card === */}
-      <motion.div
+      <div
         className="absolute inset-y-0 right-0 w-[42%] hidden lg:block pointer-events-none z-[2]"
         style={{
           clipPath: 'polygon(16% 0%, 100% 0%, 100% 100%, 0% 100%)',
           filter: 'drop-shadow(-12px 0px 18px rgba(0,0,0,0.28))',
         }}
-        initial={{ x: 180, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
       >
         <div className="dark:hidden w-full h-full bg-slate-400/60 backdrop-blur-md" />
         <div className="hidden dark:block w-full h-full bg-neutral-900" />
-      </motion.div>
+      </div>
 
       {/* === Layer 3 — front card === */}
-      <motion.div
+      <div
         className="absolute inset-y-0 right-0 w-[28%] hidden lg:block pointer-events-none z-[3]"
         style={{
           clipPath: 'polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)',
           filter: 'drop-shadow(-16px 0px 24px rgba(0,0,0,0.45))',
         }}
-        initial={{ x: 240, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
       >
         <div className="dark:hidden w-full h-full bg-[#1e293b]" />
         <div className="hidden dark:block w-full h-full bg-neutral-950" />
-      </motion.div>
+      </div>
 
       {/* === Gradient overlay === */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none z-[4]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-      >
+      <div className="absolute inset-0 pointer-events-none z-[4]">
         <div className="dark:hidden absolute inset-0" style={{ background: 'linear-gradient(to left, transparent 28%, #e2e8f0 55%, #cbd5e1 70%, transparent 100%)' }} />
         <div className="hidden dark:block absolute inset-0" style={{ background: 'linear-gradient(to left, transparent 28%, #171717 50%, #262626 68%, transparent 100%)' }} />
-      </motion.div>
+      </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-20 pb-10 flex flex-col lg:flex-row items-center lg:gap-0 min-h-screen">
 
@@ -166,19 +152,14 @@ const Hero = () => {
         </div>
 
         {/* Desktop: Profile image */}
-        <motion.div
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.5 }}
-          className="absolute inset-y-0 right-0 w-[52%] hidden lg:flex items-end justify-center z-[6] pointer-events-none"
-        >
+        <div className="absolute inset-y-0 right-0 w-[52%] hidden lg:flex items-end justify-center z-[20] pointer-events-none">
           <img
             src={personalInfo.profileImage}
             alt={personalInfo.name}
             className="h-[78%] w-auto object-cover object-top"
             style={{ marginRight: '22%' }}
           />
-        </motion.div>
+        </div>
 
         {/* Slide dots */}
         <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-20">

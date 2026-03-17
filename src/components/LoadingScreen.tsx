@@ -21,7 +21,7 @@ export default function LoadingScreen({ onLoadingComplete }: { onLoadingComplete
     >
       {/* Left card — white */}
       <motion.div
-        className="absolute inset-y-0 left-0 w-1/2 bg-white overflow-hidden"
+        className="absolute inset-y-0 left-0 w-1/2 bg-white rounded-tr-[2.5rem] rounded-br-[2.5rem] overflow-hidden"
         initial={{ x: '-100%' }}
         animate={{ x: 0 }}
         transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
@@ -43,7 +43,7 @@ export default function LoadingScreen({ onLoadingComplete }: { onLoadingComplete
 
       {/* Right card — black */}
       <motion.div
-        className="absolute inset-y-0 right-0 w-1/2 bg-black overflow-hidden"
+        className="absolute inset-y-0 right-0 w-1/2 bg-black rounded-tl-[2.5rem] rounded-bl-[2.5rem] overflow-hidden"
         initial={{ x: '100%' }}
         animate={{ x: 0 }}
         transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
