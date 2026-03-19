@@ -270,6 +270,7 @@ export const projects = [
     description: 'Group project: A free community platform for donating items, requesting goods, browsing by location and category, with real-time chat and secure authentication.',
     tech: ['MERN', 'Tailwind CSS', 'Firebase', 'Cloudinary', 'Socket.IO', 'GitHub'],
     period: 'Jul - Oct 2025',
+    academic: true,
     images: [
       '/assets/ShareLanka.png',
       '/assets/ShareLanka1.png',
@@ -283,6 +284,7 @@ export const projects = [
     description: 'The Gadget Hub is an online platform that streamlines gadget purchases by comparing distributor quotations, selecting the best deals, and managing customer orders and notifications efficiently.',
     tech: ['C#', 'ASP.NET Web API', 'ASP.NET Razor', 'SQL Server'],
     period: 'Aug - Oct 2025',
+    academic: true,
     images: [
       '/assets/GadgetHub.png',
       '/assets/GadgetHub1.png',
@@ -296,6 +298,7 @@ export const projects = [
     description: 'The website promotes holistic health by offering wellness information, online appointment booking, client–therapist communication, and secure access for clients, therapists, and administrators.',
     tech: ['HTML5', 'CSS3', 'JavaScript', 'PHP', 'MySQL'],
     period: 'May - Jul 2025',
+    academic: true,
     images: [
       '/assets/GreenLife.png',
       '/assets/GreenLife1.png',
@@ -310,6 +313,7 @@ export const projects = [
     description: 'Mobile app for LuxeVista Resort: personalized guest accounts, browse and book rooms, reserve spa and activities, manage bookings, and receive offers plus local concierge recommendations.',
     tech: ['Java'],
     period: 'May - Jul 2025',
+    academic: true,
     images: [
       '/assets/LuxeVista.png',
       '/assets/LuxeVista1.png',
@@ -323,6 +327,7 @@ export const projects = [
     description: 'A system developed to manage pet supply transactions efficiently, enabling product management, category-based search, and secure multi-level user access for cashiers and managers.',
     tech: ['Java', 'OOP', 'Firebase'],
     period: 'Sep - Dec 2024',
+    academic: true,
     images: [
       '/assets/Pawsshop.png',
       '/assets/Pawsshop1.png',
@@ -336,6 +341,7 @@ export const projects = [
     description: 'A system designed to record and analyze temperature variations, calculate fluctuations, and determine the most suitable conditions for healthy orchid growth and flowering.',
     tech: ['C++'],
     period: 'Sep - Dec 2024',
+    academic: true,
     images: [
       '/assets/orchiflora.png',
     ],

@@ -3,6 +3,42 @@ import { ExternalLink, Github } from 'lucide-react'
 import { projects } from '../data/portfolio'
 import { useState } from 'react'
 
+// Full corner-to-corner diagonal ribbon
+function AcademicRibbon() {
+  return (
+    <div className="absolute top-0 right-0 w-32 h-32 overflow-hidden rounded-tr-3xl pointer-events-none z-10">
+      {/* Ribbon band */}
+      <div
+        className="absolute flex items-center justify-center text-[9px] font-black uppercase tracking-widest text-gray-800"
+        style={{
+          width: '160px',
+          padding: '6px 0',
+          background: 'linear-gradient(180deg, #e8e8e8 0%, #c0c0c0 40%, #a8a8a8 60%, #d0d0d0 100%)',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.6)',
+          top: '28px',
+          right: '-36px',
+          transform: 'rotate(45deg)',
+          transformOrigin: 'center',
+        }}
+      >
+        Academic
+        {/* Fold shadows on ends */}
+        <span className="absolute left-0 top-0 bottom-0 w-3"
+          style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.2), transparent)' }} />
+        <span className="absolute right-0 top-0 bottom-0 w-3"
+          style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.2), transparent)' }} />
+      </div>
+      {/* Top-right corner fold triangle */}
+      <div className="absolute top-0 right-0 w-0 h-0"
+        style={{
+          borderLeft: '10px solid transparent',
+          borderTop: '10px solid #888',
+        }}
+      />
+    </div>
+  )
+}
+
 export default function Projects() {
   const [activeProject, setActiveProject] = useState<number>(0)
   const [clickedProject, setClickedProject] = useState<string | null>(null)
@@ -57,6 +93,9 @@ export default function Projects() {
 
               {/* Dark overlay */}
               <div className="absolute inset-0 bg-black/50" />
+
+              {/* Academic ribbon */}
+              {project.academic && <AcademicRibbon />}
 
               {/* Gradient overlay on active */}
               <AnimatePresence>
@@ -177,6 +216,7 @@ export default function Projects() {
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                {project.academic && <AcademicRibbon />}
                 <div className="absolute bottom-3 left-3">
                   <p className="text-[9px] font-black uppercase tracking-widest text-white/60">{project.period}</p>
                   <h3 className="text-base font-black text-white">{project.title}</h3>
