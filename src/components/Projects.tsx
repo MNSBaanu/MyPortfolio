@@ -1,193 +1,143 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ExternalLink, Github } from 'lucide-react'
 import { projects } from '../data/portfolio'
 import { useState } from 'react'
 
 export default function Projects() {
+  const [activeProject, setActiveProject] = useState<number>(0)
   const [clickedProject, setClickedProject] = useState<string | null>(null)
-  const [currentPage, setCurrentPage] = useState(0)
-  const [imageIndices, setImageIndices] = useState<{ [key: string]: number }>({})
-
-  const projectsPerPage = 4 // 2 rows x 2 columns
-  const totalPages = Math.ceil(projects.length / projectsPerPage)
-  const startIndex = currentPage * projectsPerPage
-  const endIndex = startIndex + projectsPerPage
-  const currentProjects = projects.slice(startIndex, endIndex)
-
-  const nextPage = () => {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage(currentPage + 1)
-    }
-  }
-
-  const prevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1)
-    }
-  }
 
   return (
     <div
-      className="box-border pb-12 sm:pb-14 bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
+      className="box-border bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
       style={{
-        height: '100vh',
+        minHeight: '100vh',
         paddingTop: 'calc(var(--header-height, 0px) + 3rem)',
+        paddingBottom: '3rem',
       }}
     >
-      <div className="h-full max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 flex flex-col">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 flex flex-col h-full">
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
           viewport={{ once: true }}
-          className="text-center mb-10"
+          className="mb-10"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight">
+          <h2 className="font-bold text-black dark:text-gray-100 mb-4 tracking-tight"
+            style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>
             Featured Projects
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            A showcase of my recent work and technical expertise
-          </p>
+          <div className="w-16 h-1 bg-gradient-to-r from-[#103257] to-[#0d4a6b]" />
         </motion.div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentPage}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
-          >
-            {currentProjects.map((project, index) => (
-              <motion.div
-                key={project.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-                viewport={{ once: true }}
-                className={`group rounded-3xl overflow-hidden transition-all duration-300 border border-gray-200 dark:border-neutral-800 relative ${
-                  index % 2 === 0
-                    ? 'bg-white dark:bg-neutral-950'
-                    : 'bg-gray-50 dark:bg-neutral-900'
-                }`}
-              >
-                {/* Project Image Carousel */}
-                <div className="relative h-40 sm:h-44 md:h-48 bg-gray-100 dark:bg-neutral-900 overflow-hidden group/image">
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={imageIndices[project.title] || 0}
-                      initial={{ opacity: 0, scale: 1.1 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.4 }}
-                      src={project.images[imageIndices[project.title] || 0]}
-                      alt={`${project.title} - Image ${(imageIndices[project.title] || 0) + 1}`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      onError={(e) => {
-                        e.currentTarget.src = `https://placehold.co/600x400/f3f4f6/1f2937?text=${encodeURIComponent(project.title)}`
-                      }}
-                    />
-                  </AnimatePresence>
+        {/* ── DESKTOP: hover-expand accordion ── */}
+        <div className="hidden lg:flex items-stretch gap-2 h-[480px]">
+          {projects.map((project, index) => (
+            <motion.div
+              key={index}
+              className="relative cursor-pointer overflow-hidden rounded-3xl flex-shrink-0"
+              animate={{
+                width: activeProject === index ? '420px' : '72px',
+              }}
+              transition={{ duration: 0.4, ease: 'easeInOut' }}
+              onHoverStart={() => setActiveProject(index)}
+              onClick={() => setActiveProject(index)}
+            >
+              {/* Background image */}
+              <img
+                src={project.images[0]}
+                alt={project.title}
+                className="absolute inset-0 w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = `https://placehold.co/600x480/103257/ffffff?text=${encodeURIComponent(project.title)}`
+                }}
+              />
 
-                  {/* Image Navigation */}
-                  {project.images.length > 1 && (
-                    <>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          const currentIndex = imageIndices[project.title] || 0
-                          const newIndex = currentIndex === 0 ? project.images.length - 1 : currentIndex - 1
-                          setImageIndices({ ...imageIndices, [project.title]: newIndex })
-                        }}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 dark:bg-black/90 hover:bg-white dark:hover:bg-black text-black dark:text-gray-100 rounded-full opacity-0 group-hover/image:opacity-100 transition-all duration-300 z-10 shadow-lg"
-                      >
-                        <ChevronLeft className="w-5 h-5" strokeWidth={2.5} />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          const currentIndex = imageIndices[project.title] || 0
-                          const newIndex = (currentIndex + 1) % project.images.length
-                          setImageIndices({ ...imageIndices, [project.title]: newIndex })
-                        }}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 dark:bg-black/90 hover:bg-white dark:hover:bg-black text-black dark:text-gray-100 rounded-full opacity-0 group-hover/image:opacity-100 transition-all duration-300 z-10 shadow-lg"
-                      >
-                        <ChevronRight className="w-5 h-5" strokeWidth={2.5} />
-                      </button>
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-black/50" />
 
-                      {/* Image Indicators */}
-                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                        {project.images.map((_, imgIndex) => (
-                          <button
-                            key={imgIndex}
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              setImageIndices({ ...imageIndices, [project.title]: imgIndex })
-                            }}
-                            className={`h-2 rounded-full transition-all duration-300 ${
-                              (imageIndices[project.title] || 0) === imgIndex
-                                ? 'bg-white dark:bg-gray-200 w-8'
-                                : 'bg-white/50 dark:bg-neutral-700 hover:bg-white/80 dark:hover:bg-neutral-500 w-2'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
+              {/* Gradient overlay on active */}
+              <AnimatePresence>
+                {activeProject === index && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"
+                  />
+                )}
+              </AnimatePresence>
 
-                <div className="p-4 sm:p-5">
-                  <div className="flex justify-between items-start mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-lg sm:text-xl font-bold text-black dark:text-gray-100 mb-1 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
-                        {project.title}
-                      </h3>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{project.period}</p>
+              {/* Collapsed: rotated title */}
+              <AnimatePresence>
+                {activeProject !== index && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute inset-0 flex items-center justify-center"
+                  >
+                    <p className="text-white text-xs font-bold uppercase tracking-widest whitespace-nowrap"
+                      style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+                      {project.title}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Expanded: content */}
+              <AnimatePresence>
+                {activeProject === index && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25, delay: 0.15 }}
+                    className="absolute bottom-0 left-0 right-0 p-5"
+                  >
+                    <p className="text-[10px] font-black uppercase tracking-widest text-white/50 mb-1">{project.period}</p>
+                    <h3 className="text-xl font-black text-white mb-2 leading-tight">{project.title}</h3>
+                    <p className="text-xs text-white/70 leading-relaxed mb-3 line-clamp-2">{project.description}</p>
+
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {project.tech.slice(0, 4).map((t, i) => (
+                        <span key={i} className="px-2 py-0.5 bg-white/10 border border-white/20 text-white/80 rounded text-[9px] font-bold uppercase">
+                          {t}
+                        </span>
+                      ))}
                     </div>
+
                     <div className="flex gap-2">
-                      <motion.button
+                      <button
                         onClick={(e) => {
-                          e.preventDefault()
+                          e.stopPropagation()
                           setClickedProject(project.title)
-                          setTimeout(() => setClickedProject(null), 3000)
+                          setTimeout(() => setClickedProject(null), 2500)
                         }}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="p-2 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-neutral-900 rounded-full transition-all duration-300"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white text-black text-[11px] font-bold rounded-full hover:bg-gray-100 transition-colors"
                       >
-                        <ExternalLink className="w-4 h-4" strokeWidth={2} />
-                      </motion.button>
-                      <motion.a
+                        <ExternalLink className="w-3 h-3" />
+                        Live
+                      </button>
+                      <a
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="p-2 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-neutral-900 rounded-full transition-all duration-300"
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white/10 border border-white/20 text-white text-[11px] font-bold rounded-full hover:bg-white/20 transition-colors"
                       >
-                        <Github className="w-4 h-4" strokeWidth={2} />
-                      </motion.a>
+                        <Github className="w-3 h-3" />
+                        Code
+                      </a>
                     </div>
-                  </div>
-                  
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 leading-relaxed line-clamp-2">
-                    {project.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2.5 py-1 bg-gray-100 dark:bg-neutral-900 text-gray-700 dark:text-gray-100 rounded-full text-xs font-medium hover:bg-gray-200 dark:hover:bg-neutral-800 transition-colors duration-300"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-                {/* Coming Soon Overlay */}
+              {/* Coming soon overlay */}
+              <AnimatePresence>
                 {clickedProject === project.title && (
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -195,74 +145,63 @@ export default function Projects() {
                     exit={{ opacity: 0 }}
                     className="absolute inset-0 backdrop-blur-md bg-black/70 flex items-center justify-center z-20 rounded-3xl"
                   >
-                    <motion.div
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ type: "spring", duration: 0.5 }}
-                      className="text-center px-6"
-                    >
-                      <h3 className="text-2xl font-bold text-white mb-2">
-                        Coming Soon
-                      </h3>
-                      <p className="text-sm text-gray-200">
-                        Live demo will be available soon
-                      </p>
-                    </motion.div>
+                    <div className="text-center">
+                      <p className="text-white font-bold text-lg">Coming Soon</p>
+                      <p className="text-white/60 text-xs mt-1">Live demo will be available soon</p>
+                    </div>
                   </motion.div>
                 )}
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
 
-        {/* Pagination Controls */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-6 mt-12">
-            <motion.button
-              onClick={prevPage}
-              disabled={currentPage === 0}
-              whileHover={{ scale: currentPage === 0 ? 1 : 1.05 }}
-              whileTap={{ scale: currentPage === 0 ? 1 : 0.95 }}
-              className={`p-3 rounded-full transition-all duration-300 ${
-                currentPage === 0
-                  ? 'bg-gray-100 dark:bg-neutral-900 text-gray-400 cursor-not-allowed'
-                  : 'bg-white dark:bg-black text-black dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-neutral-900 shadow-md hover:shadow-lg border border-gray-200 dark:border-neutral-800'
-              }`}
+        {/* ── MOBILE: vertical cards ── */}
+        <div className="lg:hidden flex flex-col gap-4">
+          {projects.map((project, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              viewport={{ once: true }}
+              className="rounded-2xl overflow-hidden border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-950"
             >
-              <ChevronLeft className="w-6 h-6" strokeWidth={2.5} />
-            </motion.button>
-
-            <div className="flex gap-2">
-              {Array.from({ length: totalPages }).map((_, index) => (
-                <motion.button
-                  key={index}
-                  onClick={() => setCurrentPage(index)}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    currentPage === index
-                      ? 'bg-black dark:bg-gray-200 w-10'
-                      : 'bg-gray-300 dark:bg-neutral-700 hover:bg-gray-400 dark:hover:bg-neutral-500 w-2'
-                  }`}
+              <div className="relative h-40 overflow-hidden">
+                <img
+                  src={project.images[0]}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = `https://placehold.co/600x400/103257/ffffff?text=${encodeURIComponent(project.title)}`
+                  }}
                 />
-              ))}
-            </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-3 left-3">
+                  <p className="text-[9px] font-black uppercase tracking-widest text-white/60">{project.period}</p>
+                  <h3 className="text-base font-black text-white">{project.title}</h3>
+                </div>
+              </div>
+              <div className="p-4">
+                <p className="text-xs text-gray-600 dark:text-neutral-300 leading-relaxed mb-3 line-clamp-2">{project.description}</p>
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {project.tech.slice(0, 4).map((t, i) => (
+                    <span key={i} className="px-1.5 py-px bg-gray-100 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-gray-500 dark:text-neutral-300 rounded text-[8px] font-bold uppercase">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-black dark:bg-white text-white dark:text-black text-[11px] font-bold rounded-full">
+                    <Github className="w-3 h-3" /> Code
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
-            <motion.button
-              onClick={nextPage}
-              disabled={currentPage === totalPages - 1}
-              whileHover={{ scale: currentPage === totalPages - 1 ? 1 : 1.05 }}
-              whileTap={{ scale: currentPage === totalPages - 1 ? 1 : 0.95 }}
-              className={`p-3 rounded-full transition-all duration-300 ${
-                currentPage === totalPages - 1
-                  ? 'bg-gray-100 dark:bg-neutral-900 text-gray-400 cursor-not-allowed'
-                  : 'bg-white dark:bg-black text-black dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-neutral-900 shadow-md hover:shadow-lg border border-gray-200 dark:border-neutral-800'
-              }`}
-            >
-              <ChevronRight className="w-6 h-6" strokeWidth={2.5} />
-            </motion.button>
-          </div>
-        )}
       </div>
     </div>
   )
