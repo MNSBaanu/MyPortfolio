@@ -89,17 +89,17 @@ export default function Projects() {
               onHoverStart={() => setActiveProject(index)}
               onClick={() => setActiveProject(index)}
             >
-              {/* Background image */}
-              <AnimatePresence mode="wait">
+              {/* Background image — card stack: new image slides up from below */}
+              <AnimatePresence>
                 <motion.img
                   key={imageIndices[index]}
                   src={project.images[imageIndices[index]]}
                   alt={project.title}
                   className="absolute inset-0 w-full h-full object-cover"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
+                  initial={{ y: '100%', scale: 1.05 }}
+                  animate={{ y: '0%', scale: 1 }}
+                  exit={{ y: '-8%', scale: 0.96, opacity: 0.6 }}
+                  transition={{ duration: 0.55, ease: [0.32, 0.72, 0, 1] }}
                   onError={(e) => {
                     e.currentTarget.src = `https://placehold.co/600x480/103257/ffffff?text=${encodeURIComponent(project.title)}`
                   }}
@@ -224,17 +224,17 @@ export default function Projects() {
               viewport={{ once: true }}
               className="rounded-2xl overflow-hidden border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-950"
             >
-              <div className="relative h-40 overflow-hidden">
-                <AnimatePresence mode="wait">
+              <div className="relative h-40 overflow-hidden" style={{ isolation: 'isolate' }}>
+                <AnimatePresence>
                   <motion.img
                     key={imageIndices[index]}
                     src={project.images[imageIndices[index]]}
                     alt={project.title}
-                    className="w-full h-full object-cover"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.6 }}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    initial={{ y: '100%', scale: 1.05 }}
+                    animate={{ y: '0%', scale: 1 }}
+                    exit={{ y: '-8%', scale: 0.96, opacity: 0.6 }}
+                    transition={{ duration: 0.55, ease: [0.32, 0.72, 0, 1] }}
                     onError={(e) => {
                       e.currentTarget.src = `https://placehold.co/600x400/103257/ffffff?text=${encodeURIComponent(project.title)}`
                     }}

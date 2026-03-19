@@ -79,6 +79,7 @@ function App() {
                   <section id="projects" className="sticky top-0 z-50">
                     <Projects />
                   </section>
+                  <div className="h-[40vh] relative z-[55] bg-transparent pointer-events-none" />
                   <section id="contact" className="sticky top-0 z-[60]">
                     <Contact />
                   </section>
