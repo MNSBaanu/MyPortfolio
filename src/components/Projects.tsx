@@ -1,40 +1,35 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { ExternalLink, Github } from 'lucide-react'
 import { projects } from '../data/portfolio'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // Full corner-to-corner diagonal ribbon
-function AcademicRibbon() {
+function ProjectRibbon({ type }: { type: 'academic' | 'personal' }) {
+  const isAcademic = type === 'academic'
   return (
     <div className="absolute top-0 right-0 w-32 h-32 overflow-hidden rounded-tr-3xl pointer-events-none z-10">
-      {/* Ribbon band */}
       <div
-        className="absolute flex items-center justify-center text-[9px] font-black uppercase tracking-widest text-gray-800"
+        className="absolute flex items-center justify-center text-[9px] font-black uppercase tracking-widest"
         style={{
           width: '160px',
           padding: '6px 0',
-          background: 'linear-gradient(180deg, #e8e8e8 0%, #c0c0c0 40%, #a8a8a8 60%, #d0d0d0 100%)',
-          boxShadow: '0 2px 6px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.6)',
+          background: isAcademic
+            ? 'linear-gradient(180deg, #1a1a1a 0%, #000000 40%, #111111 60%, #1a1a1a 100%)'
+            : 'linear-gradient(180deg, #ffffff 0%, #e8e8e8 40%, #d4d4d4 60%, #ffffff 100%)',
+          color: isAcademic ? '#ffffff' : '#111111',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)',
           top: '28px',
           right: '-36px',
           transform: 'rotate(45deg)',
           transformOrigin: 'center',
         }}
       >
-        Academic
-        {/* Fold shadows on ends */}
+        {isAcademic ? 'Academic' : 'Personal'}
         <span className="absolute left-0 top-0 bottom-0 w-3"
-          style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.2), transparent)' }} />
+          style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.3), transparent)' }} />
         <span className="absolute right-0 top-0 bottom-0 w-3"
-          style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.2), transparent)' }} />
+          style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.3), transparent)' }} />
       </div>
-      {/* Top-right corner fold triangle */}
-      <div className="absolute top-0 right-0 w-0 h-0"
-        style={{
-          borderLeft: '10px solid transparent',
-          borderTop: '10px solid #888',
-        }}
-      />
     </div>
   )
 }
@@ -42,6 +37,19 @@ function AcademicRibbon() {
 export default function Projects() {
   const [activeProject, setActiveProject] = useState<number>(0)
   const [clickedProject, setClickedProject] = useState<string | null>(null)
+  const [imageIndices, setImageIndices] = useState<number[]>(() => projects.map(() => 0))
+
+  // Auto-cycle images every 3s for projects with multiple images
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setImageIndices(prev =>
+        prev.map((idx, i) =>
+          projects[i].images.length > 1 ? (idx + 1) % projects[i].images.length : idx
+        )
+      )
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div
@@ -82,20 +90,30 @@ export default function Projects() {
               onClick={() => setActiveProject(index)}
             >
               {/* Background image */}
-              <img
-                src={project.images[0]}
-                alt={project.title}
-                className="absolute inset-0 w-full h-full object-cover"
-                onError={(e) => {
-                  e.currentTarget.src = `https://placehold.co/600x480/103257/ffffff?text=${encodeURIComponent(project.title)}`
-                }}
-              />
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={imageIndices[index]}
+                  src={project.images[imageIndices[index]]}
+                  alt={project.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6 }}
+                  onError={(e) => {
+                    e.currentTarget.src = `https://placehold.co/600x480/103257/ffffff?text=${encodeURIComponent(project.title)}`
+                  }}
+                />
+              </AnimatePresence>
 
               {/* Dark overlay */}
               <div className="absolute inset-0 bg-black/50" />
 
-              {/* Academic ribbon */}
-              {project.academic && <AcademicRibbon />}
+              {/* Ribbon */}
+              {project.academic
+                ? <ProjectRibbon type="academic" />
+                : (project as any).badge === 'Personal' && <ProjectRibbon type="personal" />
+              }
 
               {/* Gradient overlay on active */}
               <AnimatePresence>
@@ -207,16 +225,26 @@ export default function Projects() {
               className="rounded-2xl overflow-hidden border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-950"
             >
               <div className="relative h-40 overflow-hidden">
-                <img
-                  src={project.images[0]}
-                  alt={project.title}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src = `https://placehold.co/600x400/103257/ffffff?text=${encodeURIComponent(project.title)}`
-                  }}
-                />
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={imageIndices[index]}
+                    src={project.images[imageIndices[index]]}
+                    alt={project.title}
+                    className="w-full h-full object-cover"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.6 }}
+                    onError={(e) => {
+                      e.currentTarget.src = `https://placehold.co/600x400/103257/ffffff?text=${encodeURIComponent(project.title)}`
+                    }}
+                  />
+                </AnimatePresence>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                {project.academic && <AcademicRibbon />}
+                {project.academic
+                  ? <ProjectRibbon type="academic" />
+                  : (project as any).badge === 'Personal' && <ProjectRibbon type="personal" />
+                }
                 <div className="absolute bottom-3 left-3">
                   <p className="text-[9px] font-black uppercase tracking-widest text-white/60">{project.period}</p>
                   <h3 className="text-base font-black text-white">{project.title}</h3>
