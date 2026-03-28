@@ -1,7 +1,8 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { personalInfo } from '../data/portfolio'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import CVViewer from './CVViewer'
+import { ChevronDown } from 'lucide-react'
 
 const taglines = [
   { role: 'Characters', name: 'Aspiring Software Engineer', desc: 'Full-stack developer crafting end-to-end solutions. Passionate about building scalable applications and leveraging AI to solve real-world problems.' },
@@ -13,6 +14,7 @@ const taglines = [
 const Hero = () => {
   const [showCVViewer, setShowCVViewer] = useState(false)
   const [current, setCurrent] = useState(0)
+  const sectionRef = useRef<HTMLElement>(null)
 
   const next = () => setCurrent((c) => (c + 1) % taglines.length)
 
@@ -21,60 +23,109 @@ const Hero = () => {
     return () => clearInterval(timer)
   }, [])
 
+  // ── Scroll-driven parallax ──
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  })
 
+  const layer1Y = useTransform(scrollYProgress, [0, 1], [0, -80])
+  const layer2Y = useTransform(scrollYProgress, [0, 1], [0, -140])
+  const layer3Y = useTransform(scrollYProgress, [0, 1], [0, -200])
+  const imageY  = useTransform(scrollYProgress, [0, 1], [0, -60])
+  const textY   = useTransform(scrollYProgress, [0, 1], [0, -40])
+  const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0])
 
+  // ── Mouse-tracking tilt ──
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
 
+  const springConfig = { stiffness: 80, damping: 20, mass: 0.5 }
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [3, -3]), springConfig)
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), springConfig)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    mouseX.set((e.clientX - rect.left) / rect.width - 0.5)
+    mouseY.set((e.clientY - rect.top) / rect.height - 0.5)
+  }
+
+  const handleMouseLeave = () => {
+    mouseX.set(0)
+    mouseY.set(0)
+  }
 
   return (
     <section
+      ref={sectionRef}
       id="home"
       className="min-h-screen relative overflow-hidden bg-white dark:bg-black flex items-center"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
-      {/* === Layer 1 — back card === */}
-      <div
-        className="absolute inset-y-0 right-0 w-[55%] hidden lg:block pointer-events-none z-[1]"
-        style={{
-          clipPath: 'polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%)',
-          filter: 'drop-shadow(-8px 0px 12px rgba(0,0,0,0.18))',
-        }}
+      {/* ── 3D tilt wrapper for right-side panels + image ── */}
+      <motion.div
+        className="absolute inset-0 hidden lg:block pointer-events-none"
+        style={{ rotateX, rotateY, transformStyle: 'preserve-3d', transformPerspective: 1200 }}
       >
-        <div className="dark:hidden w-full h-full bg-slate-200/70 backdrop-blur-sm" />
-        <div className="hidden dark:block w-full h-full bg-neutral-800" />
-      </div>
+        {/* === Layer 1 — back card === */}
+        <motion.div
+          className="absolute inset-y-0 right-0 w-[55%] z-[1]"
+          style={{
+            y: layer1Y,
+            clipPath: 'polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%)',
+            filter: 'drop-shadow(-8px 0px 12px rgba(0,0,0,0.18))',
+          }}
+        >
+          <div className="dark:hidden w-full h-full bg-slate-200/70 backdrop-blur-sm" />
+          <div className="hidden dark:block w-full h-full bg-neutral-800" />
+        </motion.div>
 
-      {/* === Layer 2 — mid card === */}
-      <div
-        className="absolute inset-y-0 right-0 w-[42%] hidden lg:block pointer-events-none z-[2]"
-        style={{
-          clipPath: 'polygon(16% 0%, 100% 0%, 100% 100%, 0% 100%)',
-          filter: 'drop-shadow(-12px 0px 18px rgba(0,0,0,0.28))',
-        }}
-      >
-        <div className="dark:hidden w-full h-full bg-slate-400/60 backdrop-blur-md" />
-        <div className="hidden dark:block w-full h-full bg-neutral-900" />
-      </div>
+        {/* === Layer 2 — mid card === */}
+        <motion.div
+          className="absolute inset-y-0 right-0 w-[42%] z-[2]"
+          style={{
+            y: layer2Y,
+            clipPath: 'polygon(16% 0%, 100% 0%, 100% 100%, 0% 100%)',
+            filter: 'drop-shadow(-12px 0px 18px rgba(0,0,0,0.28))',
+          }}
+        >
+          <div className="dark:hidden w-full h-full bg-slate-400/60 backdrop-blur-md" />
+          <div className="hidden dark:block w-full h-full bg-neutral-900" />
+        </motion.div>
 
-      {/* === Layer 3 — front card === */}
-      <div
-        className="absolute inset-y-0 right-0 w-[28%] hidden lg:block pointer-events-none z-[3]"
-        style={{
-          clipPath: 'polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)',
-          filter: 'drop-shadow(-16px 0px 24px rgba(0,0,0,0.45))',
-        }}
-      >
-        <div className="dark:hidden w-full h-full bg-[#1e293b]" />
-        <div className="hidden dark:block w-full h-full bg-neutral-950" />
-      </div>
+        {/* === Layer 3 — front card === */}
+        <motion.div
+          className="absolute inset-y-0 right-0 w-[28%] z-[3]"
+          style={{
+            y: layer3Y,
+            clipPath: 'polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)',
+            filter: 'drop-shadow(-16px 0px 24px rgba(0,0,0,0.45))',
+          }}
+        >
+          <div className="dark:hidden w-full h-full bg-[#1e293b]" />
+          <div className="hidden dark:block w-full h-full bg-neutral-950" />
+        </motion.div>
 
-      {/* === Gradient overlay === */}
-      <div className="absolute inset-0 pointer-events-none z-[4]">
-        <div className="dark:hidden absolute inset-0" style={{ background: 'linear-gradient(to left, transparent 28%, #e2e8f0 55%, #cbd5e1 70%, transparent 100%)' }} />
-        <div className="hidden dark:block absolute inset-0" style={{ background: 'linear-gradient(to left, transparent 28%, #171717 50%, #262626 68%, transparent 100%)' }} />
-      </div>
+        {/* === Profile image with parallax === */}
+        <motion.div
+          className="absolute inset-y-0 right-0 w-[52%] flex items-end justify-center z-[20]"
+          style={{ y: imageY }}
+        >
+          <img
+            src={personalInfo.profileImage}
+            alt={personalInfo.name}
+            className="h-[78%] w-auto object-cover object-top"
+            style={{ marginRight: '22%' }}
+          />
+        </motion.div>
+      </motion.div>
+
+
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-20 pb-10 flex flex-col lg:flex-row items-center lg:gap-0 min-h-screen">
 
-        {/* Mobile: image on top */}
+        {/* Mobile: image on top (no parallax on mobile) */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -88,9 +139,11 @@ const Hero = () => {
           />
         </motion.div>
 
-        {/* Left: Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center gap-4 lg:gap-6 lg:pr-10">
-
+        {/* Left: Content with scroll parallax */}
+        <motion.div
+          className="w-full lg:w-1/2 flex flex-col justify-center gap-4 lg:gap-6 lg:pr-10"
+          style={{ y: textY }}
+        >
           <motion.p
             key={current + '-role'}
             initial={{ opacity: 0, x: -10 }}
@@ -149,30 +202,37 @@ const Hero = () => {
             </span>
             Open for Opportunities · Kandy, Sri Lanka
           </motion.div>
-        </div>
-
-        {/* Desktop: Profile image */}
-        <div className="absolute inset-y-0 right-0 w-[52%] hidden lg:flex items-end justify-center z-[20] pointer-events-none">
-          <img
-            src={personalInfo.profileImage}
-            alt={personalInfo.name}
-            className="h-[78%] w-auto object-cover object-top"
-            style={{ marginRight: '22%' }}
-          />
-        </div>
-
-        {/* Slide dots */}
-        <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-          {taglines.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrent(i)}
-              aria-label={`Slide ${i + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'w-6 bg-black dark:bg-white' : 'w-1.5 bg-gray-300 dark:bg-neutral-600'}`}
-            />
-          ))}
-        </div>
+        </motion.div>
       </div>
+
+      {/* Slide dots */}
+      <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+        {taglines.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            aria-label={`Slide ${i + 1}`}
+            className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? 'w-6 bg-black dark:bg-white' : 'w-1.5 bg-gray-300 dark:bg-neutral-600'}`}
+          />
+        ))}
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        style={{ opacity: scrollIndicatorOpacity }}
+        className="absolute bottom-20 sm:bottom-24 right-8 sm:right-12 z-20 hidden sm:flex flex-col items-center gap-2 pointer-events-none"
+      >
+        <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-gray-400 dark:text-gray-500"
+          style={{ writingMode: 'vertical-rl' }}>
+          Scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <ChevronDown className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+        </motion.div>
+      </motion.div>
 
       <CVViewer isOpen={showCVViewer} onClose={() => setShowCVViewer(false)} />
     </section>
