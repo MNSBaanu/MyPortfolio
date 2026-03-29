@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { personalInfo } from '../data/portfolio'
 import { useState, useEffect } from 'react'
 import CVViewer from './CVViewer'
 
@@ -14,10 +13,8 @@ const Hero = () => {
   const [showCVViewer, setShowCVViewer] = useState(false)
   const [current, setCurrent] = useState(0)
 
-  const next = () => setCurrent((c) => (c + 1) % taglines.length)
-
   useEffect(() => {
-    const timer = setInterval(next, 5000)
+    const timer = setInterval(() => setCurrent(c => (c + 1) % taglines.length), 5000)
     return () => clearInterval(timer)
   }, [])
 
@@ -26,34 +23,35 @@ const Hero = () => {
       id="home"
       className="min-h-screen relative overflow-hidden bg-white dark:bg-black flex items-center"
     >
-      {/* Desktop: Profile image */}
-      <div className="absolute inset-y-0 right-0 w-[52%] hidden lg:flex items-end justify-center z-[20] pointer-events-none">
+      {/* ── Layer 1: giant title text — behind everything ── */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1]">
+        <motion.h1
+          key={current + '-bg'}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="text-center font-black uppercase leading-none tracking-tighter select-none text-black/[0.06] dark:text-white/[0.06]"
+          style={{ fontSize: 'clamp(4rem, 12vw, 10rem)', whiteSpace: 'nowrap' }}
+        >
+          {taglines[current].name}
+        </motion.h1>
+      </div>
+
+      {/* ── Layer 2: herobg image — centered, above title text ── */}
+      <div className="absolute inset-0 flex items-end justify-center pointer-events-none z-[2]">
         <img
-          src={personalInfo.profileImage}
-          alt={personalInfo.name}
-          className="h-[78%] w-auto object-cover object-top"
-          style={{ marginRight: '22%' }}
+          src="/assets/herobg.png"
+          alt=""
+          aria-hidden="true"
+          className="h-[90%] w-auto object-contain object-bottom"
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-20 pb-10 flex flex-col lg:flex-row items-center lg:gap-0 min-h-screen">
+      {/* ── Layer 3: content — above image ── */}
+      <div className="relative z-[10] w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-24 pb-10 min-h-screen flex flex-col justify-center">
 
-        {/* Mobile: image on top */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="lg:hidden flex justify-center w-full pt-4 pb-6"
-        >
-          <img
-            src={personalInfo.profileImage}
-            alt={personalInfo.name}
-            className="w-48 xs:w-56 sm:w-64 h-60 xs:h-72 sm:h-80 object-cover object-top"
-          />
-        </motion.div>
-
-        {/* Left: Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center gap-4 lg:gap-6 lg:pr-10">
+        {/* Left content block */}
+        <div className="w-full lg:w-[45%] flex flex-col gap-4 lg:gap-6">
 
           <motion.p
             key={current + '-role'}
@@ -62,11 +60,11 @@ const Hero = () => {
             transition={{ duration: 0.4 }}
             className="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 flex items-center gap-2"
           >
-            <span className="w-4 h-px bg-gray-400 dark:bg-gray-500 inline-block"></span>
+            <span className="w-4 h-px bg-gray-400 dark:bg-gray-500 inline-block" />
             {taglines[current].role}
           </motion.p>
 
-          <motion.h1
+          <motion.h2
             key={current + '-name'}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -74,7 +72,7 @@ const Hero = () => {
             className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-black uppercase leading-tight tracking-tight text-black dark:text-white"
           >
             {taglines[current].name}
-          </motion.h1>
+          </motion.h2>
 
           <motion.p
             key={current + '-desc'}
@@ -108,8 +106,8 @@ const Hero = () => {
             className="flex items-center gap-2 text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
             </span>
             Open for Opportunities · Kandy, Sri Lanka
           </motion.div>
