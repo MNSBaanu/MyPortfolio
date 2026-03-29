@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react'
 import CVViewer from './CVViewer'
 
 const taglines = [
-  { role: 'Characters', name: 'Aspiring Software Engineer', desc: 'Full-stack developer crafting end-to-end solutions. Passionate about building scalable applications and leveraging AI to solve real-world problems.' },
-  { role: 'Developer', name: 'Full-Stack Developer', desc: 'Building robust web applications from database to UI. Experienced with React, Node.js, and modern cloud infrastructure.' },
-  { role: 'Enthusiast', name: 'AI & Tech Enthusiast', desc: 'Exploring the intersection of artificial intelligence and software engineering to create intelligent, impactful solutions.' },
-  { role: 'Student', name: 'Software Engineering Student', desc: 'Pursuing BEng (Hons) in Software Engineering, continuously learning and growing through real-world projects.' },
+  { role: 'Characters', name: 'Aspiring Software', sub: 'Engineer', desc: 'Full-stack developer crafting end-to-end solutions. Passionate about building scalable applications and leveraging AI to solve real-world problems.' },
+  { role: 'Developer', name: 'Full-Stack', sub: 'Developer', desc: 'Building robust web applications from database to UI. Experienced with React, Node.js, and modern cloud infrastructure.' },
+  { role: 'Enthusiast', name: 'AI & Tech', sub: 'Enthusiast', desc: 'Exploring the intersection of artificial intelligence and software engineering to create intelligent, impactful solutions.' },
+  { role: 'Student', name: 'Software Eng.', sub: 'Student', desc: 'Pursuing BEng (Hons) in Software Engineering, continuously learning and growing through real-world projects.' },
 ]
 
 const Hero = () => {
@@ -21,101 +21,122 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="min-h-screen relative overflow-hidden bg-white dark:bg-black flex items-center"
+      className="min-h-screen relative overflow-hidden bg-white dark:bg-black flex flex-col"
     >
-      {/* ── Layer 1: giant title text — behind everything ── */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1]">
+      <div className="relative flex-1 flex flex-col items-center justify-start pt-24 pb-8 min-h-screen">
+
+        {/* Role label */}
+        <motion.p
+          key={current + '-role'}
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-2 z-10 relative"
+        >
+          <span className="w-4 h-px bg-gray-400 dark:bg-gray-500 inline-block" />
+          {taglines[current].role}
+        </motion.p>
+
+        {/* Foreground title — above image */}
         <motion.h1
-          key={current + '-bg'}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          className="text-center font-black uppercase leading-none tracking-tighter select-none text-black/[0.06] dark:text-white/[0.06]"
-          style={{ fontSize: 'clamp(4rem, 12vw, 10rem)', whiteSpace: 'nowrap' }}
+          key={current + '-name'}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="font-black uppercase leading-none tracking-tighter text-black dark:text-white text-center relative z-[10]"
+          style={{ fontSize: 'clamp(3.5rem, 10vw, 8rem)', lineHeight: 1 }}
         >
           {taglines[current].name}
         </motion.h1>
-      </div>
 
-      {/* ── Layer 2: herobg image — centered, above title text ── */}
-      <div className="absolute inset-0 flex items-end justify-center pointer-events-none z-[2]">
-        <img
-          src="/assets/herobg.png"
-          alt=""
-          aria-hidden="true"
-          className="h-[90%] w-auto object-contain object-bottom"
-        />
-      </div>
+        {/* Ghost subtitle — behind image */}
+        <motion.h2
+          key={current + '-sub'}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="font-black uppercase leading-none tracking-tighter text-center relative z-[3] text-gray-200 dark:text-neutral-800"
+          style={{ fontSize: 'clamp(3rem, 9vw, 7rem)', lineHeight: 1 }}
+        >
+          {taglines[current].sub}
+        </motion.h2>
 
-      {/* ── Layer 3: content — above image ── */}
-      <div className="relative z-[10] w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-24 pb-10 min-h-screen flex flex-col justify-center">
+        {/* Image — large, pinned to bottom center */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-[5] pointer-events-none">
+          <img
+            src="/assets/herobg.png"
+            alt="MNSBaanu"
+            className="w-auto object-contain object-bottom"
+            style={{ height: 'clamp(400px, 72vh, 680px)' }}
+          />
+        </div>
 
-        {/* Left content block */}
-        <div className="w-full lg:w-[45%] flex flex-col gap-4 lg:gap-6">
-
-          <motion.p
-            key={current + '-role'}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4 }}
-            className="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 flex items-center gap-2"
-          >
-            <span className="w-4 h-px bg-gray-400 dark:bg-gray-500 inline-block" />
-            {taglines[current].role}
-          </motion.p>
-
-          <motion.h2
-            key={current + '-name'}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-black uppercase leading-tight tracking-tight text-black dark:text-white"
-          >
-            {taglines[current].name}
-          </motion.h2>
-
-          <motion.p
-            key={current + '-desc'}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed max-w-sm"
-          >
+        {/* Left side desc — absolutely positioned left of image */}
+        <motion.div
+          key={current + '-left'}
+          initial={{ opacity: 0, x: -16 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="absolute left-6 sm:left-10 lg:left-16 bottom-16 z-[10] max-w-[200px] hidden lg:flex flex-col gap-3"
+        >
+          <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
             {taglines[current].desc}
-          </motion.p>
-
-          <div className="flex flex-wrap gap-3 mt-1">
-            <button
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="flex items-center gap-2 px-5 sm:px-6 py-2 sm:py-2.5 bg-black dark:bg-white text-white dark:text-black text-xs sm:text-sm font-semibold rounded-full hover:opacity-80 transition-opacity duration-200"
-            >
-              Let's Connect
-            </button>
-            <button
-              onClick={() => setShowCVViewer(true)}
-              className="px-5 sm:px-6 py-2 sm:py-2.5 border border-gray-300 dark:border-neutral-700 text-black dark:text-white text-xs sm:text-sm font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-neutral-900 transition-colors duration-200"
-            >
-              View Resume
-            </button>
+          </p>
+          <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+            </span>
+            Open for Opportunities
           </div>
+          <p className="text-[10px] text-gray-400 dark:text-gray-500">Kandy, Sri Lanka</p>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="flex items-center gap-2 text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mt-1"
+        {/* Bottom buttons — right side */}
+        <div className="absolute right-6 sm:right-10 lg:right-16 bottom-16 z-[10] flex flex-col gap-2 hidden lg:flex">
+          <button
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-5 py-2.5 bg-black dark:bg-white text-white dark:text-black text-xs font-semibold rounded-full hover:opacity-80 transition-opacity"
           >
+            Let's Connect
+          </button>
+          <button
+            onClick={() => setShowCVViewer(true)}
+            className="px-5 py-2.5 border border-gray-300 dark:border-neutral-700 text-black dark:text-white text-xs font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-neutral-900 transition-colors"
+          >
+            View Resume
+          </button>
+        </div>
+
+        {/* Mobile bottom row */}
+        <div className="lg:hidden w-full px-6 mt-6 flex flex-col gap-3 relative z-10">
+          <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">{taglines[current].desc}</p>
+          <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
             </span>
             Open for Opportunities · Kandy, Sri Lanka
-          </motion.div>
+          </div>
+          <div className="flex gap-3">
+            <button
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-5 py-2.5 bg-black dark:bg-white text-white dark:text-black text-xs font-semibold rounded-full hover:opacity-80 transition-opacity"
+            >
+              Let's Connect
+            </button>
+            <button
+              onClick={() => setShowCVViewer(true)}
+              className="px-5 py-2.5 border border-gray-300 dark:border-neutral-700 text-black dark:text-white text-xs font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-neutral-900 transition-colors"
+            >
+              View Resume
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Slide dots */}
-      <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
         {taglines.map((_, i) => (
           <button
             key={i}
