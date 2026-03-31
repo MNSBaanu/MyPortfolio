@@ -57,7 +57,7 @@ export default function About() {
               viewport={{ once: true }}
               className="mb-5 sm:mb-8"
             >
-              <h2 className="font-bold text-black dark:text-gray-100 mb-4 tracking-tight"
+              <h2 className="font-semibold text-black dark:text-gray-100 mb-4 tracking-tight"
                 style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>
                 About Me
               </h2>
@@ -79,6 +79,10 @@ export default function About() {
                 style={{ fontSize: 'clamp(0.85rem, 2vw, 1.05rem)' }}>
                 {about.description2}
               </p>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium"
+                style={{ fontSize: 'clamp(0.85rem, 2vw, 1.05rem)' }}>
+                {about.description3}
+              </p>
             </motion.div>
 
             {/* Tags */}
@@ -92,7 +96,7 @@ export default function About() {
                 Core Identity
               </h3>
               <div className="flex flex-wrap gap-2">
-                {['Software Engineering Student', 'Tech Enthusiast', 'Problem Solver', 'Quick Learner'].map((tag, index) => (
+                {['Full-Stack Engineer', 'AI Enthusiast', 'Problem Solver', 'Lifelong Learner'].map((tag, index) => (
                   <motion.span
                     key={tag}
                     initial={{ opacity: 0, scale: 0.9 }}

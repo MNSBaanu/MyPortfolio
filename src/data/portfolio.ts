@@ -15,8 +15,9 @@ export const personalInfo = {
 }
 
 export const about = {
-  description1: "I'm a Software Engineering student with a passion for creating meaningful digital experiences. I believe in writing clean, efficient code and continuously pushing myself to learn and grow.",
-  description2: 'I\'m driven by challenges and motivated by the endless possibilities that technology offers to solve real-world problems.',
+  description1: "I build things that Work & Look Good doing it. From database to UI, I care about every Layer of the Stack and every Pixel of the Interface.",
+  description2: "Challenges don't slow me down, they sharpen my Focus. I'm Driven by the belief that great Software isn't just Functional. it's Thoughtful, fast, and Built to Last.",
+  description3: "Currently pursuing my BEng in Software Engineering while working as a Software Engineer Intern — turning classroom theory into real production code, one commit at a time.",
   stats: [
     { number: '10+', label: 'Certifications' },
     { number: '10+', label: 'Projects Completed' },
