@@ -76,7 +76,7 @@ export default function ContactForm() {
 
                     <div className="w-full flex items-start justify-center">
                         <div className="bg-white dark:bg-black border border-gray-300 dark:border-neutral-800 rounded-lg w-full max-w-md shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl">
-                            <div className="bg-[#103257] text-white px-4 py-3 text-lg font-medium">
+                            <div className="bg-black text-white px-4 py-3 text-lg font-medium">
                                 Contact Form
                             </div>
 
@@ -89,7 +89,7 @@ export default function ContactForm() {
                                         value={formData.name}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-[#103257] focus:border-transparent outline-none transition-all duration-300"
+                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
                                         placeholder="Your full name"
                                     />
                                     <input
@@ -99,7 +99,7 @@ export default function ContactForm() {
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-[#103257] focus:border-transparent outline-none transition-all duration-300"
+                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
                                         placeholder="your.email@example.com"
                                     />
                                 </div>
@@ -110,7 +110,7 @@ export default function ContactForm() {
                                     value={formData.subject}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-[#103257] focus:border-transparent outline-none transition-all duration-300"
+                                    className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
                                     placeholder="What is this about?"
                                 />
                                 <textarea
@@ -120,7 +120,7 @@ export default function ContactForm() {
                                     onChange={handleChange}
                                     required
                                     rows={4}
-                                    className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-[#103257] focus:border-transparent outline-none transition-all duration-300 resize-none"
+                                    className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300 resize-none"
                                     placeholder="Your detailed message..."
                                 />
 
@@ -133,7 +133,7 @@ export default function ContactForm() {
                                         disabled={isSubmitting}
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="w-full sm:w-auto px-8 py-3 bg-[#103257] text-white text-sm font-bold rounded-xl cursor-pointer border-none shadow-lg hover:shadow-[#103257]/30 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
+                                        className="w-full sm:w-auto px-8 py-3 bg-black dark:bg-white text-white dark:text-black text-sm font-bold rounded-xl cursor-pointer border-none shadow-lg transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
                                     >
                                         {isSubmitting ? (
                                             <>

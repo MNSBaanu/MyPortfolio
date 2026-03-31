@@ -43,8 +43,8 @@ const Hero = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="font-black uppercase leading-none tracking-tighter text-black dark:text-white text-center relative z-[10]"
-          style={{ fontSize: 'clamp(3.5rem, 10vw, 8rem)', lineHeight: 1 }}
+          className="font-semibold uppercase leading-none tracking-tight text-black dark:text-white text-center relative z-[10]"
+          style={{ fontSize: 'clamp(2.2rem, 6vw, 5rem)', lineHeight: 1 }}
         >
           {taglines[current].name}
         </motion.h1>
@@ -55,8 +55,8 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="font-black uppercase leading-none tracking-tighter text-center relative z-[3] text-gray-200 dark:text-neutral-800"
-          style={{ fontSize: 'clamp(3rem, 9vw, 7rem)', lineHeight: 1 }}
+          className="font-semibold uppercase leading-none tracking-tight text-center relative z-[3] text-gray-200 dark:text-neutral-800"
+          style={{ fontSize: 'clamp(1.8rem, 5vw, 4.2rem)', lineHeight: 1 }}
         >
           {taglines[current].sub}
         </motion.h2>

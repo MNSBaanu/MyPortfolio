@@ -50,7 +50,7 @@ function ProjectPanel({ projectIdx }: { projectIdx: number }) {
     >
       <img src={allImages[activeImage]} alt={project.title}
         className="absolute inset-0 w-full h-full object-cover"
-        onError={(e) => { e.currentTarget.src = `https://placehold.co/800x500/103257/ffffff?text=${encodeURIComponent(project.title)}` }}
+        onError={(e) => { e.currentTarget.src = `https://placehold.co/800x500/111111/ffffff?text=${encodeURIComponent(project.title)}` }}
       />
       <div className="absolute inset-0" style={{ background: 'linear-gradient(to top,rgba(0,0,0,0.92) 0%,rgba(0,0,0,0.5) 45%,transparent 100%)', opacity: hovered ? 1 : 0, transition: 'opacity 0.35s ease' }} />
 
@@ -116,7 +116,7 @@ function ProjectModal({ projectIdx, onClose }: { projectIdx: number; onClose: ()
             <h2 className="text-2xl font-black text-black dark:text-white leading-tight mb-2">{project.title}</h2>
             <div className="flex flex-wrap items-center gap-3">
               <span className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 dark:text-gray-400">
-                <span className={`w-2 h-2 rounded-full flex-shrink-0 ${project.academic ? 'bg-blue-500' : 'bg-green-500'}`} />
+                <span className={`w-2 h-2 rounded-full flex-shrink-0 ${project.academic ? 'bg-gray-400' : 'bg-green-500'}`} />
                 {project.academic ? 'Academic Project' : 'Personal Project'}
               </span>
               <span className="text-gray-300 dark:text-neutral-600 text-xs">·</span>
@@ -157,7 +157,7 @@ function ProjectModal({ projectIdx, onClose }: { projectIdx: number; onClose: ()
                   src={img}
                   alt={`${project.title} screenshot ${i + 1}`}
                   className="w-full h-auto block"
-                  onError={(e) => { e.currentTarget.src = `https://placehold.co/900x560/103257/ffffff?text=${encodeURIComponent(project.title)}` }}
+                  onError={(e) => { e.currentTarget.src = `https://placehold.co/900x560/111111/ffffff?text=${encodeURIComponent(project.title)}` }}
                 />
               </div>
             ))}
@@ -190,7 +190,7 @@ function ProjectModal({ projectIdx, onClose }: { projectIdx: number; onClose: ()
 
             <div>
               <p className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-1.5">Type</p>
-              <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wide ${project.academic ? 'bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300' : 'bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-300'}`}>
+              <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wide ${project.academic ? 'bg-gray-100 dark:bg-neutral-800 text-gray-700 dark:text-gray-300' : 'bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-300'}`}>
                 {project.academic ? 'Academic' : 'Personal'}
               </span>
             </div>
@@ -243,7 +243,7 @@ export default function Projects() {
           <h2 className="font-bold text-black dark:text-gray-100 mb-3 tracking-tight" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>
             Featured Projects
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-[#103257] to-[#0d4a6b]" />
+          <div className="w-16 h-1 bg-black dark:bg-white" />
         </div>
 
         {/* ── DESKTOP ── */}
@@ -274,7 +274,7 @@ export default function Projects() {
                   onMouseLeave={e => (e.currentTarget.style.opacity = '0.65', e.currentTarget.style.transform = 'scale(1)')}
                 >
                   <img src={p.images[0]} alt={p.title} className="w-full h-full object-cover"
-                    onError={(e) => { e.currentTarget.src = `https://placehold.co/120x76/103257/ffffff?text=${encodeURIComponent(p.title)}` }}
+                    onError={(e) => { e.currentTarget.src = `https://placehold.co/120x76/111111/ffffff?text=${encodeURIComponent(p.title)}` }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                   <p className="absolute bottom-1.5 left-2 right-2 text-white text-[8px] font-black uppercase tracking-wide leading-tight line-clamp-1">
@@ -298,7 +298,7 @@ export default function Projects() {
               className="rounded-2xl overflow-hidden border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-left w-full">
               <div className="relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
                 <img src={p.images[0]} alt={p.title} className="w-full h-full object-cover"
-                  onError={(e) => { e.currentTarget.src = `https://placehold.co/600x338/103257/ffffff?text=${encodeURIComponent(p.title)}` }}
+                  onError={(e) => { e.currentTarget.src = `https://placehold.co/600x338/111111/ffffff?text=${encodeURIComponent(p.title)}` }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-3 left-3">

@@ -21,7 +21,7 @@ function JourneyCard({ item }: { item: JourneyItem }) {
         <span className="text-[9px] font-bold bg-black text-white dark:bg-white dark:text-black px-2.5 py-0.5 rounded-full self-start whitespace-nowrap">{item.period}</span>
       </div>
       <h3 className="text-sm font-black text-black dark:text-gray-100 leading-tight mb-1">{item.title}</h3>
-      <p className="text-xs font-bold text-[#103257] dark:text-blue-400 mb-2">{item.organization}</p>
+      <p className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2">{item.organization}</p>
       {item.description && (
         <p className="text-[11px] text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-3">{item.description}</p>
       )}
@@ -115,7 +115,7 @@ export default function Journey() {
                 <h2 className="font-black text-black dark:text-gray-100 tracking-tighter" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
                   {section.title}
                 </h2>
-                <div className="w-10 h-1.5 bg-[#103257] dark:bg-blue-600 mt-3 rounded-full" />
+                <div className="w-10 h-1.5 bg-black dark:bg-white mt-3 rounded-full" />
               </div>
 
               {/* Horizontal scroll strip — all screen sizes */}

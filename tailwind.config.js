@@ -26,9 +26,9 @@ export default {
         },
         'dark-teal': '#1a4d4d',
         'darker-teal': '#0f3a3a',
-        'saree-blue': '#103257',
       },
       fontFamily: {
+        'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'sans-serif'],
         'mono': ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
         'cyber': ['Orbitron', 'sans-serif'],
       },

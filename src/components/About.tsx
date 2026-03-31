@@ -61,7 +61,7 @@ export default function About() {
                 style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>
                 About Me
               </h2>
-              <div className="w-12 sm:w-16 h-1 bg-gradient-to-r from-[#103257] to-[#0d4a6b] rounded-full" />
+              <div className="w-12 sm:w-16 h-1 bg-black dark:bg-white rounded-full" />
             </motion.div>
 
             <motion.div
@@ -98,7 +98,7 @@ export default function About() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.4 + index * 0.05 }}
-                    whileHover={{ scale: 1.05, borderColor: '#103257' }}
+                    whileHover={{ scale: 1.05, borderColor: '#000000' }}
                     viewport={{ once: true }}
                     className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-white dark:bg-black border border-gray-200 dark:border-neutral-800 shadow-sm text-gray-700 dark:text-gray-300 text-[10px] sm:text-[11px] font-bold tracking-tight transition-all duration-300 cursor-default"
                   >
