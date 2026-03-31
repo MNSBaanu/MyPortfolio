@@ -65,7 +65,7 @@ function ProjectPanel({ projectIdx }: { projectIdx: number }) {
       {/* hover info */}
       <div className="absolute bottom-0 left-0 right-0 p-4 z-10" style={{ opacity: hovered ? 1 : 0, transform: hovered ? 'translateY(0)' : 'translateY(12px)', transition: 'opacity 0.35s ease, transform 0.35s ease', pointerEvents: 'none' }}>
         <p className="text-[9px] font-black uppercase tracking-widest text-white/50 mb-0.5">{project.period}</p>
-        <h3 className="text-sm font-black text-white mb-1 leading-tight">{project.title}</h3>
+        <h3 className="text-sm font-medium text-white mb-1 leading-tight">{project.title}</h3>
         <p className="text-[10px] text-white/70 leading-relaxed line-clamp-2 mb-2">{project.description}</p>
         <div className="flex flex-wrap gap-1">
           {project.tech.slice(0, 4).map((t, i) => (
@@ -113,7 +113,7 @@ function ProjectModal({ projectIdx, onClose }: { projectIdx: number; onClose: ()
         {/* ── Top bar ── */}
         <div className="flex items-start justify-between gap-4 px-8 pt-7 pb-5 border-b border-gray-100 dark:border-neutral-800">
           <div className="flex-1 min-w-0">
-            <h2 className="text-2xl font-black text-black dark:text-white leading-tight mb-2">{project.title}</h2>
+            <h2 className="text-2xl font-semibold text-black dark:text-white leading-tight mb-2">{project.title}</h2>
             <div className="flex flex-wrap items-center gap-3">
               <span className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 dark:text-gray-400">
                 <span className={`w-2 h-2 rounded-full flex-shrink-0 ${project.academic ? 'bg-gray-400' : 'bg-green-500'}`} />
@@ -277,7 +277,7 @@ export default function Projects() {
                     onError={(e) => { e.currentTarget.src = `https://placehold.co/120x76/111111/ffffff?text=${encodeURIComponent(p.title)}` }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-                  <p className="absolute bottom-1.5 left-2 right-2 text-white text-[8px] font-black uppercase tracking-wide leading-tight line-clamp-1">
+                  <p className="absolute bottom-1.5 left-2 right-2 text-white text-[8px] font-medium uppercase tracking-wide leading-tight line-clamp-1">
                     {p.title}
                   </p>
                 </button>
@@ -303,7 +303,7 @@ export default function Projects() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-3 left-3">
                   <p className="text-[9px] font-black uppercase tracking-widest text-white/60">{p.period}</p>
-                  <h3 className="text-base font-black text-white">{p.title}</h3>
+                  <h3 className="text-base font-medium text-white">{p.title}</h3>
                 </div>
               </div>
               <div className="p-4">
