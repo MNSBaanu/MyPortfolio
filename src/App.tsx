@@ -51,7 +51,7 @@ function App() {
               key="content"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.1 }}
               className="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-black dark:text-gray-100"
             >
               <Header />
