@@ -28,7 +28,7 @@ export default function LoadingScreen({ onLoadingComplete }: { onLoadingComplete
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1.2, ease: 'easeInOut' }}
-      className="fixed inset-0 z-[100] bg-white flex items-center justify-center"
+      className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
     >
       {/* Spinner */}
       <div className="relative w-24 h-24" style={{ transform: `rotate(${rotation}deg)` }}>
@@ -54,7 +54,7 @@ export default function LoadingScreen({ onLoadingComplete }: { onLoadingComplete
                   width: 10,
                   height: 22,
                   borderRadius: 3,
-                  backgroundColor: `rgba(0,0,0,${opacity})`,
+                  backgroundColor: `rgba(255,255,255,${opacity})`,
                 }}
               />
             </div>

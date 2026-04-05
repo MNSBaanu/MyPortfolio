@@ -41,7 +41,7 @@ export default function Hero() {
 
           <h2
             className="font-semibold text-black dark:text-white leading-snug whitespace-pre-line"
-            style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2rem)' }}
+            style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)' }}
           >
             {TAGLINE}
           </h2>
@@ -50,33 +50,16 @@ export default function Hero() {
             Full-stack developer crafting end-to-end solutions. Passionate about scalable apps and leveraging AI to solve real-world problems.
           </p>
 
-          <button
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="flex items-center gap-2 text-sm font-semibold text-black dark:text-white hover:opacity-60 transition-opacity w-fit"
-          >
-            <span className="text-gray-400 dark:text-gray-500 font-mono text-xs">{'// '}</span>
-            HIRE ME
-            <span className="text-base">→</span>
-          </button>
-
-          <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-            </span>
-            Open for Opportunities
-          </div>
-
           <p className="text-[10px] text-gray-400 dark:text-gray-500">Kandy, Sri Lanka</p>
         </motion.div>
 
-        {/* ── Profile image — centered, pinned to bottom ── */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-[5] pointer-events-none">
+        {/* ── Profile image — bottom-pinned background ── */}
+        <div className="absolute inset-x-0 bottom-0 z-[1] pointer-events-none flex justify-center items-end">
           <img
             src="/assets/herobg.png"
             alt="MNSBaanu"
-            className="w-auto object-contain object-bottom"
-            style={{ height: 'clamp(400px, 72vh, 680px)' }}
+            className="object-contain object-bottom opacity-50 dark:opacity-[0.20]"
+            style={{ height: '85vh', width: 'auto' }}
           />
         </div>
 
@@ -85,31 +68,49 @@ export default function Hero() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="absolute right-6 sm:right-10 lg:right-16 bottom-16 z-10 hidden lg:flex flex-col gap-3 items-end"
+          className="absolute right-24 lg:right-[12%] top-1/2 -translate-y-1/2 z-10 hidden lg:flex flex-col gap-6 items-end"
         >
-          {SERVICES.map((s, i) => (
-            <p
-              key={s}
-              className={`text-sm transition-all duration-500 cursor-default text-right ${
-                i === activeService
-                  ? 'text-black dark:text-white font-semibold'
-                  : 'text-gray-300 dark:text-neutral-700 font-normal'
-              }`}
-            >
-              {s}
-            </p>
-          ))}
+          {/* Services list */}
+          <div className="flex flex-col gap-2 text-right">
+            {SERVICES.map((s, i) => (
+              <p
+                key={s}
+                className={`text-sm transition-all duration-500 cursor-default text-right ${
+                  i === activeService
+                    ? 'text-black dark:text-white font-semibold'
+                    : 'text-gray-300 dark:text-neutral-700 font-normal'
+                }`}
+              >
+                {s}
+              </p>
+            ))}
+          </div>
 
-          <div className="flex flex-col gap-2 mt-3">
+          {/* Divider */}
+          <div className="w-8 h-px bg-gray-200 dark:bg-neutral-700" />
+
+          {/* Hire me + availability */}
+          <div className="flex flex-col gap-3 items-end">
             <button
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-5 py-2.5 bg-black dark:bg-white text-white dark:text-black text-xs font-semibold rounded-full hover:opacity-80 transition-opacity"
+              className="flex items-center gap-2 text-sm font-semibold text-black dark:text-white hover:opacity-60 transition-opacity"
             >
-              Let's Connect
+              <span className="text-gray-400 dark:text-gray-500 font-mono text-xs">{'// '}</span>
+              HIRE ME
+              <span className="text-base">→</span>
             </button>
+
+            <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+              </span>
+              Open for Opportunities
+            </div>
+
             <button
               onClick={() => setShowCVViewer(true)}
-              className="px-5 py-2.5 border border-gray-300 dark:border-neutral-700 text-black dark:text-white text-xs font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-neutral-900 transition-colors"
+              className="px-5 py-2 border border-gray-200 dark:border-neutral-700 text-black dark:text-white text-xs font-medium rounded-full hover:bg-gray-50 dark:hover:bg-neutral-900 transition-colors"
             >
               View Resume
             </button>
