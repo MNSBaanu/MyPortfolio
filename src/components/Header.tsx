@@ -33,12 +33,16 @@ const Header = () => {
   // Track active section via IntersectionObserver
   useEffect(() => {
     const observers: IntersectionObserver[] = []
-    navLinks.forEach(({ href }) => {
-      const id = href.replace('#', '')
+    // Map section ids to nav ids (experience/education/certifications → journey)
+    const sectionToNav: Record<string, string> = {
+      experience: 'journey', education: 'journey', certifications: 'journey'
+    }
+    const allSections = ['home', 'about', 'experience', 'education', 'certifications', 'skills', 'projects', 'contact']
+    allSections.forEach((id) => {
       const el = document.getElementById(id)
       if (!el) return
       const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActiveSection(id) },
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(sectionToNav[id] ?? id) },
         { threshold: 0.3 }
       )
       obs.observe(el)
@@ -59,18 +63,19 @@ const Header = () => {
 
   const scrollToSection = (href: string) => {
     setIsMobileMenuOpen(false)
-    const id = href.replace('#', '')
+    let id = href.replace('#', '')
 
     if (id === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }
 
+    // Journey nav item scrolls to experience (first of the journey group)
+    if (id === 'journey') id = 'experience'
+
     const el = document.getElementById(id)
     if (!el) return
 
-    // For sticky card sections, scroll to the element's offsetTop so it
-    // naturally slides up to the front of the stack
     if (STICKY_SECTIONS.includes(id)) {
       const top = el.getBoundingClientRect().top + window.scrollY
       window.scrollTo({ top, behavior: 'smooth' })
