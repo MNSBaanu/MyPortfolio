@@ -52,11 +52,11 @@ function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.1 }}
-              className="min-h-screen flex flex-col bg-white text-gray-900 dark:bg-black dark:text-gray-100"
+              className="min-h-screen flex flex-col bg-black text-gray-900 dark:bg-black dark:text-gray-100"
             >
               <Header />
               <SocialSidebar />
-              <main className="relative flex-1 bg-gray-50 dark:bg-black">
+              <main className="relative flex-1 bg-black dark:bg-black">
                 <section className="sticky top-0 h-screen z-0">
                   <Hero />
                 </section>

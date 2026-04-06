@@ -82,7 +82,7 @@ export default function Experience() {
       <div
         ref={containerRef}
         className="hidden lg:block box-border px-6 sm:px-8 bg-white dark:bg-black relative z-30 rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.05)]"
-        style={{ height: `${count * 100 + 100}vh` }}
+        style={{ height: `${count * 140 + 100}vh` }}
       >
         <div className="sticky top-0 h-screen overflow-hidden flex flex-col items-center justify-center">
           <div className="absolute top-[15%] w-full max-w-6xl mx-auto px-8">
@@ -94,7 +94,7 @@ export default function Experience() {
                 x: useTransform(
                   scrollYProgress,
                   [0.2, 0.9],
-                  [0, -(count * 320 - (typeof window !== 'undefined' ? window.innerWidth * 0.6 : 0))]
+                  [0, -(count * 340 - (typeof window !== 'undefined' ? window.innerWidth * 0.6 : 0))]
                 ),
               }}
               className="flex gap-6 px-[15vw] absolute left-0"
