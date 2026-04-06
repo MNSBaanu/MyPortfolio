@@ -41,7 +41,7 @@ export default function Education() {
       <div
         ref={containerRef}
         className="hidden lg:block box-border px-6 sm:px-8 bg-white dark:bg-neutral-900 rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.05)]"
-        style={{ height: `${count * 100 + 100}vh` }}
+        style={{ height: `${count * 70 + 100}vh` }}
       >
         <div className="sticky top-0 h-screen overflow-hidden flex flex-col items-center justify-center">
           <div className="absolute top-[15%] w-full max-w-6xl mx-auto px-8">
@@ -52,7 +52,7 @@ export default function Education() {
           </div>
           <div className="w-full flex items-center h-[420px] relative mt-24">
             <motion.div
-              style={{ x: useTransform(scrollYProgress, [0.2, 0.9], [0, -(count * 324 - (typeof window !== 'undefined' ? window.innerWidth * 0.6 : 0))]) }}
+              style={{ x: useTransform(scrollYProgress, [0.2, 0.9], [0, -(count * 306 - (typeof window !== 'undefined' ? window.innerWidth * 0.6 : 0))]) }}
               className="flex gap-6 px-[15vw] absolute left-0"
             >
               {educationData.map((item, idx) => (

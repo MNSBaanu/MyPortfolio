@@ -185,7 +185,7 @@ function ProjectModal({ projectIdx, onClose }: { projectIdx: number; onClose: ()
       onClick={onClose}>
       <div
         className="relative bg-white dark:bg-neutral-950 w-full flex flex-col rounded-t-3xl shadow-2xl overflow-hidden"
-        style={{ height: '90vh' }}
+        style={{ height: '90vh', overscrollBehavior: 'contain' }}
         onClick={e => e.stopPropagation()}
       >
         {/* Drag handle */}
@@ -216,7 +216,7 @@ function ExploreModal({ onClose }: { onClose: () => void }) {
       onClick={onClose}>
       <div
         className="relative bg-white dark:bg-neutral-950 w-full flex rounded-t-3xl shadow-2xl overflow-hidden"
-        style={{ height: '90vh' }}
+        style={{ height: '90vh', overscrollBehavior: 'contain' }}
         onClick={e => e.stopPropagation()}
       >
         {/* Drag handle */}
@@ -258,7 +258,21 @@ function ExploreModal({ onClose }: { onClose: () => void }) {
 export default function Projects() {
   const [modalProject, setModalProject] = useState<number | null>(null)
   const [exploreOpen, setExploreOpen] = useState(false)
-  const panelIdxs = [0, 1, 2]
+  const [offset, setOffset] = useState(0)
+
+  // Rotate featured panels every 5s
+  useEffect(() => {
+    const t = setInterval(() => {
+      setOffset(o => (o + 1) % projects.length)
+    }, 5000)
+    return () => clearInterval(t)
+  }, [])
+
+  const panelIdxs = [
+    offset % projects.length,
+    (offset + 1) % projects.length,
+    (offset + 2) % projects.length,
+  ]
 
   return (
     <div
