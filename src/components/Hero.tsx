@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import CVViewer from './CVViewer'
+import { useTheme } from '../context/ThemeContext'
 
 const TAGLINE = 'Building bold solutions\nwith thoughtful engineering.'
 
@@ -14,6 +15,7 @@ const SERVICES = [
 export default function Hero() {
   const [showCVViewer, setShowCVViewer] = useState(false)
   const [activeService, setActiveService] = useState(0)
+  const { theme } = useTheme()
 
   useEffect(() => {
     const t = setInterval(() => setActiveService(s => (s + 1) % SERVICES.length), 2400)
@@ -58,8 +60,8 @@ export default function Hero() {
           <img
             src="/assets/herobg.png"
             alt="MNSBaanu"
-            className="object-contain object-bottom opacity-50 dark:opacity-[0.20]"
-            style={{ height: '85vh', width: 'auto' }}
+            className="object-contain object-bottom"
+            style={{ height: '85vh', width: 'auto', opacity: theme === 'dark' ? 0.25 : 0.75 }}
           />
         </div>
 
