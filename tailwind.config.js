@@ -10,83 +10,9 @@ export default {
       screens: {
         'xs': '475px',
       },
-      colors: {
-        'teal': {
-          50: '#f0fdfa',
-          100: '#ccfbf1',
-          200: '#99f6e4',
-          300: '#5eead4',
-          400: '#2dd4bf',
-          500: '#14b8a6',
-          600: '#0d9488',
-          700: '#0f766e',
-          800: '#115e59',
-          900: '#134e4a',
-          950: '#1a4d4d',
-        },
-        'dark-teal': '#1a4d4d',
-        'darker-teal': '#0f3a3a',
-      },
       fontFamily: {
         'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'sans-serif'],
         'mono': ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
-        'cyber': ['Orbitron', 'sans-serif'],
-      },
-      animation: {
-        'matrix-rain': 'matrix-rain 20s linear infinite',
-        'hologram': 'hologram 3s ease-in-out infinite',
-        'glitch': 'glitch 0.3s ease-in-out infinite',
-        'float-3d': 'float-3d 6s ease-in-out infinite',
-        'terminal-cursor': 'terminal-cursor 1s ease-in-out infinite',
-        'code-scan': 'code-scan 2s linear infinite',
-      },
-      keyframes: {
-        'matrix-rain': {
-          '0%': { transform: 'translateY(-100vh)' },
-          '100%': { transform: 'translateY(100vh)' },
-        },
-        'hologram': {
-          '0%, 100%': { 
-            opacity: '0.8',
-            transform: 'translateY(0px) rotateX(0deg)',
-            filter: 'hue-rotate(0deg)'
-          },
-          '50%': { 
-            opacity: '1',
-            transform: 'translateY(-10px) rotateX(5deg)',
-            filter: 'hue-rotate(90deg)'
-          },
-        },
-        'glitch': {
-          '0%, 100%': { transform: 'translate(0)' },
-          '20%': { transform: 'translate(-2px, 2px)' },
-          '40%': { transform: 'translate(-2px, -2px)' },
-          '60%': { transform: 'translate(2px, 2px)' },
-          '80%': { transform: 'translate(2px, -2px)' },
-        },
-        'float-3d': {
-          '0%, 100%': { 
-            transform: 'translateY(0px) rotateY(0deg) rotateX(0deg)' 
-          },
-          '33%': { 
-            transform: 'translateY(-20px) rotateY(120deg) rotateX(10deg)' 
-          },
-          '66%': { 
-            transform: 'translateY(10px) rotateY(240deg) rotateX(-10deg)' 
-          },
-        },
-        'terminal-cursor': {
-          '0%, 50%': { opacity: '1' },
-          '51%, 100%': { opacity: '0' },
-        },
-        'code-scan': {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100vw)' },
-        },
-      },
-      perspective: {
-        '1000': '1000px',
-        '2000': '2000px',
       },
     },
   },

@@ -12,7 +12,7 @@ export default defineConfig({
         name: 'MNSBaanu Portfolio',
         short_name: 'MNSBaanu',
         description: 'Full Stack Developer Portfolio - MNSBaanu',
-        theme_color: '#0f766e',
+        theme_color: '#080808',
         background_color: '#000000',
         display: 'standalone',
         icons: [
@@ -91,8 +91,5 @@ export default defineConfig({
         ]
       }
     })
-  ],
-  optimizeDeps: {
-    include: ['three']
-  }
+  ]
 })
