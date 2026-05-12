@@ -1,8 +1,16 @@
 # ── Dependencies ──────────────────────────────────────────────
+# Match the folder anywhere in the tree (do not commit installs).
+node_modules
 node_modules/
+**/node_modules/
 .pnp
 .pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
 .yarn/install-state.gz
+.pnp.*
+.npm
 
 # ── Build outputs ─────────────────────────────────────────────
 dist/
