@@ -13,42 +13,25 @@ export default function About() {
       }}
     >
       <div className="max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-14 items-center w-full">
 
-        {/* Mobile: image as background, content on top */}
-        <div className="relative lg:grid lg:grid-cols-[0.8fr_1.2fr] lg:gap-10 lg:items-start w-full">
-
-          {/* Mobile background image */}
-          <div className="absolute inset-0 lg:hidden pointer-events-none overflow-hidden rounded-2xl">
-            <img
-              src="/assets/about.png"
-              alt=""
-              aria-hidden="true"
-              className="w-full h-full object-cover object-top opacity-50"
-            />
-            {/* gradient overlay so text stays readable */}
-            <div className="absolute inset-0 bg-slate-100/60 dark:bg-neutral-900/70" />
-          </div>
-
-          {/* Desktop image (normal, left column) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
             viewport={{ once: true }}
-            className="hidden lg:block relative group lg:order-1 lg:-mt-12"
+            className="relative group order-2 lg:order-1"
           >
-            <div className="relative z-10 transition-transform duration-500 group-hover:scale-[1.02]">
+            <div className="relative z-10 overflow-hidden rounded-2xl border border-gray-200/80 dark:border-neutral-800 bg-white dark:bg-black shadow-sm transition-transform duration-500 group-hover:scale-[1.01]">
               <img
                 src="/assets/about.png"
                 alt="MNSBaanu"
-                className="w-full h-auto block"
+                className="w-full h-auto block object-cover"
               />
-              <div className="absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-slate-100 dark:from-neutral-900 to-transparent pointer-events-none" />
             </div>
           </motion.div>
 
-          {/* Content */}
-          <div className="relative z-10 flex flex-col text-left lg:order-2 lg:pt-4 py-4 lg:py-0">
+          <div className="relative z-10 flex flex-col text-left order-1 lg:order-2">
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -57,8 +40,10 @@ export default function About() {
               viewport={{ once: true }}
               className="mb-5 sm:mb-8"
             >
-              <h2 className="font-semibold text-black dark:text-gray-100 mb-4 tracking-tight"
-                style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>
+              <h2
+                className="font-semibold text-black dark:text-gray-100 mb-4 tracking-tight"
+                style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}
+              >
                 About Me
               </h2>
               <div className="w-12 sm:w-16 h-1 bg-black dark:bg-white rounded-full" />
@@ -71,21 +56,26 @@ export default function About() {
               viewport={{ once: true }}
               className="space-y-4 sm:space-y-6 mb-7 sm:mb-10"
             >
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium"
-                style={{ fontSize: 'clamp(0.85rem, 2vw, 1.05rem)' }}>
+              <p
+                className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium"
+                style={{ fontSize: 'clamp(0.85rem, 2vw, 1.05rem)' }}
+              >
                 {about.description1}
               </p>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium"
-                style={{ fontSize: 'clamp(0.85rem, 2vw, 1.05rem)' }}>
+              <p
+                className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium"
+                style={{ fontSize: 'clamp(0.85rem, 2vw, 1.05rem)' }}
+              >
                 {about.description2}
               </p>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium"
-                style={{ fontSize: 'clamp(0.85rem, 2vw, 1.05rem)' }}>
+              <p
+                className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium"
+                style={{ fontSize: 'clamp(0.85rem, 2vw, 1.05rem)' }}
+              >
                 {about.description3}
               </p>
             </motion.div>
 
-            {/* Tags */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
