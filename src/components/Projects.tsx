@@ -49,6 +49,10 @@ function ProjectPanel({ projectIdx, onClick }: { projectIdx: number; onClick: ()
       onClick={onClick}
     >
       <img src={allImages[activeImage]} alt={project.title}
+        width={800}
+        height={500}
+        loading="lazy"
+        decoding="async"
         className="absolute inset-0 w-full h-full object-cover"
         onError={(e) => { e.currentTarget.src = `https://placehold.co/800x500/111111/ffffff?text=${encodeURIComponent(project.title)}` }}
       />

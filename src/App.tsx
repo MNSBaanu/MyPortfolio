@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import { Toaster } from 'react-hot-toast'
 import { HelmetProvider } from 'react-helmet-async'
 import { ThemeProvider } from './context/ThemeContext'
@@ -22,20 +22,22 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Preload images
-    const images = ['/assets/profile.png', '/assets/Logo.png']
-    const imagePromises = images.map((src) => {
-      return new Promise((resolve, reject) => {
-        const img = new Image()
-        img.src = src
-        img.onload = resolve
-        img.onerror = reject
-      })
-    })
+    const maxWait = window.setTimeout(() => setIsLoading(false), 400)
 
-    Promise.all(imagePromises).catch(() => {
-      // Continue even if images fail to load
-    })
+    const images = ['/assets/profile.png', '/assets/Logo.png']
+    const imagePromises = images.map(
+      (src) =>
+        new Promise<void>((resolve) => {
+          const img = new Image()
+          img.onload = () => resolve()
+          img.onerror = () => resolve()
+          img.src = src
+        })
+    )
+
+    Promise.all(imagePromises).then(() => setIsLoading(false))
+
+    return () => window.clearTimeout(maxWait)
   }, [])
 
   return (
@@ -45,51 +47,46 @@ function App() {
         <Toaster position="top-right" />
         <AnimatePresence mode="wait">
           {isLoading ? (
-            <LoadingScreen key="loading" onLoadingComplete={() => setIsLoading(false)} />
+            <LoadingScreen key="loading" />
           ) : (
-            <motion.div
+            <div
               key="content"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.1 }}
-              className="min-h-screen flex flex-col bg-black text-gray-900 dark:bg-black dark:text-gray-100"
+              className="min-h-screen bg-black text-gray-900 dark:bg-black dark:text-gray-100"
             >
               <Header />
               <SocialSidebar />
-              <main className="relative flex-1 bg-black dark:bg-black">
-                <section className="sticky top-0 h-screen z-0">
+              <main className="relative bg-black dark:bg-black">
+                <section className="sticky top-0 z-0 h-screen">
                   <Hero />
                 </section>
-                <div className="relative z-10 space-y-0">
-                  <section id="about" className="sticky top-0 z-20">
-                    <About />
-                  </section>
-                  <section id="experience" className="sticky top-0 z-30 lg:relative lg:z-30">
-                    <Experience />
-                  </section>
-                  <section id="education" className="sticky top-0 z-[35] lg:relative lg:z-[35]">
-                    <Education />
-                  </section>
-                  <section id="certifications" className="sticky top-0 z-[38] lg:relative lg:z-[38]">
-                    <Certifications />
-                  </section>
-                  <section id="skills" className="sticky top-0 z-40">
-                    <Skills />
-                  </section>
-                  <section id="projects" className="sticky top-0 z-50">
-                    <Projects />
-                  </section>
-                  <div className="h-[40vh] relative z-[55] bg-transparent pointer-events-none" />
-                  <section id="contact" className="sticky top-0 z-[60]">
-                    <Contact />
-                  </section>
-                  <section id="contact-form" className="sticky top-0 z-[70]">
-                    <ContactForm />
-                  </section>
-                  <Footer />
-                </div>
+                <section id="about" className="sticky top-0 z-20">
+                  <About />
+                </section>
+                <section id="experience" className="sticky top-0 z-30">
+                  <Experience />
+                </section>
+                <section id="education" className="sticky top-0 z-[35]">
+                  <Education />
+                </section>
+                <section id="certifications" className="sticky top-0 z-[38]">
+                  <Certifications />
+                </section>
+                <section id="skills" className="sticky top-0 z-40">
+                  <Skills />
+                </section>
+                <section id="projects" className="sticky top-0 z-50">
+                  <Projects />
+                </section>
+                <div className="h-[40vh] relative z-[55] pointer-events-none" aria-hidden="true" />
+                <section id="contact" className="sticky top-0 z-[60]">
+                  <Contact />
+                </section>
+                <section id="contact-form" className="sticky top-0 z-[70]">
+                  <ContactForm />
+                </section>
+                <Footer />
               </main>
-            </motion.div>
+            </div>
           )}
         </AnimatePresence>
       </ThemeProvider>

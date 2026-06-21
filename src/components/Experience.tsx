@@ -1,11 +1,9 @@
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
+import { motion } from 'framer-motion'
 import { experience as experienceData } from '../data/portfolio'
 
-function ExperienceCard({ item, idx }: { item: typeof experienceData[0], idx: number }) {
+function ExperienceCard({ item, idx }: { item: typeof experienceData[0]; idx: number }) {
   return (
     <motion.div
-      key={idx}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: idx * 0.1 }}
@@ -35,77 +33,21 @@ function ExperienceCard({ item, idx }: { item: typeof experienceData[0], idx: nu
 }
 
 export default function Experience() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const count = experienceData.length
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  })
-
-  const SectionTitle = (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
-    >
-      <h2 className="font-bold text-black dark:text-gray-100 mb-4 tracking-tight"
-        style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>
-        Work Experience
-      </h2>
-      <div className="w-12 sm:w-16 h-1 bg-black dark:bg-white" />
-    </motion.div>
-  )
-
   return (
-    <>
-      {/* ── MOBILE: touch-scrollable horizontal strip ── */}
-      <div className="lg:hidden box-border bg-white dark:bg-black rounded-t-[2.5rem] border-t border-gray-100 dark:border-neutral-800 min-h-screen flex flex-col">
-        {/* Title always at top — visible when section is stuck */}
-        <div className="px-4 sm:px-6 pt-10 pb-4 border-b border-gray-100 dark:border-neutral-800 shrink-0">
-          <h2 className="font-bold text-black dark:text-gray-100 tracking-tight"
-            style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)' }}>Work Experience</h2>
-          <div className="w-10 h-1 bg-black dark:bg-white mt-2 rounded-full" />
-        </div>
-        {/* Swipeable cards */}
-        <div className="flex gap-4 overflow-x-auto py-6 px-4 sm:px-6 snap-x snap-mandatory no-scrollbar shrink-0">
-          {experienceData.map((item, idx) => (
-            <div key={idx} className="snap-start">
-              <ExperienceCard item={item} idx={idx} />
-            </div>
-          ))}
-        </div>
+    <div className="box-border bg-white dark:bg-black rounded-t-[2.5rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)] min-h-screen flex flex-col">
+      <div className="px-4 sm:px-6 lg:px-8 pt-10 pb-4 border-b border-gray-100 dark:border-neutral-800 shrink-0">
+        <h2 className="font-bold text-black dark:text-gray-100 tracking-tight" style={{ fontSize: 'clamp(1.5rem, 5vw, 3rem)' }}>
+          Work Experience
+        </h2>
+        <div className="w-10 sm:w-16 h-1 bg-black dark:bg-white mt-2 rounded-full" />
       </div>
-
-      {/* ── DESKTOP: scroll-driven horizontal animation ── */}
-      <div
-        ref={containerRef}
-        className="hidden lg:block box-border px-6 sm:px-8 bg-white dark:bg-black relative z-30 rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.05)]"
-        style={{ height: `${count * 70 + 100}vh` }}
-      >
-        <div className="sticky top-0 h-screen overflow-hidden flex flex-col items-center justify-center">
-          <div className="absolute top-[15%] w-full max-w-6xl mx-auto px-8">
-            {SectionTitle}
+      <div className="flex gap-4 overflow-x-auto py-6 px-4 sm:px-6 lg:px-8 snap-x snap-mandatory no-scrollbar flex-1 items-center">
+        {experienceData.map((item, idx) => (
+          <div key={idx} className="snap-start">
+            <ExperienceCard item={item} idx={idx} />
           </div>
-          <div className="w-full flex items-center h-[420px] relative mt-24">
-            <motion.div
-              style={{
-                x: useTransform(
-                  scrollYProgress,
-                  [0.2, 0.9],
-                  [0, -(count * 306 - (typeof window !== 'undefined' ? window.innerWidth * 0.6 : 0))]
-                ),
-              }}
-              className="flex gap-6 px-[15vw] absolute left-0"
-            >
-              {experienceData.map((item, idx) => (
-                <ExperienceCard key={idx} item={item} idx={idx} />
-              ))}
-            </motion.div>
-          </div>
-        </div>
+        ))}
       </div>
-    </>
+    </div>
   )
 }

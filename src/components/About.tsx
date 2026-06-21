@@ -4,8 +4,7 @@ import { about } from '../data/portfolio'
 export default function About() {
   return (
     <div
-      id="about"
-      className="box-border px-4 sm:px-6 md:px-8 bg-slate-100 dark:bg-neutral-900 relative z-10 rounded-t-[2.5rem] sm:rounded-t-[4rem] border-t border-gray-200/50 dark:border-neutral-800"
+      className="box-border px-4 sm:px-6 md:px-8 bg-slate-100 dark:bg-neutral-900 relative rounded-t-[2.5rem] sm:rounded-t-[4rem] border-t border-gray-200/50 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
       style={{
         minHeight: '100vh',
         paddingTop: 'calc(var(--header-height, 0px) + 3rem)',
@@ -26,6 +25,10 @@ export default function About() {
               <img
                 src="/assets/about.png"
                 alt="MNSBaanu"
+                width={640}
+                height={640}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-auto block object-cover"
               />
             </div>

@@ -172,6 +172,8 @@ const Header = () => {
           {/* Mobile toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMobileMenuOpen}
             className="md:hidden p-2.5 rounded-full bg-gray-100 dark:bg-neutral-900 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-neutral-800"
           >
             {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}

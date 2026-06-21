@@ -2,15 +2,14 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 const TICKS = 12
-const HOLD = 2600
 
-export default function LoadingScreen({ onLoadingComplete }: { onLoadingComplete: () => void }) {
+export default function LoadingScreen() {
   const [rotation, setRotation] = useState(0)
 
   useEffect(() => {
     let frame: number
     let start: number | null = null
-    const speed = 120 // degrees per second
+    const speed = 120
 
     const animate = (ts: number) => {
       if (!start) start = ts
@@ -18,19 +17,16 @@ export default function LoadingScreen({ onLoadingComplete }: { onLoadingComplete
       frame = requestAnimationFrame(animate)
     }
     frame = requestAnimationFrame(animate)
-
-    const t = setTimeout(() => onLoadingComplete(), HOLD)
-    return () => { cancelAnimationFrame(frame); clearTimeout(t) }
-  }, [onLoadingComplete])
+    return () => cancelAnimationFrame(frame)
+  }, [])
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1.2, ease: 'easeInOut' }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
       className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
     >
-      {/* Spinner */}
       <div className="relative w-24 h-24" style={{ transform: `rotate(${rotation}deg)` }}>
         {Array.from({ length: TICKS }).map((_, i) => {
           const angle = (i / TICKS) * 360

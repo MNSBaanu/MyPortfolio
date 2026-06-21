@@ -17,10 +17,34 @@ function asyncCss(): Plugin {
   }
 }
 
+function preloadFonts(): Plugin {
+  return {
+    name: 'preload-fonts',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        if (!ctx.bundle) return html
+
+        const fontPreloads = Object.keys(ctx.bundle)
+          .filter((file) => file.endsWith('.woff2') && file.includes('inter-latin-wght'))
+          .slice(0, 1)
+          .map(
+            (file) =>
+              `<link rel="preload" href="/assets/${file.split('/').pop()}" as="font" type="font/woff2" crossorigin>`
+          )
+
+        if (fontPreloads.length === 0) return html
+        return html.replace('</head>', `    ${fontPreloads.join('\n    ')}\n  </head>`)
+      },
+    },
+  }
+}
+
 export default defineConfig({
   plugins: [
     react(),
     asyncCss(),
+    preloadFonts(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['assets/**/*', 'robots.txt', 'sitemap.xml'],
@@ -46,7 +70,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,svg}'],
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         runtimeCaching: [
           {
             urlPattern: /\.(?:png|jpg|jpeg|webp|gif)$/,
@@ -55,7 +79,7 @@ export default defineConfig({
               cacheName: 'images-cache',
               expiration: {
                 maxEntries: 60,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 30
               },
               cacheableResponse: {
                 statuses: [0, 200]
@@ -69,7 +93,7 @@ export default defineConfig({
               cacheName: 'cdn-cache',
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 30
               },
               cacheableResponse: {
                 statuses: [0, 200]
@@ -83,7 +107,7 @@ export default defineConfig({
               cacheName: 'icon-cache',
               expiration: {
                 maxEntries: 30,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 30
               },
               cacheableResponse: {
                 statuses: [0, 200]
@@ -98,6 +122,14 @@ export default defineConfig({
     target: 'es2022',
     supported: {
       destructuring: true,
+    },
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/framer-motion')) return 'vendor-motion'
+          if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/')) return 'vendor-react'
+        },
+      },
     },
   },
 })
