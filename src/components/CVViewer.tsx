@@ -2,7 +2,6 @@ import { motion } from 'framer-motion'
 import { X, Download } from 'lucide-react'
 import { personalInfo, skills, professionalSkills, projects, experience, education, certifications } from '../data/portfolio'
 import { useEffect } from 'react'
-import html2pdf from 'html2pdf.js'
 
 interface CVViewerProps {
   isOpen: boolean
@@ -26,9 +25,11 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
 
   if (!isOpen) return null
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     const element = document.getElementById('cv-content')
     if (!element) return
+
+    const { default: html2pdf } = await import('html2pdf.js')
 
     const opt = {
       margin: [10, 10, 10, 10] as [number, number, number, number],

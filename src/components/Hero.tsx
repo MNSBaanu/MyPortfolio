@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
-import CVViewer from './CVViewer'
+import { useState, useEffect, lazy, Suspense } from 'react'
+
+const CVViewer = lazy(() => import('./CVViewer'))
 
 const TAGLINE = 'Building bold solutions\nwith thoughtful engineering.'
 
@@ -139,7 +140,11 @@ export default function Hero() {
         ))}
       </div>
 
-      <CVViewer isOpen={showCVViewer} onClose={() => setShowCVViewer(false)} />
+      {showCVViewer && (
+        <Suspense fallback={null}>
+          <CVViewer isOpen={showCVViewer} onClose={() => setShowCVViewer(false)} />
+        </Suspense>
+      )}
     </section>
   )
 }
