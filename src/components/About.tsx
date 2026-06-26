@@ -33,17 +33,15 @@ export default function About() {
             viewport={{ once: true }}
             className="relative group order-2 lg:order-1"
           >
-            <div className="relative z-10 overflow-hidden rounded-2xl border border-gray-200/80 dark:border-neutral-800 bg-white dark:bg-black shadow-sm transition-transform duration-500 group-hover:scale-[1.01]">
-              <img
-                src="/assets/about.png"
-                alt="MNSBaanu"
-                width={640}
-                height={640}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-auto block object-cover"
-              />
-            </div>
+            <img
+              src="/assets/about.png"
+              alt="MNSBaanu"
+              width={640}
+              height={640}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-auto block object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+            />
           </motion.div>
 
           <div className="relative z-10 flex flex-col text-left order-1 lg:order-2">

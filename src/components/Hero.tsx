@@ -26,7 +26,10 @@ export default function Hero() {
       id="home"
       className="min-h-screen relative overflow-hidden bg-white dark:bg-black flex flex-col"
     >
-      <div className="relative flex-1 flex items-center px-6 sm:px-10 lg:px-16 pt-24 pb-24 min-h-screen">
+      <div
+        className="relative flex-1 flex items-center px-6 sm:px-10 lg:px-16 pb-24 min-h-screen"
+        style={{ paddingTop: 'calc(var(--header-height, 0px) + 1.5rem)' }}
+      >
         <div className="w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
           {/* Intro */}

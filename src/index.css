@@ -13,8 +13,7 @@
 @layer base {
   html {
     @apply scroll-smooth no-scrollbar;
-    scroll-padding-top: 100px;
-    /* Offset for fixed header */
+    scroll-padding-top: var(--header-height, 80px);
   }
 
   body {
@@ -116,12 +115,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-/* Airbnb-style navigation */
-.nav-blur {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
 
 /* Inter Font Class */
@@ -323,31 +316,6 @@ button {
 /* Social links - Airbnb style */
 .social-link {
   @apply p-4 bg-gray-100 rounded-full shadow-sm border border-gray-200 text-gray-700 hover:text-gray-900 hover:shadow-md hover:scale-110 transition-all duration-300;
-}
-
-/* Navigation styles - Airbnb style */
-.nav-link {
-  @apply text-gray-700 hover:text-black transition-colors duration-300 font-medium relative;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #000000;
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-  width: 100%;
-}
-
-/* Header styles for light theme */
-.header-light {
-  @apply bg-white/80 backdrop-blur-md border-b border-gray-100;
 }
 
 /* Hero background */
