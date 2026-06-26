@@ -1,5 +1,5 @@
-import { ExternalLink, Github, X } from 'lucide-react'
-import { projects } from '../data/portfolio'
+import { ExternalLink, Github, X, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react'
+import { projects, personalInfo } from '../data/portfolio'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -86,173 +86,309 @@ function ProjectPanel({ projectIdx, onClick }: { projectIdx: number; onClick: ()
   )
 }
 
-// ── Project detail content (shared between both modal modes) ──
-function ProjectDetail({ idx, onClose }: { idx: number; onClose: () => void }) {
+// ── Dribbble-inspired project detail page ──
+function ProjectDetailPage({
+  idx,
+  onClose,
+  onNavigate,
+  showHeader = true,
+}: {
+  idx: number
+  onClose: () => void
+  onNavigate?: (i: number) => void
+  showHeader?: boolean
+}) {
   const project = projects[idx]
   const [clickedLive, setClickedLive] = useState(false)
+  const hasPrev = idx > 0
+  const hasNext = idx < projects.length - 1
 
   return (
-    <>
-      {/* Top bar */}
-      <div className="flex items-start justify-between gap-4 px-8 pt-7 pb-5 border-b border-gray-100 dark:border-neutral-800 flex-shrink-0">
-        <div className="flex-1 min-w-0">
-          <h2 className="text-2xl font-semibold text-black dark:text-white leading-tight mb-2">{project.title}</h2>
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 dark:text-gray-400">
-              <span className={`w-2 h-2 rounded-full flex-shrink-0 ${project.academic ? 'bg-gray-400' : 'bg-green-500'}`} />
-              {project.academic ? 'Academic Project' : 'Personal Project'}
-            </span>
-            <span className="text-gray-300 dark:text-neutral-600 text-xs">·</span>
-            <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold">{project.period}</span>
-          </div>
-        </div>
-        <div className="flex items-center gap-2 flex-shrink-0">
-          <button onClick={() => { setClickedLive(true); setTimeout(() => setClickedLive(false), 2500) }}
-            className="flex items-center gap-1.5 px-5 py-2.5 bg-black dark:bg-white text-white dark:text-black text-xs font-bold rounded-full hover:opacity-80 transition-opacity">
-            <ExternalLink className="w-3.5 h-3.5" />
-            {clickedLive ? 'Coming Soon' : 'Live Demo'}
-          </button>
-          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-5 py-2.5 border border-gray-200 dark:border-neutral-700 text-black dark:text-white text-xs font-bold rounded-full hover:bg-gray-50 dark:hover:bg-neutral-900 transition-colors">
-            <Github className="w-3.5 h-3.5" /> GitHub
-          </a>
-          <button onClick={onClose}
-            className="w-9 h-9 rounded-full bg-gray-100 dark:bg-neutral-800 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-neutral-700 transition-colors ml-1">
-            <X className="w-4 h-4 text-gray-600 dark:text-gray-300" />
-          </button>
-        </div>
-      </div>
+    <div className="flex flex-col min-h-full bg-[#f3f3f4] dark:bg-neutral-950">
+      {showHeader && (
+        <header className="sticky top-0 z-20 border-b border-gray-200/80 dark:border-neutral-800 bg-[#f3f3f4]/90 dark:bg-neutral-950/90 backdrop-blur-xl">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-4">
+            <button
+              onClick={onClose}
+              className="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span className="hidden sm:inline">Back</span>
+            </button>
 
-      {/* Body */}
-      <div className="flex flex-col lg:flex-row flex-1 min-h-0 overflow-hidden">
-        <div className="flex-1 min-w-0 px-8 py-7 space-y-6 overflow-y-auto">
-          {project.images.map((img, i) => (
-            <div key={i} className="w-full rounded-2xl overflow-hidden bg-gray-50 dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
-              <img src={img} alt={`${project.title} screenshot ${i + 1}`} className="w-full h-auto block"
-                onError={(e) => { e.currentTarget.src = `https://placehold.co/900x560/111111/ffffff?text=${encodeURIComponent(project.title)}` }} />
+            <p className="text-sm sm:text-base font-semibold text-black dark:text-white truncate text-center flex-1">
+              {project.title}
+            </p>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-full border border-gray-300 dark:border-neutral-700 text-black dark:text-white hover:bg-white dark:hover:bg-neutral-900 transition-colors"
+              >
+                <Github className="w-3.5 h-3.5" />
+                Code
+              </a>
+              <button
+                onClick={() => {
+                  setClickedLive(true)
+                  setTimeout(() => setClickedLive(false), 2500)
+                }}
+                className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-full bg-[#ea4c89] text-white hover:opacity-90 transition-opacity"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                {clickedLive ? 'Soon' : 'Live'}
+              </button>
+              <button
+                onClick={onClose}
+                className="sm:hidden w-9 h-9 rounded-full bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 flex items-center justify-center"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
-          ))}
-          <div className="pt-2 pb-6">
-            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-3">About this project</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl">{project.description}</p>
           </div>
-        </div>
-        <div className="lg:w-60 flex-shrink-0 px-6 py-7 lg:border-l border-t lg:border-t-0 border-gray-100 dark:border-neutral-800 space-y-7 overflow-y-auto">
-          <div>
-            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-3">Tech Stack</p>
-            <div className="flex flex-wrap gap-1.5">
-              {project.tech.map((t, i) => (
-                <span key={i} className="px-2.5 py-1 bg-gray-100 dark:bg-neutral-800 text-gray-700 dark:text-gray-300 rounded-lg text-[10px] font-bold uppercase tracking-wide">{t}</span>
-              ))}
+        </header>
+      )}
+
+      <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-16">
+        {/* Project details at top */}
+        <div className="max-w-3xl mb-8 sm:mb-10">
+          <h1 className="text-2xl sm:text-3xl font-bold text-black dark:text-white tracking-tight leading-tight">
+            {project.title}
+          </h1>
+
+          <div className="mt-4 sm:mt-5 flex items-center gap-3 sm:gap-4">
+            <img
+              src={personalInfo.profileImage}
+              alt={personalInfo.name}
+              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover ring-2 ring-white dark:ring-neutral-800 shadow-sm"
+              onError={(e) => {
+                e.currentTarget.src = 'https://placehold.co/96x96/111111/ffffff?text=M'
+              }}
+            />
+            <div>
+              <p className="text-sm font-semibold text-black dark:text-white">
+                {personalInfo.name}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                {personalInfo.title} · {project.period}
+              </p>
             </div>
-          </div>
-          <div>
-            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-1.5">Timeline</p>
-            <p className="text-sm font-bold text-black dark:text-white">{project.period}</p>
-          </div>
-          <div>
-            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-1.5">Type</p>
-            <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wide ${project.academic ? 'bg-gray-100 dark:bg-neutral-800 text-gray-700 dark:text-gray-300' : 'bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-300'}`}>
+            <span
+              className={`ml-auto shrink-0 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${
+                project.academic
+                  ? 'bg-gray-200 dark:bg-neutral-800 text-gray-600 dark:text-gray-300'
+                  : 'bg-pink-50 dark:bg-pink-950/50 text-[#ea4c89]'
+              }`}
+            >
               {project.academic ? 'Academic' : 'Personal'}
             </span>
           </div>
-          <div className="space-y-2">
-            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-2">Links</p>
-            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-neutral-700 text-xs font-bold text-black dark:text-white hover:bg-gray-50 dark:hover:bg-neutral-900 transition-colors">
-              <Github className="w-3.5 h-3.5 flex-shrink-0" /> View on GitHub
+
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {project.tech.map((t) => (
+              <span
+                key={t}
+                className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-white dark:bg-neutral-900 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-neutral-800"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+
+          <p className="mt-4 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            {project.description}
+          </p>
+
+          <div className="mt-5 flex flex-wrap gap-2 sm:hidden">
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-300 dark:border-neutral-700 text-xs font-semibold text-black dark:text-white"
+            >
+              <Github className="w-3.5 h-3.5" />
+              View Code
             </a>
-            <button onClick={() => { setClickedLive(true); setTimeout(() => setClickedLive(false), 2500) }}
-              className="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-gray-200 dark:border-neutral-700 text-xs font-bold text-black dark:text-white hover:bg-gray-50 dark:hover:bg-neutral-900 transition-colors">
-              <ExternalLink className="w-3.5 h-3.5 flex-shrink-0" />
+            <button
+              onClick={() => {
+                setClickedLive(true)
+                setTimeout(() => setClickedLive(false), 2500)
+              }}
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#ea4c89] text-white text-xs font-semibold"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
               {clickedLive ? 'Coming Soon' : 'Live Demo'}
             </button>
           </div>
+
+          {onNavigate && (
+            <div className="mt-6 pt-5 border-t border-gray-200 dark:border-neutral-800 flex items-center justify-between">
+              <button
+                onClick={() => hasPrev && onNavigate(idx - 1)}
+                disabled={!hasPrev}
+                className="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                Previous
+              </button>
+              <span className="text-xs text-gray-400 dark:text-neutral-500">
+                {idx + 1} / {projects.length}
+              </span>
+              <button
+                onClick={() => hasNext && onNavigate(idx + 1)}
+                disabled={!hasNext}
+                className="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-colors"
+              >
+                Next
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          )}
         </div>
-      </div>
-    </>
+
+        {/* Smaller project shots below */}
+        <div className="space-y-4 sm:space-y-5 max-w-2xl mx-auto">
+          {project.images.map((img, i) => (
+            <div
+              key={i}
+              className="rounded-xl overflow-hidden bg-white dark:bg-neutral-900 shadow-[0_1px_3px_rgba(0,0,0,0.08),0_4px_16px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.35)]"
+            >
+              <img
+                src={img}
+                alt={`${project.title} — shot ${i + 1}`}
+                className="w-full h-auto max-h-[280px] sm:max-h-[320px] object-contain object-center bg-gray-50 dark:bg-neutral-900 mx-auto block"
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                onError={(e) => {
+                  e.currentTarget.src = `https://placehold.co/800x500/f5f5f5/333333?text=${encodeURIComponent(project.title)}`
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
   )
 }
 
-// ── Single project modal — bottom sheet ──
+// ── Single project — full-screen Dribbble-style overlay ──
 function ProjectModal({ projectIdx, onClose }: { projectIdx: number; onClose: () => void }) {
+  const [currentIdx, setCurrentIdx] = useState(projectIdx)
+
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    setCurrentIdx(projectIdx)
+  }, [projectIdx])
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft' && currentIdx > 0) setCurrentIdx((i) => i - 1)
+      if (e.key === 'ArrowRight' && currentIdx < projects.length - 1) setCurrentIdx((i) => i + 1)
+    }
     window.addEventListener('keydown', handler)
     document.body.style.overflow = 'hidden'
-    return () => { window.removeEventListener('keydown', handler); document.body.style.overflow = '' }
-  }, [onClose])
+    return () => {
+      window.removeEventListener('keydown', handler)
+      document.body.style.overflow = ''
+    }
+  }, [onClose, currentIdx])
 
   return createPortal(
-    <div className="fixed inset-0 z-[9999] flex items-end justify-center"
-      style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}
-      onClick={onClose}>
-      <div
-        className="relative bg-white dark:bg-neutral-950 w-full flex flex-col rounded-t-3xl shadow-2xl overflow-hidden"
-        style={{ height: '90vh', overscrollBehavior: 'contain' }}
-        onClick={e => e.stopPropagation()}
-      >
-        {/* Drag handle */}
-        <div className="flex justify-center pt-3 pb-1 flex-shrink-0">
-          <div className="w-10 h-1 rounded-full bg-gray-200 dark:bg-neutral-700" />
-        </div>
-        <ProjectDetail idx={projectIdx} onClose={onClose} />
+    <div
+      className="fixed inset-0 z-[9999] overflow-y-auto bg-[#f3f3f4] dark:bg-neutral-950"
+      onClick={onClose}
+    >
+      <div onClick={(e) => e.stopPropagation()}>
+        <ProjectDetailPage
+          idx={currentIdx}
+          onClose={onClose}
+          onNavigate={setCurrentIdx}
+        />
       </div>
     </div>,
     document.body
   )
 }
 
-// ── Explore all modal — bottom sheet with sidebar ──
+// ── Explore all — sidebar grid + Dribbble detail ──
 function ExploreModal({ onClose }: { onClose: () => void }) {
   const [selected, setSelected] = useState(0)
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
     window.addEventListener('keydown', handler)
     document.body.style.overflow = 'hidden'
-    return () => { window.removeEventListener('keydown', handler); document.body.style.overflow = '' }
+    return () => {
+      window.removeEventListener('keydown', handler)
+      document.body.style.overflow = ''
+    }
   }, [onClose])
 
   return createPortal(
-    <div className="fixed inset-0 z-[9999] flex items-end justify-center"
-      style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}
-      onClick={onClose}>
-      <div
-        className="relative bg-white dark:bg-neutral-950 w-full flex rounded-t-3xl shadow-2xl overflow-hidden"
-        style={{ height: '90vh', overscrollBehavior: 'contain' }}
-        onClick={e => e.stopPropagation()}
-      >
-        {/* Drag handle */}
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 w-10 h-1 rounded-full bg-gray-200 dark:bg-neutral-700 z-10" />
-
-        {/* Left sidebar */}
-        <div className="w-56 flex-shrink-0 border-r border-gray-100 dark:border-neutral-800 flex flex-col overflow-hidden pt-8">
-          <div className="px-4 py-4 border-b border-gray-100 dark:border-neutral-800 flex-shrink-0">
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500">All Projects</p>
-            <p className="text-xs text-gray-400 dark:text-neutral-600 mt-0.5">{projects.length} total</p>
+    <div className="fixed inset-0 z-[9999] flex bg-[#f3f3f4] dark:bg-neutral-950">
+      <aside className="hidden md:flex w-64 lg:w-72 flex-col border-r border-gray-200 dark:border-neutral-800 bg-white dark:bg-black shrink-0">
+        <div className="px-5 py-5 border-b border-gray-100 dark:border-neutral-800 flex items-center justify-between">
+          <div>
+            <p className="text-sm font-bold text-black dark:text-white">All Shots</p>
+            <p className="text-xs text-gray-400 mt-0.5">{projects.length} projects</p>
           </div>
-          <div className="overflow-y-auto flex-1 py-2">
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-900 flex items-center justify-center transition-colors"
+          >
+            <X className="w-4 h-4 text-gray-500" />
+          </button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-3 space-y-2">
+          {projects.map((p, i) => (
+            <button
+              key={p.title}
+              onClick={() => setSelected(i)}
+              className={`w-full text-left rounded-xl overflow-hidden border-2 transition-all duration-200 ${
+                selected === i
+                  ? 'border-[#ea4c89] shadow-md'
+                  : 'border-transparent hover:border-gray-200 dark:hover:border-neutral-800'
+              }`}
+            >
+              <div className="aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-neutral-900">
+                <img
+                  src={p.images[0]}
+                  alt={p.title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div className="px-2 py-2 bg-white dark:bg-neutral-950">
+                <p className="text-xs font-semibold text-black dark:text-white line-clamp-1">{p.title}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </aside>
+
+      <div className="flex-1 min-w-0 overflow-y-auto">
+        <div className="md:hidden sticky top-0 z-20 flex items-center justify-between px-4 h-14 border-b border-gray-200 dark:border-neutral-800 bg-[#f3f3f4]/90 dark:bg-neutral-950/90 backdrop-blur">
+          <button onClick={onClose} className="text-sm font-medium text-gray-600">Close</button>
+          <select
+            value={selected}
+            onChange={(e) => setSelected(Number(e.target.value))}
+            className="text-sm font-semibold bg-transparent text-black dark:text-white"
+          >
             {projects.map((p, i) => (
-              <button key={i} onClick={() => setSelected(i)}
-                className={`w-full text-left px-4 py-3 transition-colors duration-150 ${
-                  selected === i ? 'bg-black dark:bg-white' : 'hover:bg-gray-50 dark:hover:bg-neutral-900'
-                }`}>
-                <p className={`text-xs font-semibold leading-tight line-clamp-1 ${selected === i ? 'text-white dark:text-black' : 'text-black dark:text-white'}`}>
-                  {p.title}
-                </p>
-                <p className={`text-[10px] mt-0.5 ${selected === i ? 'text-white/60 dark:text-black/60' : 'text-gray-400 dark:text-neutral-600'}`}>
-                  {p.period}
-                </p>
-              </button>
+              <option key={p.title} value={i}>{p.title}</option>
             ))}
-          </div>
+          </select>
         </div>
-
-        {/* Right detail panel */}
-        <div className="flex-1 min-w-0 flex flex-col overflow-hidden pt-8">
-          <ProjectDetail idx={selected} onClose={onClose} />
-        </div>
+        <ProjectDetailPage
+          idx={selected}
+          onClose={onClose}
+          onNavigate={setSelected}
+          showHeader={false}
+        />
       </div>
     </div>,
     document.body
