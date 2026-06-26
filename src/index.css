@@ -413,7 +413,7 @@ button {
 
   /* Hide modal overlay and controls */
   .fixed,
-  .print\\:hidden {
+  .cv-controls {
     display: none !important;
   }
 

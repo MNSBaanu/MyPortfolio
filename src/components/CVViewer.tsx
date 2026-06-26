@@ -69,7 +69,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
         className="bg-white rounded-lg shadow-2xl max-h-[90vh] overflow-y-auto relative w-full max-w-[95vw] sm:max-w-[90vw] md:max-w-[210mm]"
       >
         {/* Header Controls */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-2 sm:p-3 md:p-4 flex justify-between items-center print:hidden z-10">
+        <div className="cv-controls sticky top-0 bg-white border-b border-gray-200 p-2 sm:p-3 md:p-4 flex justify-between items-center z-10">
           <h2 className="text-sm sm:text-base md:text-xl font-bold text-gray-800">Resume Preview</h2>
           <div className="flex gap-1 sm:gap-2">
             <button
