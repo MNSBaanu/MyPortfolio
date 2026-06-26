@@ -24,7 +24,7 @@ export default function About() {
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-14 items-center w-full">
+        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-14 lg:items-center items-start w-full">
 
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -44,7 +44,7 @@ export default function About() {
             />
           </motion.div>
 
-          <div className="relative z-10 flex flex-col text-left order-1 lg:order-2">
+          <div className="relative z-10 flex flex-col text-left order-1 lg:order-2 lg:self-start lg:mt-20">
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
