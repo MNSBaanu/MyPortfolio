@@ -11,7 +11,6 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Experience from './components/Experience'
 import Education from './components/Education'
-import Certifications from './components/Certifications'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
@@ -67,9 +66,6 @@ function App() {
                 </section>
                 <section id="education" className="sticky top-0 z-[35]">
                   <Education />
-                </section>
-                <section id="certifications" className="sticky top-0 z-[38]">
-                  <Certifications />
                 </section>
                 <section id="skills" className="sticky top-0 z-40">
                   <Skills />

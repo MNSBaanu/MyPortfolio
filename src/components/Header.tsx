@@ -15,7 +15,7 @@ const navLinks = [
 
 // Sections that are sticky cards — we scroll to their offsetTop so they
 // slide up to the front naturally with the stacking animation.
-const STICKY_SECTIONS = ['about', 'journey', 'experience', 'education', 'certifications', 'skills', 'projects', 'contact']
+const STICKY_SECTIONS = ['about', 'journey', 'experience', 'education', 'skills', 'projects', 'contact']
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -34,9 +34,9 @@ const Header = () => {
   useEffect(() => {
     const observers: IntersectionObserver[] = []
     const sectionToNav: Record<string, string> = {
-      experience: 'journey', education: 'journey', certifications: 'journey'
+      experience: 'journey', education: 'journey'
     }
-    const allSections = ['home', 'about', 'experience', 'education', 'certifications', 'skills', 'projects', 'contact']
+    const allSections = ['home', 'about', 'experience', 'education', 'skills', 'projects', 'contact']
     allSections.forEach((id) => {
       const el = document.getElementById(id)
       if (!el) return
