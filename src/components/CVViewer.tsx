@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { X, Download } from 'lucide-react'
-import { personalInfo, skills, professionalSkills, projects, experience, education, certifications } from '../data/portfolio'
+import { personalInfo, skills, projects, experience, education, certifications } from '../data/portfolio'
 import { useEffect } from 'react'
 
 interface CVViewerProps {
@@ -153,16 +153,6 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
             </div>
           </div>
 
-          {/* Skills */}
-          <div className="mb-3 sm:mb-4">
-            <h2 className="text-sm sm:text-base font-bold text-black mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-black pb-1">Soft Skills</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 sm:gap-x-8 gap-y-1 text-xs sm:text-sm">
-              {professionalSkills.map((skill) => (
-                <div key={skill} className="text-gray-800">{skill}</div>
-              ))}
-            </div>
-          </div>
-
           {/* Technical Skills */}
           <div className="mb-3 sm:mb-4">
             <h2 className="text-sm sm:text-base font-bold text-black mb-1 sm:mb-2 uppercase tracking-wide border-b-2 border-black pb-1">Technical Skills</h2>
@@ -207,13 +197,6 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
             </div>
           </div>
 
-          {/* Additional Information */}
-          <div className="mb-4">
-            <h2 className="text-base font-bold text-black mb-2 uppercase tracking-wide border-b-2 border-black pb-1">Additional Information</h2>
-            <p className="text-gray-800">
-              <span className="font-bold">Languages:</span> English, Sinhala, Tamil
-            </p>
-          </div>
         </div>
       </motion.div>
     </motion.div>

@@ -80,26 +80,6 @@ export const skillCategories = [
       { name: 'RStudio', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rstudio/rstudio-original.svg' },
     ]
   },
-  {
-    category: 'Professional Skills',
-    skills: [
-      { name: 'Problem Solving', icon: 'https://cdn-icons-png.flaticon.com/512/2620/2620316.png' },
-      { name: 'Team Work', icon: 'https://cdn-icons-png.flaticon.com/512/1534/1534938.png' },
-      { name: 'Communication', icon: 'https://cdn-icons-png.flaticon.com/512/2991/2991235.png' },
-      { name: 'Time Management', icon: 'https://cdn-icons-png.flaticon.com/512/2838/2838779.png' },
-      { name: 'Leadership', icon: 'https://cdn-icons-png.flaticon.com/512/1705/1705312.png' },
-    ],
-    subcategories: [
-      {
-        name: 'Languages',
-        skills: [
-          { name: 'English' },
-          { name: 'Tamil' },
-          { name: 'Sinhala' },
-        ]
-      }
-    ]
-  }
 ]
 
 // Technical skills only (for CV)
@@ -108,16 +88,6 @@ export const skills = [
   ...skillCategories[1].skills,
   ...skillCategories[2].skills,
   ...skillCategories[3].skills,
-]
-
-// Professional/Soft skills (for CV)
-export const professionalSkills = [
-  'Problem Solving',
-  'Team Work',
-  'Communication',
-  'Time Management',
-  'Leadership',
-  'Decision Making',
 ]
 
 export const education = [
