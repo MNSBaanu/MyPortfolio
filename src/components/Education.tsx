@@ -10,48 +10,61 @@ export default function Education() {
         paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
       }}
     >
-      <div className="h-full max-w-7xl mx-auto flex flex-col min-h-0">
+      <div className="h-full max-w-3xl mx-auto flex flex-col min-h-0">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-8 sm:mb-10 shrink-0"
+          className="text-center mb-6 sm:mb-8 shrink-0"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 tracking-tight">
             Education
           </h2>
         </motion.div>
 
-        <div className="flex gap-4 overflow-x-auto overflow-y-visible py-2 px-1 snap-x snap-mandatory no-scrollbar flex-1 min-h-0 items-center">
-          {educationData.map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              viewport={{ once: true }}
-              className="snap-start flex-shrink-0 w-[260px] xs:w-[280px] sm:w-[300px]"
-            >
-              <div className="p-4 sm:p-5 rounded-2xl border border-gray-200 dark:border-neutral-800 bg-white/80 dark:bg-black/60 backdrop-blur-xl shadow-lg min-h-[240px] sm:min-h-[260px] flex flex-col">
-                <div className="shrink-0 text-center mb-3">
-                  <span className="text-[9px] font-black uppercase text-gray-400 tracking-widest">Education</span>
-                  <span className="block mt-1 text-[9px] font-bold bg-black dark:bg-white text-white dark:text-black px-2.5 py-0.5 rounded-full whitespace-nowrap w-fit mx-auto">
-                    {item.period}
-                  </span>
-                </div>
-                <h3 className="shrink-0 text-sm sm:text-base font-medium text-black dark:text-white leading-tight mb-1 text-center">
-                  {item.title}
-                </h3>
-                <p className="shrink-0 text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 text-center">
-                  {item.institution}
-                </p>
-                <p className="text-[11px] sm:text-xs text-gray-600 dark:text-neutral-300 leading-relaxed line-clamp-4 font-medium flex-1">
-                  {item.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+        <div className="flex-1 min-h-0 flex flex-col justify-center py-2">
+          <div className="relative">
+            <div
+              className="absolute left-[4.5rem] sm:left-[5.5rem] top-2 bottom-2 w-px bg-gray-200 dark:bg-neutral-800"
+              aria-hidden="true"
+            />
+
+            <ul className="space-y-4 sm:space-y-5">
+              {educationData.map((item, idx) => (
+                <motion.li
+                  key={item.title + item.period}
+                  initial={{ opacity: 0, x: -12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: idx * 0.06 }}
+                  viewport={{ once: true }}
+                  className="relative flex gap-4 sm:gap-6"
+                >
+                  <div className="shrink-0 w-16 sm:w-20 text-right">
+                    <span className="text-[10px] sm:text-xs font-semibold text-gray-400 dark:text-gray-500 leading-snug block">
+                      {item.period}
+                    </span>
+                  </div>
+
+                  <div className="relative shrink-0 pt-1.5">
+                    <span className="block w-2 h-2 rounded-full bg-black dark:bg-white ring-4 ring-white dark:ring-neutral-900" />
+                  </div>
+
+                  <div className="flex-1 min-w-0 pb-1">
+                    <h3 className="text-sm sm:text-base font-semibold text-black dark:text-white leading-snug">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                      {item.institution}
+                    </p>
+                    <p className="text-[11px] sm:text-xs text-gray-600 dark:text-neutral-400 mt-1 leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
