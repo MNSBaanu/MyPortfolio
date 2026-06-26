@@ -4,11 +4,10 @@ import { certifications as certificationsData } from '../data/portfolio'
 export default function Certifications() {
   return (
     <div className="box-border bg-white dark:bg-black rounded-t-[2.5rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)] min-h-screen flex flex-col">
-      <div className="px-4 sm:px-6 lg:px-8 pt-10 pb-4 border-b border-gray-100 dark:border-neutral-800 shrink-0">
-        <h2 className="font-bold text-black dark:text-gray-100 tracking-tight" style={{ fontSize: 'clamp(1.5rem, 5vw, 3rem)' }}>
+      <div className="px-4 sm:px-6 lg:px-8 pt-10 pb-4 border-b border-gray-100 dark:border-neutral-800 shrink-0 text-center">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight">
           Certifications
         </h2>
-        <div className="w-10 sm:w-16 h-1 bg-black dark:bg-white mt-2 rounded-full" />
       </div>
       <div className="flex gap-4 overflow-x-auto py-6 px-4 sm:px-6 lg:px-8 snap-x snap-mandatory no-scrollbar flex-1 items-center">
         {certificationsData.map((item, idx) => (

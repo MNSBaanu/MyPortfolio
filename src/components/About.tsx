@@ -12,6 +12,18 @@ export default function About() {
       }}
     >
       <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          viewport={{ once: true }}
+          className="text-center mb-10 sm:mb-14"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight">
+            About Me
+          </h2>
+        </motion.div>
+
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-14 items-center w-full">
 
           <motion.div
@@ -35,22 +47,6 @@ export default function About() {
           </motion.div>
 
           <div className="relative z-10 flex flex-col text-left order-1 lg:order-2">
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              viewport={{ once: true }}
-              className="mb-5 sm:mb-8"
-            >
-              <h2
-                className="font-semibold text-black dark:text-gray-100 mb-4 tracking-tight"
-                style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}
-              >
-                About Me
-              </h2>
-              <div className="w-12 sm:w-16 h-1 bg-black dark:bg-white rounded-full" />
-            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}

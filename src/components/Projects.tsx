@@ -285,11 +285,10 @@ export default function Projects() {
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 pr-16 lg:pr-20 h-full flex flex-col">
 
-        <div className="mb-5 flex-shrink-0">
-          <h2 className="font-bold text-black dark:text-gray-100 mb-3 tracking-tight" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>
+        <div className="mb-5 flex-shrink-0 text-center">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight">
             Featured Projects
           </h2>
-          <div className="w-16 h-1 bg-black dark:bg-white" />
         </div>
 
         {/* ── DESKTOP ── */}
