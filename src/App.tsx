@@ -23,7 +23,7 @@ function App() {
   useEffect(() => {
     const maxWait = window.setTimeout(() => setIsLoading(false), 400)
 
-    const images = ['/assets/profile.png', '/assets/Logo.png']
+    const images = ['/assets/about.png', '/assets/Logo.png']
     const imagePromises = images.map(
       (src) =>
         new Promise<void>((resolve) => {

@@ -1,105 +1,96 @@
 import { motion } from 'framer-motion'
-import { about } from '../data/portfolio'
+import { about, projects, experience, skillCategories } from '../data/portfolio'
+
+const descriptions = [about.description1, about.description2, about.description3]
+
+const techCount = skillCategories.reduce((total, category) => total + category.skills.length, 0)
+
+const aboutStats = [
+  { number: `${projects.length}+`, label: 'Projects' },
+  { number: `${techCount}+`, label: 'Technologies' },
+  { number: String(experience.length), label: 'Experience' },
+]
 
 export default function About() {
   return (
     <div
-      className="box-border px-4 sm:px-6 md:px-8 bg-slate-100 dark:bg-neutral-900 relative rounded-t-[2.5rem] sm:rounded-t-[4rem] border-t border-gray-200/50 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
+      className="box-border px-6 sm:px-8 bg-slate-100 dark:bg-neutral-900 relative rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-200/50 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
       style={{
-        minHeight: '100vh',
-        paddingTop: 'calc(var(--header-height, 0px) + 3rem)',
-        paddingBottom: '4rem',
+        height: '100vh',
+        paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
       }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="h-full max-w-3xl mx-auto flex flex-col min-h-0 overflow-y-auto no-scrollbar">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-10 sm:mb-14"
+          className="text-center shrink-0 mb-5 sm:mb-6"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 tracking-tight">
             About Me
           </h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-14 lg:items-center items-start w-full">
-
+        <div className="flex flex-col items-center text-center pb-4">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="relative group order-2 lg:order-1"
+            className="space-y-4 sm:space-y-5 max-w-2xl mx-auto mb-8 sm:mb-10"
           >
-            <img
-              src="/assets/about.png"
-              alt="MNSBaanu"
-              width={640}
-              height={640}
-              loading="lazy"
-              decoding="async"
-              className="w-full h-auto block object-cover transition-transform duration-500 group-hover:scale-[1.01]"
-            />
+            {descriptions.map((text) => (
+              <p
+                key={text.slice(0, 24)}
+                className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed"
+              >
+                {text}
+              </p>
+            ))}
           </motion.div>
 
-          <div className="relative z-10 flex flex-col text-left order-1 lg:order-2 lg:self-start lg:mt-20">
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="space-y-4 sm:space-y-6 mb-7 sm:mb-10"
-            >
-              <p
-                className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium"
-                style={{ fontSize: 'clamp(0.85rem, 2vw, 1.05rem)' }}
-              >
-                {about.description1}
-              </p>
-              <p
-                className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium"
-                style={{ fontSize: 'clamp(0.85rem, 2vw, 1.05rem)' }}
-              >
-                {about.description2}
-              </p>
-              <p
-                className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium"
-                style={{ fontSize: 'clamp(0.85rem, 2vw, 1.05rem)' }}
-              >
-                {about.description3}
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em] mb-3 sm:mb-4">
-                Core Identity
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {['Full-Stack Engineer', 'AI Enthusiast', 'Problem Solver', 'Lifelong Learner'].map((tag, index) => (
-                  <motion.span
-                    key={tag}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4 + index * 0.05 }}
-                    whileHover={{ scale: 1.05, borderColor: '#000000' }}
-                    viewport={{ once: true }}
-                    className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-white dark:bg-black border border-gray-200 dark:border-neutral-800 shadow-sm text-gray-700 dark:text-gray-300 text-[10px] sm:text-[11px] font-bold tracking-tight transition-all duration-300 cursor-default"
-                  >
-                    {tag}
-                  </motion.span>
-                ))}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-3 gap-4 sm:gap-8 mb-8 sm:mb-10 w-full max-w-md mx-auto"
+          >
+            {aboutStats.map((stat) => (
+              <div key={stat.label} className="flex flex-col items-center gap-1">
+                <span className="text-2xl sm:text-3xl font-bold text-black dark:text-white tracking-tight">
+                  {stat.number}
+                </span>
+                <span className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                  {stat.label}
+                </span>
               </div>
-            </motion.div>
+            ))}
+          </motion.div>
 
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="w-full"
+          >
+            <h3 className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em] mb-3 sm:mb-4">
+              Core Identity
+            </h3>
+            <div className="flex flex-wrap justify-center gap-2">
+              {about.identityTags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-white dark:bg-black border border-gray-200 dark:border-neutral-800 shadow-sm text-gray-700 dark:text-gray-300 text-[10px] sm:text-[11px] font-bold tracking-tight"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ export const personalInfo = {
   title: 'Aspiring Software Engineer',
   description: 'Full-stack developer crafting end-to-end solutions. Passionate about building scalable applications and leveraging AI to solve real-world problems.',
   cvSummary: 'Highly motivated and detail-oriented individual with strong problem-solving skills and a passion for technology. Adept at learning new concepts quickly and working in dynamic environments. Seeking opportunities to apply skills, contribute to projects, and grow professionally. Looking for opportunities near Kandy or Remote.',
-  profileImage: '/assets/profile.png',
+  profileImage: '/assets/about.png',
   email: 'sbaanukghsbio21@gmail.com',
   phone: '+94 76 245 5654',
   location: 'Kandy, Sri Lanka',
@@ -18,10 +18,11 @@ export const about = {
   description1: "I build things that Work & Look Good doing it. From database to UI, I care about every Layer of the Stack and every Pixel of the Interface.",
   description2: "Challenges don't slow me down, they sharpen my Focus. I'm Driven by the belief that great Software isn't just Functional. it's Thoughtful, fast, and Built to Last.",
   description3: "Currently pursuing my BEng in Software Engineering while working as a Software Engineer Intern — turning classroom theory into real production code, one commit at a time.",
-  stats: [
-    { number: '10+', label: 'Certifications' },
-    { number: '10+', label: 'Projects Completed' },
-    { number: '5+', label: 'Technologies' },
+  identityTags: [
+    'Software Engineer Intern',
+    'Full-Stack Developer',
+    'AI Enthusiast',
+    'UI / UX Focused',
   ],
 }
 
