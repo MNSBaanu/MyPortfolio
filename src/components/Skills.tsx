@@ -66,8 +66,7 @@ function SkillCard({
   return (
     <motion.div
       style={{ scale, rotateX, rotateY, z, transformStyle: 'preserve-3d' }}
-      className={`flex-shrink-0 p-6 sm:p-7 md:p-8 rounded-2xl transition-shadow duration-300 flex flex-col items-center justify-center gap-4 group min-w-[140px] sm:min-w-[160px] md:min-w-[180px] border border-gray-100 dark:border-neutral-800 shadow-sm hover:shadow-lg ${index % 2 === 0 ? 'bg-gray-50 dark:bg-black' : 'bg-gray-100 dark:bg-black'
-        }`}
+      className="flex-shrink-0 p-6 sm:p-7 md:p-8 rounded-2xl transition-shadow duration-300 flex flex-col items-center justify-center gap-4 group min-w-[140px] sm:min-w-[160px] md:min-w-[180px] bg-white dark:bg-black border border-gray-200 dark:border-neutral-800 shadow-sm hover:shadow-md"
     >
       {skill.icon && (
         <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center">
@@ -80,16 +79,12 @@ function SkillCard({
             decoding="async"
             className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
             style={{
-              filter:
-                theme === 'dark'
-                  ? 'brightness(0) invert(1)'
-                  : 'grayscale(100%) contrast(200%) brightness(0.1)',
-              mixBlendMode: theme === 'dark' ? 'normal' : 'multiply',
+              filter: theme === 'dark' ? 'brightness(0) invert(1)' : 'none',
             }}
           />
         </div>
       )}
-      <span className="font-semibold text-sm sm:text-base text-black dark:text-gray-100 text-center leading-tight">
+      <span className="font-semibold text-sm sm:text-base text-gray-700 dark:text-gray-100 text-center leading-tight">
         {skill.name}
       </span>
     </motion.div>
@@ -150,7 +145,7 @@ export default function Skills() {
 
   return (
     <div
-      className="box-border px-6 sm:px-8 bg-white dark:bg-neutral-900 relative z-40 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.05)]"
+      className="box-border px-6 sm:px-8 bg-slate-100 dark:bg-neutral-900 relative z-40 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-200/50 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
       style={{
         height: '100vh',
         paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
