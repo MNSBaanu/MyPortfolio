@@ -1,6 +1,6 @@
 export const personalInfo = {
   name: 'MNSBaanu',
-  title: 'Aspiring Software Engineer',
+  title: 'Aspiring Full-Stack Developer',
   description: 'Full-stack developer crafting end-to-end solutions. Passionate about building scalable applications and leveraging AI to solve real-world problems.',
   cvSummary: 'Highly motivated and detail-oriented individual with strong problem-solving skills and a passion for technology. Adept at learning new concepts quickly and working in dynamic environments. Seeking opportunities to apply skills, contribute to projects, and grow professionally. Looking for opportunities near Kandy or Remote.',
   profileImage: '/assets/about.png',
@@ -17,9 +17,9 @@ export const personalInfo = {
 export const about = {
   description1: "I build things that Work & Look Good doing it. From database to UI, I care about every Layer of the Stack and every Pixel of the Interface.",
   description2: "Challenges don't slow me down, they sharpen my Focus. I'm Driven by the belief that great Software isn't just Functional. it's Thoughtful, fast, and Built to Last.",
-  description3: "Currently pursuing my BEng in Software Engineering while working as a Software Engineer Intern — turning classroom theory into real production code, one commit at a time.",
+  description3: "Currently pursuing my BEng in Software Engineering while working as a Junior Software Engineer — turning classroom theory into real production code, one commit at a time.",
   identityTags: [
-    'Software Engineer Intern',
+    'Junior Software Engineer',
     'Full-Stack Developer',
     'AI Enthusiast',
     'UI / UX Focused',
@@ -126,11 +126,19 @@ export const education = [
 
 export const experience = [
   {
+    title: 'Junior Software Engineer',
+    company: 'Vision Designing - Sarasota, Florida, US',
+    period: 'Jul 2026 - Present',
+    type: 'Full-time (Onsite)',
+    description: 'Building and maintaining web and mobile applications as part of the engineering team. Owning frontend and backend feature delivery, API integration, and testing. Contributing to UI/UX improvements and shipping production-ready software across the company stack.',
+    tech: ['.NET', 'C#', 'React Native', 'Next.js', 'AWS', 'Electron'],
+  },
+  {
     title: 'Software Engineer Intern',
     company: 'Vision Designing - Sarasota, Florida, US',
-    period: 'Dec 2025 - Present',
+    period: 'Dec 2025 - Jun 2026',
     type: 'Full-time (Onsite)',
-    description: 'Contributing to ongoing web and mobile application projects under senior developer guidance. Assisting with frontend and backend development tasks, supporting API integration and testing processes. Actively participating in UI/UX improvements while gaining hands-on experience with production-level development workflows and industry best practices.',
+    description: 'Contributed to ongoing web and mobile application projects under senior developer guidance. Assisted with frontend and backend development tasks, supporting API integration and testing processes. Actively participated in UI/UX improvements while gaining hands-on experience with production-level development workflows and industry best practices.',
     tech: ['.NET', 'C#', 'React Native', 'Next.js', 'AWS', 'Electron'],
   },
   {
