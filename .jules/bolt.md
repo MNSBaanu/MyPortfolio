@@ -1,0 +1,3 @@
+## 2025-07-24 - React excessive re-rendering and continuous polling
+**Learning:** Found a component (`src/components/Projects.tsx`) tracking mouse coordinates via `useState` for a 3D hover effect, causing re-renders dozens of times a second. Also found an image slider using a continuous `requestAnimationFrame` loop just to check if 4 seconds had passed instead of using a simple timeout.
+**Action:** Always prefer updating DOM nodes directly via refs for high-frequency events (like `mousemove` or `scroll`) rather than putting them in React state. Replace continuous polling loops with standard `setTimeout` when only waiting for a set duration.
