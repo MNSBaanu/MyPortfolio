@@ -143,6 +143,7 @@ function ProjectDetailPage({
               <button
                 onClick={onClose}
                 className="sm:hidden w-9 h-9 rounded-full bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 flex items-center justify-center"
+                aria-label="Close project details"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -339,6 +340,7 @@ function ExploreModal({ onClose }: { onClose: () => void }) {
           <button
             onClick={onClose}
             className="w-8 h-8 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-900 flex items-center justify-center transition-colors"
+            aria-label="Close all shots"
           >
             <X className="w-4 h-4 text-gray-500" />
           </button>
