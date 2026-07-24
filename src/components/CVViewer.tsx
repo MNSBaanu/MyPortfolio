@@ -83,6 +83,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
             <button
               onClick={onClose}
               className="p-1 sm:p-1.5 md:p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              aria-label="Close CV preview"
             >
               <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
