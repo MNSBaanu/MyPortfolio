@@ -25,9 +25,17 @@ export default function ContactForm() {
         setIsSubmitting(true)
 
         try {
-            const serviceId = 'service_8p7djun'
-            const templateId = 'template_hvf689g'
-            const publicKey = 'CiBF-DJszrNTqx-Ac'
+            // 🛡️ Security Fix: Removed hardcoded API keys.
+            // Now using environment variables to prevent secret leakage.
+            const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+            const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+            if (!serviceId || !templateId || !publicKey) {
+                console.error('Email service is not properly configured.')
+                toast.error('Unable to send message at this time. Please try again later.')
+                return
+            }
 
             const templateParams = {
                 from_name: formData.name,
