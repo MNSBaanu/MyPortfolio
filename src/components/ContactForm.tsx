@@ -94,6 +94,7 @@ export default function ContactForm() {
                                         type="text"
                                         id="name"
                                         name="name"
+                                        aria-label="Full Name"
                                         value={formData.name}
                                         onChange={handleChange}
                                         required
@@ -104,6 +105,7 @@ export default function ContactForm() {
                                         type="email"
                                         id="email"
                                         name="email"
+                                        aria-label="Email Address"
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
@@ -115,6 +117,7 @@ export default function ContactForm() {
                                     type="text"
                                     id="subject"
                                     name="subject"
+                                    aria-label="Subject"
                                     value={formData.subject}
                                     onChange={handleChange}
                                     required
@@ -124,6 +127,7 @@ export default function ContactForm() {
                                 <textarea
                                     id="message"
                                     name="message"
+                                    aria-label="Message"
                                     value={formData.message}
                                     onChange={handleChange}
                                     required
