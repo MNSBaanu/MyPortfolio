@@ -9,29 +9,42 @@ const SLIDE_DURATION = 4000
 function ProjectPanel({ projectIdx, onClick }: { projectIdx: number; onClick: () => void }) {
   const [activeImage, setActiveImage] = useState(0)
   const [hovered, setHovered] = useState(false)
-  const [tilt, setTilt] = useState({ x: 0, y: 0 })
-  const startTimeRef = useRef<number>(Date.now())
-  const rafRef = useRef<number>(0)
+  const timerRef = useRef<number>(0)
   const cardRef = useRef<HTMLDivElement>(null)
   const project = projects[projectIdx]
   const allImages = project.images
 
-  useEffect(() => { setActiveImage(0); startTimeRef.current = Date.now() }, [projectIdx])
+  useEffect(() => { setActiveImage(0) }, [projectIdx])
 
   const advanceImage = useCallback(() => {
-    setActiveImage(prev => { const n = prev < allImages.length - 1 ? prev + 1 : 0; startTimeRef.current = Date.now(); return n })
+    setActiveImage(prev => { const n = prev < allImages.length - 1 ? prev + 1 : 0; return n })
   }, [allImages.length])
 
   useEffect(() => {
-    const tick = () => { if (Date.now() - startTimeRef.current >= SLIDE_DURATION) advanceImage(); else rafRef.current = requestAnimationFrame(tick) }
-    rafRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafRef.current)
+    timerRef.current = window.setTimeout(advanceImage, SLIDE_DURATION)
+    return () => clearTimeout(timerRef.current)
   }, [projectIdx, activeImage, advanceImage])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = cardRef.current?.getBoundingClientRect()
-    if (!rect) return
-    setTilt({ x: ((e.clientY - rect.top) / rect.height - 0.5) * -12, y: ((e.clientX - rect.left) / rect.width - 0.5) * 12 })
+    if (!rect || !cardRef.current) return
+    const tiltX = ((e.clientY - rect.top) / rect.height - 0.5) * -12
+    const tiltY = ((e.clientX - rect.left) / rect.width - 0.5) * 12
+    cardRef.current.style.transform = `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.03)`
+  }
+
+  const handleMouseEnter = () => {
+    setHovered(true)
+    if (cardRef.current) {
+      cardRef.current.style.transform = `perspective(900px) rotateX(0deg) rotateY(0deg) scale(1.03)`
+    }
+  }
+
+  const handleMouseLeave = () => {
+    setHovered(false)
+    if (cardRef.current) {
+      cardRef.current.style.transform = `perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)`
+    }
   }
 
   return (
@@ -39,13 +52,12 @@ function ProjectPanel({ projectIdx, onClick }: { projectIdx: number; onClick: ()
       ref={cardRef}
       className="relative flex-1 min-w-0 rounded-2xl overflow-hidden bg-black cursor-pointer"
       style={{
-        transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${hovered ? 1.03 : 1})`,
         transition: hovered ? 'transform 0.1s ease' : 'transform 0.5s cubic-bezier(0.25,0.8,0.25,1)',
         boxShadow: hovered ? '0 28px 56px rgba(0,0,0,0.4)' : '0 8px 24px rgba(0,0,0,0.18)',
       }}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => { setHovered(false); setTilt({ x: 0, y: 0 }) }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       onClick={onClick}
     >
       <img src={allImages[activeImage]} alt={project.title}
@@ -77,7 +89,7 @@ function ProjectPanel({ projectIdx, onClick }: { projectIdx: number; onClick: ()
       {allImages.length > 1 && (
         <div className="absolute bottom-3 right-3 flex gap-1 z-10" style={{ opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease' }}>
           {allImages.map((_, i) => (
-            <button key={i} onClick={e => { e.stopPropagation(); setActiveImage(i); startTimeRef.current = Date.now() }}
+            <button key={i} onClick={e => { e.stopPropagation(); setActiveImage(i) }}
               className={`h-1 rounded-full transition-all duration-300 ${i === activeImage ? 'w-4 bg-white' : 'w-1 bg-white/40'}`} />
           ))}
         </div>
@@ -143,6 +155,7 @@ function ProjectDetailPage({
               <button
                 onClick={onClose}
                 className="sm:hidden w-9 h-9 rounded-full bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 flex items-center justify-center"
+                aria-label="Close project details"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -339,6 +352,7 @@ function ExploreModal({ onClose }: { onClose: () => void }) {
           <button
             onClick={onClose}
             className="w-8 h-8 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-900 flex items-center justify-center transition-colors"
+            aria-label="Close all shots"
           >
             <X className="w-4 h-4 text-gray-500" />
           </button>
@@ -395,12 +409,10 @@ function ExploreModal({ onClose }: { onClose: () => void }) {
   )
 }
 
-export default function Projects() {
-  const [modalProject, setModalProject] = useState<number | null>(null)
-  const [exploreOpen, setExploreOpen] = useState(false)
+// ── Featured panels wrapper to isolate interval state ──
+function FeaturedPanels({ onProjectClick }: { onProjectClick: (idx: number) => void }) {
   const [offset, setOffset] = useState(0)
 
-  // Rotate featured panels every 5s
   useEffect(() => {
     const t = setInterval(() => {
       setOffset(o => (o + 1) % projects.length)
@@ -413,6 +425,19 @@ export default function Projects() {
     (offset + 1) % projects.length,
     (offset + 2) % projects.length,
   ]
+
+  return (
+    <div className="flex gap-3 min-h-0" style={{ height: '360px', perspective: '1200px' }}>
+      {panelIdxs.map((i) => (
+        <ProjectPanel key={i} projectIdx={i} onClick={() => onProjectClick(i)} />
+      ))}
+    </div>
+  )
+}
+
+export default function Projects() {
+  const [modalProject, setModalProject] = useState<number | null>(null)
+  const [exploreOpen, setExploreOpen] = useState(false)
 
   return (
     <div
@@ -429,11 +454,7 @@ export default function Projects() {
 
         {/* ── DESKTOP ── */}
         <div className="hidden lg:flex flex-col flex-1 min-h-0">
-          <div className="flex gap-3 min-h-0" style={{ height: '360px', perspective: '1200px' }}>
-            {panelIdxs.map(i => (
-              <ProjectPanel key={i} projectIdx={i} onClick={() => setModalProject(i)} />
-            ))}
-          </div>
+          <FeaturedPanels onProjectClick={setModalProject} />
 
           <div className="flex items-center mt-4 flex-shrink-0">
             <button

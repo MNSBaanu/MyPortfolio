@@ -20,20 +20,44 @@ export default function ContactForm() {
         })
     }
 
+    // Basic email validation regex
+    const isValidEmail = (email: string) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+    // Basic sanitization to prevent XSS payloads
+    const sanitizeInput = (input: string) => {
+        return input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+
+        if (!isValidEmail(formData.email)) {
+            toast.error('Please enter a valid email address.');
+            return;
+        }
+
         setIsSubmitting(true)
 
         try {
-            const serviceId = 'service_8p7djun'
-            const templateId = 'template_hvf689g'
-            const publicKey = 'CiBF-DJszrNTqx-Ac'
+            // 🛡️ Security Fix: Removed hardcoded API keys.
+            // Now using environment variables to prevent secret leakage.
+            const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+            const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
+            if (!serviceId || !templateId || !publicKey) {
+                console.error('Email service is not properly configured.')
+                toast.error('Unable to send message at this time. Please try again later.')
+                return
+            }
 
             const templateParams = {
-                from_name: formData.name,
-                from_email: formData.email,
-                subject: formData.subject,
-                message: formData.message,
+                from_name: sanitizeInput(formData.name),
+                from_email: formData.email, // already validated
+                subject: sanitizeInput(formData.subject),
+                message: sanitizeInput(formData.message),
                 to_name: 'Sahla Baanu',
                 reply_to: formData.email
             }
@@ -86,9 +110,11 @@ export default function ContactForm() {
                                         type="text"
                                         id="name"
                                         name="name"
+                                        aria-label="Full Name"
                                         value={formData.name}
                                         onChange={handleChange}
                                         required
+                                        maxLength={100}
                                         className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
                                         placeholder="Your full name"
                                     />
@@ -96,9 +122,11 @@ export default function ContactForm() {
                                         type="email"
                                         id="email"
                                         name="email"
+                                        aria-label="Email Address"
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
+                                        maxLength={100}
                                         className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
                                         placeholder="your.email@example.com"
                                     />
@@ -107,18 +135,22 @@ export default function ContactForm() {
                                     type="text"
                                     id="subject"
                                     name="subject"
+                                    aria-label="Subject"
                                     value={formData.subject}
                                     onChange={handleChange}
                                     required
+                                    maxLength={200}
                                     className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
                                     placeholder="What is this about?"
                                 />
                                 <textarea
                                     id="message"
                                     name="message"
+                                    aria-label="Message"
                                     value={formData.message}
                                     onChange={handleChange}
                                     required
+                                    maxLength={2000}
                                     rows={4}
                                     className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300 resize-none"
                                     placeholder="Your detailed message..."
