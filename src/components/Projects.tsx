@@ -409,12 +409,10 @@ function ExploreModal({ onClose }: { onClose: () => void }) {
   )
 }
 
-export default function Projects() {
-  const [modalProject, setModalProject] = useState<number | null>(null)
-  const [exploreOpen, setExploreOpen] = useState(false)
+// ── Featured panels wrapper to isolate interval state ──
+function FeaturedPanels({ onProjectClick }: { onProjectClick: (idx: number) => void }) {
   const [offset, setOffset] = useState(0)
 
-  // Rotate featured panels every 5s
   useEffect(() => {
     const t = setInterval(() => {
       setOffset(o => (o + 1) % projects.length)
@@ -427,6 +425,19 @@ export default function Projects() {
     (offset + 1) % projects.length,
     (offset + 2) % projects.length,
   ]
+
+  return (
+    <div className="flex gap-3 min-h-0" style={{ height: '360px', perspective: '1200px' }}>
+      {panelIdxs.map((i) => (
+        <ProjectPanel key={i} projectIdx={i} onClick={() => onProjectClick(i)} />
+      ))}
+    </div>
+  )
+}
+
+export default function Projects() {
+  const [modalProject, setModalProject] = useState<number | null>(null)
+  const [exploreOpen, setExploreOpen] = useState(false)
 
   return (
     <div
@@ -443,11 +454,7 @@ export default function Projects() {
 
         {/* ── DESKTOP ── */}
         <div className="hidden lg:flex flex-col flex-1 min-h-0">
-          <div className="flex gap-3 min-h-0" style={{ height: '360px', perspective: '1200px' }}>
-            {panelIdxs.map(i => (
-              <ProjectPanel key={i} projectIdx={i} onClick={() => setModalProject(i)} />
-            ))}
-          </div>
+          <FeaturedPanels onProjectClick={setModalProject} />
 
           <div className="flex items-center mt-4 flex-shrink-0">
             <button
