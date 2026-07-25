@@ -33,7 +33,7 @@
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^6.0.2",
     "autoprefixer": "^10.4.16",
-    "postcss": "^8.5.10",
+    "postcss": "^8.5.23",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.2.2",
     "vite": "^8.0.16",
@@ -46,7 +46,7 @@
     "dompurify": ">=3.4.9",
     "@babel/core": "7.29.7",
     "picomatch": ">=4.0.4",
-    "fast-uri": ">=3.1.1",
+    "fast-uri": ">=4.1.1",
     "@babel/plugin-transform-modules-systemjs": ">=7.29.4",
     "brace-expansion": ">=5.0.7"
   }
