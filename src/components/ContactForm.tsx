@@ -20,8 +20,24 @@ export default function ContactForm() {
         })
     }
 
+    // Basic email validation regex
+    const isValidEmail = (email: string) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
+    // Basic sanitization to prevent XSS payloads
+    const sanitizeInput = (input: string) => {
+        return input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+
+        if (!isValidEmail(formData.email)) {
+            toast.error('Please enter a valid email address.');
+            return;
+        }
+
         setIsSubmitting(true)
 
         try {
@@ -38,10 +54,10 @@ export default function ContactForm() {
             }
 
             const templateParams = {
-                from_name: formData.name,
-                from_email: formData.email,
-                subject: formData.subject,
-                message: formData.message,
+                from_name: sanitizeInput(formData.name),
+                from_email: formData.email, // already validated
+                subject: sanitizeInput(formData.subject),
+                message: sanitizeInput(formData.message),
                 to_name: 'Sahla Baanu',
                 reply_to: formData.email
             }
@@ -98,6 +114,7 @@ export default function ContactForm() {
                                         value={formData.name}
                                         onChange={handleChange}
                                         required
+                                        maxLength={100}
                                         className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
                                         placeholder="Your full name"
                                     />
@@ -109,6 +126,7 @@ export default function ContactForm() {
                                         value={formData.email}
                                         onChange={handleChange}
                                         required
+                                        maxLength={100}
                                         className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
                                         placeholder="your.email@example.com"
                                     />
@@ -121,6 +139,7 @@ export default function ContactForm() {
                                     value={formData.subject}
                                     onChange={handleChange}
                                     required
+                                    maxLength={200}
                                     className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
                                     placeholder="What is this about?"
                                 />
@@ -131,6 +150,7 @@ export default function ContactForm() {
                                     value={formData.message}
                                     onChange={handleChange}
                                     required
+                                    maxLength={2000}
                                     rows={4}
                                     className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300 resize-none"
                                     placeholder="Your detailed message..."
