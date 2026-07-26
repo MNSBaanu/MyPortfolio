@@ -27,7 +27,12 @@ export default function ContactForm() {
 
     // Basic sanitization to prevent XSS payloads
     const sanitizeInput = (input: string) => {
-        return input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return input
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -67,7 +72,8 @@ export default function ContactForm() {
             toast.success('Message sent successfully! I\'ll get back to you soon.')
             setFormData({ name: '', email: '', subject: '', message: '' })
         } catch (error: any) {
-            toast.error(`Failed to send message: ${error.text || error.message || 'Please try again'}`)
+            console.error('Failed to send email:', error)
+            toast.error('Failed to send message. Please try again later.')
         } finally {
             setIsSubmitting(false)
         }
