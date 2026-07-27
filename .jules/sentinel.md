@@ -6,3 +6,7 @@
 **Vulnerability:** Lack of constraints on contact form inputs could allow oversized payloads (DoS risk) and unchecked characters.
 **Learning:** Adding `maxLength` limits directly in the UI constrains payload sizes, and implementing basic sanitization adds a defensive layer, even though backend validation is still paramount.
 **Prevention:** Always implement defense-in-depth by adding max lengths and basic sanitization to user-facing forms before transmission.
+## 2026-07-27 - [Secure Error Handling & Script Fix]
+**Vulnerability:** Leaking internal error details (`error.text` or `error.message`) to users via toasts on `src/components/ContactForm.tsx`.
+**Learning:** Directly rendering raw error properties to users violates the "fail securely" principle and exposes backend configurations or API issues. In addition, the security check script `scripts/security-check.js` incorrectly searched only the first route object in `vercel.json` for security headers like HSTS and CSP, missing configurations across multiple route/header blocks.
+**Prevention:** Always log full error details securely to the console (`console.error`) and present generic fallback messages to end users. Ensure auditing scripts deeply inspect configurations (e.g. using `flatMap` on arrays of objects) to prevent false negatives.
