@@ -67,12 +67,12 @@ const totalDeps = Object.keys(packageJson.dependencies || {}).length +
 console.log(`   ℹ️  Total dependencies: ${totalDeps}`);
 console.log('   ⚠️  Run "npm audit" to check for vulnerabilities');
 
-// Helper to search all headers in vercel.json
-const allHeaders = (vercelConfig.headers || []).flatMap(route => route.headers || []);
+// Helper to get all headers across all routes
+const allVercelHeaders = vercelConfig.headers?.flatMap(route => route.headers || []) || [];
 
 // Check 5: HTTPS enforcement
 console.log('\n5. Checking HTTPS enforcement...');
-const hasHSTS = allHeaders.some(h => h.key === 'Strict-Transport-Security');
+const hasHSTS = allVercelHeaders.some(h => h.key === 'Strict-Transport-Security');
 if (hasHSTS) {
   console.log('   ✅ HSTS header configured (HTTPS enforced)');
   passed++;
@@ -83,7 +83,7 @@ if (hasHSTS) {
 
 // Check 6: CSP configured
 console.log('\n6. Checking Content Security Policy...');
-const hasCSP = allHeaders.some(h => h.key === 'Content-Security-Policy');
+const hasCSP = allVercelHeaders.some(h => h.key === 'Content-Security-Policy');
 if (hasCSP) {
   console.log('   ✅ CSP configured');
   passed++;
