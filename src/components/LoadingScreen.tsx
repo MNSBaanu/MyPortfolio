@@ -1,25 +1,8 @@
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
 
 const TICKS = 12
 
 export default function LoadingScreen() {
-  const [rotation, setRotation] = useState(0)
-
-  useEffect(() => {
-    let frame: number
-    let start: number | null = null
-    const speed = 120
-
-    const animate = (ts: number) => {
-      if (!start) start = ts
-      setRotation(((ts - start) * speed) / 1000)
-      frame = requestAnimationFrame(animate)
-    }
-    frame = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(frame)
-  }, [])
-
   return (
     <motion.div
       initial={{ opacity: 1 }}
@@ -27,7 +10,11 @@ export default function LoadingScreen() {
       transition={{ duration: 0.35, ease: 'easeOut' }}
       className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
     >
-      <div className="relative w-24 h-24" style={{ transform: `rotate(${rotation}deg)` }}>
+      <motion.div
+        className="relative w-24 h-24"
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 3, ease: 'linear' }}
+      >
         {Array.from({ length: TICKS }).map((_, i) => {
           const angle = (i / TICKS) * 360
           const opacity = 0.12 + ((TICKS - 1 - i) / (TICKS - 1)) * 0.88
@@ -56,7 +43,7 @@ export default function LoadingScreen() {
             </div>
           )
         })}
-      </div>
+      </motion.div>
     </motion.div>
   )
 }
