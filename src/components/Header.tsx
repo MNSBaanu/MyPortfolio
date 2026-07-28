@@ -30,24 +30,31 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Track active section via IntersectionObserver
+  // Track active section via a single IntersectionObserver
+  // This reduces memory footprint and batches intersection calculations
   useEffect(() => {
-    const observers: IntersectionObserver[] = []
     const sectionToNav: Record<string, string> = {
       experience: 'journey', education: 'journey'
     }
     const allSections = ['home', 'about', 'experience', 'education', 'skills', 'projects', 'contact']
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(sectionToNav[entry.target.id] ?? entry.target.id)
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
     allSections.forEach((id) => {
       const el = document.getElementById(id)
-      if (!el) return
-      const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActiveSection(sectionToNav[id] ?? id) },
-        { threshold: 0.3 }
-      )
-      obs.observe(el)
-      observers.push(obs)
+      if (el) obs.observe(el)
     })
-    return () => observers.forEach(o => o.disconnect())
+
+    return () => obs.disconnect()
   }, [])
 
   useLayoutEffect(() => {
