@@ -7,3 +7,7 @@
 ## 2026-07-26 - Multiple IntersectionObserver Instances
 **Learning:** In `src/components/Header.tsx`, creating a separate `IntersectionObserver` instance for each section causes unnecessary memory overhead and increases browser-side intersection calculations.
 **Action:** Always batch intersection observations into a single `IntersectionObserver` instance that tracks multiple elements, and loop through `entries` to determine which specific element intersected.
+
+## 2026-08-03 - Lazy Loading with Custom Loading Screens
+**Learning:** Using `React.lazy` with `Suspense fallback={null}` in a site with a custom `isLoading` state delays bundle fetching until the loading screen is removed, causing components to pop in. It can also break deep linking scroll anchoring because components initially have 0 height.
+**Action:** When implementing code splitting for sections, ensure components begin fetching during the loading screen or use a layout-preserving fallback skeleton to prevent layout shifts and scroll anchoring issues on deep links.
