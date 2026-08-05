@@ -9,7 +9,8 @@ export default function ContactForm() {
         name: '',
         email: '',
         subject: '',
-        message: ''
+        message: '',
+        botField: '' // 🛡️ Security Fix: Honeypot field to catch spam bots
     })
     const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -43,6 +44,13 @@ export default function ContactForm() {
             return;
         }
 
+        // 🛡️ Security Fix: If honeypot field is filled, silently abort to deter bots
+        if (formData.botField) {
+            toast.success('Message sent successfully! I\'ll get back to you soon.')
+            setFormData({ name: '', email: '', subject: '', message: '', botField: '' })
+            return
+        }
+
         setIsSubmitting(true)
 
         try {
@@ -70,7 +78,7 @@ export default function ContactForm() {
             await emailjs.send(serviceId, templateId, templateParams, publicKey)
 
             toast.success('Message sent successfully! I\'ll get back to you soon.')
-            setFormData({ name: '', email: '', subject: '', message: '' })
+            setFormData({ name: '', email: '', subject: '', message: '', botField: '' })
         } catch (error: any) {
             console.error('Failed to send email:', error)
             toast.error('Failed to send message. Please try again later.')
@@ -111,6 +119,18 @@ export default function ContactForm() {
                             </div>
 
                             <form onSubmit={handleSubmit} className="p-4 space-y-4">
+                                {/* 🛡️ Security Fix: Honeypot field, visually hidden from real users */}
+                                <div aria-hidden="true" className="hidden" style={{ display: 'none' }}>
+                                    <input
+                                        type="text"
+                                        id="botField"
+                                        name="botField"
+                                        value={formData.botField}
+                                        onChange={handleChange}
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                    />
+                                </div>
                                 <div className="grid grid-cols-1 gap-4">
                                     <input
                                         type="text"
