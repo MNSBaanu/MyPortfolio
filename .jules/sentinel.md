@@ -14,3 +14,7 @@
 **Vulnerability:** The public-facing contact form lacked bot protection, leaving the `emailjs` integration susceptible to abuse, potentially exhausting API limits.
 **Learning:** Adding a hidden "honeypot" field that legitimate users won't see but automated scrapers/bots will fill out allows for silent abortion of the form submission. This approach is more user-friendly than CAPTCHAs while effectively reducing spam.
 **Prevention:** Always implement anti-spam measures (such as honeypots or CAPTCHAs) on public forms that trigger third-party API services or external integrations.
+## 2025-02-27 - Information Leakage & Missing Rate Limiting in Contact Form
+**Vulnerability:** The contact form lacks client-side rate limiting to prevent spam and logs the full error object from the EmailJS API upon failure, which can expose stack traces and internal API details in the browser console.
+**Learning:** Client-side rate limiting serves as an important defense-in-depth layer to deter basic spamming and API abuse, even for third-party services. Additionally, exposing full error objects in production logs poses an information disclosure risk.
+**Prevention:** Implement rate-limiting checks before making API calls (e.g. using `localStorage`) and ensure catch blocks only log generic or specific sanitized messages (e.g. `error.message`) rather than the raw error object.
