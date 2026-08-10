@@ -44,6 +44,13 @@ export default function ContactForm() {
             return;
         }
 
+        // 🛡️ Security Fix: Basic client-side rate limiting to prevent spamming
+        const lastSent = localStorage.getItem('lastEmailSent');
+        if (lastSent && Date.now() - parseInt(lastSent) < 60000) {
+            toast.error('Please wait a minute before sending another message.');
+            return;
+        }
+
         // 🛡️ Security Fix: If honeypot field is filled, silently abort to deter bots
         if (formData.botField) {
             toast.success('Message sent successfully! I\'ll get back to you soon.')
@@ -75,10 +82,13 @@ export default function ContactForm() {
 
             await emailjs.send(serviceId, templateId, templateParams, publicKey)
 
+            localStorage.setItem('lastEmailSent', Date.now().toString());
+
             toast.success('Message sent successfully! I\'ll get back to you soon.')
             setFormData({ name: '', email: '', subject: '', message: '', botField: '' })
         } catch (error: any) {
-            console.error('Failed to send email:', error)
+            // 🛡️ Security Fix: Log only generic/sanitized error messages to prevent exposing stack traces or API details
+            console.error('Failed to send email:', error?.message || 'Unknown error occurred')
             toast.error('Failed to send message. Please try again later.')
         } finally {
             setIsSubmitting(false)
