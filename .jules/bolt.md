@@ -11,3 +11,6 @@
 ## 2026-08-03 - Lazy Loading with Custom Loading Screens
 **Learning:** Using `React.lazy` with `Suspense fallback={null}` in a site with a custom `isLoading` state delays bundle fetching until the loading screen is removed, causing components to pop in. It can also break deep linking scroll anchoring because components initially have 0 height.
 **Action:** When implementing code splitting for sections, ensure components begin fetching during the loading screen or use a layout-preserving fallback skeleton to prevent layout shifts and scroll anchoring issues on deep links.
+## 2025-08-10 - Eager Image Fetching within display:none Elements
+**Learning:** Elements hidden via CSS `display: none` (like Tailwind's `lg:hidden`) will STILL trigger eager image fetching for `<img>` tags if `loading="lazy"` is missing. This caused the desktop view to eagerly download 15 images intended only for the mobile view, wasting bandwidth and CPU.
+**Action:** Always add `loading="lazy"` and `decoding="async"` to images in hidden sections (like mobile-only or desktop-only views) to prevent them from fetching assets that aren't visible on the current viewport.
