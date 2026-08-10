@@ -474,7 +474,9 @@ export default function Projects() {
             <button key={index} onClick={() => setModalProject(index)}
               className="rounded-2xl overflow-hidden border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-left w-full">
               <div className="relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
+                {/* ⚡ Bolt: Added lazy loading to prevent 15 hidden images from being eagerly fetched on desktop, which uses display: none (lg:hidden) */}
                 <img src={p.images[0]} alt={p.title} className="w-full h-full object-cover"
+                  loading="lazy" decoding="async"
                   onError={(e) => { e.currentTarget.src = `https://placehold.co/600x338/111111/ffffff?text=${encodeURIComponent(p.title)}` }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-3 left-3">
