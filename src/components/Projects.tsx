@@ -1,12 +1,13 @@
 import { ExternalLink, Github, X, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react'
 import { projects, personalInfo } from '../data/portfolio'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 
 const SLIDE_DURATION = 4000
 
 // ── 3D tilt panel ──
-function ProjectPanel({ projectIdx, onClick }: { projectIdx: number; onClick: () => void }) {
+// ⚡ Bolt: Wrapped in React.memo to prevent unnecessary re-renders when the parent's offset changes every 5 seconds.
+const ProjectPanel = React.memo(function ProjectPanel({ projectIdx, onClick }: { projectIdx: number; onClick: (idx: number) => void }) {
   const [activeImage, setActiveImage] = useState(0)
   const [hovered, setHovered] = useState(false)
   const timerRef = useRef<number>(0)
@@ -58,7 +59,7 @@ function ProjectPanel({ projectIdx, onClick }: { projectIdx: number; onClick: ()
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={onClick}
+      onClick={() => onClick(projectIdx)}
     >
       <img src={allImages[activeImage]} alt={project.title}
         width={800}
@@ -96,7 +97,7 @@ function ProjectPanel({ projectIdx, onClick }: { projectIdx: number; onClick: ()
       )}
     </div>
   )
-}
+})
 
 // ── Dribbble-inspired project detail page ──
 function ProjectDetailPage({
@@ -429,7 +430,7 @@ function FeaturedPanels({ onProjectClick }: { onProjectClick: (idx: number) => v
   return (
     <div className="flex gap-3 min-h-0" style={{ height: '360px', perspective: '1200px' }}>
       {panelIdxs.map((i) => (
-        <ProjectPanel key={i} projectIdx={i} onClick={() => onProjectClick(i)} />
+        <ProjectPanel key={i} projectIdx={i} onClick={onProjectClick} />
       ))}
     </div>
   )
