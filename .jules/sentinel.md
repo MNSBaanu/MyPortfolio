@@ -18,3 +18,7 @@
 **Vulnerability:** The contact form lacks client-side rate limiting to prevent spam and logs the full error object from the EmailJS API upon failure, which can expose stack traces and internal API details in the browser console.
 **Learning:** Client-side rate limiting serves as an important defense-in-depth layer to deter basic spamming and API abuse, even for third-party services. Additionally, exposing full error objects in production logs poses an information disclosure risk.
 **Prevention:** Implement rate-limiting checks before making API calls (e.g. using `localStorage`) and ensure catch blocks only log generic or specific sanitized messages (e.g. `error.message`) rather than the raw error object.
+## 2024-05-24 - Rate limit bypass via corrupted data
+**Vulnerability:** Client-side rate limiting in `ContactForm.tsx` via `localStorage` checked `Date.now() - parseInt(lastSent) < 60000`. If `lastSent` was non-numeric, it evaluated to `NaN < 60000` (false), allowing rate limit bypass.
+**Learning:** `NaN` comparisons in JavaScript can lead to security control bypasses if input (even from `localStorage`) is assumed to be well-formed.
+**Prevention:** Ensure strict typing and validation when parsing potentially manipulated browser storage values (e.g., verifying `!isNaN`).

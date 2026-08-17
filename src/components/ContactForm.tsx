@@ -39,14 +39,28 @@ export default function ContactForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
+        // 🛡️ Security Fix: Missing input length limits (DoS risk)
+        if (
+            formData.name.length > 100 ||
+            formData.email.length > 100 ||
+            formData.subject.length > 200 ||
+            formData.message.length > 2000
+        ) {
+            toast.error('Input exceeds maximum allowed length.');
+            return;
+        }
+
         if (!isValidEmail(formData.email)) {
             toast.error('Please enter a valid email address.');
             return;
         }
 
         // 🛡️ Security Fix: Basic client-side rate limiting to prevent spamming
+        // Fixed rate limit bypass via malformed/tampered localStorage data
         const lastSent = localStorage.getItem('lastEmailSent');
-        if (lastSent && Date.now() - parseInt(lastSent) < 60000) {
+        const lastSentTime = parseInt(lastSent || '0', 10);
+
+        if (lastSent && (!isNaN(lastSentTime) && Date.now() - lastSentTime < 60000)) {
             toast.error('Please wait a minute before sending another message.');
             return;
         }
