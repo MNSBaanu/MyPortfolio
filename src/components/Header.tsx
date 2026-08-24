@@ -62,9 +62,21 @@ const Header = () => {
     if (!el) return
     const update = () =>
       document.documentElement.style.setProperty('--header-height', `${el.offsetHeight}px`)
+
+    // ⚡ Bolt: Debounce the window resize event to prevent layout thrashing
+    // and high CPU usage from repeatedly writing to the DOM during resizing.
+    let timeoutId: number
+    const debouncedUpdate = () => {
+      window.clearTimeout(timeoutId)
+      timeoutId = window.setTimeout(update, 150)
+    }
+
     update()
-    window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update)
+    window.addEventListener('resize', debouncedUpdate)
+    return () => {
+      window.removeEventListener('resize', debouncedUpdate)
+      window.clearTimeout(timeoutId)
+    }
   }, [isMobileMenuOpen])
 
   const scrollToSection = (href: string) => {

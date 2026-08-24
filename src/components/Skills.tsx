@@ -123,9 +123,20 @@ export default function Skills() {
       setMetrics({ containerWidth, cardWidth, gap })
     }
 
+    // ⚡ Bolt: Debounce the window resize event to prevent layout thrashing
+    // and high CPU usage from repeatedly reading DOM properties during resizing.
+    let timeoutId: number
+    const debouncedMeasure = () => {
+      window.clearTimeout(timeoutId)
+      timeoutId = window.setTimeout(measure, 150)
+    }
+
     measure()
-    window.addEventListener('resize', measure)
-    return () => window.removeEventListener('resize', measure)
+    window.addEventListener('resize', debouncedMeasure)
+    return () => {
+      window.removeEventListener('resize', debouncedMeasure)
+      window.clearTimeout(timeoutId)
+    }
   }, [])
 
   const pitch = metrics.cardWidth + metrics.gap

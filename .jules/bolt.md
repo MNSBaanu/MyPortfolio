@@ -14,3 +14,6 @@
 ## 2025-08-10 - Eager Image Fetching within display:none Elements
 **Learning:** Elements hidden via CSS `display: none` (like Tailwind's `lg:hidden`) will STILL trigger eager image fetching for `<img>` tags if `loading="lazy"` is missing. This caused the desktop view to eagerly download 15 images intended only for the mobile view, wasting bandwidth and CPU.
 **Action:** Always add `loading="lazy"` and `decoding="async"` to images in hidden sections (like mobile-only or desktop-only views) to prevent them from fetching assets that aren't visible on the current viewport.
+## 2026-08-24 - Synchronous Layout Thrashing on Unthrottled Resize Events
+**Learning:** In `src/components/Skills.tsx` and `src/components/Header.tsx`, attaching expensive functions (like reading `offsetWidth`, `getComputedStyle`, or updating CSS variables via DOM writes) directly to the `window.resize` event causes synchronous layout thrashing and high CPU overhead, degrading responsiveness during window resizing.
+**Action:** Always debounce or throttle expensive operations tied to high-frequency browser events like `resize` or `scroll`. Use a simple `setTimeout` within a wrapper function to ensure layout recalculations only occur after the user has paused resizing.
