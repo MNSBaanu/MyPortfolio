@@ -1,65 +1,82 @@
-﻿# MNSBaanu's Portfolio
+<div align="center">
+  
+# MNS Baanu's Portfolio
+  
+A modern, responsive personal portfolio website showcasing my skills, projects, education, experience, and certifications.
 
-A modern, responsive portfolio website built with React, TypeScript, and Tailwind CSS.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Portfolio-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://mnsbaanu-portfolio.vercel.app)
+[![GitHub](https://img.shields.io/badge/GitHub-MNSBaanu-181717?style=for-the-badge&logo=github)](https://github.com/MNSBaanu)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-MNS%20Baanu-0A66C2?style=for-the-badge&logo=linkedin)](https://lk.linkedin.com/in/mns-baanu)
 
-## 🌐 Live Demo
+</div>
 
-**[mnsbaanu-portfolio.vercel.app](https://mnsbaanu-portfolio.vercel.app)**
+## Features
 
-## ✨ Features
+* Responsive design for all devices
+* Progressive Web App (PWA) with offline support
+* Smooth animations with Framer Motion
+* SEO optimized with meta tags and structured data
+* Contact form with EmailJS integration
+* CV viewer with PDF download
+* Project showcase with image carousels
+* Modern and interactive UI
 
-- Progressive Web App (PWA) with offline support
-- Responsive design for all devices
-- Smooth animations with Framer Motion
-- SEO optimized with meta tags and structured data
-- Contact form with EmailJS integration
-- CV viewer with PDF download
-- Project showcase with image carousels
+## Tech Stack
 
-## 🛠️ Tech Stack
+* React 18
+* TypeScript
+* Tailwind CSS
+* Framer Motion
+* Vite
+* EmailJS
+* Vercel
 
-- React 18 + TypeScript
-- Tailwind CSS
-- Framer Motion
-- Vite
-- EmailJS
-- Vercel
-
-## 🚀 Quick Start
+## Getting Started
 
 ```bash
-# Clone the repository
 git clone https://github.com/MNSBaanu/MyPortfolio.git
 cd MyPortfolio
-
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
-
-# Build for production
-npm run build
 ```
 
-## 🎨 Customization
+## Customization
 
-Edit `src/data/portfolio.ts` to update:
-- Personal information
-- Skills and technologies
-- Education and experience
-- Projects and certifications
+Update the portfolio content in:
 
-## 📫 Contact
+`src/data/portfolio.ts`
 
-- **Email**: sbaanukghsbio21@gmail.com
-- **LinkedIn**: [linkedin.com/in/mns-baanu](https://lk.linkedin.com/in/mns-baanu)
-- **GitHub**: [github.com/MNSBaanu](https://github.com/MNSBaanu)
+You can update:
 
-## 📄 License
+* Personal information
+* Skills and technologies
+* Education and experience
+* Projects
+* Certifications
+* Social links
 
-MIT License
+## Contact
+
+* **Email:** [sbaanukghsbio21@gmail.com](mailto:sbaanukghsbio21@gmail.com)
+* **LinkedIn:** [linkedin.com/in/mns-baanu](https://lk.linkedin.com/in/mns-baanu)
+* **GitHub:** [github.com/MNSBaanu](https://github.com/MNSBaanu)
+
+## Suggestions & Feedback
+
+Have a suggestion to improve the portfolio?
+
+Feel free to open an **Issue** or share your feedback. All constructive suggestions are welcome!
+
+## License
+
+This project is for personal portfolio use.
 
 ---
 
-**Built with ❤️ by MNSBaanu**
+<div align="center">
+
+**Built with ❤️ MNSBaanu** 
+
+</div>
+
+
