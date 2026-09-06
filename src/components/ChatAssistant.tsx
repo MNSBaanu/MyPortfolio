@@ -61,6 +61,7 @@ type ChatAssistantProps = {
 
 const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
   const [input, setInput] = useState('')
+  const [isThinking, setIsThinking] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     { id: 1, role: 'assistant', text: `Hi! I’m ${personalInfo.name}'s portfolio assistant. Ask me anything about their work, skills, or background.` },
   ])
@@ -70,20 +71,40 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
     if (open) endRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, open])
 
-  const ask = (question: string) => {
+  const ask = async (question: string) => {
     const trimmed = question.trim()
-    if (!trimmed) return
-    setMessages((current) => [
-      ...current,
-      { id: Date.now(), role: 'user', text: trimmed },
-      { id: Date.now() + 1, role: 'assistant', text: answerQuestion(trimmed) },
-    ])
+    if (!trimmed || isThinking) return
+    const userMessage = { id: Date.now(), role: 'user' as const, text: trimmed }
+    const conversation = [...messages, userMessage]
+    setMessages((current) => [...current, userMessage])
     setInput('')
+    setIsThinking(true)
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: conversation.map(({ role, text }) => ({ role, content: text })),
+        }),
+      })
+
+      if (!response.ok) throw new Error('Assistant API unavailable')
+      const data = await response.json() as { reply?: string }
+      if (!data.reply) throw new Error('Assistant returned no reply')
+      setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', text: data.reply! }])
+    } catch {
+      // Local fallback keeps the widget usable during local development or
+      // before OPENAI_API_KEY has been added to the Vercel project.
+      setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', text: answerQuestion(trimmed) }])
+    } finally {
+      setIsThinking(false)
+    }
   }
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
-    ask(input)
+    void ask(input)
   }
 
   return (
@@ -123,6 +144,14 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
                 {message.role === 'user' && <User size={15} className="mb-2 shrink-0 text-gray-400" />}
               </div>
             ))}
+            {isThinking && (
+              <div className="flex items-end gap-2">
+                <Bot size={15} className="mb-2 shrink-0 text-gray-400" />
+                <div className="rounded-2xl rounded-bl-md bg-gray-100 px-4 py-3 text-sm text-gray-500 dark:bg-neutral-900 dark:text-gray-400">
+                  Thinking...
+                </div>
+              </div>
+            )}
             {messages.length === 1 && (
               <div className="space-y-2 pt-1">
                 <p className="px-1 text-[11px] font-semibold uppercase tracking-wider text-gray-400">Try asking</p>
