@@ -1,11 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Linkedin, Mail, ArrowUp, Sun, Moon } from 'lucide-react'
+import { Github, Linkedin, Mail, ArrowUp, Sun, Moon, MessageCircle } from 'lucide-react'
 import { personalInfo } from '../data/portfolio'
 import { useState, useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import ChatAssistant from './ChatAssistant'
 
 const SocialSidebar = () => {
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [isChatOpen, setIsChatOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
@@ -60,6 +62,18 @@ const SocialSidebar = () => {
           </motion.a>
         ))}
 
+        <motion.button
+          whileHover={{ scale: 1.1, y: -2 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setIsChatOpen((open) => !open)}
+          aria-label={isChatOpen ? 'Close portfolio assistant' : 'Open portfolio assistant'}
+          aria-expanded={isChatOpen}
+          className={`${btnClass} ${isChatOpen ? 'bg-black text-white dark:bg-white dark:text-black' : ''}`}
+        >
+          <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
+          <span className={tooltipClass}>Ask Assistant</span>
+        </motion.button>
+
         <AnimatePresence>
           {showBackToTop && (
             <motion.button
@@ -77,6 +91,7 @@ const SocialSidebar = () => {
           )}
         </AnimatePresence>
       </motion.div>
+      <ChatAssistant open={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </div>
   )
 }
