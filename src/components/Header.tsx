@@ -25,7 +25,19 @@ const Header = () => {
   const headerRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20)
+    // ⚡ Bolt: Throttled the scroll event listener using requestAnimationFrame
+    // to prevent layout thrashing and excessive React state updates.
+    // Also added `{ passive: true }` to ensure scrolling remains smooth.
+    let ticking = false
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20)
+          ticking = false
+        })
+        ticking = true
+      }
+    }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
