@@ -97,10 +97,7 @@ export default function Skills() {
   // Flatten all skills from all categories into one array
   const allSkills = useMemo(
     () =>
-      skillCategories.flatMap((category) => [
-        ...category.skills,
-        ...(category.subcategories?.flatMap((sub) => sub.skills) || []),
-      ]) as Skill[],
+      skillCategories.flatMap((category) => category.skills) as Skill[],
     [],
   )
 
