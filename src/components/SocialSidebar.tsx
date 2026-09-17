@@ -11,10 +11,20 @@ const SocialSidebar = () => {
   const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
+    // ⚡ Bolt: Throttled the scroll event listener using requestAnimationFrame
+    // to prevent layout thrashing and excessive React state updates.
+    // Also added `{ passive: true }` to ensure scrolling remains smooth.
+    let ticking = false
     const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 500)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setShowBackToTop(window.scrollY > 500)
+          ticking = false
+        })
+        ticking = true
+      }
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
