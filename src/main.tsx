@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 )
 
 const defer = (callback: () => void) => {
-  if ('requestIdleCallback' in window) {
+  if (typeof window.requestIdleCallback === 'function') {
     window.requestIdleCallback(callback, { timeout: 3000 })
   } else {
     window.setTimeout(callback, 1)
