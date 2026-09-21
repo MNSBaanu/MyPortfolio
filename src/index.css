@@ -234,13 +234,6 @@ textarea {
   color: #ffffff;
 }
 
-/* Remove default button styles */
-button {
-  border: none;
-  background: none;
-  cursor: pointer;
-}
-
 /* Airbnb-style input */
 .apple-input {
   @apply w-full px-4 py-4 bg-white border border-gray-300 rounded-xl text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:bg-white focus:outline-none transition-colors duration-300;

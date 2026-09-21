@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, Sun, Moon, X } from 'lucide-react'
+import { Menu, Sun, Moon, X, Github, Linkedin, Mail } from 'lucide-react'
 import { personalInfo } from '../data/portfolio'
 import { useTheme } from '../context/ThemeContext'
 
@@ -145,7 +145,7 @@ const Header = () => {
             </motion.button>
 
             {/* Desktop Nav */}
-            <nav aria-label="Main" className="hidden md:flex items-center gap-5 lg:gap-6">
+            <nav aria-label="Main" className="hidden lg:flex items-center gap-6">
               {navLinks.map((link, i) => {
                 const id = link.href.replace('#', '')
                 const isActive = activeSection === id
@@ -206,7 +206,7 @@ const Header = () => {
                 aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
                 aria-expanded={isMobileMenuOpen}
                 aria-controls="mobile-menu"
-                className="md:hidden p-2.5 rounded-full border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-neutral-500 transition-all duration-300"
+                className="lg:hidden p-2.5 rounded-full border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-neutral-500 transition-all duration-300"
               >
                 {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
               </button>
@@ -224,7 +224,7 @@ const Header = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25 }}
-              className="pointer-events-auto mt-2 rounded-2xl border border-gray-200/80 dark:border-neutral-800 bg-white/95 dark:bg-black/95 backdrop-blur-xl shadow-lg px-4 sm:px-6 py-4 md:hidden"
+              className="pointer-events-auto mt-2 rounded-2xl border border-gray-200/80 dark:border-neutral-800 bg-white/95 dark:bg-black/95 backdrop-blur-xl shadow-lg px-4 sm:px-6 py-4 lg:hidden"
             >
               <div className="flex flex-col gap-0.5">
                 {navLinks.map((link, i) => {
@@ -258,6 +258,24 @@ const Header = () => {
                   {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
                   {theme === 'dark' ? 'Light mode' : 'Dark mode'}
                 </motion.button>
+                <div className="mt-3 pt-3 border-t border-gray-200 dark:border-neutral-800 flex items-center gap-2">
+                  {[
+                    { icon: Github, href: personalInfo.social.github, label: 'GitHub' },
+                    { icon: Linkedin, href: personalInfo.social.linkedin, label: 'LinkedIn' },
+                    { icon: Mail, href: `mailto:${personalInfo.email}`, label: 'Email' },
+                  ].map(({ icon: Icon, href, label }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target={href.startsWith('mailto:') ? undefined : '_blank'}
+                      rel={href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+                      aria-label={label}
+                      className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 dark:border-neutral-700 text-gray-700 dark:text-gray-200"
+                    >
+                      <Icon size={18} />
+                    </a>
+                  ))}
+                </div>
               </div>
             </motion.nav>
           )}

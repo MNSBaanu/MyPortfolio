@@ -4,10 +4,9 @@ import { education as educationData } from '../data/portfolio'
 export default function Education() {
   return (
     <div
-      className="box-border px-6 sm:px-8 bg-white dark:bg-neutral-900 relative rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
+      className="box-border min-h-[100svh] md:h-[100svh] pb-20 md:pb-0 px-6 sm:px-8 bg-white dark:bg-neutral-900 relative rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
       style={{
-        height: '100svh',
-        paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
+                paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
       }}
     >
       <div className="h-full max-w-3xl mx-auto flex flex-col min-h-0 overflow-y-auto">

@@ -76,26 +76,26 @@ function App() {
                   <section className="sticky top-0 z-0 h-screen supports-[height:100svh]:h-[100svh]">
                     <Hero />
                   </section>
-                  <section id="about" className="sticky top-0 z-20">
+                  <section id="about" className="relative -mt-12 md:mt-0 md:sticky md:top-0 z-20">
                     <Suspense fallback={null}><About /></Suspense>
                   </section>
-                  <section id="experience" className="sticky top-0 z-30">
+                  <section id="experience" className="relative -mt-12 md:mt-0 md:sticky md:top-0 z-30">
                     <Suspense fallback={null}><Experience /></Suspense>
                   </section>
-                  <section id="education" className="sticky top-0 z-[35]">
+                  <section id="education" className="relative -mt-12 md:mt-0 md:sticky md:top-0 z-[35]">
                     <Suspense fallback={null}><Education /></Suspense>
                   </section>
-                  <section id="skills" className="sticky top-0 z-40">
+                  <section id="skills" className="relative -mt-12 md:mt-0 md:sticky md:top-0 z-40">
                     <Suspense fallback={null}><Skills /></Suspense>
                   </section>
-                  <section id="projects" className="sticky top-0 z-50">
+                  <section id="projects" className="relative -mt-12 lg:mt-0 lg:sticky lg:top-0 z-50">
                     <Suspense fallback={null}><Projects /></Suspense>
                   </section>
-                  <div className="h-[40vh] relative z-[55] pointer-events-none" aria-hidden="true" />
-                  <section id="contact" className="sticky top-0 z-[60]">
+                  <div className="hidden md:block h-[40vh] relative z-[55] pointer-events-none" aria-hidden="true" />
+                  <section id="contact" className="relative -mt-12 md:mt-0 md:sticky md:top-0 z-[60]">
                     <Suspense fallback={null}><Contact /></Suspense>
                   </section>
-                  <section id="contact-form" className="sticky top-0 z-[70]">
+                  <section id="contact-form" className="relative -mt-12 md:mt-0 md:sticky md:top-0 z-[70]">
                     <Suspense fallback={null}><ContactForm /></Suspense>
                   </section>
                   <Suspense fallback={null}><Footer /></Suspense>

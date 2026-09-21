@@ -464,8 +464,8 @@ function FeaturedPanels({ onProjectClick }: { onProjectClick: (idx: number) => v
 
   return (
     <div
-      className="flex gap-3 min-h-0"
-      style={{ height: '360px', perspective: '1200px' }}
+      className="flex gap-3 flex-1 min-h-[320px] max-h-[520px]"
+      style={{ perspective: '1200px' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocus={() => setHovered(true)}
@@ -484,10 +484,10 @@ export default function Projects() {
 
   return (
     <div
-      className="box-border bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
-      style={{ height: '100svh', paddingTop: 'calc(var(--header-height, 0px) + 1.5rem)', paddingBottom: '1.5rem' }}
+      className="box-border min-h-[100svh] lg:h-[100svh] pb-20 lg:pb-6 bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
+      style={{ paddingTop: 'calc(var(--header-height, 0px) + 1.5rem)' }}
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 pr-16 lg:pr-20 h-full flex flex-col">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 sm:pr-16 lg:pr-20 h-full flex flex-col">
 
         <div className="mb-5 flex-shrink-0 text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight">
@@ -499,7 +499,7 @@ export default function Projects() {
         <div className="hidden lg:flex flex-col flex-1 min-h-0">
           <FeaturedPanels onProjectClick={setModalProject} />
 
-          <div className="flex items-center mt-4 flex-shrink-0">
+          <div className="flex items-center justify-center mt-6 flex-shrink-0">
             <button
               onClick={() => setExploreOpen(true)}
               className="flex items-center gap-2 px-6 py-2.5 border border-gray-200 dark:border-neutral-700 text-black dark:text-white text-xs font-semibold rounded-full hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300"
@@ -512,10 +512,10 @@ export default function Projects() {
         </div>
 
         {/* ── MOBILE ── */}
-        <div className="lg:hidden flex-1 min-h-0 flex flex-col gap-4 overflow-y-auto pb-4">
-          {projects.map((p, index) => (
+        <div className="lg:hidden grid sm:grid-cols-2 gap-4">
+          {projects.slice(0, 6).map((p, index) => (
             <button key={index} onClick={() => setModalProject(index)}
-              className="rounded-2xl overflow-hidden border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-left w-full">
+              className="shrink-0 rounded-2xl overflow-hidden border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-left w-full">
               <div className="relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
                 {/* ⚡ Bolt: Added lazy loading to prevent 15 hidden images from being eagerly fetched on desktop, which uses display: none (lg:hidden) */}
                 <img src={p.images[0]} alt={p.title} className="w-full h-full object-cover"
@@ -537,6 +537,13 @@ export default function Projects() {
               </div>
             </button>
           ))}
+          <button
+            onClick={() => setExploreOpen(true)}
+            className="sm:col-span-2 justify-self-center flex items-center gap-2 px-6 py-2.5 border border-gray-300 dark:border-neutral-700 text-black dark:text-white text-sm font-semibold rounded-full"
+          >
+            Explore All {projects.length} Projects
+            <span aria-hidden="true">→</span>
+          </button>
         </div>
       </div>
 

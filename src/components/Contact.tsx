@@ -29,13 +29,12 @@ export default function Contact() {
 
   return (
     <div
-      className="box-border px-6 sm:px-8 bg-gray-50 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
+      className="box-border min-h-[100svh] md:h-[100svh] pb-20 md:pb-0 px-6 sm:px-8 bg-gray-50 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
       style={{
-        height: '100svh',
-        paddingTop: 'calc(var(--header-height, 0px) + 1rem)',
+                paddingTop: 'calc(var(--header-height, 0px) + 1rem)',
       }}
     >
-      <div className="h-full max-w-7xl mx-auto flex flex-col overflow-y-auto">
+      <div className="h-full max-w-7xl mx-auto flex flex-col overflow-y-auto no-scrollbar">
         <div className="flex flex-col my-auto pb-16 sm:pb-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

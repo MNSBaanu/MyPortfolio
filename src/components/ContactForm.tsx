@@ -111,13 +111,12 @@ export default function ContactForm() {
 
     return (
         <div
-            className="box-border px-6 sm:px-8 bg-gray-50 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
+            className="box-border min-h-[100svh] md:h-[100svh] pb-20 md:pb-0 px-6 sm:px-8 bg-gray-50 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
             style={{
-                height: '100svh',
-                paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
+                                paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
             }}
         >
-            <div className="h-full max-w-7xl mx-auto flex flex-col overflow-y-auto">
+            <div className="h-full max-w-7xl mx-auto flex flex-col overflow-y-auto no-scrollbar">
                 <div className="flex flex-col items-center my-auto pb-12 sm:pb-20">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -136,7 +135,7 @@ export default function ContactForm() {
 
                     <div className="w-full flex items-start justify-center">
                         <div className="bg-white dark:bg-black border border-gray-300 dark:border-neutral-800 rounded-lg w-full max-w-md shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl">
-                            <div className="bg-black text-white px-4 py-3 text-lg font-medium">
+                            <div className="bg-black text-white px-4 py-3 text-lg font-medium border-b border-transparent dark:border-neutral-800">
                                 Contact Form
                             </div>
 

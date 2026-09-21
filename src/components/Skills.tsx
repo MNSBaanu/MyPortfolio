@@ -173,10 +173,9 @@ export default function Skills() {
 
   return (
     <div
-      className="box-border px-6 sm:px-8 bg-slate-100 dark:bg-neutral-900 relative z-40 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-200/50 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
+      className="box-border md:h-[100svh] pb-20 md:pb-0 px-6 sm:px-8 bg-slate-100 dark:bg-neutral-900 relative z-40 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-200/50 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
       style={{
-        height: '100svh',
-        paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
+                paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
       }}
     >
       <div className="h-full max-w-7xl mx-auto flex flex-col min-h-0">
@@ -185,7 +184,7 @@ export default function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-8 sm:mb-10 shrink-0"
+          className="text-center shrink-0"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight">
             Skills & Technologies
@@ -207,11 +206,11 @@ export default function Skills() {
         </motion.div>
 
         {/* Continuous Scrolling Skills Ticker */}
-        <div className="relative -mx-6 sm:-mx-8 md:-mx-12 lg:-mx-16 flex-1 min-h-0 flex items-start pt-6 sm:pt-8 px-1">
+        <div className="relative -mx-6 sm:-mx-8 flex-1 min-h-0 flex items-center">
           {/* Scrolling container */}
           <div
             ref={containerRef}
-            className={`flex w-full ${prefersReducedMotion ? 'overflow-x-auto pb-4' : 'overflow-hidden'}`}
+            className={`flex w-full py-10 ${prefersReducedMotion ? 'overflow-x-auto' : 'overflow-hidden'}`}
             style={{ perspective: 1200 }}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}

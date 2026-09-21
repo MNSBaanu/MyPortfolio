@@ -36,12 +36,12 @@ const SocialSidebar = () => {
   const tooltipClass = "absolute right-full mr-3 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 bg-black dark:bg-white text-white dark:text-black text-xs px-3 py-1.5 rounded-lg whitespace-nowrap pointer-events-none"
 
   return (
-    <div className="fixed right-3 sm:right-6 md:right-8 bottom-4 sm:bottom-auto sm:top-[35%] z-[110] flex flex-col gap-2 sm:gap-4 pointer-events-none">
+    <div className="fixed right-3 sm:right-6 lg:right-8 bottom-4 lg:bottom-auto lg:top-[35%] z-[110] flex flex-col gap-2 lg:gap-4 pointer-events-none">
       <motion.div
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-        className="flex flex-col gap-2 sm:gap-4 pointer-events-auto"
+        className="flex flex-col gap-2 lg:gap-4 pointer-events-auto"
       >
         {socialLinks.map((social) => (
           <motion.a
@@ -51,7 +51,7 @@ const SocialSidebar = () => {
             rel={social.external ? "noopener noreferrer" : undefined}
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            className={btnClass}
+            className={`${btnClass} max-lg:hidden`}
           >
             <social.icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
             <span className={tooltipClass}>{social.label}</span>

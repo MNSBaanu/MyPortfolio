@@ -13,10 +13,9 @@ export default function Experience() {
 
   return (
     <div
-      className="box-border px-6 sm:px-8 bg-white dark:bg-black relative rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
+      className="box-border min-h-[100svh] md:h-[100svh] pb-20 md:pb-0 px-6 sm:px-8 bg-white dark:bg-black relative rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
       style={{
-        height: '100svh',
-        paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
+                paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
       }}
     >
       <div className="h-full max-w-5xl mx-auto flex flex-col min-h-0">
@@ -33,7 +32,7 @@ export default function Experience() {
         </motion.div>
 
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-6 lg:gap-10 overflow-hidden">
-          <div className="lg:w-[40%] shrink-0 max-h-[40%] lg:max-h-none min-h-0 overflow-y-auto border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-neutral-800 pb-4 lg:pb-0 lg:pr-6">
+          <div className="lg:w-[40%] shrink-0 min-h-0 overflow-y-auto border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-neutral-800 pb-4 lg:pb-0 lg:pr-6">
             {experienceData.map((item, idx) => {
               const isOpen = selected === idx
               return (
