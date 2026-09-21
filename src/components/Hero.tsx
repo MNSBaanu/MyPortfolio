@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useState, lazy, Suspense } from 'react'
-import { ArrowRight, Download } from 'lucide-react'
+import { ArrowRight, FileText } from 'lucide-react'
 import { personalInfo } from '../data/portfolio'
 
 const CVViewer = lazy(() => import('./CVViewer'))
@@ -42,7 +42,7 @@ export default function Hero() {
               }}
             />
 
-            <p className="text-[10px] sm:text-xs uppercase tracking-[0.25em] text-gray-400 dark:text-gray-500">
+            <p className="text-xs uppercase tracking-[0.25em] text-gray-500 dark:text-gray-400">
               {personalInfo.title}
             </p>
 
@@ -74,7 +74,7 @@ export default function Hero() {
                 onClick={() => setShowCVViewer(true)}
                 className="inline-flex items-center gap-2 px-6 py-2.5 border border-gray-300 dark:border-neutral-700 text-black dark:text-white text-xs sm:text-sm font-semibold rounded-full hover:bg-gray-50 dark:hover:bg-neutral-900 transition-colors"
               >
-                <Download className="w-4 h-4" />
+                <FileText className="w-4 h-4" />
                 View Resume
               </button>
             </div>

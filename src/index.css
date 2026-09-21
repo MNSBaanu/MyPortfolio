@@ -379,26 +379,27 @@ button {
   }
 
   /* Hide everything except CV content */
-  body * {
-    visibility: hidden;
+  body > :not(.cv-overlay) {
+    display: none !important;
   }
 
-  #cv-content,
-  #cv-content * {
-    visibility: visible;
+  .cv-overlay,
+  .cv-dialog {
+    position: static !important;
+    max-height: none !important;
+    max-width: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    transform: none !important;
+    backdrop-filter: none !important;
   }
 
   #cv-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
     background: white !important;
     padding: 0;
   }
 
-  /* Hide modal overlay and controls */
-  .fixed,
+  /* Hide modal controls */
   .cv-controls {
     display: none !important;
   }

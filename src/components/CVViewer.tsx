@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion'
 import { X, Download } from 'lucide-react'
 import { personalInfo, skills, projects, experience, education, certifications } from '../data/portfolio'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
+import { useDialog } from '../hooks/useDialog'
 
 interface CVViewerProps {
   isOpen: boolean
@@ -9,6 +11,9 @@ interface CVViewerProps {
 }
 
 export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
+  const dialogRef = useRef<HTMLDivElement>(null)
+  useDialog(dialogRef, onClose, isOpen)
+
   // Lock body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
@@ -53,24 +58,28 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
     html2pdf().set(opt).from(element).save()
   }
 
-  return (
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      className="cv-overlay fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] flex items-center justify-center p-4"
       onClick={onClose}
     >
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cv-title"
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-lg shadow-2xl max-h-[90vh] overflow-y-auto relative w-full max-w-[95vw] sm:max-w-[90vw] md:max-w-[210mm]"
+        className="cv-dialog bg-white rounded-lg shadow-2xl max-h-[90vh] overflow-y-auto relative w-full max-w-[95vw] sm:max-w-[90vw] md:max-w-[210mm]"
       >
         {/* Header Controls */}
         <div className="cv-controls sticky top-0 bg-white border-b border-gray-200 p-2 sm:p-3 md:p-4 flex justify-between items-center z-10">
-          <h2 className="text-sm sm:text-base md:text-xl font-bold text-gray-800">Resume Preview</h2>
+          <h2 id="cv-title" className="text-sm sm:text-base md:text-xl font-bold text-gray-800">Resume Preview</h2>
           <div className="flex gap-1 sm:gap-2">
             <button
               onClick={handleDownload}
@@ -200,6 +209,7 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
 
         </div>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body
   )
 }
