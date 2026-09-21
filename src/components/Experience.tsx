@@ -15,7 +15,7 @@ export default function Experience() {
     <div
       className="box-border px-6 sm:px-8 bg-white dark:bg-black relative rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
       style={{
-        height: '100vh',
+        height: '100svh',
         paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
       }}
     >
@@ -33,7 +33,7 @@ export default function Experience() {
         </motion.div>
 
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-6 lg:gap-10 overflow-hidden">
-          <div className="lg:w-[40%] shrink-0 min-h-0 overflow-y-auto no-scrollbar border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-neutral-800 pb-4 lg:pb-0 lg:pr-6">
+          <div className="lg:w-[40%] shrink-0 max-h-[40%] lg:max-h-none min-h-0 overflow-y-auto border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-neutral-800 pb-4 lg:pb-0 lg:pr-6">
             {experienceData.map((item, idx) => {
               const isOpen = selected === idx
               return (
@@ -57,7 +57,7 @@ export default function Experience() {
                   >
                     {item.title}
                   </p>
-                  <p className="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                     {item.period}
                   </p>
                 </button>
@@ -65,7 +65,7 @@ export default function Experience() {
             })}
           </div>
 
-          <div className="flex-1 min-h-0 min-w-0 overflow-y-auto no-scrollbar">
+          <div className="flex-1 min-h-0 min-w-0 overflow-y-auto">
             <AnimatePresence mode="wait">
               {active ? (
                 <motion.article
@@ -80,7 +80,7 @@ export default function Experience() {
                     <h3 className="text-base sm:text-lg font-semibold text-black dark:text-white leading-snug">
                       {active.title}
                     </h3>
-                    <span className="shrink-0 text-[10px] text-gray-400 dark:text-gray-500 whitespace-nowrap">
+                    <span className="shrink-0 text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
                       {active.period}
                     </span>
                   </div>
@@ -89,7 +89,7 @@ export default function Experience() {
                     {active.company}
                   </p>
                   {active.type && (
-                    <p className="text-xs text-gray-400 dark:text-neutral-500 mb-4">
+                    <p className="text-xs text-gray-500 dark:text-neutral-400 mb-4">
                       {active.type}
                     </p>
                   )}
@@ -103,7 +103,7 @@ export default function Experience() {
                       {active.tech.map((t) => (
                         <span
                           key={t}
-                          className="px-2 py-0.5 text-[10px] font-medium rounded-md border border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-gray-300"
+                          className="px-2 py-0.5 text-xs font-medium rounded-md border border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-gray-300"
                         >
                           {t}
                         </span>
@@ -117,7 +117,7 @@ export default function Experience() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="text-sm text-gray-400 dark:text-gray-500 py-4"
+                  className="text-sm text-gray-500 dark:text-gray-400 py-4"
                 >
                   Select a role to view details
                 </motion.p>
