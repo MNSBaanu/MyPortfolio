@@ -2,12 +2,14 @@ import { ExternalLink, Github, X, ChevronLeft, ChevronRight, ArrowLeft } from 'l
 import { projects, personalInfo } from '../data/portfolio'
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { createPortal } from 'react-dom'
+import { useReducedMotion } from 'framer-motion'
+import { useDialog } from '../hooks/useDialog'
 
 const SLIDE_DURATION = 4000
 
 // ── 3D tilt panel ──
 // ⚡ Bolt: Wrapped in React.memo to prevent unnecessary re-renders when the parent's offset changes every 5 seconds.
-const ProjectPanel = React.memo(function ProjectPanel({ projectIdx, onClick }: { projectIdx: number; onClick: (idx: number) => void }) {
+const ProjectPanel = React.memo(function ProjectPanel({ projectIdx, onClick, paused }: { projectIdx: number; onClick: (idx: number) => void; paused: boolean }) {
   const [activeImage, setActiveImage] = useState(0)
   const [hovered, setHovered] = useState(false)
   const timerRef = useRef<number>(0)
@@ -22,9 +24,10 @@ const ProjectPanel = React.memo(function ProjectPanel({ projectIdx, onClick }: {
   }, [allImages.length])
 
   useEffect(() => {
+    if (paused) return
     timerRef.current = window.setTimeout(advanceImage, SLIDE_DURATION)
     return () => clearTimeout(timerRef.current)
-  }, [projectIdx, activeImage, advanceImage])
+  }, [projectIdx, activeImage, advanceImage, paused])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = cardRef.current?.getBoundingClientRect()
@@ -59,9 +62,20 @@ const ProjectPanel = React.memo(function ProjectPanel({ projectIdx, onClick }: {
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onFocus={() => setHovered(true)}
+      onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setHovered(false) }}
       onClick={() => onClick(projectIdx)}
+      onKeyDown={(e) => {
+        if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault()
+          onClick(projectIdx)
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`View ${project.title} details`}
     >
-      <img src={allImages[activeImage]} alt={project.title}
+      <img src={allImages[activeImage]} alt=""
         width={800}
         height={500}
         loading="lazy"
@@ -73,25 +87,29 @@ const ProjectPanel = React.memo(function ProjectPanel({ projectIdx, onClick }: {
       <div className="absolute top-3 right-3 flex gap-1.5 z-10" style={{ opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease', pointerEvents: hovered ? 'auto' : 'none' }}>
         <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
           onClick={e => e.stopPropagation()}
-          className="flex items-center gap-1 px-2.5 py-1 bg-black/60 border border-white/20 text-white text-[10px] font-bold rounded-full hover:bg-black/80 transition-colors backdrop-blur-sm">
+          className="flex items-center gap-1 px-2.5 py-1 bg-black/60 border border-white/20 text-white text-xs font-bold rounded-full hover:bg-black/80 transition-colors backdrop-blur-sm">
           <Github className="w-2.5 h-2.5" /> Code
         </a>
       </div>
       <div className="absolute bottom-0 left-0 right-0 p-4 z-10" style={{ opacity: hovered ? 1 : 0, transform: hovered ? 'translateY(0)' : 'translateY(12px)', transition: 'opacity 0.35s ease, transform 0.35s ease', pointerEvents: 'none' }}>
-        <p className="text-[9px] font-black uppercase tracking-widest text-white/50 mb-0.5">{project.period}</p>
+        <p className="text-[11px] font-black uppercase tracking-widest text-white/70 mb-0.5">{project.period}</p>
         <h3 className="text-sm font-medium text-white mb-1 leading-tight">{project.title}</h3>
-        <p className="text-[10px] text-white/70 leading-relaxed line-clamp-2 mb-2">{project.description}</p>
+        <p className="text-xs text-white/80 leading-relaxed line-clamp-2 mb-2">{project.description}</p>
         <div className="flex flex-wrap gap-1">
           {project.tech.slice(0, 4).map((t, i) => (
-            <span key={i} className="px-1.5 py-0.5 bg-white/10 border border-white/20 text-white/80 rounded text-[8px] font-bold uppercase">{t}</span>
+            <span key={i} className="px-1.5 py-0.5 bg-white/10 border border-white/20 text-white/90 rounded text-[11px] font-bold uppercase">{t}</span>
           ))}
         </div>
       </div>
       {allImages.length > 1 && (
-        <div className="absolute bottom-3 right-3 flex gap-1 z-10" style={{ opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease' }}>
+        <div className="absolute bottom-2 right-2 flex z-10" style={{ opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease' }}>
           {allImages.map((_, i) => (
             <button key={i} onClick={e => { e.stopPropagation(); setActiveImage(i) }}
-              className={`h-1 rounded-full transition-all duration-300 ${i === activeImage ? 'w-4 bg-white' : 'w-1 bg-white/40'}`} />
+              aria-label={`Show image ${i + 1} of ${allImages.length}`}
+              aria-current={i === activeImage ? 'true' : undefined}
+              className="p-1.5">
+              <span className={`block h-1 rounded-full transition-all duration-300 ${i === activeImage ? 'w-4 bg-white' : 'w-1 bg-white/40'}`} />
+            </button>
           ))}
         </div>
       )}
@@ -112,7 +130,7 @@ function ProjectDetailPage({
   showHeader?: boolean
 }) {
   const project = projects[idx]
-  const [clickedLive, setClickedLive] = useState(false)
+  const liveUrl = project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : null
   const hasPrev = idx > 0
   const hasNext = idx < projects.length - 1
 
@@ -123,6 +141,7 @@ function ProjectDetailPage({
           <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-4">
             <button
               onClick={onClose}
+              aria-label="Back to projects"
               className="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -143,16 +162,17 @@ function ProjectDetailPage({
                 <Github className="w-3.5 h-3.5" />
                 Code
               </a>
-              <button
-                onClick={() => {
-                  setClickedLive(true)
-                  setTimeout(() => setClickedLive(false), 2500)
-                }}
-                className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-full bg-[#ea4c89] text-white hover:opacity-90 transition-opacity"
-              >
-                <ExternalLink className="w-3.5 h-3.5" />
-                {clickedLive ? 'Soon' : 'Live'}
-              </button>
+              {liveUrl && (
+                <a
+                  href={liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden sm:flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-full bg-black dark:bg-white text-white dark:text-black hover:opacity-80 transition-opacity"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  Live
+                </a>
+              )}
               <button
                 onClick={onClose}
                 className="sm:hidden w-9 h-9 rounded-full bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 flex items-center justify-center"
@@ -190,10 +210,10 @@ function ProjectDetailPage({
               </p>
             </div>
             <span
-              className={`ml-auto shrink-0 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${
+              className={`ml-auto shrink-0 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${
                 project.academic
                   ? 'bg-gray-200 dark:bg-neutral-800 text-gray-600 dark:text-gray-300'
-                  : 'bg-pink-50 dark:bg-pink-950/50 text-[#ea4c89]'
+                  : 'bg-black dark:bg-white text-white dark:text-black'
               }`}
             >
               {project.academic ? 'Academic' : 'Personal'}
@@ -204,7 +224,7 @@ function ProjectDetailPage({
             {project.tech.map((t) => (
               <span
                 key={t}
-                className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-white dark:bg-neutral-900 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-neutral-800"
+                className="px-2.5 py-1 rounded-full text-xs font-medium bg-white dark:bg-neutral-900 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-neutral-800"
               >
                 {t}
               </span>
@@ -225,16 +245,17 @@ function ProjectDetailPage({
               <Github className="w-3.5 h-3.5" />
               View Code
             </a>
-            <button
-              onClick={() => {
-                setClickedLive(true)
-                setTimeout(() => setClickedLive(false), 2500)
-              }}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#ea4c89] text-white text-xs font-semibold"
-            >
-              <ExternalLink className="w-3.5 h-3.5" />
-              {clickedLive ? 'Coming Soon' : 'Live Demo'}
-            </button>
+            {liveUrl && (
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-black dark:bg-white text-white dark:text-black text-xs font-semibold"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                Live Demo
+              </a>
+            )}
           </div>
 
           {onNavigate && (
@@ -247,7 +268,7 @@ function ProjectDetailPage({
                 <ChevronLeft className="w-4 h-4" />
                 Previous
               </button>
-              <span className="text-xs text-gray-400 dark:text-neutral-500">
+              <span className="text-xs text-gray-500 dark:text-neutral-400">
                 {idx + 1} / {projects.length}
               </span>
               <button
@@ -290,6 +311,8 @@ function ProjectDetailPage({
 // ── Single project — full-screen Dribbble-style overlay ──
 function ProjectModal({ projectIdx, onClose }: { projectIdx: number; onClose: () => void }) {
   const [currentIdx, setCurrentIdx] = useState(projectIdx)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  useDialog(dialogRef, onClose)
 
   useEffect(() => {
     setCurrentIdx(projectIdx)
@@ -297,7 +320,6 @@ function ProjectModal({ projectIdx, onClose }: { projectIdx: number; onClose: ()
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
       if (e.key === 'ArrowLeft' && currentIdx > 0) setCurrentIdx((i) => i - 1)
       if (e.key === 'ArrowRight' && currentIdx < projects.length - 1) setCurrentIdx((i) => i + 1)
     }
@@ -307,10 +329,14 @@ function ProjectModal({ projectIdx, onClose }: { projectIdx: number; onClose: ()
       window.removeEventListener('keydown', handler)
       document.body.style.overflow = ''
     }
-  }, [onClose, currentIdx])
+  }, [currentIdx])
 
   return createPortal(
     <div
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={projects[currentIdx].title}
       className="fixed inset-0 z-[9999] overflow-y-auto bg-[#f3f3f4] dark:bg-neutral-950"
       onClick={onClose}
     >
@@ -329,26 +355,29 @@ function ProjectModal({ projectIdx, onClose }: { projectIdx: number; onClose: ()
 // ── Explore all — sidebar grid + Dribbble detail ──
 function ExploreModal({ onClose }: { onClose: () => void }) {
   const [selected, setSelected] = useState(0)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  useDialog(dialogRef, onClose)
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', handler)
     document.body.style.overflow = 'hidden'
     return () => {
-      window.removeEventListener('keydown', handler)
       document.body.style.overflow = ''
     }
-  }, [onClose])
+  }, [])
 
   return createPortal(
-    <div className="fixed inset-0 z-[9999] flex bg-[#f3f3f4] dark:bg-neutral-950">
+    <div
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="All projects"
+      className="fixed inset-0 z-[9999] flex bg-[#f3f3f4] dark:bg-neutral-950"
+    >
       <aside className="hidden md:flex w-64 lg:w-72 flex-col border-r border-gray-200 dark:border-neutral-800 bg-white dark:bg-black shrink-0">
         <div className="px-5 py-5 border-b border-gray-100 dark:border-neutral-800 flex items-center justify-between">
           <div>
             <p className="text-sm font-bold text-black dark:text-white">All Shots</p>
-            <p className="text-xs text-gray-400 mt-0.5">{projects.length} projects</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{projects.length} projects</p>
           </div>
           <button
             onClick={onClose}
@@ -363,16 +392,17 @@ function ExploreModal({ onClose }: { onClose: () => void }) {
             <button
               key={p.title}
               onClick={() => setSelected(i)}
+              aria-current={selected === i ? 'true' : undefined}
               className={`w-full text-left rounded-xl overflow-hidden border-2 transition-all duration-200 ${
                 selected === i
-                  ? 'border-[#ea4c89] shadow-md'
+                  ? 'border-black dark:border-white shadow-md'
                   : 'border-transparent hover:border-gray-200 dark:hover:border-neutral-800'
               }`}
             >
               <div className="aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-neutral-900">
                 <img
                   src={p.images[0]}
-                  alt={p.title}
+                  alt=""
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
@@ -387,8 +417,9 @@ function ExploreModal({ onClose }: { onClose: () => void }) {
 
       <div className="flex-1 min-w-0 overflow-y-auto">
         <div className="md:hidden sticky top-0 z-20 flex items-center justify-between px-4 h-14 border-b border-gray-200 dark:border-neutral-800 bg-[#f3f3f4]/90 dark:bg-neutral-950/90 backdrop-blur">
-          <button onClick={onClose} className="text-sm font-medium text-gray-600">Close</button>
+          <button onClick={onClose} className="text-sm font-medium text-gray-600 dark:text-gray-300">Close</button>
           <select
+            aria-label="Choose project"
             value={selected}
             onChange={(e) => setSelected(Number(e.target.value))}
             className="text-sm font-semibold bg-transparent text-black dark:text-white"
@@ -413,13 +444,17 @@ function ExploreModal({ onClose }: { onClose: () => void }) {
 // ── Featured panels wrapper to isolate interval state ──
 function FeaturedPanels({ onProjectClick }: { onProjectClick: (idx: number) => void }) {
   const [offset, setOffset] = useState(0)
+  const [hovered, setHovered] = useState(false)
+  const prefersReducedMotion = useReducedMotion()
+  const paused = hovered || !!prefersReducedMotion
 
   useEffect(() => {
+    if (paused) return
     const t = setInterval(() => {
       setOffset(o => (o + 1) % projects.length)
     }, 5000)
     return () => clearInterval(t)
-  }, [])
+  }, [paused])
 
   const panelIdxs = [
     offset % projects.length,
@@ -428,9 +463,16 @@ function FeaturedPanels({ onProjectClick }: { onProjectClick: (idx: number) => v
   ]
 
   return (
-    <div className="flex gap-3 min-h-0" style={{ height: '360px', perspective: '1200px' }}>
+    <div
+      className="flex gap-3 min-h-0"
+      style={{ height: '360px', perspective: '1200px' }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => setHovered(true)}
+      onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setHovered(false) }}
+    >
       {panelIdxs.map((i) => (
-        <ProjectPanel key={i} projectIdx={i} onClick={onProjectClick} />
+        <ProjectPanel key={i} projectIdx={i} onClick={onProjectClick} paused={paused} />
       ))}
     </div>
   )
@@ -443,7 +485,7 @@ export default function Projects() {
   return (
     <div
       className="box-border bg-gray-50 dark:bg-black relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
-      style={{ height: '100vh', paddingTop: 'calc(var(--header-height, 0px) + 1.5rem)', paddingBottom: '1.5rem' }}
+      style={{ height: '100svh', paddingTop: 'calc(var(--header-height, 0px) + 1.5rem)', paddingBottom: '1.5rem' }}
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 pr-16 lg:pr-20 h-full flex flex-col">
 
@@ -465,12 +507,12 @@ export default function Projects() {
               Explore All Projects
               <span className="text-sm">→</span>
             </button>
-            <span className="ml-4 text-xs text-gray-400 dark:text-neutral-600">{projects.length} projects</span>
+            <span className="ml-4 text-xs text-gray-500 dark:text-neutral-400">{projects.length} projects</span>
           </div>
         </div>
 
         {/* ── MOBILE ── */}
-        <div className="lg:hidden flex flex-col gap-4 overflow-y-auto">
+        <div className="lg:hidden flex-1 min-h-0 flex flex-col gap-4 overflow-y-auto pb-4">
           {projects.map((p, index) => (
             <button key={index} onClick={() => setModalProject(index)}
               className="rounded-2xl overflow-hidden border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-left w-full">
@@ -481,7 +523,7 @@ export default function Projects() {
                   onError={(e) => { e.currentTarget.src = `https://placehold.co/600x338/111111/ffffff?text=${encodeURIComponent(p.title)}` }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-3 left-3">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-white/60">{p.period}</p>
+                  <p className="text-[11px] font-black uppercase tracking-widest text-white/80">{p.period}</p>
                   <h3 className="text-base font-medium text-white">{p.title}</h3>
                 </div>
               </div>
@@ -489,7 +531,7 @@ export default function Projects() {
                 <p className="text-xs text-gray-600 dark:text-neutral-300 leading-relaxed mb-3 line-clamp-2">{p.description}</p>
                 <div className="flex flex-wrap gap-1">
                   {p.tech.slice(0, 4).map((t, i) => (
-                    <span key={i} className="px-1.5 py-px bg-gray-100 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-gray-500 dark:text-neutral-300 rounded text-[8px] font-bold uppercase">{t}</span>
+                    <span key={i} className="px-1.5 py-px bg-gray-100 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-gray-600 dark:text-neutral-300 rounded text-[11px] font-bold uppercase">{t}</span>
                   ))}
                 </div>
               </div>
