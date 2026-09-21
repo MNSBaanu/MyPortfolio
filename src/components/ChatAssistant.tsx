@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Bot, Send, Sparkles, User, X } from 'lucide-react'
 import { about, education, experience, personalInfo, projects, skillCategories } from '../data/portfolio'
+import { useDialog } from '../hooks/useDialog'
 
 type Message = {
   id: number
@@ -66,6 +67,8 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
     { id: 1, role: 'assistant', text: `Hi! I’m ${personalInfo.name}'s portfolio assistant. Ask me anything about their work, skills, or background.` },
   ])
   const endRef = useRef<HTMLDivElement>(null)
+  const dialogRef = useRef<HTMLElement>(null)
+  useDialog(dialogRef, onClose, open, false)
 
   useEffect(() => {
     if (open) endRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -95,7 +98,7 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
       setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', text: data.reply! }])
     } catch {
       // Local fallback keeps the widget usable during local development or
-      // before OPENAI_API_KEY has been added to the Vercel project.
+      // before GEMINI_API_KEY has been added to the Vercel project.
       setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', text: answerQuestion(trimmed) }])
     } finally {
       setIsThinking(false)
@@ -111,6 +114,7 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
     <AnimatePresence>
       {open && (
         <motion.section
+          ref={dialogRef}
           role="dialog"
           aria-label="Portfolio assistant"
           initial={{ opacity: 0, scale: 0.92, x: 18, y: 8 }}
@@ -134,7 +138,7 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
             </button>
           </div>
 
-          <div className="no-scrollbar flex-1 space-y-4 overflow-y-auto px-4 py-5" aria-live="polite">
+          <div className="flex-1 space-y-4 overflow-y-auto px-4 py-5" aria-live="polite">
             {messages.map((message) => (
               <div key={message.id} className={`flex items-end gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 {message.role === 'assistant' && <Bot size={15} className="mb-2 shrink-0 text-gray-400" />}
@@ -154,7 +158,7 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
             )}
             {messages.length === 1 && (
               <div className="space-y-2 pt-1">
-                <p className="px-1 text-[11px] font-semibold uppercase tracking-wider text-gray-400">Try asking</p>
+                <p className="px-1 text-[11px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Try asking</p>
                 {suggestions.map((suggestion) => <button key={suggestion} onClick={() => ask(suggestion)} className="block w-full rounded-xl border border-gray-200 px-3 py-2 text-left text-xs text-gray-600 transition-colors hover:border-gray-400 hover:text-black dark:border-neutral-800 dark:text-gray-400 dark:hover:border-neutral-600 dark:hover:text-white">{suggestion}</button>)}
               </div>
             )}
@@ -163,7 +167,7 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
 
           <form onSubmit={handleSubmit} className="border-t border-gray-100 p-3 dark:border-neutral-800">
             <div className="flex items-center gap-2 rounded-2xl border border-gray-200 bg-gray-50 px-3 py-1 dark:border-neutral-800 dark:bg-neutral-900">
-              <input value={input} onChange={(event) => setInput(event.target.value)} placeholder="Ask about MNSBaanu..." aria-label="Ask the portfolio assistant" className="min-w-0 flex-1 bg-transparent py-2.5 text-sm text-gray-900 outline-none placeholder:text-gray-400 dark:text-white" />
+              <input value={input} onChange={(event) => setInput(event.target.value)} data-autofocus placeholder="Ask about MNSBaanu..." aria-label="Ask the portfolio assistant" className="min-w-0 flex-1 bg-transparent py-2.5 text-base sm:text-sm text-gray-900 outline-none placeholder:text-gray-500 dark:text-white" />
               <button type="submit" aria-label="Send question" disabled={!input.trim()} className="rounded-xl bg-black p-2 text-white transition-opacity hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-30 dark:bg-white dark:text-black">
                 <Send size={15} />
               </button>
