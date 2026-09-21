@@ -17,6 +17,11 @@ const navLinks = [
 // slide up to the front naturally with the stacking animation.
 const STICKY_SECTIONS = ['about', 'journey', 'experience', 'education', 'skills', 'projects', 'contact']
 
+const TRACKED_SECTIONS = ['about', 'experience', 'education', 'skills', 'projects', 'contact', 'contact-form']
+const SECTION_TO_NAV: Record<string, string> = {
+  experience: 'journey', education: 'journey', 'contact-form': 'contact'
+}
+
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
@@ -33,41 +38,38 @@ const Header = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           setIsScrolled(window.scrollY > 20)
+          const threshold = window.innerHeight * 0.5
+          let current = 'home'
+          TRACKED_SECTIONS.forEach((id) => {
+            const el = document.getElementById(id)
+            if (el && el.getBoundingClientRect().top <= threshold) current = id
+          })
+          setActiveSection(SECTION_TO_NAV[current] ?? current)
           ticking = false
         })
         ticking = true
       }
     }
+    handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Track active section via a single IntersectionObserver
-  // This reduces memory footprint and batches intersection calculations
   useEffect(() => {
-    const sectionToNav: Record<string, string> = {
-      experience: 'journey', education: 'journey'
+    if (!isMobileMenuOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false)
     }
-    const allSections = ['home', 'about', 'experience', 'education', 'skills', 'projects', 'contact']
-
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(sectionToNav[entry.target.id] ?? entry.target.id)
-          }
-        })
-      },
-      { threshold: 0.3 }
-    )
-
-    allSections.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) obs.observe(el)
-    })
-
-    return () => obs.disconnect()
-  }, [])
+    const onPointer = (e: PointerEvent) => {
+      if (!headerRef.current?.contains(e.target as Node)) setIsMobileMenuOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('pointerdown', onPointer)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('pointerdown', onPointer)
+    }
+  }, [isMobileMenuOpen])
 
   useLayoutEffect(() => {
     const el = headerRef.current
@@ -128,20 +130,22 @@ const Header = () => {
         >
           <div className="flex items-center justify-between gap-4">
             {/* Logo */}
-            <motion.div
+            <motion.button
+              type="button"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7 }}
-              className="cursor-pointer shrink-0"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="shrink-0 rounded-lg"
+              onClick={() => scrollToSection('#home')}
+              aria-label={`${personalInfo.name}, back to top`}
             >
               <span className="text-xl sm:text-2xl font-bold tracking-tight text-black dark:text-white">
                 {personalInfo.name}
               </span>
-            </motion.div>
+            </motion.button>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-5 lg:gap-6">
+            <nav aria-label="Main" className="hidden md:flex items-center gap-5 lg:gap-6">
               {navLinks.map((link, i) => {
                 const id = link.href.replace('#', '')
                 const isActive = activeSection === id
@@ -152,6 +156,7 @@ const Header = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.07, duration: 0.4 }}
                     onClick={() => scrollToSection(link.href)}
+                    aria-current={isActive ? 'true' : undefined}
                     className={`relative py-1 text-sm font-medium tracking-tight transition-colors duration-300 ${
                       isActive
                         ? 'text-black dark:text-white'
@@ -200,6 +205,7 @@ const Header = () => {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
                 aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-menu"
                 className="md:hidden p-2.5 rounded-full border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-neutral-500 transition-all duration-300"
               >
                 {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
@@ -211,7 +217,9 @@ const Header = () => {
         {/* Mobile menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div
+            <motion.nav
+              id="mobile-menu"
+              aria-label="Main"
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
@@ -229,6 +237,7 @@ const Header = () => {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.05 }}
                       onClick={() => scrollToSection(link.href)}
+                      aria-current={isActive ? 'true' : undefined}
                       className={`text-left py-2.5 text-base font-semibold tracking-tight transition-colors ${
                         isActive
                           ? 'text-black dark:text-white'
@@ -244,13 +253,13 @@ const Header = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: navLinks.length * 0.05 }}
                   onClick={toggleTheme}
-                  className="mt-2 flex items-center gap-2 py-2 text-sm font-medium tracking-tight text-gray-500 dark:text-gray-400"
+                  className="mt-2 flex items-center gap-2 py-2 text-sm font-medium tracking-tight text-gray-600 dark:text-gray-400"
                 >
                   {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
                   {theme === 'dark' ? 'Light mode' : 'Dark mode'}
                 </motion.button>
               </div>
-            </motion.div>
+            </motion.nav>
           )}
         </AnimatePresence>
       </div>
