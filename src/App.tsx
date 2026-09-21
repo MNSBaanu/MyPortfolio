@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, MotionConfig } from 'framer-motion'
 import { Toaster } from 'react-hot-toast'
 import { HelmetProvider } from 'react-helmet-async'
 import { ThemeProvider } from './context/ThemeContext'
@@ -59,49 +59,51 @@ function App() {
   return (
     <HelmetProvider>
       <ThemeProvider>
-        <SEO />
-        <Toaster position="top-right" />
-        <AnimatePresence mode="wait">
-          {isLoading ? (
-            <LoadingScreen key="loading" />
-          ) : (
-            <div
-              key="content"
-              className="min-h-screen bg-black text-gray-900 dark:bg-black dark:text-gray-100"
-            >
-              <Header />
-              <SocialSidebar />
-              <main className="relative bg-black dark:bg-black">
-                <section className="sticky top-0 z-0 h-screen">
-                  <Hero />
-                </section>
-                <section id="about" className="sticky top-0 z-20">
-                  <Suspense fallback={null}><About /></Suspense>
-                </section>
-                <section id="experience" className="sticky top-0 z-30">
-                  <Suspense fallback={null}><Experience /></Suspense>
-                </section>
-                <section id="education" className="sticky top-0 z-[35]">
-                  <Suspense fallback={null}><Education /></Suspense>
-                </section>
-                <section id="skills" className="sticky top-0 z-40">
-                  <Suspense fallback={null}><Skills /></Suspense>
-                </section>
-                <section id="projects" className="sticky top-0 z-50">
-                  <Suspense fallback={null}><Projects /></Suspense>
-                </section>
-                <div className="h-[40vh] relative z-[55] pointer-events-none" aria-hidden="true" />
-                <section id="contact" className="sticky top-0 z-[60]">
-                  <Suspense fallback={null}><Contact /></Suspense>
-                </section>
-                <section id="contact-form" className="sticky top-0 z-[70]">
-                  <Suspense fallback={null}><ContactForm /></Suspense>
-                </section>
-                <Suspense fallback={null}><Footer /></Suspense>
-              </main>
-            </div>
-          )}
-        </AnimatePresence>
+        <MotionConfig reducedMotion="user">
+          <SEO />
+          <Toaster position="top-right" />
+          <AnimatePresence mode="wait">
+            {isLoading ? (
+              <LoadingScreen key="loading" />
+            ) : (
+              <div
+                key="content"
+                className="min-h-screen bg-white text-gray-900 dark:bg-black dark:text-gray-100"
+              >
+                <Header />
+                <SocialSidebar />
+                <main className="relative bg-white dark:bg-black">
+                  <section className="sticky top-0 z-0 h-screen supports-[height:100svh]:h-[100svh]">
+                    <Hero />
+                  </section>
+                  <section id="about" className="sticky top-0 z-20">
+                    <Suspense fallback={null}><About /></Suspense>
+                  </section>
+                  <section id="experience" className="sticky top-0 z-30">
+                    <Suspense fallback={null}><Experience /></Suspense>
+                  </section>
+                  <section id="education" className="sticky top-0 z-[35]">
+                    <Suspense fallback={null}><Education /></Suspense>
+                  </section>
+                  <section id="skills" className="sticky top-0 z-40">
+                    <Suspense fallback={null}><Skills /></Suspense>
+                  </section>
+                  <section id="projects" className="sticky top-0 z-50">
+                    <Suspense fallback={null}><Projects /></Suspense>
+                  </section>
+                  <div className="h-[40vh] relative z-[55] pointer-events-none" aria-hidden="true" />
+                  <section id="contact" className="sticky top-0 z-[60]">
+                    <Suspense fallback={null}><Contact /></Suspense>
+                  </section>
+                  <section id="contact-form" className="sticky top-0 z-[70]">
+                    <Suspense fallback={null}><ContactForm /></Suspense>
+                  </section>
+                  <Suspense fallback={null}><Footer /></Suspense>
+                </main>
+              </div>
+            )}
+          </AnimatePresence>
+        </MotionConfig>
       </ThemeProvider>
     </HelmetProvider>
   )

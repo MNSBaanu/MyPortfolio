@@ -69,7 +69,7 @@
       }
 
       html, body, #root {
-        background: #000000;
+        background: #ffffff;
       }
 
       html.dark, html.dark body, html.dark #root {
@@ -80,6 +80,13 @@
         font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
       }
     </style>
+    <script>
+      try {
+        var t = localStorage.getItem('theme')
+        if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        document.documentElement.classList.add(t)
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

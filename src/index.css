@@ -26,6 +26,24 @@
     overflow-x: clip;
     @apply no-scrollbar bg-white text-gray-900 dark:bg-black dark:text-gray-100;
   }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-offset-2 ring-black ring-offset-white dark:ring-white dark:ring-offset-black;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
 @layer utilities {

@@ -8,7 +8,9 @@ export default function LoadingScreen() {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
-      className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+      role="status"
+      aria-label="Loading"
+      className="fixed inset-0 z-[100] bg-white dark:bg-black flex items-center justify-center"
     >
       <motion.div
         className="relative w-24 h-24"
@@ -29,6 +31,7 @@ export default function LoadingScreen() {
               }}
             >
               <div
+                className="bg-black dark:bg-white"
                 style={{
                   position: 'absolute',
                   top: '4px',
@@ -37,7 +40,7 @@ export default function LoadingScreen() {
                   width: 10,
                   height: 22,
                   borderRadius: 3,
-                  backgroundColor: `rgba(255,255,255,${opacity})`,
+                  opacity,
                 }}
               />
             </div>
