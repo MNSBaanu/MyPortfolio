@@ -13,7 +13,7 @@ export default function Contact() {
     },
     {
       icon: Phone,
-      label: 'Phone',
+      label: 'Phone (WhatsApp)',
       value: personalInfo.phone,
       href: `https://wa.me/${personalInfo.phone.replace(/\D/g, '')}?text=Hi%20MNSBaanu,%20I%20found%20your%20portfolio%20and%20would%20like%20to%20connect!`,
       clickable: true,
@@ -31,12 +31,12 @@ export default function Contact() {
     <div
       className="box-border px-6 sm:px-8 bg-gray-50 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
       style={{
-        height: '100vh',
+        height: '100svh',
         paddingTop: 'calc(var(--header-height, 0px) + 1rem)',
       }}
     >
-      <div className="h-full max-w-7xl mx-auto flex flex-col justify-center pb-16 sm:pb-24">
-        <div className="flex flex-col">
+      <div className="h-full max-w-7xl mx-auto flex flex-col overflow-y-auto">
+        <div className="flex flex-col my-auto pb-16 sm:pb-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -65,9 +65,9 @@ export default function Contact() {
                   <Component
                     key={detail.label}
                     href={detail.clickable ? detail.href : undefined}
-                    target={detail.clickable && detail.label === 'Phone' ? '_blank' : undefined}
-                    rel={detail.clickable && detail.label === 'Phone' ? 'noopener noreferrer' : undefined}
-                    className={`bg-white dark:bg-black border border-gray-300 dark:border-neutral-800 rounded-lg p-4 sm:p-5 transition-all duration-300 flex items-center gap-4 group ${detail.clickable ? 'hover:border-black cursor-pointer' : 'cursor-default'
+                    target={detail.icon === Phone ? '_blank' : undefined}
+                    rel={detail.icon === Phone ? 'noopener noreferrer' : undefined}
+                    className={`bg-white dark:bg-black border border-gray-300 dark:border-neutral-800 rounded-lg p-4 sm:p-5 transition-all duration-300 flex items-center gap-4 group ${detail.clickable ? 'hover:border-black dark:hover:border-white cursor-pointer' : 'cursor-default'
                       }`}
                   >
                     <detail.icon
@@ -75,7 +75,7 @@ export default function Contact() {
                         }`}
                     />
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">{detail.label}</h4>
+                      <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">{detail.label}</h3>
                       <p className="text-sm sm:text-base text-gray-900 dark:text-gray-100 break-words">
                         {detail.value}
                       </p>
