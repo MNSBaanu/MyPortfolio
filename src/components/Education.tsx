@@ -6,11 +6,11 @@ export default function Education() {
     <div
       className="box-border px-6 sm:px-8 bg-white dark:bg-neutral-900 relative rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
       style={{
-        height: '100vh',
+        height: '100svh',
         paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
       }}
     >
-      <div className="h-full max-w-3xl mx-auto flex flex-col min-h-0">
+      <div className="h-full max-w-3xl mx-auto flex flex-col min-h-0 overflow-y-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -23,10 +23,10 @@ export default function Education() {
           </h2>
         </motion.div>
 
-        <div className="flex-1 min-h-0 flex flex-col justify-center py-2">
+        <div className="my-auto py-2">
           <div className="relative">
             <div
-              className="absolute left-[4.5rem] sm:left-[5.5rem] top-2 bottom-2 w-px bg-gray-200 dark:bg-neutral-800"
+              className="absolute left-[5.25rem] sm:left-[6.75rem] top-2 bottom-2 w-px bg-gray-200 dark:bg-neutral-800"
               aria-hidden="true"
             />
 
@@ -41,7 +41,7 @@ export default function Education() {
                   className="relative flex gap-4 sm:gap-6"
                 >
                   <div className="shrink-0 w-16 sm:w-20 text-right">
-                    <span className="text-[10px] sm:text-xs font-semibold text-gray-400 dark:text-gray-500 leading-snug block">
+                    <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 leading-snug block">
                       {item.period}
                     </span>
                   </div>
@@ -57,7 +57,7 @@ export default function Education() {
                     <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5">
                       {item.institution}
                     </p>
-                    <p className="text-[11px] sm:text-xs text-gray-600 dark:text-neutral-400 mt-1 leading-relaxed">
+                    <p className="text-xs text-gray-600 dark:text-neutral-400 mt-1 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
