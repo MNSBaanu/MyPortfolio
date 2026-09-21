@@ -113,12 +113,12 @@ export default function ContactForm() {
         <div
             className="box-border px-6 sm:px-8 bg-gray-50 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
             style={{
-                height: '100vh',
+                height: '100svh',
                 paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
             }}
         >
-            <div className="h-full max-w-7xl mx-auto flex flex-col justify-center pb-12 sm:pb-20">
-                <div className="flex flex-col items-center">
+            <div className="h-full max-w-7xl mx-auto flex flex-col overflow-y-auto">
+                <div className="flex flex-col items-center my-auto pb-12 sm:pb-20">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -154,55 +154,63 @@ export default function ContactForm() {
                                     />
                                 </div>
                                 <div className="grid grid-cols-1 gap-4">
+                                    <div>
+                                        <label htmlFor="name" className="block mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            required
+                                            maxLength={100}
+                                            className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-base sm:text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
+                                            placeholder="Your full name"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="email" className="block mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Email Address</label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            required
+                                            maxLength={100}
+                                            className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-base sm:text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
+                                            placeholder="your.email@example.com"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label htmlFor="subject" className="block mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Subject</label>
                                     <input
                                         type="text"
-                                        id="name"
-                                        name="name"
-                                        aria-label="Full Name"
-                                        value={formData.name}
+                                        id="subject"
+                                        name="subject"
+                                        value={formData.subject}
                                         onChange={handleChange}
                                         required
-                                        maxLength={100}
-                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
-                                        placeholder="Your full name"
-                                    />
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        aria-label="Email Address"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        required
-                                        maxLength={100}
-                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
-                                        placeholder="your.email@example.com"
+                                        maxLength={200}
+                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-base sm:text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
+                                        placeholder="What is this about?"
                                     />
                                 </div>
-                                <input
-                                    type="text"
-                                    id="subject"
-                                    name="subject"
-                                    aria-label="Subject"
-                                    value={formData.subject}
-                                    onChange={handleChange}
-                                    required
-                                    maxLength={200}
-                                    className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
-                                    placeholder="What is this about?"
-                                />
-                                <textarea
-                                    id="message"
-                                    name="message"
-                                    aria-label="Message"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    required
-                                    maxLength={2000}
-                                    rows={4}
-                                    className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300 resize-none"
-                                    placeholder="Your detailed message..."
-                                />
+                                <div>
+                                    <label htmlFor="message" className="block mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
+                                    <textarea
+                                        id="message"
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        required
+                                        maxLength={2000}
+                                        rows={4}
+                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-base sm:text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300 resize-none"
+                                        placeholder="Your detailed message..."
+                                    />
+                                </div>
 
                                 <div className="flex items-center justify-between pt-2">
                                     <div className="hidden sm:block text-xs text-gray-500 dark:text-gray-400">
@@ -217,7 +225,7 @@ export default function ContactForm() {
                                     >
                                         {isSubmitting ? (
                                             <>
-                                                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                <div className="w-4 h-4 border-2 border-white/30 border-t-white dark:border-black/30 dark:border-t-black rounded-full animate-spin" aria-hidden="true" />
                                                 Sending...
                                             </>
                                         ) : (
