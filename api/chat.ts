@@ -15,6 +15,38 @@ export default async function handler(req: any, res: any) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
+  // 🛡️ Security Fix: Prevent CSRF and unauthorized API usage by enforcing strict origin checks.
+  // This ensures that only the portfolio frontend can call this endpoint and use the Gemini API quota.
+  let requestOrigin = req.headers.origin;
+  if (!requestOrigin && req.headers.referer) {
+    try {
+      requestOrigin = new URL(req.headers.referer).origin;
+    } catch {
+      requestOrigin = '';
+    }
+  }
+
+  // To support Vercel preview deployments, we check if the origin is a subdomain of our project.
+  const isVercelPreview = requestOrigin &&
+    requestOrigin.startsWith('https://mnsbaanu-portfolio') &&
+    requestOrigin.endsWith('.vercel.app');
+
+  const allowedOrigins = [
+    'https://mnsbaanu-portfolio.vercel.app',
+    'http://localhost:5173', // Vite default port
+    'http://localhost:4173', // Vite preview port
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:4173'
+  ];
+
+  // Exact match required to prevent partial match bypasses (e.g. attacker-localhost.com)
+  const isAllowed = allowedOrigins.includes(requestOrigin) || isVercelPreview;
+  // If the request doesn't have an origin or referer, or if it doesn't match the allowed origins, reject it.
+  // This strictly enforces that the endpoint can only be called from browsers on our own origin.
+  if (!requestOrigin || !isAllowed) {
+    return res.status(403).json({ error: 'Forbidden: Invalid Origin' });
+  }
+
   if (!process.env.GEMINI_API_KEY) {
     return res.status(503).json({ error: 'GEMINI_API_KEY is not configured' })
   }
