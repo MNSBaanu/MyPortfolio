@@ -1,4 +1,5 @@
-import { animate, motion, useMotionValue, useTransform } from 'framer-motion'
+import { animate, motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion'
+import { Pause, Play } from 'lucide-react'
 import { skillCategories } from '../data/portfolio'
 import { useTheme } from '../context/ThemeContext'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
@@ -14,6 +15,7 @@ function SkillCard({
   cardWidth,
   pitch,
   loopDistance,
+  duplicate,
 }: {
   index: number
   skill: Skill
@@ -23,6 +25,7 @@ function SkillCard({
   cardWidth: number
   pitch: number
   loopDistance: number
+  duplicate: boolean
 }) {
   const scale = useTransform(x, (latest) => {
     if (containerWidth <= 0 || cardWidth <= 0 || pitch <= 0 || loopDistance <= 0) return 1
@@ -66,13 +69,14 @@ function SkillCard({
   return (
     <motion.div
       style={{ scale, rotateX, rotateY, z, transformStyle: 'preserve-3d' }}
+      aria-hidden={duplicate || undefined}
       className="flex-shrink-0 p-6 sm:p-7 md:p-8 rounded-2xl transition-shadow duration-300 flex flex-col items-center justify-center gap-4 group min-w-[140px] sm:min-w-[160px] md:min-w-[180px] bg-white dark:bg-black border border-gray-200 dark:border-neutral-800 shadow-sm hover:shadow-md"
     >
       {skill.icon && (
         <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center">
           <img
             src={skill.icon}
-            alt={skill.name}
+            alt=""
             width={64}
             height={64}
             loading="lazy"
@@ -101,8 +105,13 @@ export default function Skills() {
     [],
   )
 
+  const prefersReducedMotion = useReducedMotion()
+  const [paused, setPaused] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const controlsRef = useRef<ReturnType<typeof animate> | null>(null)
+
   // Duplicate skills for seamless loop
-  const duplicatedSkills = [...allSkills, ...allSkills]
+  const duplicatedSkills = prefersReducedMotion ? allSkills : [...allSkills, ...allSkills]
   const x = useMotionValue(0)
   const trackRef = useRef<HTMLDivElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
@@ -140,7 +149,7 @@ export default function Skills() {
   const loopDistance = pitch > 0 ? pitch * allSkills.length : 0
 
   useEffect(() => {
-    if (!loopDistance) return
+    if (!loopDistance || prefersReducedMotion) return
     x.set(0)
     const controls = animate(x, -loopDistance, {
       repeat: Infinity,
@@ -148,14 +157,25 @@ export default function Skills() {
       duration: allSkills.length * 1.2,
       ease: 'linear',
     })
-    return () => controls.stop()
-  }, [allSkills.length, loopDistance, x])
+    controlsRef.current = controls
+    return () => {
+      controls.stop()
+      controlsRef.current = null
+    }
+  }, [allSkills.length, loopDistance, x, prefersReducedMotion])
+
+  useEffect(() => {
+    const controls = controlsRef.current
+    if (!controls) return
+    if (paused || hovered) controls.pause()
+    else controls.play()
+  }, [paused, hovered, loopDistance, prefersReducedMotion])
 
   return (
     <div
       className="box-border px-6 sm:px-8 bg-slate-100 dark:bg-neutral-900 relative z-40 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-200/50 dark:border-neutral-800 shadow-[0_-10px_50px_rgba(0,0,0,0.08)]"
       style={{
-        height: '100vh',
+        height: '100svh',
         paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
       }}
     >
@@ -173,12 +193,29 @@ export default function Skills() {
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             A curated collection of tools and technologies I work with
           </p>
+          {!prefersReducedMotion && (
+            <button
+              type="button"
+              onClick={() => setPaused((p) => !p)}
+              aria-pressed={paused}
+              className="mt-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-300 dark:border-neutral-700 text-xs font-medium text-gray-700 dark:text-gray-300 hover:border-gray-400 dark:hover:border-neutral-500 transition-colors"
+            >
+              {paused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
+              {paused ? 'Play animation' : 'Pause animation'}
+            </button>
+          )}
         </motion.div>
 
         {/* Continuous Scrolling Skills Ticker */}
         <div className="relative -mx-6 sm:-mx-8 md:-mx-12 lg:-mx-16 flex-1 min-h-0 flex items-start pt-6 sm:pt-8 px-1">
           {/* Scrolling container */}
-          <div ref={containerRef} className="flex overflow-hidden w-full" style={{ perspective: 1200 }}>
+          <div
+            ref={containerRef}
+            className={`flex w-full ${prefersReducedMotion ? 'overflow-x-auto pb-4' : 'overflow-hidden'}`}
+            style={{ perspective: 1200 }}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
             <motion.div
               ref={trackRef}
               className="flex gap-6 sm:gap-8"
@@ -195,6 +232,7 @@ export default function Skills() {
                   cardWidth={metrics.cardWidth}
                   pitch={pitch}
                   loopDistance={loopDistance}
+                  duplicate={index >= allSkills.length}
                 />
               ))}
             </motion.div>
