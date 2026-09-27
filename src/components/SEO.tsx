@@ -8,7 +8,7 @@ export default function SEO() {
     "name": "MNSBaanu",
     "alternateName": "Sahla Baanu",
     "url": "https://mnsbaanu-portfolio.vercel.app",
-    "image": "https://mnsbaanu-portfolio.vercel.app/assets/profile.png",
+    "image": "https://mnsbaanu-portfolio.vercel.app/assets/brand/profile.webp",
     "jobTitle": "Full Stack Developer",
     "description": "Full Stack Developer specializing in MERN stack, React, Node.js, and modern web technologies",
     "email": personalInfo.email,

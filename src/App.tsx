@@ -37,7 +37,7 @@ function App() {
 
     const maxWait = window.setTimeout(() => setIsLoading(false), 400)
 
-    const images = ['/assets/about.png', '/assets/Logo.png']
+    const images = ['/assets/brand/profile.webp', '/assets/brand/logo.png']
     const imagePromises = images.map(
       (src) =>
         new Promise<void>((resolve) => {
