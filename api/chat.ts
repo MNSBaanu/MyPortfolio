@@ -10,14 +10,26 @@ const portfolioContext = JSON.stringify({
   projects,
 }, null, 2)
 
-export default async function handler(req: any, res: any) {
+type ChatMessage = { role?: unknown; content?: unknown }
+
+type ChatRequest = {
+  method?: string
+  headers: { origin?: string; referer?: string }
+  body?: { messages?: unknown }
+}
+
+type ChatResponse = {
+  status(code: number): { json(body: unknown): void }
+}
+
+export default async function handler(req: ChatRequest, res: ChatResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  // 🛡️ Security Fix: Prevent CSRF and unauthorized API usage by enforcing strict origin checks.
+  // Prevent CSRF and unauthorized API usage by enforcing strict origin checks.
   // This ensures that only the portfolio frontend can call this endpoint and use the Gemini API quota.
-  let requestOrigin = req.headers.origin;
+  let requestOrigin = req.headers.origin ?? '';
   if (!requestOrigin && req.headers.referer) {
     try {
       requestOrigin = new URL(req.headers.referer).origin;
@@ -51,11 +63,11 @@ export default async function handler(req: any, res: any) {
     return res.status(503).json({ error: 'GEMINI_API_KEY is not configured' })
   }
 
-  const messages = Array.isArray(req.body?.messages) ? req.body.messages : []
+  const messages: ChatMessage[] = Array.isArray(req.body?.messages) ? req.body.messages : []
   const safeMessages = messages
-    .filter((message: any) => message?.role === 'user' || message?.role === 'assistant')
+    .filter((message) => message?.role === 'user' || message?.role === 'assistant')
     .slice(-12)
-    .map((message: any) => ({
+    .map((message) => ({
       role: message.role,
       content: String(message.content ?? '').slice(0, 2000),
     }))
@@ -77,7 +89,8 @@ export default async function handler(req: any, res: any) {
 
 PORTFOLIO CONTEXT:
 ${portfolioContext}` }],
-      contents: safeMessages.map((message: any) => ({
+      },
+      contents: safeMessages.map((message) => ({
         role: message.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: message.content }],
       })),
@@ -88,10 +101,9 @@ ${portfolioContext}` }],
     return res.status(502).json({ error: 'The assistant could not complete the request' })
   }
 
-  const data = await geminiResponse.json()
-  const reply = typeof data.candidates?.[0]?.content?.parts?.[0]?.text === 'string'
-    ? data.candidates[0].content.parts[0].text.trim()
-    : ''
+  const data = (await geminiResponse.json()) as { candidates?: { content?: { parts?: { text?: unknown }[] } }[] }
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text
+  const reply = typeof text === 'string' ? text.trim() : ''
   if (!reply) return res.status(502).json({ error: 'The assistant returned an empty response' })
 
   return res.status(200).json({ reply })
