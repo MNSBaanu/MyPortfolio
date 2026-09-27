@@ -9,7 +9,7 @@ const SocialSidebar = () => {
   const [isChatOpen, setIsChatOpen] = useState(false)
 
   useEffect(() => {
-    // ⚡ Bolt: Throttled the scroll event listener using requestAnimationFrame
+    // Throttled the scroll event listener using requestAnimationFrame
     // to prevent layout thrashing and excessive React state updates.
     // Also added `{ passive: true }` to ensure scrolling remains smooth.
     let ticking = false

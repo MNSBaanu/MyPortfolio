@@ -8,7 +8,7 @@ import { useDialog } from '../hooks/useDialog'
 const SLIDE_DURATION = 4000
 
 // ── 3D tilt panel ──
-// ⚡ Bolt: Wrapped in React.memo to prevent unnecessary re-renders when the parent's offset changes every 5 seconds.
+// Wrapped in React.memo to prevent unnecessary re-renders when the parent's offset changes every 5 seconds.
 const ProjectPanel = React.memo(function ProjectPanel({ projectIdx, onClick, paused }: { projectIdx: number; onClick: (idx: number) => void; paused: boolean }) {
   const [activeImage, setActiveImage] = useState(0)
   const [hovered, setHovered] = useState(false)
@@ -517,7 +517,7 @@ export default function Projects() {
             <button key={index} onClick={() => setModalProject(index)}
               className="shrink-0 rounded-2xl overflow-hidden border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-left w-full">
               <div className="relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
-                {/* ⚡ Bolt: Added lazy loading to prevent 15 hidden images from being eagerly fetched on desktop, which uses display: none (lg:hidden) */}
+                {/* Added lazy loading to prevent 15 hidden images from being eagerly fetched on desktop, which uses display: none (lg:hidden) */}
                 <img src={p.images[0]} alt={p.title} className="w-full h-full object-cover"
                   loading="lazy" decoding="async"
                   onError={(e) => { e.currentTarget.src = `https://placehold.co/600x338/111111/ffffff?text=${encodeURIComponent(p.title)}` }} />

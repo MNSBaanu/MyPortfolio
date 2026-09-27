@@ -10,7 +10,7 @@ export default function ContactForm() {
         email: '',
         subject: '',
         message: '',
-        botField: '' // 🛡️ Security Fix: Honeypot field to catch spam bots
+        botField: '' // Honeypot field to catch spam bots
     })
     const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -39,7 +39,7 @@ export default function ContactForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        // 🛡️ Security Fix: Missing input length limits (DoS risk)
+        // Input length limits
         if (
             formData.name.length > 100 ||
             formData.email.length > 100 ||
@@ -55,7 +55,7 @@ export default function ContactForm() {
             return;
         }
 
-        // 🛡️ Security Fix: Basic client-side rate limiting to prevent spamming
+        // Basic client-side rate limiting to prevent spamming
         // Fixed rate limit bypass via malformed/tampered localStorage data
         const lastSent = localStorage.getItem('lastEmailSent');
         const lastSentTime = parseInt(lastSent || '0', 10);
@@ -65,7 +65,7 @@ export default function ContactForm() {
             return;
         }
 
-        // 🛡️ Security Fix: If honeypot field is filled, silently abort to deter bots
+        // If honeypot field is filled, silently abort to deter bots
         if (formData.botField) {
             toast.success('Message sent successfully! I\'ll get back to you soon.')
             setFormData({ name: '', email: '', subject: '', message: '', botField: '' })
@@ -101,7 +101,7 @@ export default function ContactForm() {
             toast.success('Message sent successfully! I\'ll get back to you soon.')
             setFormData({ name: '', email: '', subject: '', message: '', botField: '' })
         } catch (error: any) {
-            // 🛡️ Security Fix: Log only generic/sanitized error messages to prevent exposing stack traces or API details
+            // Log only generic/sanitized error messages to prevent exposing stack traces or API details
             console.error('Failed to send email:', error?.message || 'Unknown error occurred')
             toast.error('Failed to send message. Please try again later.')
         } finally {
@@ -140,7 +140,7 @@ export default function ContactForm() {
                             </div>
 
                             <form onSubmit={handleSubmit} className="p-4 space-y-4">
-                                {/* 🛡️ Security Fix: Honeypot field, visually hidden from real users */}
+                                {/* Honeypot field, visually hidden from real users */}
                                 <div aria-hidden="true" className="hidden" style={{ display: 'none' }}>
                                     <input
                                         type="text"

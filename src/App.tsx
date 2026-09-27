@@ -8,7 +8,7 @@ import SEO from './components/SEO'
 import Header from './components/Header'
 import SocialSidebar from './components/SocialSidebar'
 import Hero from './components/Hero'
-// ⚡ Bolt: Lazy load below-the-fold sections to reduce initial JS bundle size and improve page load performance.
+// Lazy load below-the-fold sections to reduce initial JS bundle size and improve page load performance.
 const About = lazy(() => import('./components/About'))
 const Experience = lazy(() => import('./components/Experience'))
 const Education = lazy(() => import('./components/Education'))
@@ -22,10 +22,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // ⚡ Bolt: Eagerly prefetch lazy-loaded component chunks while the loading screen is visible.
-    // This resolves the waterfall issue where chunks are only requested after the loading screen unmounts,
-    // reducing the perceived interaction delay (pop-in effect) by utilizing idle network time.
-    // Expected impact: ~30-50% faster section rendering upon loading screen dismissal.
+    // Prefetch lazy-loaded section chunks while the loading screen is visible.
     const prefetchComponents = () => {
       import('./components/About')
       import('./components/Experience')

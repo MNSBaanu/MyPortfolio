@@ -30,7 +30,7 @@ const Header = () => {
   const headerRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
-    // ⚡ Bolt: Throttled the scroll event listener using requestAnimationFrame
+    // Throttled the scroll event listener using requestAnimationFrame
     // to prevent layout thrashing and excessive React state updates.
     // Also added `{ passive: true }` to ensure scrolling remains smooth.
     let ticking = false
@@ -77,7 +77,7 @@ const Header = () => {
     const update = () =>
       document.documentElement.style.setProperty('--header-height', `${el.offsetHeight}px`)
 
-    // ⚡ Bolt: Debounce the window resize event to prevent layout thrashing
+    // Debounce the window resize event to prevent layout thrashing
     // and high CPU usage from repeatedly writing to the DOM during resizing.
     let timeoutId: number
     const debouncedUpdate = () => {

@@ -129,7 +129,7 @@ export default function Skills() {
       setMetrics({ containerWidth, cardWidth, gap })
     }
 
-    // ⚡ Bolt: Debounce the window resize event to prevent layout thrashing
+    // Debounce the window resize event to prevent layout thrashing
     // and high CPU usage from repeatedly reading DOM properties during resizing.
     let timeoutId: number
     const debouncedMeasure = () => {
