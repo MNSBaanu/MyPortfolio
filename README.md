@@ -47,6 +47,8 @@ Fill in `.env` with your EmailJS keys. `GEMINI_API_KEY` is only read by the `api
 
 Other scripts: `npm run build`, `npm run preview`, `npm run typecheck`.
 
+After changing CV content in `src/data/portfolio.ts`, run `npm run cv` to regenerate `public/assets/cv/MNSBaanu_CV.pdf` (needs Chrome or Edge installed), then commit the PDF.
+
 ## Project Structure
 
 ```

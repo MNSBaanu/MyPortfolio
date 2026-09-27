@@ -1,6 +1,10 @@
-import { ArrowUpRight, Github } from 'lucide-react'
+import { ArrowUpRight, Github, X } from 'lucide-react'
+import { track } from '@vercel/analytics'
 import { brief, personalInfo, projects } from '../../data/portfolio'
 import BriefSection from '../layout/BriefSection'
+
+export const usesTech = (projectTech: string[], item: string) =>
+  projectTech.some((tech) => tech === item || (item === '.NET' && tech.includes('.NET')))
 
 const summaries = new Map(brief.projectSummaries.map((summary) => [summary.title, summary]))
 
@@ -18,11 +22,30 @@ const featured = projects
   .sort((a, b) => a.index - b.index)
   .map(({ project }) => toCaseStudy(project))
 
-export default function Work() {
+type WorkProps = {
+  techFilter: string | null
+  onClearFilter: () => void
+}
+
+export default function Work({ techFilter, onClearFilter }: WorkProps) {
+  const shown = techFilter ? projects.filter((project) => usesTech(project.tech, techFilter)).map(toCaseStudy) : featured
+
   return (
     <BriefSection id="work" index="03" title="Selected work">
+      {techFilter && (
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-emerald-50 px-4 py-3 text-sm dark:bg-emerald-500/10">
+          <span className="text-emerald-800 dark:text-emerald-300">
+            {shown.length} project{shown.length === 1 ? '' : 's'} using <strong>{techFilter}</strong>
+          </span>
+          <button onClick={onClearFilter} className="inline-flex items-center gap-1 font-medium text-emerald-800 hover:underline dark:text-emerald-300">
+            <X size={14} />
+            Clear filter
+          </button>
+        </div>
+      )}
+
       <div className="space-y-8">
-        {featured.map((project, i) => (
+        {shown.map((project, i) => (
           <article
             key={project.title}
             className="grid gap-5 border-b border-dashed border-stone-200 pb-8 last:border-0 last:pb-0 md:grid-cols-[240px_1fr] dark:border-neutral-800"
@@ -55,12 +78,24 @@ export default function Work() {
               <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
                 <p className="font-mono text-xs text-stone-500 dark:text-neutral-500">{project.tech.join(' · ')}</p>
                 <div className="flex gap-3 text-sm font-medium">
-                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-emerald-600 dark:hover:text-emerald-400">
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => track('Project Link', { project: project.title, link: 'code' })}
+                    className="inline-flex items-center gap-1 hover:text-emerald-600 dark:hover:text-emerald-400"
+                  >
                     <Github size={14} />
                     Code
                   </a>
                   {project.liveUrl !== '#' && (
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-emerald-600 dark:hover:text-emerald-400">
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => track('Project Link', { project: project.title, link: 'live' })}
+                      className="inline-flex items-center gap-1 hover:text-emerald-600 dark:hover:text-emerald-400"
+                    >
                       <ArrowUpRight size={14} />
                       Live
                     </a>
@@ -72,15 +107,17 @@ export default function Work() {
         ))}
       </div>
 
-      <a
-        href={personalInfo.social.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-8 flex items-center justify-between rounded-xl border border-stone-200 px-4 py-3 text-sm font-medium transition-colors hover:border-stone-900 dark:border-neutral-800 dark:hover:border-neutral-300"
-      >
-        +{projects.length - featured.length} more projects on GitHub
-        <ArrowUpRight size={16} />
-      </a>
+      {!techFilter && (
+        <a
+          href={personalInfo.social.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-8 flex items-center justify-between rounded-xl border border-stone-200 px-4 py-3 text-sm font-medium transition-colors hover:border-stone-900 dark:border-neutral-800 dark:hover:border-neutral-300"
+        >
+          +{projects.length - shown.length} more projects on GitHub
+          <ArrowUpRight size={16} />
+        </a>
+      )}
     </BriefSection>
   )
 }

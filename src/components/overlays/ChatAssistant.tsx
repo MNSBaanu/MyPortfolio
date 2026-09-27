@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Bot, Send, Sparkles, User, X } from 'lucide-react'
+import { Bot, FileSearch, Send, Sparkles, User, X } from 'lucide-react'
+import { track } from '@vercel/analytics'
 import { brief, certifications, education, experience, personalInfo, projects, skillCategories } from '../../data/portfolio'
 import { useDialog } from '../../hooks/useDialog'
 
@@ -119,6 +120,21 @@ function answerQuestion(question: string) {
   return `That isn't covered in the portfolio. You can ask about ${personalInfo.name}'s experience, projects, skills, education or certifications, or email ${personalInfo.email}.`
 }
 
+function matchOffline(jobDescription: string) {
+  const text = normalize(jobDescription)
+  const found = techTerms.filter((term) => hasTerm(text, normalize(term)))
+  const matched = found.filter((term) => !found.some((other) => other !== term && normalize(other).includes(normalize(term))))
+  if (!matched.length) {
+    return `The description doesn't name technologies from the portfolio. Ask about specific skills, or email ${personalInfo.email} to discuss the role.`
+  }
+  const lines = matched.slice(0, 8).map((term) => {
+    const uses = projects.filter((project) => project.tech.includes(term)).length
+    const evidence = [experience[0].tech?.includes(term) && 'used at work', uses > 0 && `${uses} project${uses === 1 ? '' : 's'}`].filter(Boolean)
+    return `${term}: ${evidence.length ? evidence.join(', ') : 'listed in skills'}`
+  })
+  return `Quick match from the portfolio data:\n${list(lines)}\nFor a requirement-by-requirement match, try again in a moment.`
+}
+
 type ChatAssistantProps = {
   open: boolean
   onClose: () => void
@@ -127,8 +143,10 @@ type ChatAssistantProps = {
 const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
   const [input, setInput] = useState('')
   const [isThinking, setIsThinking] = useState(false)
+  const [jdMode, setJdMode] = useState(false)
+  const [jd, setJd] = useState('')
   const [messages, setMessages] = useState<Message[]>([
-    { id: 1, role: 'assistant', text: `Hi! I’m ${personalInfo.name}'s portfolio assistant. Ask me anything about their work, skills, or background.` },
+    { id: 1, role: 'assistant', text: `Hi! I’m ${personalInfo.name}'s portfolio assistant. Ask me anything about their work, skills, or background, or paste a job description to see how it matches.` },
   ])
   const listRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -144,22 +162,15 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
     if (list) list.scrollTop = list.scrollHeight
   }, [messages, isThinking, open])
 
-  const ask = async (question: string) => {
-    const trimmed = question.trim()
-    if (!trimmed || isThinking) return
-    const userMessage = { id: Date.now(), role: 'user' as const, text: trimmed }
-    const conversation = [...messages, userMessage]
-    setMessages((current) => [...current, userMessage])
-    setInput('')
+  const request = async (userText: string, body: object, fallback: () => string) => {
+    setMessages((current) => [...current, { id: Date.now(), role: 'user', text: userText }])
     setIsThinking(true)
 
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: conversation.map(({ role, text }) => ({ role, content: text })),
-        }),
+        body: JSON.stringify(body),
         signal: AbortSignal.timeout(20000),
       })
 
@@ -174,10 +185,29 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
     } catch {
       // Local fallback keeps the widget usable during local development or
       // before GEMINI_API_KEY has been added to the Vercel project.
-      setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', text: answerQuestion(trimmed), offline: true }])
+      setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', text: fallback(), offline: true }])
     } finally {
       setIsThinking(false)
     }
+  }
+
+  const ask = (question: string) => {
+    const trimmed = question.trim()
+    if (!trimmed || isThinking) return
+    setInput('')
+    track('Chat Question')
+    const conversation = [...messages, { role: 'user', text: trimmed }]
+    void request(trimmed, { messages: conversation.map(({ role, text }) => ({ role, content: text })) }, () => answerQuestion(trimmed))
+  }
+
+  const askMatch = () => {
+    const text = jd.trim()
+    if (!text || isThinking) return
+    setJd('')
+    setJdMode(false)
+    track('Job Match')
+    const preview = text.length > 160 ? `${text.slice(0, 160)}…` : text
+    void request(`Match this job description:\n"${preview}"`, { jobDescription: text }, () => matchOffline(text))
   }
 
   const handleSubmit = (event: FormEvent) => {
@@ -253,15 +283,46 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
             )}
           </div>
 
-          <form onSubmit={handleSubmit} className="border-t border-stone-200 p-3 sm:px-6 sm:py-4 dark:border-neutral-800">
-            <div className="flex items-center gap-2 rounded-xl border border-stone-200 bg-stone-50 px-3 py-1 focus-within:border-stone-900 dark:border-neutral-700 dark:bg-neutral-950 dark:focus-within:border-neutral-300">
-              <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} data-autofocus maxLength={500} placeholder={`Ask about ${personalInfo.name}...`} aria-label="Ask the portfolio assistant" className="min-w-0 flex-1 bg-transparent py-2.5 text-base sm:text-sm text-stone-900 outline-none placeholder:text-stone-400 dark:text-white dark:placeholder:text-neutral-500" />
-              <button type="submit" aria-label="Send question" disabled={!input.trim() || isThinking} className="rounded-lg bg-stone-900 p-2 text-white transition-opacity hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-30 dark:bg-white dark:text-black">
-                <Send size={15} />
-              </button>
-            </div>
-            <p className="mt-2 px-1 text-[11px] text-stone-400 dark:text-neutral-500">AI answers can contain mistakes. The CV has the verified details.</p>
-          </form>
+          {jdMode ? (
+            <form onSubmit={(event) => { event.preventDefault(); askMatch() }} className="border-t border-stone-200 p-3 sm:px-6 sm:py-4 dark:border-neutral-800">
+              <label htmlFor="job-description" className="mb-1 block font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-400">Job description</label>
+              <textarea
+                id="job-description"
+                value={jd}
+                onChange={(event) => setJd(event.target.value)}
+                autoFocus
+                maxLength={6000}
+                rows={6}
+                placeholder="Paste the job description or its requirements"
+                className="w-full resize-none rounded-xl border border-stone-200 bg-stone-50 px-3 py-2.5 text-base text-stone-900 outline-none placeholder:text-stone-400 focus:border-stone-900 sm:text-sm dark:border-neutral-700 dark:bg-neutral-950 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-neutral-300"
+              />
+              <div className="mt-2 flex items-center justify-end gap-2">
+                <button type="button" onClick={() => setJdMode(false)} className="rounded-lg px-3 py-2 text-sm text-stone-600 hover:bg-stone-100 dark:text-neutral-400 dark:hover:bg-neutral-800">
+                  Cancel
+                </button>
+                <button type="submit" disabled={!jd.trim() || isThinking} className="inline-flex items-center gap-2 rounded-lg bg-stone-900 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-30 dark:bg-white dark:text-black">
+                  <FileSearch size={15} />
+                  Check match
+                </button>
+              </div>
+            </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="border-t border-stone-200 p-3 sm:px-6 sm:py-4 dark:border-neutral-800">
+              <div className="flex items-center gap-2 rounded-xl border border-stone-200 bg-stone-50 px-3 py-1 focus-within:border-stone-900 dark:border-neutral-700 dark:bg-neutral-950 dark:focus-within:border-neutral-300">
+                <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} data-autofocus maxLength={500} placeholder={`Ask about ${personalInfo.name}...`} aria-label="Ask the portfolio assistant" className="min-w-0 flex-1 bg-transparent py-2.5 text-base sm:text-sm text-stone-900 outline-none placeholder:text-stone-400 dark:text-white dark:placeholder:text-neutral-500" />
+                <button type="submit" aria-label="Send question" disabled={!input.trim() || isThinking} className="rounded-lg bg-stone-900 p-2 text-white transition-opacity hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-30 dark:bg-white dark:text-black">
+                  <Send size={15} />
+                </button>
+              </div>
+              <div className="mt-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 px-1">
+                <p className="text-[11px] text-stone-400 dark:text-neutral-500">AI answers can contain mistakes. The CV has the verified details.</p>
+                <button type="button" onClick={() => setJdMode(true)} className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 hover:underline dark:text-emerald-400">
+                  <FileSearch size={13} />
+                  Match a job description
+                </button>
+              </div>
+            </form>
+          )}
         </motion.section>
       )}
     </AnimatePresence>

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { MotionConfig } from 'framer-motion'
+import { Analytics } from '@vercel/analytics/react'
+import { track } from '@vercel/analytics'
 import { Toaster } from 'react-hot-toast'
 import { HelmetProvider } from 'react-helmet-async'
 import { ThemeProvider } from './context/ThemeContext'
@@ -16,22 +18,35 @@ import Contact from './components/sections/Contact'
 
 function App() {
   const [chatOpen, setChatOpen] = useState(false)
+  const [techFilter, setTechFilter] = useState<string | null>(null)
+
+  const toggleChat = () => {
+    if (!chatOpen) track('Chat Opened')
+    setChatOpen(!chatOpen)
+  }
+
+  const selectTech = (tech: string) => {
+    track('Stack Filter', { tech })
+    setTechFilter(tech)
+    requestAnimationFrame(() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' }))
+  }
 
   return (
     <HelmetProvider>
       <ThemeProvider>
         <MotionConfig reducedMotion="user">
           <SEO />
+          <Analytics />
           <Toaster position="top-right" />
           <div className="min-h-screen bg-stone-100 text-stone-900 dark:bg-neutral-950 dark:text-neutral-100">
             <div className="mx-auto max-w-6xl px-4 py-4 pb-24 sm:px-6 sm:py-8 sm:pb-24 lg:grid lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-8 lg:px-8 lg:py-10">
-              <IdentityPanel chatOpen={chatOpen} onToggleChat={() => setChatOpen((open) => !open)} />
+              <IdentityPanel chatOpen={chatOpen} onToggleChat={toggleChat} />
               <main className="mt-4 space-y-4 lg:mt-0">
                 <ChatAssistant open={chatOpen} onClose={() => setChatOpen(false)} />
                 <Summary />
                 <Experience />
-                <Work />
-                <Stack />
+                <Work techFilter={techFilter} onClearFilter={() => setTechFilter(null)} />
+                <Stack activeTech={techFilter} onSelectTech={selectTech} />
                 <Education />
                 <Contact />
                 <p className="py-4 text-center font-mono text-xs text-stone-500 dark:text-neutral-500">

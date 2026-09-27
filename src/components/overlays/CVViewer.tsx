@@ -3,6 +3,7 @@ import { X, Download } from 'lucide-react'
 import { personalInfo, skills, projects, experience, education, certifications } from '../../data/portfolio'
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
+import { track } from '@vercel/analytics'
 import { useDialog } from '../../hooks/useDialog'
 
 interface CVViewerProps {
@@ -15,6 +16,10 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
   useDialog(dialogRef, onClose, isOpen)
 
   // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) track('CV Viewed')
+  }, [isOpen])
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -30,33 +35,6 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
 
   if (!isOpen) return null
 
-  const handleDownload = async () => {
-    const element = document.getElementById('cv-content')
-    if (!element) return
-
-    const { default: html2pdf } = await import('html2pdf.js')
-
-    const opt = {
-      margin: [10, 10, 10, 10] as [number, number, number, number],
-      filename: `${personalInfo.name}_CV.pdf`,
-      image: { type: 'jpeg' as const, quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        letterRendering: true,
-        logging: false
-      },
-      jsPDF: {
-        unit: 'mm',
-        format: 'a4',
-        orientation: 'portrait' as const,
-        compress: true
-      },
-      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-    }
-
-    html2pdf().set(opt).from(element).save()
-  }
 
   return createPortal(
     <motion.div
@@ -81,14 +59,16 @@ export default function CVViewer({ isOpen, onClose }: CVViewerProps) {
         <div className="cv-controls sticky top-0 bg-white border-b border-gray-200 p-2 sm:p-3 md:p-4 flex justify-between items-center z-10">
           <h2 id="cv-title" className="text-sm sm:text-base md:text-xl font-bold text-gray-800">Resume Preview</h2>
           <div className="flex gap-1 sm:gap-2">
-            <button
-              onClick={handleDownload}
+            <a
+              href={personalInfo.cvFile}
+              download
+              onClick={() => track('CV Downloaded')}
               className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
             >
               <Download className="w-3 h-3 sm:w-4 sm:h-4 md:w-4.5 md:h-4.5" />
               <span className="hidden sm:inline">Download PDF</span>
               <span className="sm:hidden">PDF</span>
-            </button>
+            </a>
             <button
               onClick={onClose}
               className="p-1 sm:p-1.5 md:p-2 hover:bg-gray-100 rounded-lg transition-colors"
