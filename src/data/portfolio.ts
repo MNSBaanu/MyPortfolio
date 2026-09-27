@@ -40,7 +40,7 @@ export const brief = {
   projectSummaries: [
     {
       title: 'AromaCafe POS',
-      hook: 'An offline-first point of sale for cafés, shipped as a desktop app.',
+      hook: 'An offline-first point of sale for cafés, built as a desktop app.',
       highlights: [
         'Runs fully offline on SQLite with no server to maintain',
         'Stock-aware catalog, cart and checkout with automatic change calculation',
@@ -197,7 +197,7 @@ export const experience = [
     company: 'Self-employed',
     period: '2023 - Present',
     type: 'Part-time',
-    description: 'Designing and building academic and personal projects end to end across web, desktop and mobile, from planning and UI to APIs, databases and deployment. Over 20 projects shipped, including a café POS, a real-time donation platform and an AI shopping agent.',
+    description: 'Designing and building academic and personal projects end to end across web, desktop and mobile, from planning and UI to APIs, databases and deployment. Over 20 projects so far, including a café POS, a real-time donation platform and an AI shopping agent, with several live in production.',
     tech: ['React', 'Next.js', 'Node.js', 'C#', 'Java', 'PHP', 'MongoDB'],
   },
   {

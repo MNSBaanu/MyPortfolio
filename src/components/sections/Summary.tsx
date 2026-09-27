@@ -5,7 +5,7 @@ const facts = [
   { label: 'Work mode', value: 'On-site or remote' },
   { label: 'Building since', value: experience[2].period.split(' - ')[0] },
   { label: 'Higher Diploma', value: education[1].title.split(' - ')[1] },
-  { label: 'Projects built', value: String(projects.length) },
+  { label: 'Projects', value: `${projects.length} · ${projects.filter((project) => project.liveUrl !== '#').length} live` },
 ]
 
 export default function Summary() {

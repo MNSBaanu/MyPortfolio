@@ -88,7 +88,7 @@ function answerQuestion(question: string) {
   if (hasAny(text, ['project', 'built', 'build', 'portfolio', 'demo', 'live', 'app'])) {
     const live = projects.filter((item) => link(item.liveUrl))
     const academic = projects.filter((item) => item.academic).length
-    return `${personalInfo.name} has built ${projects.length} projects (${projects.length - academic} personal, ${academic} academic). Highlights: ${brief.projectSummaries.map((item) => item.title).join(', ')}. Live demos: ${live.map((item) => item.title).join(', ')}. Ask about any project by name for details.`
+    return `${personalInfo.name} has worked on ${projects.length} projects (${projects.length - academic} personal, ${academic} academic), and ${live.length} are live: ${live.map((item) => item.title).join(', ')}. Highlights: ${brief.projectSummaries.map((item) => item.title).join(', ')}. Ask about any project by name for details.`
   }
 
   if (hasAny(text, ['available', 'location', 'where', 'based', 'remote', 'relocat', 'open to', 'looking'])) {
