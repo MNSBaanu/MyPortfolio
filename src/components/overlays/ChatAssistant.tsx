@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Bot, Send, Sparkles, User, X } from 'lucide-react'
-import { about, education, experience, personalInfo, projects, skillCategories } from '../../data/portfolio'
+import { brief, certifications, education, experience, personalInfo, projects, skillCategories } from '../../data/portfolio'
 import { useDialog } from '../../hooks/useDialog'
 
 type Message = {
@@ -10,49 +10,106 @@ type Message = {
   text: string
 }
 
-const suggestions = ['What does MNSBaanu do?', 'What are the main skills?', 'Tell me about the projects']
+const suggestions = ['Why should we hire MNSBaanu?', 'Which projects use React?', 'What is the current role?']
 
-const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9+#. ]/g, ' ')
+const intro = `${personalInfo.name} is a ${experience[0].title} at ${experience[0].company.split(' - ')[0]}, working across ${experience[0].tech?.join(', ')}. ${brief.promotion}`
+
+const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9+#. ]/g, ' ').replace(/\s+/g, ' ')
+const escape = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+const hasTerm = (text: string, term: string) => new RegExp(`(^|[^a-z0-9])${escape(term)}($|[^a-z0-9+#])`).test(text)
+const hasAny = (text: string, words: string[]) => words.some((word) => new RegExp(`(^| )${escape(word)}`).test(text))
+const list = (items: string[]) => items.map((item) => `- ${item}`).join('\n')
+const link = (url: string) => (url && url !== '#' ? url : '')
+
+const projectAliases = projects.map((project) => {
+  const words = project.title.replace(/^The /, '').split(' ')
+  const title = normalize(words.join(' '))
+  const aliases = [title, title.replace(/ /g, '')]
+  const inBrackets = project.title.match(/\(([^)]+)\)/)
+  if (inBrackets) aliases.push(normalize(inBrackets[1]))
+  for (const word of words) {
+    if (/[a-z][A-Z]/.test(word) || /^[A-Z]{3,}$/.test(word)) aliases.push(normalize(word))
+  }
+  if (words.length === 2 && words[0].length >= 5) aliases.push(normalize(words[0]))
+  return { project, aliases: aliases.map((alias) => alias.trim()).filter(Boolean) }
+})
+
+const techTerms = [...new Set([
+  ...skillCategories.flatMap((category) => category.skills.map((skill) => skill.name)),
+  ...projects.flatMap((project) => project.tech),
+  ...experience.flatMap((job) => job.tech ?? []),
+])].filter((term) => term.length > 1)
+
+function describeProject(project: (typeof projects)[number]) {
+  const summary = brief.projectSummaries.find((item) => item.title === project.title)
+  const links = [link(project.liveUrl) && `Live: ${project.liveUrl}`, `Code: ${project.githubUrl}`].filter(Boolean).join(' | ')
+  return `${project.title} (${project.period}, ${project.academic ? 'academic' : 'personal'} project): ${summary ? `${summary.hook} ${summary.highlights.join('. ')}.` : project.description}\nTech: ${project.tech.join(', ')}\n${links}`
+}
+
+function describeTech(term: string) {
+  const inProjects = projects.filter((project) => project.tech.includes(term)).map((project) => project.title)
+  const atWork = experience[0].tech?.includes(term)
+  const parts = [
+    atWork && `${personalInfo.name} uses ${term} at work as a ${experience[0].title} at ${experience[0].company.split(' - ')[0]}.`,
+    inProjects.length > 0 && `${term} is used in ${inProjects.length} project${inProjects.length > 1 ? 's' : ''}: ${inProjects.join(', ')}.`,
+  ].filter(Boolean)
+  return parts.length ? parts.join(' ') : `${term} is listed in ${personalInfo.name}'s skills.`
+}
 
 function answerQuestion(question: string) {
   const text = normalize(question)
-  const allSkills = skillCategories.flatMap((category) => category.skills.map((skill) => skill.name))
 
-  if (/(^| )(who|about|do|does|developer|work)( |$)/.test(text) || text.includes('introduce')) {
-    return `${personalInfo.name} is an ${personalInfo.title.toLowerCase()} based in ${personalInfo.location}. ${about.description1} ${personalInfo.availability}.`
+  const project = projectAliases.find(({ aliases }) => aliases.some((alias) => hasTerm(text, alias)))?.project
+  if (project) return describeProject(project)
+
+  if (hasAny(text, ['certif', 'course', 'badge', 'credential'])) {
+    return `${personalInfo.name} holds ${certifications.length} certifications:\n${list(certifications.map((cert) => `${cert.title}, ${cert.issuer} (${cert.date})`))}`
   }
 
-  if (text.includes('skill') || text.includes('technolog') || text.includes('stack') || text.includes('know')) {
-    return `The main toolkit includes ${allSkills.slice(0, 12).join(', ')}, plus ${allSkills.slice(12).join(', ')}. The strongest focus is full-stack web and mobile development, with a UI/UX and AI interest.`
+  if (hasAny(text, ['educat', 'study', 'studied', 'degree', 'universit', 'school', 'college', 'qualif', 'diploma', 'beng', 'a l', 'o l', 'grade', 'pharma'])) {
+    return `Education:\n${list(education.map((item) => `${item.title}, ${item.institution} (${item.period})`))}`
   }
 
-  if (text.includes('project') || text.includes('built') || text.includes('portfolio')) {
-    const featured = projects.slice(0, 5).map((project) => project.title).join(', ')
-    return `Recent projects include ${featured}, among others. ${projects[0].description.split('. ')[0]}. You can explore the full project list in the Projects section.`
+  const techs = techTerms.filter((term) => hasTerm(text, normalize(term)))
+  const matchedTechs = techs.filter((term) => !techs.some((other) => other !== term && normalize(other).includes(normalize(term))))
+  if (matchedTechs.length) return matchedTechs.slice(0, 3).map(describeTech).join('\n\n')
+
+  if (hasAny(text, ['hire', 'why', 'strength', 'fit', 'stand out', 'best', 'good at'])) {
+    return `${intro} Strongest projects include ${brief.projectSummaries.map((item) => item.title).join(', ')}.`
   }
 
-  if (text.includes('experience') || text.includes('job') || text.includes('career') || text.includes('work')) {
-    const current = experience[0]
-    return `MNSBaanu is currently a ${current.title} at ${current.company}, working on web and mobile applications with ${current.tech?.join(', ')}. Before that, there was an internship at the same company from ${experience[1].period}.`
+  if (hasAny(text, ['project', 'built', 'build', 'portfolio', 'demo', 'live', 'app'])) {
+    const live = projects.filter((item) => link(item.liveUrl))
+    const academic = projects.filter((item) => item.academic).length
+    return `${personalInfo.name} has built ${projects.length} projects (${projects.length - academic} personal, ${academic} academic). Highlights: ${brief.projectSummaries.map((item) => item.title).join(', ')}. Live demos: ${live.map((item) => item.title).join(', ')}. Ask about any project by name for details.`
   }
 
-  if (text.includes('education') || text.includes('study') || text.includes('degree') || text.includes('university')) {
-    return `MNSBaanu is pursuing a ${education[0].title} at ${education[0].institution}. They also completed a ${education[1].title} at ${education[1].institution}.`
+  if (hasAny(text, ['available', 'location', 'where', 'based', 'remote', 'relocat', 'open to', 'looking'])) {
+    return `${personalInfo.name} is based in ${personalInfo.location} and is ${personalInfo.availability.toLowerCase()}.`
   }
 
-  if (text.includes('contact') || text.includes('email') || text.includes('hire') || text.includes('available') || text.includes('location')) {
-    return `MNSBaanu is ${personalInfo.availability.toLowerCase()}. You can reach out at ${personalInfo.email} or use the Contact section.`
+  if (hasAny(text, ['experience', 'job', 'career', 'work', 'company', 'intern', 'role', 'employ', 'position', 'currently'])) {
+    const [current, intern, ...other] = experience
+    return `${personalInfo.name} is a ${current.title} at ${current.company} (${current.period}, ${current.type}). ${current.description} Before that: ${intern.title} at the same company (${intern.period}). ${brief.promotion}${other.length ? `\nOther roles:\n${list(other.map((job) => `${job.title}, ${job.company} (${job.period})`))}` : ''}`
   }
 
-  if (text.includes('ai') || text.includes('artificial intelligence')) {
-    return 'AI is one of MNSBaanu’s interests. Projects include SmartBee, with an AI-powered virtual assistant, and Kapruka ASA, a conversational shopping agent built for the Kapruka Agent Challenge 2026.'
+  if (hasAny(text, ['skill', 'technolog', 'stack', 'language', 'framework', 'tool', 'database', 'know'])) {
+    return `Skills:\n${list(skillCategories.map((category) => `${category.category}: ${category.skills.map((skill) => skill.name).join(', ')}`))}`
   }
 
-  if (text.includes('hello') || text.includes('hi') || text.includes('hey')) {
-    return `Hi! I can tell you about ${personalInfo.name}'s skills, experience, education, projects, or contact details.`
+  if (hasAny(text, ['contact', 'email', 'mail', 'phone', 'call', 'reach', 'linkedin', 'github', 'cv', 'resume'])) {
+    return `Email: ${personalInfo.email}\nPhone: ${personalInfo.phone}\nLinkedIn: ${personalInfo.social.linkedin}\nGitHub: ${personalInfo.social.github}\nThe CV is available through the View CV button.`
   }
 
-  return `I can answer questions about ${personalInfo.name}'s skills, experience, education, projects, availability, and contact details. I don’t have that specific detail in the portfolio yet.`
+  if (hasAny(text, ['who', 'about', 'introduce', 'yourself', 'tell me', 'summary', 'name'])) {
+    return `${intro} Based in ${personalInfo.location}.`
+  }
+
+  if (/^(hi|hello|hey|good (morning|afternoon|evening))\b/.test(text.trim())) {
+    return `Hi! Ask me anything about ${personalInfo.name}: experience, projects, skills, education, certifications or how to get in touch.`
+  }
+
+  return `That isn't covered in the portfolio. You can ask about ${personalInfo.name}'s experience, projects, skills, education or certifications, or email ${personalInfo.email}.`
 }
 
 type ChatAssistantProps = {
@@ -142,7 +199,7 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
             {messages.map((message) => (
               <div key={message.id} className={`flex items-end gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 {message.role === 'assistant' && <Bot size={15} className="mb-2 shrink-0 text-gray-400" />}
-                <div className={`max-w-[84%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${message.role === 'user' ? 'rounded-br-md bg-black text-white dark:bg-white dark:text-black' : 'rounded-bl-md bg-gray-100 text-gray-700 dark:bg-neutral-900 dark:text-gray-300'}`}>
+                <div className={`max-w-[84%] rounded-2xl px-4 py-3 whitespace-pre-line text-sm leading-relaxed ${message.role === 'user' ? 'rounded-br-md bg-black text-white dark:bg-white dark:text-black' : 'rounded-bl-md bg-gray-100 text-gray-700 dark:bg-neutral-900 dark:text-gray-300'}`}>
                   {message.text}
                 </div>
                 {message.role === 'user' && <User size={15} className="mb-2 shrink-0 text-gray-400" />}

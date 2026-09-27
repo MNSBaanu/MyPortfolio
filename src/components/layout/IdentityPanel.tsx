@@ -98,8 +98,8 @@ export default function IdentityPanel() {
           </button>
         </div>
 
-        <nav aria-label="Brief sections" className="mt-6 hidden border-t border-dashed border-stone-200 pt-4 lg:block dark:border-neutral-800">
-          <ol className="space-y-1">
+        <nav aria-label="Brief sections" className="mt-5 hidden border-t border-dashed border-stone-200 pt-3 lg:block dark:border-neutral-800">
+          <ol>
             {briefSections.map((section, i) => (
               <li key={section.id}>
                 <a

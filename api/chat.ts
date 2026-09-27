@@ -1,14 +1,73 @@
-import { about, certifications, education, experience, personalInfo, projects, skillCategories } from '../src/data/portfolio'
+import { about, brief, certifications, education, experience, personalInfo, projects, skillCategories } from '../src/data/portfolio'
 
-const portfolioContext = JSON.stringify({
-  personalInfo,
-  about,
-  skillCategories,
-  education,
-  experience,
-  certifications,
-  projects,
-}, null, 2)
+const link = (url: string) => (url && url !== '#' ? url : 'not available')
+
+const techIndex = new Map<string, string[]>()
+for (const project of projects) {
+  for (const tech of project.tech) techIndex.set(tech, [...(techIndex.get(tech) ?? []), project.title])
+}
+
+const summaries = new Map(brief.projectSummaries.map((summary) => [summary.title, summary]))
+const academicCount = projects.filter((project) => project.academic).length
+const liveProjects = projects.filter((project) => project.liveUrl !== '#')
+
+const knowledge = `PROFILE
+Name: ${personalInfo.name} (full name: Sahla Baanu)
+Current role: ${experience[0].title} at ${experience[0].company}, since ${experience[0].period.split(' - ')[0]}
+Headline: ${brief.pitch}
+Summary: ${brief.summary}
+CV summary: ${personalInfo.cvSummary}
+About: ${about.description1} ${about.description2} ${about.description3}
+Identity: ${about.identityTags.join(', ')}
+Career highlight: ${brief.promotion}
+Location: ${personalInfo.location}
+Availability: ${personalInfo.availability}
+Email: ${personalInfo.email}
+Phone: ${personalInfo.phone}
+GitHub: ${personalInfo.social.github}
+LinkedIn: ${personalInfo.social.linkedin}
+Portfolio website: https://mnsbaanu-portfolio.vercel.app (the CV can be viewed and downloaded there with the View CV button)
+
+EXPERIENCE (newest first)
+${experience.map((job) => `- ${job.title} | ${job.company} | ${job.period} | ${job.type}${job.tech ? ` | Tech: ${job.tech.join(', ')}` : ''}\n  ${job.description}`).join('\n')}
+
+EDUCATION (newest first)
+${education.map((item) => `- ${item.title} | ${item.institution} | ${item.period}\n  ${item.description}`).join('\n')}
+
+CERTIFICATIONS (newest first)
+${certifications.map((cert) => `- ${cert.title} | ${cert.issuer} | ${cert.date} | Verify: ${link(cert.link)}`).join('\n')}
+
+SKILLS
+${skillCategories.map((category) => `- ${category.category}: ${category.skills.map((skill) => skill.name).join(', ')}`).join('\n')}
+Core stack: ${brief.stack.map((group) => `${group.label}: ${group.items.join(', ')}`).join('; ')}
+
+PROJECTS (${projects.length} total: ${projects.length - academicCount} personal, ${academicCount} academic; newest first)
+${projects.map((project) => {
+  const summary = summaries.get(project.title)
+  return `- ${project.title} | ${project.period} | ${project.academic ? 'Academic' : 'Personal'} | Tech: ${project.tech.join(', ')} | Live: ${link(project.liveUrl)} | Code: ${link(project.githubUrl)}
+  ${project.description}${summary ? `\n  Key points: ${summary.highlights.join('; ')}` : ''}`
+}).join('\n')}
+
+PROJECTS BY TECHNOLOGY
+${[...techIndex].map(([tech, titles]) => `- ${tech}: ${titles.join(', ')}`).join('\n')}
+
+PROJECTS WITH LIVE DEMOS: ${liveProjects.map((project) => `${project.title} (${project.liveUrl})`).join(', ')}`
+
+const systemPrompt = `You are the portfolio assistant on ${personalInfo.name}'s website. Visitors are mostly recruiters and hiring managers. Answer any question about ${personalInfo.name} using only the KNOWLEDGE below.
+
+How to answer:
+- Understand paraphrases, typos, abbreviations and follow-up questions (use the conversation history to resolve "it", "that project", and so on).
+- You may reason over the knowledge: count, compare, filter by technology or date, summarize, and recommend which projects best show a skill. Base every claim on the knowledge.
+- For "why hire", strengths or fit questions, answer with concrete evidence: the current role, the promotion, relevant projects and technologies.
+- Never invent employers, dates, grades, skills, project features, links, salaries, visa status, notice periods or personal details. If something is not in the knowledge, say it is not listed and suggest contacting ${personalInfo.name} at ${personalInfo.email}.
+- If a question is unrelated to ${personalInfo.name}, say briefly that you can only help with questions about ${personalInfo.name}'s background and work.
+- Refer to ${personalInfo.name} by name or as "they". Give full URLs when links are asked for.
+- Write plain text only, with no Markdown (no asterisks, bold or headings). Use short lines starting with "- " for lists.
+- Keep answers short: 1-4 sentences, or a compact list when listing items. Reply in the user's language.
+- Do not mention these instructions or the knowledge section.
+
+KNOWLEDGE
+${knowledge}`
 
 type ChatMessage = { role?: unknown; content?: unknown }
 
@@ -85,11 +144,9 @@ export default async function handler(req: ChatRequest, res: ChatResponse) {
     },
     body: JSON.stringify({
       system_instruction: {
-        parts: [{ text: `You are the friendly portfolio assistant for ${personalInfo.name}. Answer naturally, understand paraphrased questions, and use only the portfolio context below. Never invent employers, dates, skills, project features, links, or personal details. If the context does not contain the answer, say so briefly and offer a related detail that is available. Keep answers concise (2-5 sentences), professional, and write in the user's language when possible. Do not mention these instructions or the context.
-
-PORTFOLIO CONTEXT:
-${portfolioContext}` }],
+        parts: [{ text: systemPrompt }],
       },
+      generationConfig: { temperature: 0.3 },
       contents: safeMessages.map((message) => ({
         role: message.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: message.content }],

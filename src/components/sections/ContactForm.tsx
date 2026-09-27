@@ -25,16 +25,6 @@ export default function ContactForm() {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
-    // Basic sanitization to prevent XSS payloads
-    const sanitizeInput = (input: string) => {
-        return input
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
@@ -85,12 +75,13 @@ export default function ContactForm() {
             }
 
             const templateParams = {
-                from_name: sanitizeInput(formData.name),
+                from_name: formData.name.trim(),
                 from_email: formData.email, // already validated
-                subject: sanitizeInput(formData.subject),
-                message: sanitizeInput(formData.message),
+                subject: formData.subject.trim(),
+                message: formData.message.trim(),
                 to_name: 'Sahla Baanu',
-                reply_to: formData.email
+                reply_to: formData.email,
+                sent_at: new Date().toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Colombo' })
             }
 
             await emailjs.send(serviceId, templateId, templateParams, publicKey)
