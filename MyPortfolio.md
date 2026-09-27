@@ -35,7 +35,7 @@ React 18, TypeScript, Tailwind CSS 3, Framer Motion, Vite 8, vite-plugin-pwa, Em
 - `src/context/ThemeContext.tsx`, `src/hooks/useDialog.ts`
 - `src/registerSW.ts`: PWA registration
 - `public/assets/brand/`: logo, favicon, PWA icons, profile photo, OG image
-- `public/assets/projects/`: project screenshots (WebP, kebab-case)
+- `public/assets/projects/`: project cover images (WebP, kebab-case); AI-generated covers for 19 projects, real screenshots for LuxeVista, OrchiFlora and The Pawsshop
 - `scripts/security-check.js`
 
 ## How it works
@@ -49,10 +49,10 @@ React 18, TypeScript, Tailwind CSS 3, Framer Motion, Vite 8, vite-plugin-pwa, Em
 Vercel (`vercel.json`): SPA rewrite, long cache on `/assets`, and security headers including a CSP.
 
 ## Open issues
-- [ ] 10 projects reference screenshots that do not exist (5-min-forecast, lak-seva, talk-with-emo, gather, restaurant, kapruka-asa, hush-lines, transit-lk, smart-med, echo-sphere); they show placehold.co fallbacks
 - [ ] html2pdf chunk is about 936 KB (lazy-loaded, but still precached by the service worker)
 - [ ] No ESLint setup
 
 ## Log
+- 2026-09-27: Replaced project images with Canva AI-generated covers for 19 projects (one cover each; the old ShareLanka, GadgetHub and GreenLife screenshots were removed). All 22 projects now have images.
 - 2026-09-27: Cleanup from the audit. Removed Jules notes, duplicate manifest, unused CSS, `@vercel/analytics`, unused certificate images and custom PWA types. Converted images to WebP in `brand/` and `projects/` (22 MB to 1.5 MB); the service worker no longer precaches every image. Added the missing OG image. Fixed a syntax error in `api/chat.ts` (the chat endpoint could not run), typed it, and added `typecheck`. Removed `'unsafe-eval'` and the analytics hosts from the CSP. Split `Projects.tsx` and grouped components into folders. Added `.env.example` and updated the README.
 - 2026-09-27: Created the note. Audited the project for unused files, unused code and structure problems.

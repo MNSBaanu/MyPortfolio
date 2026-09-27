@@ -447,9 +447,7 @@ export const projects = [
     period: 'Jul – Oct 2025',
     academic: true,
     images: [
-      '/assets/projects/share-lanka-1.webp',
-      '/assets/projects/share-lanka-2.webp',
-      '/assets/projects/share-lanka-3.webp',
+      '/assets/projects/share-lanka.webp',
     ],
     liveUrl: '#',
     githubUrl: 'https://github.com/MNSBaanu/Share_Lanka',
@@ -461,9 +459,7 @@ export const projects = [
     period: 'Aug – Oct 2025',
     academic: true,
     images: [
-      '/assets/projects/gadget-hub-1.webp',
-      '/assets/projects/gadget-hub-2.webp',
-      '/assets/projects/gadget-hub-3.webp',
+      '/assets/projects/gadget-hub.webp',
     ],
     liveUrl: '#',
     githubUrl: 'https://github.com/MNSBaanu/GadgetHub',
@@ -475,10 +471,7 @@ export const projects = [
     period: 'May – Jul 2025',
     academic: true,
     images: [
-      '/assets/projects/green-life-1.webp',
-      '/assets/projects/green-life-2.webp',
-      '/assets/projects/green-life-3.webp',
-      '/assets/projects/green-life-4.webp',
+      '/assets/projects/green-life.webp',
     ],
     liveUrl: '#',
     githubUrl: 'https://github.com/MNSBaanu/GreenLife',
