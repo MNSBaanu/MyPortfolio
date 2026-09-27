@@ -47,7 +47,7 @@ export default defineConfig({
     preloadFonts(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['assets/**/*', 'robots.txt', 'sitemap.xml'],
+      includeAssets: ['robots.txt', 'sitemap.xml'],
       manifest: {
         name: 'MNSBaanu Portfolio',
         short_name: 'MNSBaanu',
@@ -99,20 +99,6 @@ export default defineConfig({
                 statuses: [0, 200]
               }
             }
-          },
-          {
-            urlPattern: /^https:\/\/.*\.flaticon\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'icon-cache',
-              expiration: {
-                maxEntries: 30,
-                maxAgeSeconds: 60 * 60 * 24 * 30
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
           }
         ]
       }
@@ -120,9 +106,6 @@ export default defineConfig({
   ],
   build: {
     target: 'es2022',
-    supported: {
-      destructuring: true,
-    },
     rollupOptions: {
       output: {
         manualChunks(id) {
