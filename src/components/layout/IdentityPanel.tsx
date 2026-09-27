@@ -41,7 +41,7 @@ export default function IdentityPanel() {
       <div className="rounded-2xl border border-stone-200 bg-white p-5 sm:p-6 dark:border-neutral-800 dark:bg-neutral-900">
         <div className="flex items-center justify-between">
           <div className="font-mono uppercase">
-            <p className="text-[11px] tracking-[0.2em] text-stone-500 dark:text-neutral-400">Candidate brief</p>
+            <p className="text-[11px] tracking-[0.2em] text-stone-500 dark:text-neutral-400">Portfolio</p>
             <p className="mt-0.5 text-[10px] tracking-[0.15em] text-stone-400 dark:text-neutral-500">Updated {updated}</p>
           </div>
           <button
@@ -111,7 +111,7 @@ export default function IdentityPanel() {
           </button>
         </div>
 
-        <nav aria-label="Brief sections" className="mt-5 hidden border-t border-dashed border-stone-200 pt-3 lg:block dark:border-neutral-800">
+        <nav aria-label="Page sections" className="mt-5 hidden border-t border-dashed border-stone-200 pt-3 lg:block dark:border-neutral-800">
           <ol>
             {briefSections.map((section, i) => (
               <li key={section.id}>
@@ -145,6 +145,15 @@ export default function IdentityPanel() {
             <Mail size={16} />
             Email me
           </a>
+          <button
+            onClick={() => setChatOpen((open) => !open)}
+            tabIndex={showBar ? 0 : -1}
+            aria-label={chatOpen ? 'Close AI assistant' : 'Ask my AI assistant'}
+            aria-expanded={chatOpen}
+            className="flex shrink-0 items-center justify-center rounded-xl border border-dashed border-emerald-500/60 bg-white px-3.5 text-emerald-700 dark:bg-neutral-900 dark:text-emerald-400"
+          >
+            <MessageCircle size={18} />
+          </button>
         </div>
       </div>
 

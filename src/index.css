@@ -27,7 +27,7 @@
     @apply no-scrollbar bg-white text-gray-900 dark:bg-black dark:text-gray-100;
   }
 
-  :focus-visible {
+  :focus-visible:not(input):not(textarea) {
     @apply outline-none ring-2 ring-offset-2 ring-black ring-offset-white dark:ring-white dark:ring-offset-black;
   }
 

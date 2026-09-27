@@ -3,7 +3,7 @@ import BriefSection from '../layout/BriefSection'
 
 const facts = [
   { label: 'Work mode', value: 'On-site or remote' },
-  { label: 'In industry since', value: experience[1].period.split(' - ')[0] },
+  { label: 'Building since', value: experience[2].period.split(' - ')[0] },
   { label: 'Higher Diploma', value: education[1].title.split(' - ')[1] },
   { label: 'Projects built', value: String(projects.length) },
 ]

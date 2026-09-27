@@ -8,9 +8,10 @@ type Message = {
   id: number
   role: 'assistant' | 'user'
   text: string
+  offline?: boolean
 }
 
-const suggestions = ['Why should we hire MNSBaanu?', 'Which projects use React?', 'What is the current role?']
+const suggestions = [`Why should we hire ${personalInfo.name}?`, 'Which projects use React?', 'What is the current role?']
 
 const intro = `${personalInfo.name} is a ${experience[0].title} at ${experience[0].company.split(' - ')[0]}, working across ${experience[0].tech?.join(', ')}. ${brief.promotion}`
 
@@ -68,6 +69,12 @@ function answerQuestion(question: string) {
 
   if (hasAny(text, ['educat', 'study', 'studied', 'degree', 'universit', 'school', 'college', 'qualif', 'diploma', 'beng', 'a l', 'o l', 'grade', 'pharma'])) {
     return `Education:\n${list(education.map((item) => `${item.title}, ${item.institution} (${item.period})`))}`
+  }
+
+  if (hasTerm(text, 'ai') || hasTerm(text, 'ml') || hasAny(text, ['artificial intelligence', 'machine learning', 'llm', 'agent'])) {
+    const aiProjects = projects.filter((item) => /\bAI\b|agent/i.test(`${item.description} ${item.tech.join(' ')}`)).map((item) => item.title)
+    const aiCerts = certifications.filter((cert) => /\bAI\b|ML/.test(cert.title)).map((cert) => cert.title)
+    return `AI work: ${aiProjects.join(', ')}. AI certifications: ${aiCerts.join(', ')}. Ask about any of these projects for details.`
   }
 
   const techs = techTerms.filter((term) => hasTerm(text, normalize(term)))
@@ -149,6 +156,10 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
         }),
       })
 
+      if (response.status === 429) {
+        setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', text: `You've asked a lot of questions in a short time. Please try again in a few minutes, or email ${personalInfo.email}.` }])
+        return
+      }
       if (!response.ok) throw new Error('Assistant API unavailable')
       const data = await response.json() as { reply?: string }
       if (!data.reply) throw new Error('Assistant returned no reply')
@@ -156,7 +167,7 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
     } catch {
       // Local fallback keeps the widget usable during local development or
       // before GEMINI_API_KEY has been added to the Vercel project.
-      setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', text: answerQuestion(trimmed) }])
+      setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', text: answerQuestion(trimmed), offline: true }])
     } finally {
       setIsThinking(false)
     }
@@ -178,19 +189,19 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
           animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
           exit={{ opacity: 0, scale: 0.92, x: 18, y: 8 }}
           transition={{ duration: 0.2 }}
-          className="pointer-events-auto fixed right-4 bottom-16 sm:right-24 sm:top-[10%] sm:bottom-auto z-[120] flex h-[min(590px,calc(100vh-6rem))] w-[calc(100vw-2rem)] max-w-[390px] flex-col overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-2xl dark:border-neutral-800 dark:bg-neutral-950"
+          className="pointer-events-auto fixed right-4 bottom-24 sm:right-6 sm:bottom-6 z-[120] flex h-[min(590px,calc(100vh-8rem))] w-[calc(100vw-2rem)] max-w-[390px] flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-2xl sm:h-[min(590px,calc(100vh-3rem))] dark:border-neutral-800 dark:bg-neutral-950"
         >
-          <div className="flex items-center justify-between border-b border-gray-100 bg-gray-50 px-5 py-4 dark:border-neutral-800 dark:bg-neutral-900">
+          <div className="flex items-center justify-between border-b border-stone-200 bg-stone-50 px-5 py-4 dark:border-neutral-800 dark:bg-neutral-900">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-black text-white dark:bg-white dark:text-black">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-600 text-white">
                 <Sparkles size={18} />
               </div>
               <div>
-                <h2 className="text-sm font-bold text-gray-900 dark:text-white">Portfolio Assistant</h2>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Knows the details on this site</p>
+                <h2 className="text-sm font-bold text-stone-900 dark:text-white">Ask about {personalInfo.name}</h2>
+                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-400">AI assistant</p>
               </div>
             </div>
-            <button onClick={onClose} aria-label="Close portfolio assistant" className="rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-200 hover:text-black dark:hover:bg-neutral-800 dark:hover:text-white">
+            <button onClick={onClose} aria-label="Close portfolio assistant" className="rounded-full p-2 text-stone-500 transition-colors hover:bg-stone-200 hover:text-stone-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white">
               <X size={18} />
             </button>
           </div>
@@ -198,37 +209,41 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
           <div className="flex-1 space-y-4 overflow-y-auto px-4 py-5" aria-live="polite">
             {messages.map((message) => (
               <div key={message.id} className={`flex items-end gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                {message.role === 'assistant' && <Bot size={15} className="mb-2 shrink-0 text-gray-400" />}
-                <div className={`max-w-[84%] rounded-2xl px-4 py-3 whitespace-pre-line text-sm leading-relaxed ${message.role === 'user' ? 'rounded-br-md bg-black text-white dark:bg-white dark:text-black' : 'rounded-bl-md bg-gray-100 text-gray-700 dark:bg-neutral-900 dark:text-gray-300'}`}>
-                  {message.text}
+                {message.role === 'assistant' && <Bot size={15} className="mb-2 shrink-0 text-stone-400" />}
+                <div className="max-w-[84%]">
+                  <div className={`rounded-2xl px-4 py-3 whitespace-pre-line text-sm leading-relaxed ${message.role === 'user' ? 'rounded-br-md bg-stone-900 text-white dark:bg-white dark:text-black' : 'rounded-bl-md bg-stone-100 text-stone-700 dark:bg-neutral-900 dark:text-neutral-300'}`}>
+                    {message.text}
+                  </div>
+                  {message.offline && <p className="mt-1 px-1 text-[11px] text-stone-400 dark:text-neutral-500">Quick answer from the portfolio data</p>}
                 </div>
-                {message.role === 'user' && <User size={15} className="mb-2 shrink-0 text-gray-400" />}
+                {message.role === 'user' && <User size={15} className="mb-2 shrink-0 text-stone-400" />}
               </div>
             ))}
             {isThinking && (
               <div className="flex items-end gap-2">
-                <Bot size={15} className="mb-2 shrink-0 text-gray-400" />
-                <div className="rounded-2xl rounded-bl-md bg-gray-100 px-4 py-3 text-sm text-gray-500 dark:bg-neutral-900 dark:text-gray-400">
+                <Bot size={15} className="mb-2 shrink-0 text-stone-400" />
+                <div className="rounded-2xl rounded-bl-md bg-stone-100 px-4 py-3 text-sm text-stone-500 dark:bg-neutral-900 dark:text-neutral-400">
                   Thinking...
                 </div>
               </div>
             )}
             {messages.length === 1 && (
               <div className="space-y-2 pt-1">
-                <p className="px-1 text-[11px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Try asking</p>
-                {suggestions.map((suggestion) => <button key={suggestion} onClick={() => ask(suggestion)} className="block w-full rounded-xl border border-gray-200 px-3 py-2 text-left text-xs text-gray-600 transition-colors hover:border-gray-400 hover:text-black dark:border-neutral-800 dark:text-gray-400 dark:hover:border-neutral-600 dark:hover:text-white">{suggestion}</button>)}
+                <p className="px-1 font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-400">Try asking</p>
+                {suggestions.map((suggestion) => <button key={suggestion} onClick={() => ask(suggestion)} className="block w-full rounded-xl border border-stone-200 px-3 py-2 text-left text-xs text-stone-600 transition-colors hover:border-emerald-500 hover:text-stone-900 dark:border-neutral-800 dark:text-neutral-400 dark:hover:border-emerald-500 dark:hover:text-white">{suggestion}</button>)}
               </div>
             )}
             <div ref={endRef} />
           </div>
 
-          <form onSubmit={handleSubmit} className="border-t border-gray-100 p-3 dark:border-neutral-800">
-            <div className="flex items-center gap-2 rounded-2xl border border-gray-200 bg-gray-50 px-3 py-1 dark:border-neutral-800 dark:bg-neutral-900">
-              <input value={input} onChange={(event) => setInput(event.target.value)} data-autofocus placeholder="Ask about MNSBaanu..." aria-label="Ask the portfolio assistant" className="min-w-0 flex-1 bg-transparent py-2.5 text-base sm:text-sm text-gray-900 outline-none placeholder:text-gray-500 dark:text-white" />
-              <button type="submit" aria-label="Send question" disabled={!input.trim()} className="rounded-xl bg-black p-2 text-white transition-opacity hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-30 dark:bg-white dark:text-black">
+          <form onSubmit={handleSubmit} className="border-t border-stone-200 p-3 dark:border-neutral-800">
+            <div className="flex items-center gap-2 rounded-xl border border-stone-200 bg-stone-50 px-3 py-1 focus-within:border-stone-900 dark:border-neutral-800 dark:bg-neutral-900 dark:focus-within:border-neutral-300">
+              <input value={input} onChange={(event) => setInput(event.target.value)} data-autofocus maxLength={500} placeholder={`Ask about ${personalInfo.name}...`} aria-label="Ask the portfolio assistant" className="min-w-0 flex-1 bg-transparent py-2.5 text-base sm:text-sm text-stone-900 outline-none placeholder:text-stone-400 dark:text-white dark:placeholder:text-neutral-500" />
+              <button type="submit" aria-label="Send question" disabled={!input.trim()} className="rounded-lg bg-stone-900 p-2 text-white transition-opacity hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-30 dark:bg-white dark:text-black">
                 <Send size={15} />
               </button>
             </div>
+            <p className="mt-2 px-1 text-[11px] text-stone-400 dark:text-neutral-500">AI answers can contain mistakes. The CV has the verified details.</p>
           </form>
         </motion.section>
       )}

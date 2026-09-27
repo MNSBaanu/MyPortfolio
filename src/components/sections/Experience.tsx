@@ -3,7 +3,7 @@ import { brief, experience } from '../../data/portfolio'
 import BriefSection from '../layout/BriefSection'
 
 export default function Experience() {
-  const [current, intern] = experience
+  const [current, intern, independent] = experience
   const [company, place] = current.company.split(' - ')
 
   return (
@@ -39,6 +39,15 @@ export default function Experience() {
           </li>
         ))}
       </ul>
+
+      <div className="mt-8 border-t border-dashed border-stone-200 pt-6 dark:border-neutral-800">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h3 className="text-lg font-semibold tracking-tight">{independent.title}</h3>
+          <span className="font-mono text-xs text-stone-500 dark:text-neutral-500">{independent.period}</span>
+        </div>
+        <p className="text-sm text-stone-500 dark:text-neutral-400">{independent.company}</p>
+        <p className="mt-3 max-w-2xl leading-relaxed text-stone-600 dark:text-neutral-400">{independent.description}</p>
+      </div>
     </BriefSection>
   )
 }

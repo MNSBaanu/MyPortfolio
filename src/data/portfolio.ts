@@ -1,8 +1,10 @@
 export const personalInfo = {
   name: 'MNSBaanu',
+  fullName: 'Sahla Baanu',
+  website: 'https://mnsbaanu-portfolio.vercel.app',
   title: 'Aspiring Full-Stack Developer',
   description: 'Full-stack developer crafting end-to-end solutions. Passionate about building scalable applications and leveraging AI to solve real-world problems.',
-  cvSummary: 'Highly motivated and detail-oriented individual with strong problem-solving skills and a passion for technology. Adept at learning new concepts quickly and working in dynamic environments. Seeking opportunities to apply skills, contribute to projects, and grow professionally. Looking for opportunities near Kandy or Remote.',
+  cvSummary: 'Software engineer building web, desktop and mobile applications since 2023, now a Junior Software Engineer working with .NET, React, Next.js, React Native and AWS. Promoted from intern in 7 months, owning features from the database to the interface. Detail-oriented problem solver who picks up new technologies quickly. Open to roles in Kandy or remote.',
   profileImage: '/assets/brand/profile.webp',
   email: 'sbaanukghsbio21@gmail.com',
   phone: '+94 76 245 5654',
@@ -27,9 +29,9 @@ export const about = {
 }
 
 export const brief = {
-  pitch: 'I build web, desktop and mobile apps end to end, and I already ship them in production.',
-  summary: 'Shipping production software at a US company across .NET, React, Next.js, React Native and AWS. I own features from the database to the interface, and I finish what I start.',
-  promotion: 'Promoted from intern to Junior Software Engineer after 7 months.',
+  pitch: 'I build web, desktop and mobile apps end to end, and ship them to production.',
+  summary: 'Shipping production software at a US company across .NET, React, Next.js, React Native and AWS. I own features from the database to the interface.',
+  promotion: 'Promoted from intern to Junior Software Engineer in 7 months.',
   stack: [
     { label: 'At work', items: ['C#', '.NET', 'Next.js', 'React Native', 'AWS', 'Electron'] },
     { label: 'Web', items: ['TypeScript', 'React', 'Node.js', 'Express', 'Tailwind CSS'] },
@@ -191,6 +193,14 @@ export const experience = [
     tech: ['.NET', 'C#', 'React Native', 'Next.js', 'AWS', 'Electron'],
   },
   {
+    title: 'Independent Software Developer',
+    company: 'Self-employed',
+    period: '2023 - Present',
+    type: 'Part-time',
+    description: 'Designing and building academic and personal projects end to end across web, desktop and mobile, from planning and UI to APIs, databases and deployment. Over 20 projects shipped, including a café POS, a real-time donation platform and an AI shopping agent.',
+    tech: ['React', 'Next.js', 'Node.js', 'C#', 'Java', 'PHP', 'MongoDB'],
+  },
+  {
     title: 'Committee Member',
     company: 'ICBT Student Council, ICBT Kandy',
     period: 'Mar 2025 - Jul 2025',
@@ -299,7 +309,7 @@ export const projects = [
   },
   {
     title: 'LocalGro',
-    description: 'A role-based supply chain and warehouse management frontend for Sri Lanka\'s fresh produce industry. Built with React 19, Vite, and Tailwind CSS, it includes a landing page, demo login for Admin, Warehouse Manager, Delivery, Finance, and Customer roles, inventory CRUD with search and low-stock filters, and order and delivery flows. Currently a frontend prototype with mock data; backend and database integration planned next.',
+    description: 'A role-based supply chain and warehouse management frontend for Sri Lanka\'s fresh produce industry. Built with React 19, Vite, and Tailwind CSS, it includes a landing page, demo login for Admin, Warehouse Manager, Delivery, Finance, and Customer roles, inventory CRUD with search and low-stock filters, and order and delivery flows. Built frontend-first with mock data, with backend and database integration next on the roadmap.',
     tech: ['React', 'Vite', 'Tailwind CSS', 'React Router'],
     period: 'Feb 2026 – Present',
     academic: false,
