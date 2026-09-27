@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { FileText, Github, Linkedin, Mail, MapPin, MessageCircle, Moon, Sun } from 'lucide-react'
 import { experience, personalInfo } from '../../data/portfolio'
 import { useTheme } from '../../context/ThemeContext'
@@ -15,6 +15,8 @@ export const briefSections = [
   { id: 'contact', title: 'Contact' },
 ]
 
+const updated = new Date().toLocaleString('en-US', { month: 'short', year: 'numeric' })
+
 const linkClass =
   'flex items-center justify-center gap-2 rounded-xl border border-stone-200 px-3 py-2.5 text-sm font-medium text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-300 dark:hover:text-white'
 
@@ -22,15 +24,26 @@ export default function IdentityPanel() {
   const { theme, toggleTheme } = useTheme()
   const [showCV, setShowCV] = useState(false)
   const [chatOpen, setChatOpen] = useState(false)
+  const [showBar, setShowBar] = useState(false)
+  const actionsRef = useRef<HTMLDivElement>(null)
   const role = experience[0]
+
+  useEffect(() => {
+    const actions = actionsRef.current
+    if (!actions) return
+    const observer = new IntersectionObserver(([entry]) => setShowBar(!entry.isIntersecting && entry.boundingClientRect.top < 0))
+    observer.observe(actions)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <aside className="lg:sticky lg:top-10 lg:self-start">
       <div className="rounded-2xl border border-stone-200 bg-white p-5 sm:p-6 dark:border-neutral-800 dark:bg-neutral-900">
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-stone-500 dark:text-neutral-400">
-            Candidate brief
-          </span>
+          <div className="font-mono uppercase">
+            <p className="text-[11px] tracking-[0.2em] text-stone-500 dark:text-neutral-400">Candidate brief</p>
+            <p className="mt-0.5 text-[10px] tracking-[0.15em] text-stone-400 dark:text-neutral-500">Updated {updated}</p>
+          </div>
           <button
             onClick={toggleTheme}
             aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
@@ -68,7 +81,7 @@ export default function IdentityPanel() {
           </p>
         </div>
 
-        <div className="mt-6 grid grid-cols-2 gap-2">
+        <div ref={actionsRef} className="mt-6 grid grid-cols-2 gap-2">
           <button
             onClick={() => setShowCV(true)}
             className="col-span-2 flex items-center justify-center gap-2 rounded-xl bg-stone-900 px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-85 dark:bg-white dark:text-black"
@@ -113,6 +126,26 @@ export default function IdentityPanel() {
             ))}
           </ol>
         </nav>
+      </div>
+
+      <div
+        aria-hidden={!showBar}
+        className={`fixed inset-x-0 bottom-0 z-50 border-t border-stone-200 bg-white/90 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur transition-transform duration-300 lg:hidden dark:border-neutral-800 dark:bg-neutral-900/90 ${showBar ? 'translate-y-0' : 'translate-y-full'}`}
+      >
+        <div className="mx-auto flex max-w-md gap-2">
+          <button
+            onClick={() => setShowCV(true)}
+            tabIndex={showBar ? 0 : -1}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-stone-900 px-4 py-3 text-sm font-semibold text-white dark:bg-white dark:text-black"
+          >
+            <FileText size={16} />
+            View CV
+          </button>
+          <a href={`mailto:${personalInfo.email}`} tabIndex={showBar ? 0 : -1} className={`flex-1 ${linkClass} bg-white dark:bg-neutral-900`}>
+            <Mail size={16} />
+            Email me
+          </a>
+        </div>
       </div>
 
       <ChatAssistant open={chatOpen} onClose={() => setChatOpen(false)} />

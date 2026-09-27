@@ -20,7 +20,7 @@ function App() {
           <SEO />
           <Toaster position="top-right" />
           <div className="min-h-screen bg-stone-100 text-stone-900 dark:bg-neutral-950 dark:text-neutral-100">
-            <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6 sm:py-8 lg:grid lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-8 lg:px-8 lg:py-10">
+            <div className="mx-auto max-w-6xl px-4 py-4 pb-24 sm:px-6 sm:py-8 sm:pb-24 lg:grid lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-8 lg:px-8 lg:py-10">
               <IdentityPanel />
               <main className="mt-4 space-y-4 lg:mt-0">
                 <Summary />

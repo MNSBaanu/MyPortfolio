@@ -28,7 +28,7 @@ export const about = {
 
 export const brief = {
   pitch: 'I build web, desktop and mobile apps end to end, and I already ship them in production.',
-  summary: 'Junior Software Engineer at a US software company, working across .NET, React, Next.js, React Native and AWS. I own features from the database to the interface, and I finish what I start.',
+  summary: 'Shipping production software at a US company across .NET, React, Next.js, React Native and AWS. I own features from the database to the interface, and I finish what I start.',
   promotion: 'Promoted from intern to Junior Software Engineer after 7 months.',
   stack: [
     { label: 'At work', items: ['C#', '.NET', 'Next.js', 'React Native', 'AWS', 'Electron'] },
