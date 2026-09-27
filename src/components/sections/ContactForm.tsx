@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { Send } from 'lucide-react'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -110,136 +109,43 @@ export default function ContactForm() {
     }
 
     return (
-        <div
-            className="box-border min-h-[100svh] md:h-[100svh] pb-20 md:pb-0 px-6 sm:px-8 bg-gray-50 dark:bg-neutral-900 relative z-10 rounded-t-[3rem] sm:rounded-t-[4rem] border-t border-gray-100 dark:border-neutral-800"
-            style={{
-                                paddingTop: 'calc(var(--header-height, 0px) + 2rem)',
-            }}
-        >
-            <div className="h-full max-w-7xl mx-auto flex flex-col overflow-y-auto no-scrollbar">
-                <div className="flex flex-col items-center my-auto pb-12 sm:pb-20">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-10"
-                    >
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-gray-100 mb-4 tracking-tight">
-                            Send Message
-                        </h2>
-                        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                            Share a few details and I’ll get back to you
-                        </p>
-                    </motion.div>
-
-                    <div className="w-full flex items-start justify-center">
-                        <div className="bg-white dark:bg-black border border-gray-300 dark:border-neutral-800 rounded-lg w-full max-w-md shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl">
-                            <div className="bg-black text-white px-4 py-3 text-lg font-medium border-b border-transparent dark:border-neutral-800">
-                                Contact Form
-                            </div>
-
-                            <form onSubmit={handleSubmit} className="p-4 space-y-4">
-                                {/* Honeypot field, visually hidden from real users */}
-                                <div aria-hidden="true" className="hidden" style={{ display: 'none' }}>
-                                    <input
-                                        type="text"
-                                        id="botField"
-                                        name="botField"
-                                        value={formData.botField}
-                                        onChange={handleChange}
-                                        tabIndex={-1}
-                                        autoComplete="off"
-                                    />
-                                </div>
-                                <div className="grid grid-cols-1 gap-4">
-                                    <div>
-                                        <label htmlFor="name" className="block mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
-                                        <input
-                                            type="text"
-                                            id="name"
-                                            name="name"
-                                            value={formData.name}
-                                            onChange={handleChange}
-                                            required
-                                            maxLength={100}
-                                            className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-base sm:text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
-                                            placeholder="Your full name"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="email" className="block mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Email Address</label>
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            name="email"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            required
-                                            maxLength={100}
-                                            className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-base sm:text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
-                                            placeholder="your.email@example.com"
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label htmlFor="subject" className="block mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Subject</label>
-                                    <input
-                                        type="text"
-                                        id="subject"
-                                        name="subject"
-                                        value={formData.subject}
-                                        onChange={handleChange}
-                                        required
-                                        maxLength={200}
-                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-base sm:text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300"
-                                        placeholder="What is this about?"
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="message" className="block mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                        required
-                                        maxLength={2000}
-                                        rows={4}
-                                        className="w-full px-4 py-3 border border-gray-200 dark:border-neutral-800 rounded-xl text-base sm:text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 bg-gray-50 dark:bg-black focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent outline-none transition-all duration-300 resize-none"
-                                        placeholder="Your detailed message..."
-                                    />
-                                </div>
-
-                                <div className="flex items-center justify-between pt-2">
-                                    <div className="hidden sm:block text-xs text-gray-500 dark:text-gray-400">
-                                        I'll respond as soon as possible.
-                                    </div>
-                                    <motion.button
-                                        type="submit"
-                                        disabled={isSubmitting}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                        className="w-full sm:w-auto px-8 py-3 bg-black dark:bg-white text-white dark:text-black text-sm font-bold rounded-xl cursor-pointer border-none shadow-lg transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50"
-                                    >
-                                        {isSubmitting ? (
-                                            <>
-                                                <div className="w-4 h-4 border-2 border-white/30 border-t-white dark:border-black/30 dark:border-t-black rounded-full animate-spin" aria-hidden="true" />
-                                                Sending...
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Send className="w-4 h-4" />
-                                                Send Message
-                                            </>
-                                        )}
-                                    </motion.button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+        <form onSubmit={handleSubmit} className="space-y-3">
+            <div aria-hidden="true" style={{ display: 'none' }}>
+                <input
+                    type="text"
+                    name="botField"
+                    value={formData.botField}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                />
+            </div>
+            <div className="grid gap-3">
+                <div>
+                    <label htmlFor="name" className="mb-1 block font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-500">Name</label>
+                    <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required maxLength={100} className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2.5 text-base text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-900 sm:text-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-neutral-300" placeholder="Your name" />
+                </div>
+                <div>
+                    <label htmlFor="email" className="mb-1 block font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-500">Email</label>
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required maxLength={100} className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2.5 text-base text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-900 sm:text-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-neutral-300" placeholder="you@company.com" />
                 </div>
             </div>
-        </div>
+            <div>
+                <label htmlFor="subject" className="mb-1 block font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-500">Subject</label>
+                <input type="text" id="subject" name="subject" value={formData.subject} onChange={handleChange} required maxLength={200} className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2.5 text-base text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-900 sm:text-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-neutral-300" placeholder="Role or opportunity" />
+            </div>
+            <div>
+                <label htmlFor="message" className="mb-1 block font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-500">Message</label>
+                <textarea id="message" name="message" value={formData.message} onChange={handleChange} required maxLength={2000} rows={4} className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2.5 text-base text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-900 sm:text-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-neutral-300 resize-none" placeholder="A few details about the role" />
+            </div>
+            <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-stone-900 px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-85 disabled:opacity-50 dark:bg-white dark:text-black"
+            >
+                <Send className="h-4 w-4" />
+                {isSubmitting ? 'Sending...' : 'Send message'}
+            </button>
+        </form>
     )
 }

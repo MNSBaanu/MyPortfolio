@@ -13,7 +13,7 @@
 @layer base {
   html {
     @apply scroll-smooth no-scrollbar;
-    scroll-padding-top: var(--header-height, 80px);
+    scroll-padding-top: 1.5rem;
   }
 
   body {

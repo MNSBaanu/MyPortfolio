@@ -17,12 +17,61 @@ export const personalInfo = {
 export const about = {
   description1: "I build things that Work & Look Good doing it. From database to UI, I care about every Layer of the Stack and every Pixel of the Interface.",
   description2: "Challenges don't slow me down, they sharpen my Focus. I'm Driven by the belief that great Software isn't just Functional. it's Thoughtful, fast, and Built to Last.",
-  description3: "Currently pursuing my BEng in Software Engineering while working as a Junior Software Engineer — turning classroom theory into real production code, one commit at a time.",
+  description3: "Currently pursuing my BEng in Software Engineering while working as a Junior Software Engineer - turning classroom theory into real production code, one commit at a time.",
   identityTags: [
     'Junior Software Engineer',
     'Full-Stack Developer',
     'AI Enthusiast',
     'UI / UX Focused',
+  ],
+}
+
+export const brief = {
+  pitch: 'I build web, desktop and mobile apps end to end, and I already ship them in production.',
+  summary: 'Junior Software Engineer at a US software company, working across .NET, React, Next.js, React Native and AWS. I own features from the database to the interface, and I finish what I start.',
+  promotion: 'Promoted from intern to Junior Software Engineer after 7 months.',
+  stack: [
+    { label: 'At work', items: ['C#', '.NET', 'Next.js', 'React Native', 'AWS', 'Electron'] },
+    { label: 'Web', items: ['TypeScript', 'React', 'Node.js', 'Express', 'Tailwind CSS'] },
+    { label: 'Data', items: ['SQL Server', 'MongoDB', 'MySQL', 'Supabase', 'Firebase', 'SQLite'] },
+  ],
+  projectSummaries: [
+    {
+      title: 'AromaCafe POS',
+      hook: 'An offline-first point of sale for cafés, shipped as a desktop app.',
+      highlights: [
+        'Runs fully offline on SQLite with no server to maintain',
+        'Stock-aware catalog, cart and checkout with automatic change calculation',
+        'Sales history with itemized receipts, packaged as a standalone Electron build',
+      ],
+    },
+    {
+      title: 'SmartBee',
+      hook: 'A campus-life platform for students across web, mobile and API.',
+      highlights: [
+        'React web app and React Native + Expo mobile app on one shared API',
+        'Node.js/Express API secured with JWT and validated with Zod',
+        'Supabase (PostgreSQL) persistence with a built-in AI assistant',
+      ],
+    },
+    {
+      title: 'ShareLanka',
+      hook: 'A real-time community for donating and requesting items across Sri Lanka.',
+      highlights: [
+        'Live chat with Socket.io, reviews, wishlists and content reporting',
+        'Admin moderation with bans, suspensions and appeals',
+        'Firebase auth (Google OAuth and email) with Cloudinary media',
+      ],
+    },
+    {
+      title: 'Kapruka ASA',
+      hook: "An AI shopping agent for Sri Lanka's largest e-commerce platform.",
+      highlights: [
+        'Built for the Kapruka Agent Challenge 2026',
+        'Finds products, quotes delivery and completes guest checkout in conversation',
+        'Uses the public Kapruka MCP for live products, delivery quotes and checkout',
+      ],
+    },
   ],
 }
 
@@ -289,7 +338,7 @@ export const projects = [
   },
   {
     title: 'ලක් Seva (LakSeva)',
-    description: 'A community-driven local service marketplace for Sri Lanka that connects people with trusted local providers — electricians, tutors, caterers, photographers, tailors, and more. Features search by category or location, provider profiles, ratings and reviews, and multi-language support in Sinhala, Tamil, and English.',
+    description: 'A community-driven local service marketplace for Sri Lanka that connects people with trusted local providers - electricians, tutors, caterers, photographers, tailors, and more. Features search by category or location, provider profiles, ratings and reviews, and multi-language support in Sinhala, Tamil, and English.',
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Netlify'],
     period: '2026 – Present',
     academic: false,
@@ -302,7 +351,7 @@ export const projects = [
   },
   {
     title: 'Talk With EMO',
-    description: 'An emotional intelligence web experience where you talk to the emotion you\'re feeling — not about it. Built around five core emotions inspired by Pixar\'s Inside Out, each with its own personality and conversational style. Features cinematic parallax scrolling with GSAP and Lenis, immersive character sections, in-browser chat, and a short emotion quiz.',
+    description: 'An emotional intelligence web experience where you talk to the emotion you\'re feeling - not about it. Built around five core emotions inspired by Pixar\'s Inside Out, each with its own personality and conversational style. Features cinematic parallax scrolling with GSAP and Lenis, immersive character sections, in-browser chat, and a short emotion quiz.',
     tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'GSAP'],
     period: '2026 – Present',
     academic: false,
@@ -315,7 +364,7 @@ export const projects = [
   },
   {
     title: 'Gather',
-    description: 'A real-time media collection platform that lets event attendees upload photos and videos via a unique link or QR code — organized, moderated, and ready to share. Hosts manage upload permissions and content visibility, while attendees can like, comment, and react. Includes a live slideshow mode for event screens and private gallery sharing.',
+    description: 'A real-time media collection platform that lets event attendees upload photos and videos via a unique link or QR code - organized, moderated, and ready to share. Hosts manage upload permissions and content visibility, while attendees can like, comment, and react. Includes a live slideshow mode for event screens and private gallery sharing.',
     tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Socket.io', 'Cloudinary'],
     period: '2026 – Present',
     academic: false,
@@ -380,7 +429,7 @@ export const projects = [
   },
   {
     title: 'Kapruka ASA',
-    description: 'An AI shopping agent built for the Kapruka Agent Challenge 2026 — a conversational commerce experience on Sri Lanka\'s largest e-commerce platform. Helps customers discover products, check delivery, and complete guest checkout through natural conversation using the public Kapruka MCP with live products, delivery quotes, and checkout.',
+    description: 'An AI shopping agent built for the Kapruka Agent Challenge 2026 - a conversational commerce experience on Sri Lanka\'s largest e-commerce platform. Helps customers discover products, check delivery, and complete guest checkout through natural conversation using the public Kapruka MCP with live products, delivery quotes, and checkout.',
     tech: ['AI Agents', 'MCP', 'Conversational UI', 'E-commerce'],
     period: '2026',
     academic: false,

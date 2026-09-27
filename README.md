@@ -53,8 +53,8 @@ Other scripts: `npm run build`, `npm run preview`, `npm run typecheck`.
 api/chat.ts                 Vercel function for the chat assistant
 public/assets/brand/        Logo, favicon, icons, profile and OG image
 public/assets/projects/     Project screenshots (WebP)
-src/components/layout/      Header, Footer, SocialSidebar, LoadingScreen, SEO
-src/components/sections/    Page sections (Hero, About, Projects, ...)
+src/components/layout/      Identity panel, section wrapper, SEO
+src/components/sections/    Brief sections (Summary, Experience, Work, Stack, ...)
 src/components/overlays/    CV viewer and chat assistant
 src/data/portfolio.ts       All portfolio content
 ```
@@ -70,7 +70,7 @@ You can update:
 * Personal information
 * Skills and technologies
 * Education and experience
-* Projects
+* Projects (the page shows a random 4 on each visit; `brief.projectSummaries` holds hand-written card text)
 * Certifications
 * Social links
 
