@@ -87,3 +87,9 @@ playwright-report/
 .parcel-cache/
 .eslintcache
 .stylelintcache
+
+# ── Obsidian ──────────────────────────────────────────────────
+# Vault settings and the local project note (<ProjectName>.md)
+.obsidian/
+.trash/
+/MyPortfolio.md
