@@ -483,9 +483,7 @@ export const projects = [
     period: 'May – Jul 2025',
     academic: true,
     images: [
-      '/assets/projects/luxe-vista-1.webp',
-      '/assets/projects/luxe-vista-2.webp',
-      '/assets/projects/luxe-vista-3.webp',
+      '/assets/projects/luxe-vista.webp',
     ],
     liveUrl: '#',
     githubUrl: 'https://github.com/MNSBaanu/LuxeVista',
@@ -509,9 +507,7 @@ export const projects = [
     period: 'Sep – Dec 2024',
     academic: true,
     images: [
-      '/assets/projects/pawsshop-1.webp',
-      '/assets/projects/pawsshop-2.webp',
-      '/assets/projects/pawsshop-3.webp',
+      '/assets/projects/pawsshop.webp',
     ],
     liveUrl: '#',
     githubUrl: 'https://github.com/MNSBaanu/PawsShop',
