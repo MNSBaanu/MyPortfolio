@@ -3,20 +3,20 @@ import { AnimatePresence, MotionConfig } from 'framer-motion'
 import { Toaster } from 'react-hot-toast'
 import { HelmetProvider } from 'react-helmet-async'
 import { ThemeProvider } from './context/ThemeContext'
-import LoadingScreen from './components/LoadingScreen'
-import SEO from './components/SEO'
-import Header from './components/Header'
-import SocialSidebar from './components/SocialSidebar'
-import Hero from './components/Hero'
+import LoadingScreen from './components/layout/LoadingScreen'
+import SEO from './components/layout/SEO'
+import Header from './components/layout/Header'
+import SocialSidebar from './components/layout/SocialSidebar'
+import Hero from './components/sections/Hero'
 // Lazy load below-the-fold sections to reduce initial JS bundle size and improve page load performance.
-const About = lazy(() => import('./components/About'))
-const Experience = lazy(() => import('./components/Experience'))
-const Education = lazy(() => import('./components/Education'))
-const Skills = lazy(() => import('./components/Skills'))
-const Projects = lazy(() => import('./components/Projects'))
-const Contact = lazy(() => import('./components/Contact'))
-const ContactForm = lazy(() => import('./components/ContactForm'))
-const Footer = lazy(() => import('./components/Footer'))
+const About = lazy(() => import('./components/sections/About'))
+const Experience = lazy(() => import('./components/sections/Experience'))
+const Education = lazy(() => import('./components/sections/Education'))
+const Skills = lazy(() => import('./components/sections/Skills'))
+const Projects = lazy(() => import('./components/sections/Projects'))
+const Contact = lazy(() => import('./components/sections/Contact'))
+const ContactForm = lazy(() => import('./components/sections/ContactForm'))
+const Footer = lazy(() => import('./components/layout/Footer'))
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -24,14 +24,14 @@ function App() {
   useEffect(() => {
     // Prefetch lazy-loaded section chunks while the loading screen is visible.
     const prefetchComponents = () => {
-      import('./components/About')
-      import('./components/Experience')
-      import('./components/Education')
-      import('./components/Skills')
-      import('./components/Projects')
-      import('./components/Contact')
-      import('./components/ContactForm')
-      import('./components/Footer')
+      import('./components/sections/About')
+      import('./components/sections/Experience')
+      import('./components/sections/Education')
+      import('./components/sections/Skills')
+      import('./components/sections/Projects')
+      import('./components/sections/Contact')
+      import('./components/sections/ContactForm')
+      import('./components/layout/Footer')
     }
     prefetchComponents()
 

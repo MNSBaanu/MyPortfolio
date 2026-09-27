@@ -1,8 +1,8 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, Sun, Moon, X, Github, Linkedin, Mail } from 'lucide-react'
-import { personalInfo } from '../data/portfolio'
-import { useTheme } from '../context/ThemeContext'
+import { personalInfo } from '../../data/portfolio'
+import { useTheme } from '../../context/ThemeContext'
 
 const navLinks = [
   { name: 'Home',     href: '#home'     },

@@ -1,8 +1,8 @@
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Bot, Send, Sparkles, User, X } from 'lucide-react'
-import { about, education, experience, personalInfo, projects, skillCategories } from '../data/portfolio'
-import { useDialog } from '../hooks/useDialog'
+import { about, education, experience, personalInfo, projects, skillCategories } from '../../data/portfolio'
+import { useDialog } from '../../hooks/useDialog'
 
 type Message = {
   id: number

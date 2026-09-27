@@ -1,7 +1,7 @@
 import { animate, motion, useMotionValue, useReducedMotion, useTransform } from 'framer-motion'
 import { Pause, Play } from 'lucide-react'
-import { skillCategories } from '../data/portfolio'
-import { useTheme } from '../context/ThemeContext'
+import { skillCategories } from '../../data/portfolio'
+import { useTheme } from '../../context/ThemeContext'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 type Skill = { name: string; icon?: string }

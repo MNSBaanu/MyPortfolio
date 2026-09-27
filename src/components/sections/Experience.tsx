@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { experience as experienceData } from '../data/portfolio'
+import { experience as experienceData } from '../../data/portfolio'
 
 export default function Experience() {
   const [selected, setSelected] = useState<number | null>(0)

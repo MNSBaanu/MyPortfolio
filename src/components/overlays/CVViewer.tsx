@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion'
 import { X, Download } from 'lucide-react'
-import { personalInfo, skills, projects, experience, education, certifications } from '../data/portfolio'
+import { personalInfo, skills, projects, experience, education, certifications } from '../../data/portfolio'
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { useDialog } from '../hooks/useDialog'
+import { useDialog } from '../../hooks/useDialog'
 
 interface CVViewerProps {
   isOpen: boolean

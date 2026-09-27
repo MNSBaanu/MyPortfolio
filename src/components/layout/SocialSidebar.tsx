@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Github, Linkedin, Mail, ArrowUp, MessageCircle } from 'lucide-react'
-import { personalInfo } from '../data/portfolio'
+import { personalInfo } from '../../data/portfolio'
 import { useState, useEffect } from 'react'
-import ChatAssistant from './ChatAssistant'
+import ChatAssistant from '../overlays/ChatAssistant'
 
 const SocialSidebar = () => {
   const [showBackToTop, setShowBackToTop] = useState(false)

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { education as educationData } from '../data/portfolio'
+import { education as educationData } from '../../data/portfolio'
 
 export default function Education() {
   return (

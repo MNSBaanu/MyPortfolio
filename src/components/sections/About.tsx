@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { about, projects, experience, skillCategories } from '../data/portfolio'
+import { about, projects, experience, skillCategories } from '../../data/portfolio'
 
 const descriptions = [about.description1, about.description2, about.description3]
 

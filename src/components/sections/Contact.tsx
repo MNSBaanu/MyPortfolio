@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, Clock } from 'lucide-react'
-import { personalInfo } from '../data/portfolio'
+import { personalInfo } from '../../data/portfolio'
 
 export default function Contact() {
   const contactDetails = [

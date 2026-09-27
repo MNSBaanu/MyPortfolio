@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion'
 import { useState, lazy, Suspense } from 'react'
 import { ArrowRight, FileText } from 'lucide-react'
-import { personalInfo } from '../data/portfolio'
+import { personalInfo } from '../../data/portfolio'
 
-const CVViewer = lazy(() => import('./CVViewer'))
+const CVViewer = lazy(() => import('../overlays/CVViewer'))
 
 export default function Hero() {
   const [showCVViewer, setShowCVViewer] = useState(false)

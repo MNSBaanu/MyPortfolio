@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async'
-import { personalInfo } from '../data/portfolio'
+import { personalInfo } from '../../data/portfolio'
 
 export default function SEO() {
   const structuredData = {

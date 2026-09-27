@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { personalInfo } from '../data/portfolio'
+import { personalInfo } from '../../data/portfolio'
 import { useRef } from 'react'
 
 export default function Footer() {
