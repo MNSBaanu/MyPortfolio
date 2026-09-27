@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { MotionConfig } from 'framer-motion'
 import { Toaster } from 'react-hot-toast'
 import { HelmetProvider } from 'react-helmet-async'
@@ -5,6 +6,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import { personalInfo } from './data/portfolio'
 import SEO from './components/layout/SEO'
 import IdentityPanel from './components/layout/IdentityPanel'
+import ChatAssistant from './components/overlays/ChatAssistant'
 import Summary from './components/sections/Summary'
 import Experience from './components/sections/Experience'
 import Work from './components/sections/Work'
@@ -13,6 +15,8 @@ import Education from './components/sections/Education'
 import Contact from './components/sections/Contact'
 
 function App() {
+  const [chatOpen, setChatOpen] = useState(false)
+
   return (
     <HelmetProvider>
       <ThemeProvider>
@@ -21,8 +25,9 @@ function App() {
           <Toaster position="top-right" />
           <div className="min-h-screen bg-stone-100 text-stone-900 dark:bg-neutral-950 dark:text-neutral-100">
             <div className="mx-auto max-w-6xl px-4 py-4 pb-24 sm:px-6 sm:py-8 sm:pb-24 lg:grid lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-8 lg:px-8 lg:py-10">
-              <IdentityPanel />
+              <IdentityPanel chatOpen={chatOpen} onToggleChat={() => setChatOpen((open) => !open)} />
               <main className="mt-4 space-y-4 lg:mt-0">
+                <ChatAssistant open={chatOpen} onClose={() => setChatOpen(false)} />
                 <Summary />
                 <Experience />
                 <Work />

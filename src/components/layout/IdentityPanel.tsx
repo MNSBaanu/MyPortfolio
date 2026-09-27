@@ -2,7 +2,6 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { FileText, Github, Linkedin, Mail, MapPin, MessageCircle, Moon, Sun } from 'lucide-react'
 import { experience, personalInfo } from '../../data/portfolio'
 import { useTheme } from '../../context/ThemeContext'
-import ChatAssistant from '../overlays/ChatAssistant'
 
 const CVViewer = lazy(() => import('../overlays/CVViewer'))
 
@@ -20,10 +19,14 @@ const updated = new Date().toLocaleString('en-US', { month: 'short', year: 'nume
 const linkClass =
   'flex items-center justify-center gap-2 rounded-xl border border-stone-200 px-3 py-2.5 text-sm font-medium text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-300 dark:hover:text-white'
 
-export default function IdentityPanel() {
+type IdentityPanelProps = {
+  chatOpen: boolean
+  onToggleChat: () => void
+}
+
+export default function IdentityPanel({ chatOpen, onToggleChat }: IdentityPanelProps) {
   const { theme, toggleTheme } = useTheme()
   const [showCV, setShowCV] = useState(false)
-  const [chatOpen, setChatOpen] = useState(false)
   const [showBar, setShowBar] = useState(false)
   const actionsRef = useRef<HTMLDivElement>(null)
   const role = experience[0]
@@ -77,7 +80,7 @@ export default function IdentityPanel() {
           </p>
           <p className="flex items-center gap-2 text-stone-600 dark:text-neutral-400">
             <MapPin size={14} className="shrink-0" />
-            {personalInfo.location} · On-site in Kandy or remote
+            {personalInfo.location}
           </p>
         </div>
 
@@ -102,7 +105,7 @@ export default function IdentityPanel() {
             GitHub
           </a>
           <button
-            onClick={() => setChatOpen((open) => !open)}
+            onClick={onToggleChat}
             aria-expanded={chatOpen}
             className="col-span-2 flex items-center justify-center gap-2 rounded-xl border border-dashed border-emerald-500/60 px-3 py-2.5 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-50 dark:text-emerald-400 dark:hover:bg-emerald-500/10"
           >
@@ -146,7 +149,7 @@ export default function IdentityPanel() {
             Email me
           </a>
           <button
-            onClick={() => setChatOpen((open) => !open)}
+            onClick={onToggleChat}
             tabIndex={showBar ? 0 : -1}
             aria-label={chatOpen ? 'Close AI assistant' : 'Ask my AI assistant'}
             aria-expanded={chatOpen}
@@ -157,7 +160,6 @@ export default function IdentityPanel() {
         </div>
       </div>
 
-      <ChatAssistant open={chatOpen} onClose={() => setChatOpen(false)} />
       {showCV && (
         <Suspense fallback={null}>
           <CVViewer isOpen={showCV} onClose={() => setShowCV(false)} />

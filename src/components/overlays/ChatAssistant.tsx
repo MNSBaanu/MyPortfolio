@@ -130,13 +130,19 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
   const [messages, setMessages] = useState<Message[]>([
     { id: 1, role: 'assistant', text: `Hi! I’m ${personalInfo.name}'s portfolio assistant. Ask me anything about their work, skills, or background.` },
   ])
-  const endRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   const dialogRef = useRef<HTMLElement>(null)
   useDialog(dialogRef, onClose, open, false)
 
   useEffect(() => {
-    if (open) endRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, open])
+    if (open) dialogRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [open])
+
+  useEffect(() => {
+    const list = listRef.current
+    if (list) list.scrollTop = list.scrollHeight
+  }, [messages, isThinking, open])
 
   const ask = async (question: string) => {
     const trimmed = question.trim()
@@ -154,6 +160,7 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
         body: JSON.stringify({
           messages: conversation.map(({ role, text }) => ({ role, content: text })),
         }),
+        signal: AbortSignal.timeout(20000),
       })
 
       if (response.status === 429) {
@@ -176,22 +183,23 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
     void ask(input)
+    inputRef.current?.focus()
   }
 
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {open && (
         <motion.section
           ref={dialogRef}
-          role="dialog"
-          aria-label="Portfolio assistant"
-          initial={{ opacity: 0, scale: 0.92, x: 18, y: 8 }}
-          animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-          exit={{ opacity: 0, scale: 0.92, x: 18, y: 8 }}
+          id="assistant"
+          aria-label="AI assistant"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
-          className="pointer-events-auto fixed right-4 bottom-24 sm:right-6 sm:bottom-6 z-[120] flex h-[min(590px,calc(100vh-8rem))] w-[calc(100vw-2rem)] max-w-[390px] flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-2xl sm:h-[min(590px,calc(100vh-3rem))] dark:border-neutral-800 dark:bg-neutral-950"
+          className="scroll-mt-6 overflow-hidden rounded-2xl border border-emerald-500/40 bg-white dark:border-emerald-500/30 dark:bg-neutral-900"
         >
-          <div className="flex items-center justify-between border-b border-stone-200 bg-stone-50 px-5 py-4 dark:border-neutral-800 dark:bg-neutral-900">
+          <div className="flex items-center justify-between border-b border-stone-200 bg-stone-50 px-5 py-4 sm:px-6 dark:border-neutral-800 dark:bg-neutral-900">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-600 text-white">
                 <Sparkles size={18} />
@@ -201,17 +209,17 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
                 <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-400">AI assistant</p>
               </div>
             </div>
-            <button onClick={onClose} aria-label="Close portfolio assistant" className="rounded-full p-2 text-stone-500 transition-colors hover:bg-stone-200 hover:text-stone-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white">
+            <button onClick={onClose} aria-label="Close AI assistant" className="rounded-full p-2 text-stone-500 transition-colors hover:bg-stone-200 hover:text-stone-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white">
               <X size={18} />
             </button>
           </div>
 
-          <div className="flex-1 space-y-4 overflow-y-auto px-4 py-5" aria-live="polite">
+          <div ref={listRef} className="h-[min(420px,55vh)] space-y-4 overflow-y-auto px-4 py-5 sm:px-6" aria-live="polite">
             {messages.map((message) => (
               <div key={message.id} className={`flex items-end gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 {message.role === 'assistant' && <Bot size={15} className="mb-2 shrink-0 text-stone-400" />}
                 <div className="max-w-[84%]">
-                  <div className={`rounded-2xl px-4 py-3 whitespace-pre-line text-sm leading-relaxed ${message.role === 'user' ? 'rounded-br-md bg-stone-900 text-white dark:bg-white dark:text-black' : 'rounded-bl-md bg-stone-100 text-stone-700 dark:bg-neutral-900 dark:text-neutral-300'}`}>
+                  <div className={`rounded-2xl px-4 py-3 whitespace-pre-line break-words text-sm leading-relaxed ${message.role === 'user' ? 'rounded-br-md bg-stone-900 text-white dark:bg-white dark:text-black' : 'rounded-bl-md bg-stone-100 text-stone-700 dark:bg-neutral-800 dark:text-neutral-300'}`}>
                     {message.text}
                   </div>
                   {message.offline && <p className="mt-1 px-1 text-[11px] text-stone-400 dark:text-neutral-500">Quick answer from the portfolio data</p>}
@@ -222,7 +230,7 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
             {isThinking && (
               <div className="flex items-end gap-2">
                 <Bot size={15} className="mb-2 shrink-0 text-stone-400" />
-                <div className="rounded-2xl rounded-bl-md bg-stone-100 px-4 py-3 text-sm text-stone-500 dark:bg-neutral-900 dark:text-neutral-400">
+                <div className="rounded-2xl rounded-bl-md bg-stone-100 px-4 py-3 text-sm text-stone-500 dark:bg-neutral-800 dark:text-neutral-400">
                   Thinking...
                 </div>
               </div>
@@ -230,16 +238,25 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
             {messages.length === 1 && (
               <div className="space-y-2 pt-1">
                 <p className="px-1 font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-400">Try asking</p>
-                {suggestions.map((suggestion) => <button key={suggestion} onClick={() => ask(suggestion)} className="block w-full rounded-xl border border-stone-200 px-3 py-2 text-left text-xs text-stone-600 transition-colors hover:border-emerald-500 hover:text-stone-900 dark:border-neutral-800 dark:text-neutral-400 dark:hover:border-emerald-500 dark:hover:text-white">{suggestion}</button>)}
+                <div className="grid gap-2 sm:grid-cols-3">
+                  {suggestions.map((suggestion) => (
+                    <button
+                      key={suggestion}
+                      onClick={() => { void ask(suggestion); inputRef.current?.focus() }}
+                      className="rounded-xl border border-stone-200 px-3 py-2 text-left text-xs text-stone-600 transition-colors hover:border-emerald-500 hover:text-stone-900 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-emerald-500 dark:hover:text-white"
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
-            <div ref={endRef} />
           </div>
 
-          <form onSubmit={handleSubmit} className="border-t border-stone-200 p-3 dark:border-neutral-800">
-            <div className="flex items-center gap-2 rounded-xl border border-stone-200 bg-stone-50 px-3 py-1 focus-within:border-stone-900 dark:border-neutral-800 dark:bg-neutral-900 dark:focus-within:border-neutral-300">
-              <input value={input} onChange={(event) => setInput(event.target.value)} data-autofocus maxLength={500} placeholder={`Ask about ${personalInfo.name}...`} aria-label="Ask the portfolio assistant" className="min-w-0 flex-1 bg-transparent py-2.5 text-base sm:text-sm text-stone-900 outline-none placeholder:text-stone-400 dark:text-white dark:placeholder:text-neutral-500" />
-              <button type="submit" aria-label="Send question" disabled={!input.trim()} className="rounded-lg bg-stone-900 p-2 text-white transition-opacity hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-30 dark:bg-white dark:text-black">
+          <form onSubmit={handleSubmit} className="border-t border-stone-200 p-3 sm:px-6 sm:py-4 dark:border-neutral-800">
+            <div className="flex items-center gap-2 rounded-xl border border-stone-200 bg-stone-50 px-3 py-1 focus-within:border-stone-900 dark:border-neutral-700 dark:bg-neutral-950 dark:focus-within:border-neutral-300">
+              <input ref={inputRef} value={input} onChange={(event) => setInput(event.target.value)} data-autofocus maxLength={500} placeholder={`Ask about ${personalInfo.name}...`} aria-label="Ask the portfolio assistant" className="min-w-0 flex-1 bg-transparent py-2.5 text-base sm:text-sm text-stone-900 outline-none placeholder:text-stone-400 dark:text-white dark:placeholder:text-neutral-500" />
+              <button type="submit" aria-label="Send question" disabled={!input.trim() || isThinking} className="rounded-lg bg-stone-900 p-2 text-white transition-opacity hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-30 dark:bg-white dark:text-black">
                 <Send size={15} />
               </button>
             </div>
