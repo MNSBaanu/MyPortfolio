@@ -18,6 +18,7 @@ A modern, responsive personal portfolio website showcasing my skills, projects, 
 * SEO optimized with meta tags and structured data
 * Contact form with EmailJS integration
 * CV viewer with PDF download
+* AI chat assistant (Gemini) that answers questions about the portfolio
 * Project showcase with image carousels
 * Modern and interactive UI
 
@@ -29,6 +30,7 @@ A modern, responsive personal portfolio website showcasing my skills, projects, 
 * Framer Motion
 * Vite
 * EmailJS
+* Gemini API (Vercel serverless function)
 * Vercel
 
 ## Getting Started
@@ -37,7 +39,24 @@ A modern, responsive personal portfolio website showcasing my skills, projects, 
 git clone https://github.com/MNSBaanu/MyPortfolio.git
 cd MyPortfolio
 npm install
+cp .env.example .env
 npm run dev
+```
+
+Fill in `.env` with your EmailJS keys. `GEMINI_API_KEY` is only read by the `api/chat.ts` Vercel function, so set it in the Vercel project settings (or use `vercel dev` locally). Without it, the chat assistant falls back to built-in answers.
+
+Other scripts: `npm run build`, `npm run preview`, `npm run typecheck`.
+
+## Project Structure
+
+```
+api/chat.ts                 Vercel function for the chat assistant
+public/assets/brand/        Logo, favicon, icons, profile and OG image
+public/assets/projects/     Project screenshots (WebP)
+src/components/layout/      Header, Footer, SocialSidebar, LoadingScreen, SEO
+src/components/sections/    Page sections (Hero, About, Projects, ...)
+src/components/overlays/    CV viewer and chat assistant
+src/data/portfolio.ts       All portfolio content
 ```
 
 ## Customization
