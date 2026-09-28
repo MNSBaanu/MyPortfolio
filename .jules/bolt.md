@@ -1,0 +1,3 @@
+## 2023-10-06 - Render-Loop Derived Data Optimization
+**Learning:** In React functional components, static derived data (like filtering an array of projects based on a static list of technologies) that is computed inside the component body or render loop executes on every single render. This causes a hidden O(N*M) penalty per render for data that never changes at runtime.
+**Action:** When working with static application data, lift invariant derived data computation outside of the React component module scope (as a global variable or Map) so it only runs once during the module evaluation phase, preserving component rendering speed.
