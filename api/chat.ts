@@ -145,7 +145,7 @@ export default async function handler(req: ChatRequest, res: ChatResponse) {
     return res.status(403).json({ error: 'Forbidden: Invalid Origin' });
   }
 
-  const ip = (req.headers['x-forwarded-for'] ?? '').split(',')[0].trim() || 'unknown'
+  const ip = (req.headers['x-forwarded-for'] ?? '').split(',').pop()?.trim() || 'unknown'
   if (isRateLimited(ip)) {
     return res.status(429).json({ error: 'Too many questions. Please try again in a few minutes.' })
   }

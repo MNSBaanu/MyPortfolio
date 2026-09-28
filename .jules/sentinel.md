@@ -1,0 +1,4 @@
+## 2025-05-23 - Rate Limit Bypass via X-Forwarded-For Spoofing
+**Vulnerability:** The rate limiting logic for the `/api/chat.ts` endpoint used the first IP address in the `x-forwarded-for` header list `(req.headers['x-forwarded-for'] ?? '').split(',')[0]`. Since clients can freely send an `x-forwarded-for` header with a spoofed IP, the proxy (e.g., Vercel) appends the true client IP to the end of the list. An attacker could bypass the rate limit by constantly changing the spoofed first IP in their requests.
+**Learning:** Extracting the first element from `x-forwarded-for` trusts user-supplied data in an environment where a proxy appends the real IP to the list.
+**Prevention:** Always extract the last IP in the `x-forwarded-for` list (the one appended by the trusted proxy) using `.pop()` or rely on environment-specific headers like `x-real-ip` or `x-vercel-forwarded-for`.
