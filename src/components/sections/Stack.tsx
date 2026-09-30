@@ -2,6 +2,17 @@ import { brief, projects } from '../../data/portfolio'
 import BriefSection from '../layout/BriefSection'
 import { usesTech } from './Work'
 
+// Pre-calculate project counts for each tech to avoid O(N * M) filtering on every render
+// This is a static lookup table since `projects` and `brief.stack` do not change at runtime.
+const techCounts = new Map<string, number>()
+brief.stack.forEach(group => {
+  group.items.forEach(item => {
+    if (!techCounts.has(item)) {
+      techCounts.set(item, projects.filter(project => usesTech(project.tech, item)).length)
+    }
+  })
+})
+
 type StackProps = {
   activeTech: string | null
   onSelectTech: (tech: string) => void
@@ -16,7 +27,7 @@ export default function Stack({ activeTech, onSelectTech }: StackProps) {
             <dt className="font-mono text-xs uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-500">{group.label}</dt>
             <dd className="flex flex-wrap gap-2">
               {group.items.map((item) => {
-                const count = projects.filter((project) => usesTech(project.tech, item)).length
+                const count = techCounts.get(item) || 0
                 const active = activeTech === item
                 if (!count) {
                   return (
