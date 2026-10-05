@@ -2,3 +2,7 @@
 **Vulnerability:** The rate limiting logic for the `/api/chat.ts` endpoint used the first IP address in the `x-forwarded-for` header list `(req.headers['x-forwarded-for'] ?? '').split(',')[0]`. Since clients can freely send an `x-forwarded-for` header with a spoofed IP, the proxy (e.g., Vercel) appends the true client IP to the end of the list. An attacker could bypass the rate limit by constantly changing the spoofed first IP in their requests.
 **Learning:** Extracting the first element from `x-forwarded-for` trusts user-supplied data in an environment where a proxy appends the real IP to the list.
 **Prevention:** Always extract the last IP in the `x-forwarded-for` list (the one appended by the trusted proxy) using `.pop()` or rely on environment-specific headers like `x-real-ip` or `x-vercel-forwarded-for`.
+## 2025-05-24 - HTML Injection in EmailJS Payloads
+**Vulnerability:** Contact form inputs were sent directly to the EmailJS API without HTML sanitization.
+**Learning:** Even though the frontend uses React (which escapes output), user inputs sent directly to third-party email services can render malicious HTML in the recipient's email client if the service's template does not automatically escape the values. This allows attackers to send phishing emails or execute Stored HTML Injection against the portfolio owner.
+**Prevention:** Always sanitize user input on the client before passing it to third-party email APIs. Implement a `sanitizeHtml` function to escape characters like `<, >, &, ", '` before including user data in the payload.
