@@ -114,12 +114,12 @@ export default async function handler(req: ChatRequest, res: ChatResponse) {
 
   // Prevent CSRF and unauthorized API usage by enforcing strict origin checks.
   // This ensures that only the portfolio frontend can call this endpoint and use the Gemini API quota.
-  let requestOrigin = req.headers.origin ?? '';
+  let requestOrigin = req.headers.origin ?? ''
   if (!requestOrigin && req.headers.referer) {
     try {
-      requestOrigin = new URL(req.headers.referer).origin;
+      requestOrigin = new URL(req.headers.referer).origin
     } catch {
-      requestOrigin = '';
+      requestOrigin = ''
     }
   }
 
@@ -135,14 +135,14 @@ export default async function handler(req: ChatRequest, res: ChatResponse) {
     'http://localhost:4173', // Vite preview port
     'http://127.0.0.1:5173',
     'http://127.0.0.1:4173'
-  ];
+  ]
 
   // Exact match required to prevent partial match bypasses (e.g. attacker-localhost.com)
-  const isAllowed = allowedOrigins.includes(requestOrigin);
+  const isAllowed = allowedOrigins.includes(requestOrigin)
   // If the request doesn't have an origin or referer, or if it doesn't match the allowed origins, reject it.
   // This strictly enforces that the endpoint can only be called from browsers on our own origin.
   if (!requestOrigin || !isAllowed) {
-    return res.status(403).json({ error: 'Forbidden: Invalid Origin' });
+    return res.status(403).json({ error: 'Forbidden: Invalid Origin' })
   }
 
   const ip = (req.headers['x-forwarded-for'] ?? '').split(',').pop()?.trim() || 'unknown'
@@ -171,11 +171,7 @@ export default async function handler(req: ChatRequest, res: ChatResponse) {
     return res.status(400).json({ error: 'A question is required' })
   }
 
-  if (jobDescription) {
-    console.log('Job description match, characters:', jobDescription.length)
-  } else {
-    console.log('Chat question:', safeMessages[safeMessages.length - 1].content.slice(0, 200))
-  }
+  console.log(jobDescription ? 'Job description match' : 'Chat question', 'characters:', safeMessages[safeMessages.length - 1].content.length)
 
   const model = process.env.GEMINI_MODEL ?? 'gemini-2.5-flash'
   try {
