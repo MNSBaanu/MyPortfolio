@@ -1,6 +1,0 @@
-## 2023-10-06 - Render-Loop Derived Data Optimization
-**Learning:** In React functional components, static derived data (like filtering an array of projects based on a static list of technologies) that is computed inside the component body or render loop executes on every single render. This causes a hidden O(N*M) penalty per render for data that never changes at runtime.
-**Action:** When working with static application data, lift invariant derived data computation outside of the React component module scope (as a global variable or Map) so it only runs once during the module evaluation phase, preserving component rendering speed.
-## 2024-05-18 - Route-Level Code Splitting
-**Learning:** In a single-page React portfolio, statically importing all main sections and heavy UI overlays into `App.tsx` forces users to download the entire application bundle upfront, even for content they haven't scrolled to or interacted with.
-**Action:** Use `React.lazy()` and `<Suspense>` to code-split below-the-fold sections (like Experience, Work, Stack) and hidden interactive overlays (like ChatAssistant). This significantly reduces the initial bundle size (from ~95kB to ~70kB gzip in this case) and improves Time to Interactive (TTI).

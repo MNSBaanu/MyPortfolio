@@ -45,7 +45,7 @@ npm run dev
 
 Fill in `.env` with your EmailJS keys. `GEMINI_API_KEY` is only read by the `api/chat.ts` Vercel function, so set it in the Vercel project settings (or use `vercel dev` locally). Without it, the chat assistant falls back to built-in answers.
 
-Other scripts: `npm run build`, `npm run preview`, `npm run typecheck`.
+Other scripts: `npm run build`, `npm run preview`, `npm run typecheck`, `npm run security-check` (scans for leaked secrets and unsafe patterns), `npm run audit`. `src/registerSW.ts` registers the service worker for offline caching. CI (`.github/workflows/ci.yml`) runs typecheck and build on every push and PR.
 
 After changing CV content in `src/data/portfolio.ts`, run `npm run cv` to regenerate `public/assets/cv/MNSBaanu_CV.pdf` (needs Chrome or Edge installed), then commit the PDF.
 
