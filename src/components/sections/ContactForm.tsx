@@ -27,6 +27,19 @@ export default function ContactForm() {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
+    const sanitizeHtml = (str: string) => {
+        return str.replace(/[&<>"']/g, (match) => {
+            const escape: Record<string, string> = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            };
+            return escape[match] || match;
+        });
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
@@ -79,12 +92,12 @@ export default function ContactForm() {
             }
 
             const templateParams = {
-                from_name: formData.name.trim(),
+                from_name: sanitizeHtml(formData.name.trim()),
                 from_email: formData.email, // already validated
-                company: formData.company.trim() || 'Not given',
-                role: formData.role.trim() || 'Not given',
-                subject: formData.subject.trim(),
-                message: formData.message.trim(),
+                company: sanitizeHtml(formData.company.trim()) || 'Not given',
+                role: sanitizeHtml(formData.role.trim()) || 'Not given',
+                subject: sanitizeHtml(formData.subject.trim()),
+                message: sanitizeHtml(formData.message.trim()),
                 to_name: 'Sahla Baanu',
                 reply_to: formData.email,
                 sent_at: new Date().toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Colombo' })
