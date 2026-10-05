@@ -20,6 +20,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('theme', theme)
     document.documentElement.classList.remove('light', 'dark')
     document.documentElement.classList.add(theme)
+    document.documentElement.style.colorScheme = theme
+    document.querySelectorAll('meta[name="theme-color"]').forEach(meta => {
+      meta.setAttribute('content', theme === 'dark' ? '#000000' : '#ffffff')
+    })
   }, [theme])
 
   const toggleTheme = () => {
