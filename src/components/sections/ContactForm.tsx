@@ -93,13 +93,13 @@ export default function ContactForm() {
 
             const templateParams = {
                 from_name: sanitizeHtml(formData.name.trim()),
-                from_email: formData.email, // already validated
+                from_email: sanitizeHtml(formData.email.trim()), // Sanitize to prevent HTML injection even if valid email format
                 company: sanitizeHtml(formData.company.trim()) || 'Not given',
                 role: sanitizeHtml(formData.role.trim()) || 'Not given',
                 subject: sanitizeHtml(formData.subject.trim()),
                 message: sanitizeHtml(formData.message.trim()),
                 to_name: 'Sahla Baanu',
-                reply_to: formData.email,
+                reply_to: sanitizeHtml(formData.email.trim()),
                 sent_at: new Date().toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Colombo' })
             }
 
