@@ -11,7 +11,7 @@ export default function BriefSection({ id, index, title, children }: BriefSectio
   return (
     <section
       id={id}
-      className="scroll-mt-6 rounded-2xl border border-stone-200 bg-white p-5 sm:p-8 dark:border-neutral-800 dark:bg-neutral-900"
+      className="brief-section scroll-mt-6 rounded-2xl border border-stone-200 bg-white p-5 sm:p-8 dark:border-neutral-800 dark:bg-neutral-900"
     >
       <header className="mb-6 flex items-baseline gap-3 border-b border-dashed border-stone-200 pb-3 dark:border-neutral-800">
         <span className="font-mono text-xs text-emerald-600 dark:text-emerald-400">{index}</span>

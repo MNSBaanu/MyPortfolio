@@ -49,7 +49,7 @@ export default function IdentityPanel({ chatOpen, onToggleChat }: IdentityPanelP
 
   return (
     <aside className="lg:sticky lg:top-10 lg:self-start">
-      <div className="rounded-2xl border border-stone-200 bg-white p-5 sm:p-6 dark:border-neutral-800 dark:bg-neutral-900">
+      <div className="identity-card rounded-2xl border border-stone-200 bg-white p-5 sm:p-6 dark:border-neutral-800 dark:bg-neutral-900">
         <div className="flex items-center justify-between">
           <div className="font-mono uppercase">
             <p className="text-[11px] tracking-[0.2em] text-stone-500 dark:text-neutral-400">Portfolio</p>

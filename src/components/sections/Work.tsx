@@ -44,11 +44,11 @@ export default function Work({ techFilter, onClearFilter }: WorkProps) {
         </div>
       )}
 
-      <div className="space-y-8">
+      <div className="space-y-6">
         {shown.map((project, i) => (
           <article
             key={project.title}
-            className="grid gap-5 border-b border-dashed border-stone-200 pb-8 last:border-0 last:pb-0 md:grid-cols-[240px_1fr] dark:border-neutral-800"
+            className="project-row grid border-b border-stone-200 pb-6 last:border-0 last:pb-0 dark:border-neutral-800"
           >
             <img
               src={project.images[0]}
@@ -59,15 +59,17 @@ export default function Work({ techFilter, onClearFilter }: WorkProps) {
               className="aspect-video w-full rounded-xl border border-stone-200 object-cover dark:border-neutral-800"
             />
             <div className="min-w-0">
-              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <span className="font-mono text-xs text-emerald-600 dark:text-emerald-400">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="text-lg font-semibold tracking-tight">{project.title}</h3>
-                <span className="font-mono text-xs text-stone-500 dark:text-neutral-500">
+              <div className="project-heading">
+                <div className="flex items-baseline gap-3">
+                  <span className="shrink-0 font-mono text-xs text-emerald-600 dark:text-emerald-400">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className="text-lg font-semibold tracking-tight">{project.title}</h3>
+                </div>
+                <p className="mt-1 font-mono text-[11px] text-stone-500 dark:text-neutral-400">
                   {project.period}{project.academic ? ' · Academic' : ''}
-                </span>
+                </p>
               </div>
-              <p className="mt-2 text-stone-700 dark:text-neutral-300">{project.hook}</p>
-              <ul className="mt-3 space-y-1.5 text-sm text-stone-600 dark:text-neutral-400">
+              <p className="mt-2 text-sm leading-relaxed text-stone-700 dark:text-neutral-300">{project.hook}</p>
+              <ul className="mt-2 space-y-1 text-[13px] leading-relaxed text-stone-600 dark:text-neutral-400">
                 {project.highlights.map((point) => (
                   <li key={point} className="flex gap-2">
                     <span className="mt-2 h-px w-3 shrink-0 bg-emerald-500" />
@@ -75,9 +77,12 @@ export default function Work({ techFilter, onClearFilter }: WorkProps) {
                   </li>
                 ))}
               </ul>
-              <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-                <p className="font-mono text-xs text-stone-500 dark:text-neutral-500">{project.tech.join(' · ')}</p>
-                <div className="flex gap-3 text-sm font-medium">
+            </div>
+              <div className="project-footer flex flex-wrap items-center justify-between gap-2">
+                <ul aria-label={`${project.title} technologies`} className="flex min-w-0 flex-1 flex-wrap gap-1.5">
+                  {project.tech.map((tech) => <li key={tech} className="project-tech rounded-md border border-stone-200 px-1.5 py-0.5 text-[10px] font-medium text-stone-600 dark:border-neutral-700 dark:text-neutral-300">{tech}</li>)}
+                </ul>
+                <div className="flex shrink-0 gap-3 text-sm font-medium">
                   <a
                     href={project.githubUrl}
                     target="_blank"
@@ -102,7 +107,6 @@ export default function Work({ techFilter, onClearFilter }: WorkProps) {
                   )}
                 </div>
               </div>
-            </div>
           </article>
         ))}
       </div>

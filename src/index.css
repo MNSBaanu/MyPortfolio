@@ -111,6 +111,102 @@ textarea {
   color: #ffffff;
 }
 
+/* Surface polish for the original sidebar and section-card layout. */
+.portfolio-shell {
+  --portfolio-accent: #047857;
+  --portfolio-line: #e3e7e3;
+  --portfolio-surface: #ffffff;
+  background: radial-gradient(ellipse at 10% 0%, #e6eee8 0, transparent 38rem), #f4f5f2;
+}
+
+.dark .portfolio-shell {
+  --portfolio-accent: #6ee7b7;
+  --portfolio-line: #2a332e;
+  --portfolio-surface: #141917;
+  background: radial-gradient(ellipse at 10% 0%, #14261e 0, transparent 38rem), #0b0f0d;
+}
+
+.portfolio-shell .identity-card,
+.portfolio-shell .brief-section {
+  border-color: var(--portfolio-line);
+  background: var(--portfolio-surface);
+  box-shadow: 0 2px 4px #15281d03, 0 12px 32px -24px #15281d30;
+}
+
+.portfolio-shell .identity-card {
+  position: relative;
+  border-top: 3px solid var(--portfolio-accent);
+}
+
+.portfolio-shell .identity-card h1 { letter-spacing: -.045em; }
+.portfolio-shell .identity-card img {
+  border: 1px solid var(--portfolio-line);
+  box-shadow: 0 4px 12px #10251a12;
+}
+
+.portfolio-shell .brief-section > header {
+  border-bottom-style: solid;
+  border-color: var(--portfolio-line);
+  padding-bottom: 16px;
+}
+
+.portfolio-shell .brief-section > header > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--portfolio-line);
+  border-radius: 8px;
+  color: var(--portfolio-accent);
+  background: color-mix(in srgb, var(--portfolio-accent) 6%, var(--portfolio-surface));
+}
+
+.portfolio-shell .brief-section > header > h2 {
+  color: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .16em;
+}
+
+.portfolio-shell #summary > p:first-of-type {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.25;
+  letter-spacing: -.04em;
+  text-wrap: balance;
+}
+
+.portfolio-shell #summary > p:nth-of-type(2) { line-height: 1.85; }
+.portfolio-shell #summary dl { border-color: var(--portfolio-line); background: var(--portfolio-line); }
+.portfolio-shell #summary dd { letter-spacing: -.02em; }
+.portfolio-shell .identity-card nav { border-top-style: solid; border-color: var(--portfolio-line); }
+.portfolio-shell .identity-card nav a { padding-top: 6px; padding-bottom: 6px; }
+.portfolio-shell .identity-card nav a:hover { color: var(--portfolio-accent); }
+.portfolio-shell .project-row { border-bottom-style: solid; border-color: var(--portfolio-line); }
+.portfolio-shell .project-row > img {
+  border-color: var(--portfolio-line);
+  box-shadow: 0 5px 18px -10px #14291d38;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.portfolio-shell .project-row:hover > img { box-shadow: 0 10px 24px -12px #14291d50; transform: translateY(-2px); }
+.portfolio-shell .project-row h3 { letter-spacing: -.03em; }
+.portfolio-shell .project-row a { padding-block: 4px; }
+.portfolio-shell #work { container-type: inline-size; }
+.portfolio-shell .project-row { grid-template-columns: minmax(0, 1fr); align-items: start; gap: 12px 20px; }
+.portfolio-shell .project-heading h3 { line-height: 1.4; overflow-wrap: anywhere; }
+.portfolio-shell .project-footer { grid-column: 1 / -1; }
+.portfolio-shell .project-tech { background: color-mix(in srgb, var(--portfolio-accent) 3%, var(--portfolio-surface)); }
+@container (min-width: 560px) {
+  .portfolio-shell .project-row { grid-template-columns: minmax(160px, .7fr) minmax(0, 1.8fr); }
+}
+.portfolio-shell .project-footer > ul { flex-basis: 260px; }
+.portfolio-shell button,
+.portfolio-shell a { -webkit-tap-highlight-color: transparent; }
+.portfolio-shell .identity-card button,
+.portfolio-shell .identity-card a { transition: background-color .2s, border-color .2s, color .2s, box-shadow .2s; }
+.portfolio-shell .identity-card button:hover,
+.portfolio-shell .identity-card > div > a:hover { box-shadow: 0 3px 10px #14291d0c; }
+
 /* Print styles for A4 CV */
 @media print {
   @page {
