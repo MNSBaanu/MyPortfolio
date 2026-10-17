@@ -30,7 +30,7 @@ export default function Experience() {
         {brief.promotion}
       </p>
 
-      <p className="mt-5 max-w-2xl leading-relaxed text-stone-600 dark:text-neutral-400">{current.description}</p>
+      <p className="mt-5 max-w-2xl leading-relaxed text-stone-600 dark:text-neutral-400">{brief.workSummary}</p>
 
       <ul className="mt-5 flex flex-wrap gap-2">
         {current.tech?.map((tech) => (
@@ -46,7 +46,7 @@ export default function Experience() {
           <span className="font-mono text-xs text-stone-500 dark:text-neutral-500">{independent.period}</span>
         </div>
         <p className="text-sm text-stone-500 dark:text-neutral-400">{independent.company}</p>
-        <p className="mt-3 max-w-2xl leading-relaxed text-stone-600 dark:text-neutral-400">{independent.description}</p>
+        <p className="mt-3 max-w-2xl leading-relaxed text-stone-600 dark:text-neutral-400">{brief.independentSummary}</p>
       </div>
     </BriefSection>
   )

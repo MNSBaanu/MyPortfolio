@@ -72,7 +72,7 @@ You can update:
 * Personal information
 * Skills and technologies
 * Education and experience
-* Projects (the page shows a random 4 on each visit; `brief.projectSummaries` holds hand-written card text)
+* Projects (`brief.projectSummaries` defines the featured selection, display order and concise case-study text; technology filters search all projects)
 * Certifications
 * Social links
 

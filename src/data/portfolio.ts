@@ -3,8 +3,8 @@ export const personalInfo = {
   fullName: 'Sahla Baanu',
   website: 'https://mnsbaanu-portfolio.vercel.app',
   cvFile: '/assets/cv/MNSBaanu_CV.pdf',
-  title: 'Aspiring Full-Stack Developer',
-  description: 'Full-stack developer crafting end-to-end solutions. Passionate about building scalable applications and leveraging AI to solve real-world problems.',
+  title: 'Junior Software Engineer | Full-Stack Developer',
+  description: 'Junior Software Engineer building web, desktop and mobile applications with .NET, React, Next.js and React Native. Based in Kandy, Sri Lanka.',
   cvSummary: 'Software engineer building web, desktop and mobile applications since 2023, now a Junior Software Engineer working with .NET, React, Next.js, React Native and AWS. Promoted from intern in 7 months, contributing across frontend, backend and API integration. Detail-oriented problem solver who picks up new technologies quickly. Open to roles in Kandy or remote.',
   profileImage: '/assets/brand/profile.webp',
   email: 'sbaanukghsbio21@gmail.com',
@@ -30,9 +30,11 @@ export const about = {
 }
 
 export const brief = {
-  pitch: 'I build web, desktop and mobile apps end to end, and ship them to production.',
-  summary: 'Building web and mobile features at a US software company with .NET, React, Next.js, React Native and AWS. I work across the frontend, backend and API integration, and I learn fast alongside a senior team.',
+  pitch: 'I turn ideas into working software, from the interface to the database.',
+  summary: 'Junior Software Engineer building production web and mobile applications with .NET, Next.js and React Native at a US software company. I deliver features across frontend, backend and API integration, alongside a BEng in Software Engineering. Based in Kandy and open to on-site or remote roles.',
   promotion: 'Promoted from intern to Junior Software Engineer in 7 months.',
+  workSummary: 'Deliver frontend and backend features for web and mobile applications, integrate APIs, and test changes before release. Contribute UI/UX improvements across a company stack that includes .NET, Next.js, React Native, AWS and Electron.',
+  independentSummary: 'Build personal and academic applications from UI and data modeling through APIs and deployment. Projects include an offline café POS, a campus platform for web and mobile, a donation community built with a team, and an AI shopping agent.',
   stack: [
     { label: 'At work', items: ['C#', '.NET', 'Next.js', 'React Native', 'AWS', 'Electron'] },
     { label: 'Web', items: ['TypeScript', 'React', 'Node.js', 'Express', 'Tailwind CSS'] },
@@ -41,38 +43,34 @@ export const brief = {
   projectSummaries: [
     {
       title: 'AromaCafe POS',
-      hook: 'An offline-first point of sale for cafés, built as a desktop app.',
+      hook: 'A desktop POS that keeps café checkout and stock management running without a server.',
       highlights: [
-        'Runs fully offline on SQLite with no server to maintain',
-        'Stock-aware catalog, cart and checkout with automatic change calculation',
-        'Sales history with itemized receipts, packaged as a standalone Electron build',
+        'Local SQLite storage supports fully offline sales and inventory',
+        'Stock-aware checkout, automatic change calculation and itemized receipts in a standalone Electron build',
       ],
     },
     {
       title: 'SmartBee',
-      hook: 'A campus-life platform for students across web, mobile and API.',
+      hook: 'A shared workspace for student modules, attendance and daily planning on web and mobile.',
       highlights: [
-        'React web app and React Native + Expo mobile app on one shared API',
-        'Node.js/Express API secured with JWT and validated with Zod',
-        'Supabase (PostgreSQL) persistence with a built-in AI assistant',
+        'React and React Native + Expo clients use one Express API and Supabase database',
+        'JWT authentication and Zod validation protect API access and incoming data',
       ],
     },
     {
       title: 'ShareLanka',
-      hook: 'A real-time community for donating and requesting items across Sri Lanka.',
+      hook: 'A team-built donation platform connecting people who give and request items across Sri Lanka.',
       highlights: [
-        'Live chat with Socket.io, reviews, wishlists and content reporting',
-        'Admin moderation with bans, suspensions and appeals',
-        'Firebase auth (Google OAuth and email) with Cloudinary media',
+        'Socket.io chat lets users coordinate donations; Firebase handles sign-in and Cloudinary stores media',
+        'Reporting, moderation and appeals support community management in this HD final group project',
       ],
     },
     {
       title: 'Kapruka ASA',
-      hook: "An AI shopping agent for Sri Lanka's largest e-commerce platform.",
+      hook: 'A conversational shopping agent that takes customers from product discovery to guest checkout.',
       highlights: [
-        'Built for the Kapruka Agent Challenge 2026',
-        'Finds products, quotes delivery and completes guest checkout in conversation',
-        'Uses the public Kapruka MCP for live products, delivery quotes and checkout',
+        'Uses the public Kapruka MCP for live product search, delivery quotes and guest checkout',
+        'Built for the Kapruka Agent Challenge 2026 to connect conversation with shopping actions',
       ],
     },
   ],

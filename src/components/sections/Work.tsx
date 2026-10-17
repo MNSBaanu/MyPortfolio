@@ -15,12 +15,11 @@ const toCaseStudy = (project: (typeof projects)[number]) => {
   return { ...project, hook, highlights: rest.slice(0, 3).map((point) => point.replace(/\.$/, '')) }
 }
 
-const featured = projects
-  .map((project, index) => ({ project, index, key: Math.random() }))
-  .sort((a, b) => a.key - b.key)
-  .slice(0, 4)
-  .sort((a, b) => a.index - b.index)
-  .map(({ project }) => toCaseStudy(project))
+// The editorial summaries define a consistent selection and display order.
+const featured = brief.projectSummaries.flatMap((summary) => {
+  const project = projects.find((item) => item.title === summary.title)
+  return project ? [toCaseStudy(project)] : []
+})
 
 type WorkProps = {
   techFilter: string | null

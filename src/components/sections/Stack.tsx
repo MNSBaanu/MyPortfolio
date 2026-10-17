@@ -53,7 +53,7 @@ export default function Stack({ activeTech, onSelectTech }: StackProps) {
           </div>
         ))}
       </dl>
-      <p className="mt-5 text-xs text-stone-500 dark:text-neutral-500">Select a technology to see the projects that use it.</p>
+      <p className="mt-5 text-xs leading-relaxed text-stone-500 dark:text-neutral-400">Electron + SQLite power AromaCafe POS; React Native + Express connect SmartBee. Select a technology to explore the projects behind it.</p>
     </BriefSection>
   )
 }
