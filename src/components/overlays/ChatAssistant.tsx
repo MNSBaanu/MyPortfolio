@@ -1,138 +1,27 @@
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Bot, FileSearch, Send, Sparkles, User, X } from 'lucide-react'
+import { Bot, FileSearch, RotateCcw, Send, Sparkles, User, X } from 'lucide-react'
 import { track } from '@vercel/analytics'
-import { brief, certifications, education, experience, personalInfo, projects, skillCategories } from '../../data/portfolio'
+import { personalInfo } from '../../data/portfolio'
+import { answerQuestion, matchOffline } from '../../lib/portfolioAssistant'
 import { useDialog } from '../../hooks/useDialog'
 
 type Message = {
   id: number
   role: 'assistant' | 'user'
   text: string
-  offline?: boolean
 }
 
-const suggestions = [`Why should we hire ${personalInfo.name}?`, 'Which projects use React?', 'What is the current role?']
+const suggestions = ['What did they contribute to ShareLanka?', 'Which projects were solo?', 'Which projects use React?']
 
-const intro = `${personalInfo.name} is a ${experience[0].title} at ${experience[0].company.split(' - ')[0]}, working across ${experience[0].tech?.join(', ')}. ${brief.promotion}`
+const welcome: Message = { id: 1, role: 'assistant', text: `Hi! I’m ${personalInfo.name}'s portfolio assistant. Ask about projects, contributions, skills or experience. You can also compare a job description with the portfolio.` }
 
-const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9+#. ]/g, ' ').replace(/\s+/g, ' ')
-const escape = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-const hasTerm = (text: string, term: string) => new RegExp(`(^|[^a-z0-9])${escape(term)}($|[^a-z0-9+#])`).test(text)
-const hasAny = (text: string, words: string[]) => words.some((word) => new RegExp(`(^| )${escape(word)}`).test(text))
-const list = (items: string[]) => items.map((item) => `- ${item}`).join('\n')
-const link = (url: string) => (url && url !== '#' ? url : '')
-
-const projectAliases = projects.map((project) => {
-  const words = project.title.replace(/^The /, '').split(' ')
-  const title = normalize(words.join(' '))
-  const aliases = [title, title.replace(/ /g, '')]
-  const inBrackets = project.title.match(/\(([^)]+)\)/)
-  if (inBrackets) aliases.push(normalize(inBrackets[1]))
-  for (const word of words) {
-    if (/[a-z][A-Z]/.test(word) || /^[A-Z]{3,}$/.test(word)) aliases.push(normalize(word))
-  }
-  if (words.length === 2 && words[0].length >= 5) aliases.push(normalize(words[0]))
-  return { project, aliases: aliases.map((alias) => alias.trim()).filter(Boolean) }
-})
-
-const techTerms = [...new Set([
-  ...skillCategories.flatMap((category) => category.skills.map((skill) => skill.name)),
-  ...projects.flatMap((project) => project.tech),
-  ...experience.flatMap((job) => job.tech ?? []),
-])].filter((term) => term.length > 1)
-
-function describeProject(project: (typeof projects)[number]) {
-  const summary = brief.projectSummaries.find((item) => item.title === project.title)
-  const links = [link(project.liveUrl) && `Live: ${project.liveUrl}`, `Code: ${project.githubUrl}`].filter(Boolean).join(' | ')
-  return `${project.title} (${project.period}, ${project.academic ? 'academic' : 'personal'} project): ${summary ? `${summary.hook} ${summary.highlights.join('. ')}.` : project.description}\nTech: ${project.tech.join(', ')}\n${links}`
-}
-
-function describeTech(term: string) {
-  const inProjects = projects.filter((project) => project.tech.includes(term)).map((project) => project.title)
-  const atWork = experience[0].tech?.includes(term)
-  const parts = [
-    atWork && `${personalInfo.name} uses ${term} at work as a ${experience[0].title} at ${experience[0].company.split(' - ')[0]}.`,
-    inProjects.length > 0 && `${term} is used in ${inProjects.length} project${inProjects.length > 1 ? 's' : ''}: ${inProjects.join(', ')}.`,
-  ].filter(Boolean)
-  return parts.length ? parts.join(' ') : `${term} is listed in ${personalInfo.name}'s skills.`
-}
-
-function answerQuestion(question: string) {
-  const text = normalize(question)
-
-  const project = projectAliases.find(({ aliases }) => aliases.some((alias) => hasTerm(text, alias)))?.project
-  if (project) return describeProject(project)
-
-  if (hasAny(text, ['certif', 'course', 'badge', 'credential'])) {
-    return `${personalInfo.name} holds ${certifications.length} certifications:\n${list(certifications.map((cert) => `${cert.title}, ${cert.issuer} (${cert.date})`))}`
-  }
-
-  if (hasAny(text, ['educat', 'study', 'studied', 'degree', 'universit', 'school', 'college', 'qualif', 'diploma', 'beng', 'a l', 'o l', 'grade', 'pharma'])) {
-    return `Education:\n${list(education.map((item) => `${item.title}, ${item.institution} (${item.period})`))}`
-  }
-
-  if (hasTerm(text, 'ai') || hasTerm(text, 'ml') || hasAny(text, ['artificial intelligence', 'machine learning', 'llm', 'agent'])) {
-    const aiProjects = projects.filter((item) => /\bAI\b|agent/i.test(`${item.description} ${item.tech.join(' ')}`)).map((item) => item.title)
-    const aiCerts = certifications.filter((cert) => /\bAI\b|ML/.test(cert.title)).map((cert) => cert.title)
-    return `AI work: ${aiProjects.join(', ')}. AI certifications: ${aiCerts.join(', ')}. Ask about any of these projects for details.`
-  }
-
-  const techs = techTerms.filter((term) => hasTerm(text, normalize(term)))
-  const matchedTechs = techs.filter((term) => !techs.some((other) => other !== term && normalize(other).includes(normalize(term))))
-  if (matchedTechs.length) return matchedTechs.slice(0, 3).map(describeTech).join('\n\n')
-
-  if (hasAny(text, ['hire', 'why', 'strength', 'fit', 'stand out', 'best', 'good at'])) {
-    return `${intro} Strongest projects include ${brief.projectSummaries.map((item) => item.title).join(', ')}.`
-  }
-
-  if (hasAny(text, ['project', 'built', 'build', 'portfolio', 'demo', 'live', 'app'])) {
-    const live = projects.filter((item) => link(item.liveUrl))
-    const academic = projects.filter((item) => item.academic).length
-    return `${personalInfo.name} has worked on ${projects.length} projects (${projects.length - academic} personal, ${academic} academic), and ${live.length} are live: ${live.map((item) => item.title).join(', ')}. Highlights: ${brief.projectSummaries.map((item) => item.title).join(', ')}. Ask about any project by name for details.`
-  }
-
-  if (hasAny(text, ['available', 'location', 'where', 'based', 'remote', 'relocat', 'open to', 'looking'])) {
-    return `${personalInfo.name} is based in ${personalInfo.location} and is ${personalInfo.availability.toLowerCase()}.`
-  }
-
-  if (hasAny(text, ['experience', 'job', 'career', 'work', 'company', 'intern', 'role', 'employ', 'position', 'currently'])) {
-    const [current, intern, ...other] = experience
-    return `${personalInfo.name} is a ${current.title} at ${current.company} (${current.period}, ${current.type}). ${current.description} Before that: ${intern.title} at the same company (${intern.period}). ${brief.promotion}${other.length ? `\nOther roles:\n${list(other.map((job) => `${job.title}, ${job.company} (${job.period})`))}` : ''}`
-  }
-
-  if (hasAny(text, ['skill', 'technolog', 'stack', 'language', 'framework', 'tool', 'database', 'know'])) {
-    return `Skills:\n${list(skillCategories.map((category) => `${category.category}: ${category.skills.map((skill) => skill.name).join(', ')}`))}`
-  }
-
-  if (hasAny(text, ['contact', 'email', 'mail', 'phone', 'call', 'reach', 'linkedin', 'github', 'cv', 'resume'])) {
-    return `Email: ${personalInfo.email}\nPhone: ${personalInfo.phone}\nLinkedIn: ${personalInfo.social.linkedin}\nGitHub: ${personalInfo.social.github}\nThe CV is available through the View CV button.`
-  }
-
-  if (hasAny(text, ['who', 'about', 'introduce', 'yourself', 'tell me', 'summary', 'name'])) {
-    return `${intro} Based in ${personalInfo.location}.`
-  }
-
-  if (/^(hi|hello|hey|good (morning|afternoon|evening))\b/.test(text.trim())) {
-    return `Hi! Ask me anything about ${personalInfo.name}: experience, projects, skills, education, certifications or how to get in touch.`
-  }
-
-  return `That isn't covered in the portfolio. You can ask about ${personalInfo.name}'s experience, projects, skills, education or certifications, or email ${personalInfo.email}.`
-}
-
-function matchOffline(jobDescription: string) {
-  const text = normalize(jobDescription)
-  const found = techTerms.filter((term) => hasTerm(text, normalize(term)))
-  const matched = found.filter((term) => !found.some((other) => other !== term && normalize(other).includes(normalize(term))))
-  if (!matched.length) {
-    return `The description doesn't name technologies from the portfolio. Ask about specific skills, or email ${personalInfo.email} to discuss the role.`
-  }
-  const lines = matched.slice(0, 8).map((term) => {
-    const uses = projects.filter((project) => project.tech.includes(term)).length
-    const evidence = [experience[0].tech?.includes(term) && 'used at work', uses > 0 && `${uses} project${uses === 1 ? '' : 's'}`].filter(Boolean)
-    return `${term}: ${evidence.length ? evidence.join(', ') : 'listed in skills'}`
-  })
-  return `Quick match from the portfolio data:\n${list(lines)}\nFor a requirement-by-requirement match, try again in a moment.`
+function AnswerText({ text }: { text: string }) {
+  return <>{text.split(/(https?:\/\/[^\s<>"']+)/g).map((part, index) => {
+    if (!/^https?:\/\//.test(part)) return part
+    const url = part.replace(/[.,;!?)]+$/, '')
+    return <span key={index}><a href={url} target="_blank" rel="noopener noreferrer" className="underline decoration-emerald-500 underline-offset-2 hover:text-emerald-700 dark:hover:text-emerald-300">{url}</a>{part.slice(url.length)}</span>
+  })}</>
 }
 
 type ChatAssistantProps = {
@@ -145,9 +34,8 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
   const [isThinking, setIsThinking] = useState(false)
   const [jdMode, setJdMode] = useState(false)
   const [jd, setJd] = useState('')
-  const [messages, setMessages] = useState<Message[]>([
-    { id: 1, role: 'assistant', text: `Hi! I’m ${personalInfo.name}'s portfolio assistant. Ask me anything about their work, skills, or background, or paste a job description to see how it matches.` },
-  ])
+  const [messages, setMessages] = useState<Message[]>([welcome])
+  const pendingRef = useRef(false)
   const listRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const dialogRef = useRef<HTMLElement>(null)
@@ -163,6 +51,8 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
   }, [messages, isThinking, open])
 
   const request = async (userText: string, body: object, fallback: () => string) => {
+    if (pendingRef.current) return
+    pendingRef.current = true
     setMessages((current) => [...current, { id: Date.now(), role: 'user', text: userText }])
     setIsThinking(true)
 
@@ -180,29 +70,30 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
       }
       if (!response.ok) throw new Error('Assistant API unavailable')
       const data = await response.json() as { reply?: string }
-      if (!data.reply) throw new Error('Assistant returned no reply')
+      if (typeof data.reply !== 'string' || !data.reply.trim()) throw new Error('Assistant returned no reply')
       setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', text: data.reply! }])
     } catch {
       // Local fallback keeps the widget usable during local development or
       // before GEMINI_API_KEY has been added to the Vercel project.
-      setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', text: fallback(), offline: true }])
+      setMessages((current) => [...current, { id: Date.now() + 1, role: 'assistant', text: fallback() }])
     } finally {
+      pendingRef.current = false
       setIsThinking(false)
     }
   }
 
   const ask = (question: string) => {
     const trimmed = question.trim()
-    if (!trimmed || isThinking) return
+    if (!trimmed || pendingRef.current) return
     setInput('')
     track('Chat Question')
     const conversation = [...messages, { role: 'user', text: trimmed }]
-    void request(trimmed, { messages: conversation.map(({ role, text }) => ({ role, content: text })) }, () => answerQuestion(trimmed))
+    void request(trimmed, { messages: conversation.map(({ role, text }) => ({ role, content: text })) }, () => answerQuestion(trimmed, messages))
   }
 
   const askMatch = () => {
     const text = jd.trim()
-    if (!text || isThinking) return
+    if (!text || pendingRef.current) return
     setJd('')
     setJdMode(false)
     track('Job Match')
@@ -239,20 +130,24 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
                 <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-400">AI assistant</p>
               </div>
             </div>
+            <div className="flex items-center gap-1">
+            <button type="button" disabled={isThinking} onClick={() => { setMessages([welcome]); setInput(''); setJd(''); setJdMode(false); inputRef.current?.focus() }} aria-label="Start a new conversation" title="Start a new conversation" className="rounded-full p-2 text-stone-500 hover:bg-stone-200 disabled:opacity-30 dark:text-neutral-400 dark:hover:bg-neutral-800">
+              <RotateCcw size={16} />
+            </button>
             <button onClick={onClose} aria-label="Close AI assistant" className="rounded-full p-2 text-stone-500 transition-colors hover:bg-stone-200 hover:text-stone-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white">
               <X size={18} />
             </button>
+            </div>
           </div>
 
-          <div ref={listRef} className="h-[min(420px,55vh)] space-y-4 overflow-y-auto px-4 py-5 sm:px-6" aria-live="polite">
+          <div ref={listRef} role="log" aria-label="Conversation" aria-live="polite" aria-relevant="additions" aria-busy={isThinking} className="h-[min(420px,55vh)] space-y-4 overflow-y-auto px-4 py-5 sm:px-6">
             {messages.map((message) => (
               <div key={message.id} className={`flex items-end gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 {message.role === 'assistant' && <Bot size={15} className="mb-2 shrink-0 text-stone-400" />}
                 <div className="max-w-[84%]">
                   <div className={`rounded-2xl px-4 py-3 whitespace-pre-line break-words text-sm leading-relaxed ${message.role === 'user' ? 'rounded-br-md bg-stone-900 text-white dark:bg-white dark:text-black' : 'rounded-bl-md bg-stone-100 text-stone-700 dark:bg-neutral-800 dark:text-neutral-300'}`}>
-                    {message.text}
+                    {message.role === 'assistant' ? <AnswerText text={message.text} /> : message.text}
                   </div>
-                  {message.offline && <p className="mt-1 px-1 text-[11px] text-stone-400 dark:text-neutral-500">Quick answer from the portfolio data</p>}
                 </div>
                 {message.role === 'user' && <User size={15} className="mb-2 shrink-0 text-stone-400" />}
               </div>
@@ -314,8 +209,7 @@ const ChatAssistant = ({ open, onClose }: ChatAssistantProps) => {
                   <Send size={15} />
                 </button>
               </div>
-              <div className="mt-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 px-1">
-                <p className="text-[11px] text-stone-400 dark:text-neutral-500">AI answers can contain mistakes. The CV has the verified details.</p>
+              <div className="mt-2 flex justify-end px-1">
                 <button type="button" onClick={() => setJdMode(true)} className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 hover:underline dark:text-emerald-400">
                   <FileSearch size={13} />
                   Match a job description

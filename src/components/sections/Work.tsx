@@ -1,6 +1,6 @@
 import { ArrowUpRight, Github, X } from 'lucide-react'
 import { track } from '@vercel/analytics'
-import { brief, personalInfo, projects } from '../../data/portfolio'
+import { brief, personalInfo, projectContext, projects } from '../../data/portfolio'
 import BriefSection from '../layout/BriefSection'
 
 export const usesTech = (projectTech: string[], item: string) =>
@@ -10,9 +10,11 @@ const summaries = new Map(brief.projectSummaries.map((summary) => [summary.title
 
 const toCaseStudy = (project: (typeof projects)[number]) => {
   const summary = summaries.get(project.title)
-  if (summary) return { ...project, ...summary }
+  const context = projectContext[project.title]
+  const projectType = context?.collaboration ?? (project.badge === 'Personal' ? 'Personal project' : project.academic ? 'Academic project' : undefined)
+  if (summary) return { ...project, ...summary, context, projectType }
   const [hook, ...rest] = project.description.split(/(?<=\.)\s+(?=[A-Z])/)
-  return { ...project, hook, highlights: rest.slice(0, 3).map((point) => point.replace(/\.$/, '')) }
+  return { ...project, hook, highlights: rest.slice(0, 3).map((point) => point.replace(/\.$/, '')), context, projectType }
 }
 
 // The editorial summaries define a consistent selection and display order.
@@ -63,10 +65,15 @@ export default function Work({ techFilter, onClearFilter }: WorkProps) {
                   <span className="shrink-0 font-mono text-xs text-emerald-600 dark:text-emerald-400">{String(i + 1).padStart(2, '0')}</span>
                   <h3 className="text-lg font-semibold tracking-tight">{project.title}</h3>
                 </div>
-                <p className="mt-1 font-mono text-[11px] text-stone-500 dark:text-neutral-400">
-                  {project.period}{project.academic ? ' · Academic' : ''}
-                </p>
+                <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-stone-500 dark:text-neutral-400">
+                  <span className="font-mono">{project.period}</span>
+                  {project.projectType && <span>· {project.projectType}</span>}
+                  {project.context?.status && (
+                    <span className="rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 font-medium text-emerald-800 dark:border-emerald-800 dark:bg-emerald-500/10 dark:text-emerald-300">{project.context.status}</span>
+                  )}
+                </div>
               </div>
+              {project.context?.contribution && <p className="mt-2 text-xs text-stone-600 dark:text-neutral-400"><span className="font-medium">My contribution:</span> {project.context.contribution}</p>}
               <p className="mt-2 text-sm leading-relaxed text-stone-700 dark:text-neutral-300">{project.hook}</p>
               <ul className="mt-2 space-y-1 text-[13px] leading-relaxed text-stone-600 dark:text-neutral-400">
                 {project.highlights.map((point) => (

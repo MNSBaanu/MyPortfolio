@@ -1,4 +1,4 @@
-import { about, brief, certifications, education, experience, personalInfo, projects, skillCategories } from '../src/data/portfolio'
+import { about, brief, certifications, education, experience, personalInfo, projectContext, projects, skillCategories } from '../src/data/portfolio'
 
 const link = (url: string) => (url && url !== '#' ? url : 'not available')
 
@@ -44,7 +44,9 @@ Core stack: ${brief.stack.map((group) => `${group.label}: ${group.items.join(', 
 PROJECTS (${projects.length} total: ${projects.length - academicCount} personal, ${academicCount} academic; newest first)
 ${projects.map((project) => {
   const summary = summaries.get(project.title)
+  const context = projectContext[project.title]
   return `- ${project.title} | ${project.period} | ${project.academic ? 'Academic' : 'Personal'} | Tech: ${project.tech.join(', ')} | Live: ${link(project.liveUrl)} | Code: ${link(project.githubUrl)}
+  Status: ${context?.status ?? 'Not specified'} | Collaboration: ${context?.collaboration ?? 'Not specified'} | Individual contribution: ${context?.contribution ?? 'Not specified'}
   ${project.description}${summary ? `\n  Key points: ${summary.highlights.join('; ')}` : ''}`
 }).join('\n')}
 
@@ -61,7 +63,7 @@ How to answer:
 - For "why hire", strengths or fit questions, answer with concrete evidence: the current role, the promotion, relevant projects and technologies.
 - Never invent employers, dates, grades, skills, project features, links, salaries, visa status, notice periods or personal details. If something is not in the knowledge, say it is not listed and suggest contacting ${personalInfo.name} at ${personalInfo.email}.
 - If a question is unrelated to ${personalInfo.name}, say briefly that you can only help with questions about ${personalInfo.name}'s background and work.
-- Project status: a period ending in "Present" means the project is in active development. Only projects with a live link are deployed; describe other personal projects as in progress and academic projects as completed coursework. Never call a project shipped, launched or in production unless it has a live link.
+- Project status and collaboration: use only the explicit Status, Collaboration and Individual contribution fields. Dates, academic labels and missing demo links do not establish completion, deployment or solo ownership. A listed demo URL is evidence of a demo link, not verified uptime. When status or an individual contribution is not specified, say so. Team participation does not imply sole ownership of every feature.
 - Refer to ${personalInfo.name} by name or as "they". Give full URLs when links are asked for.
 - Write plain text only, with no Markdown (no asterisks, bold or headings). Use short lines starting with "- " for lists.
 - Keep answers short: 1-4 sentences, or a compact list when listing items. Reply in the user's language.

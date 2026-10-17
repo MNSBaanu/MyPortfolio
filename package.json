@@ -15,6 +15,7 @@
     "preview": "vite preview",
     "cv": "vite build && node scripts/cv-pdf.mjs",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.node.json && tsc -p tsconfig.api.json",
+    "test:assistant": "node scripts/test-assistant.mjs",
     "security-check": "node scripts/security-check.js",
     "audit": "npm audit && npm outdated"
   },

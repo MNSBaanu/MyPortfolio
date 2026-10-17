@@ -30,9 +30,9 @@ export default function Contact() {
     <BriefSection id="contact" index="06" title="Contact">
       <div className="grid gap-8 md:grid-cols-2">
         <div>
-          <p className="text-3xl font-semibold tracking-tight">Let&apos;s talk.</p>
+          <p className="text-3xl font-semibold tracking-tight">Let&apos;s build something useful.</p>
           <p className="mt-2 text-stone-600 dark:text-neutral-400">
-            Hiring for a software engineering role? Send a note and I&apos;ll get back to you.
+            Have a software engineering opportunity or a project in mind? Tell me what you&apos;re working on and let&apos;s connect.
           </p>
           <div className="mt-6 flex items-center gap-2">
             <a href={`mailto:${personalInfo.email}`} className="min-w-0 truncate font-medium underline decoration-emerald-500 underline-offset-4">
@@ -65,9 +65,8 @@ export default function Contact() {
             className="mt-6 inline-flex items-center gap-2 rounded-xl border border-stone-200 px-4 py-2.5 text-sm font-medium transition-colors hover:border-stone-900 dark:border-neutral-700 dark:hover:border-neutral-300"
           >
             {copied === 'summary' ? <Check size={16} className="text-emerald-600" /> : <ClipboardList size={16} />}
-            {copied === 'summary' ? 'Summary copied' : 'Copy recruiter summary'}
+            {copied === 'summary' ? 'Summary copied' : 'Copy profile summary'}
           </button>
-          <p className="mt-2 text-xs text-stone-500 dark:text-neutral-500">Role, stack and links in one block, ready to paste into your notes or ATS.</p>
         </div>
         <Suspense fallback={null}>
           <ContactForm />

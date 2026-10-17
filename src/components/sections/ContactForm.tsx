@@ -7,9 +7,6 @@ export default function ContactForm() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        company: '',
-        role: '',
-        subject: '',
         message: '',
         botField: '' // Honeypot field to catch spam bots
     })
@@ -42,21 +39,23 @@ export default function ContactForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        if (isSubmitting) return
+        if (!formData.name.trim() || !formData.message.trim()) {
+            toast.error('Please enter your name and a message.')
+            return
+        }
 
         // Input length limits
         if (
             formData.name.length > 100 ||
             formData.email.length > 100 ||
-            formData.company.length > 100 ||
-            formData.role.length > 100 ||
-            formData.subject.length > 200 ||
             formData.message.length > 2000
         ) {
             toast.error('Input exceeds maximum allowed length.');
             return;
         }
 
-        if (!isValidEmail(formData.email)) {
+        if (!isValidEmail(formData.email.trim())) {
             toast.error('Please enter a valid email address.');
             return;
         }
@@ -74,7 +73,7 @@ export default function ContactForm() {
         // If honeypot field is filled, silently abort to deter bots
         if (formData.botField) {
             toast.success('Message sent successfully! I\'ll get back to you soon.')
-            setFormData({ name: '', email: '', company: '', role: '', subject: '', message: '', botField: '' })
+            setFormData({ name: '', email: '', message: '', botField: '' })
             return
         }
 
@@ -93,13 +92,13 @@ export default function ContactForm() {
 
             const templateParams = {
                 from_name: sanitizeHtml(formData.name.trim()),
-                from_email: formData.email, // already validated
-                company: sanitizeHtml(formData.company.trim()) || 'Not given',
-                role: sanitizeHtml(formData.role.trim()) || 'Not given',
-                subject: sanitizeHtml(formData.subject.trim()),
+                from_email: formData.email.trim(),
+                company: 'Not given',
+                role: 'Not given',
+                subject: sanitizeHtml(`Portfolio inquiry from ${formData.name.trim()}`),
                 message: sanitizeHtml(formData.message.trim()),
                 to_name: 'Sahla Baanu',
-                reply_to: formData.email,
+                reply_to: formData.email.trim(),
                 sent_at: new Date().toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Colombo' })
             }
 
@@ -108,7 +107,7 @@ export default function ContactForm() {
             localStorage.setItem('lastEmailSent', Date.now().toString());
 
             toast.success('Message sent successfully! I\'ll get back to you soon.')
-            setFormData({ name: '', email: '', company: '', role: '', subject: '', message: '', botField: '' })
+            setFormData({ name: '', email: '', message: '', botField: '' })
         } catch (error: any) {
             // Log only generic/sanitized error messages to prevent exposing stack traces or API details
             console.error('Failed to send email:', error?.message || 'Unknown error occurred')
@@ -140,23 +139,9 @@ export default function ContactForm() {
                     <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required maxLength={100} className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2.5 text-base text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-900 sm:text-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-neutral-300" placeholder="you@company.com" />
                 </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-                <div>
-                    <label htmlFor="company" className="mb-1 block font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-500">Company</label>
-                    <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} maxLength={100} className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2.5 text-base text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-900 sm:text-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-neutral-300" placeholder="Optional" />
-                </div>
-                <div>
-                    <label htmlFor="role" className="mb-1 block font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-500">Role</label>
-                    <input type="text" id="role" name="role" value={formData.role} onChange={handleChange} maxLength={100} className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2.5 text-base text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-900 sm:text-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-neutral-300" placeholder="Optional" />
-                </div>
-            </div>
-            <div>
-                <label htmlFor="subject" className="mb-1 block font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-500">Subject</label>
-                <input type="text" id="subject" name="subject" value={formData.subject} onChange={handleChange} required maxLength={200} className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2.5 text-base text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-900 sm:text-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-neutral-300" placeholder="Role or opportunity" />
-            </div>
             <div>
                 <label htmlFor="message" className="mb-1 block font-mono text-[10px] uppercase tracking-[0.15em] text-stone-500 dark:text-neutral-500">Message</label>
-                <textarea id="message" name="message" value={formData.message} onChange={handleChange} required maxLength={2000} rows={4} className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2.5 text-base text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-900 sm:text-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-neutral-300 resize-none" placeholder="A few details about the role" />
+                <textarea id="message" name="message" value={formData.message} onChange={handleChange} required maxLength={2000} rows={4} className="w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2.5 text-base text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-900 sm:text-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-neutral-300 resize-none" placeholder="Tell me about the role or project, your goals, and timing." />
             </div>
             <button
                 type="submit"
