@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react'
+import { useState, lazy, Suspense, useMemo, useCallback } from 'react'
 import { MotionConfig } from 'framer-motion'
 import { Analytics } from '@vercel/analytics/react'
 import { track } from '@vercel/analytics'
@@ -23,16 +23,39 @@ function App() {
   const [chatOpen, setChatOpen] = useState(false)
   const [techFilter, setTechFilter] = useState<string | null>(null)
 
-  const toggleChat = () => {
-    if (!chatOpen) track('Chat Opened')
-    setChatOpen(!chatOpen)
-  }
+  const toggleChat = useCallback(() => {
+    setChatOpen((prev) => {
+      if (!prev) track('Chat Opened')
+      return !prev
+    })
+  }, [])
 
-  const selectTech = (tech: string) => {
+  const selectTech = useCallback((tech: string) => {
     track('Stack Filter', { tech })
     setTechFilter(tech)
     requestAnimationFrame(() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' }))
-  }
+  }, [])
+
+  const clearTechFilter = useCallback(() => setTechFilter(null), [])
+
+  // ⚡ Bolt: Memoize heavy sections to prevent unnecessary re-renders of the entire page
+  // when isolated state (like chatOpen) toggles.
+  const mainContent = useMemo(() => (
+    <>
+      <Summary />
+      <Suspense fallback={<div className="h-32" />}>
+        <Experience />
+        <Work techFilter={techFilter} onClearFilter={clearTechFilter} />
+        <Stack activeTech={techFilter} onSelectTech={selectTech} />
+        <Education />
+        <Contact />
+      </Suspense>
+    </>
+  ), [techFilter, clearTechFilter, selectTech])
+
+  const identityPanel = useMemo(() => (
+    <IdentityPanel chatOpen={chatOpen} onToggleChat={toggleChat} />
+  ), [chatOpen, toggleChat])
 
   return (
     <HelmetProvider>
@@ -43,19 +66,12 @@ function App() {
           <Toaster position="top-right" />
           <div className="min-h-screen bg-stone-100 text-stone-900 dark:bg-neutral-950 dark:text-neutral-100">
             <div className="mx-auto max-w-6xl px-4 py-4 pb-24 sm:px-6 sm:py-8 sm:pb-24 lg:grid lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-8 lg:px-8 lg:py-10">
-              <IdentityPanel chatOpen={chatOpen} onToggleChat={toggleChat} />
+              {identityPanel}
               <main className="mt-4 space-y-4 lg:mt-0">
                 <Suspense fallback={null}>
                   <ChatAssistant open={chatOpen} onClose={() => setChatOpen(false)} />
                 </Suspense>
-                <Summary />
-                <Suspense fallback={<div className="h-32" />}>
-                  <Experience />
-                  <Work techFilter={techFilter} onClearFilter={() => setTechFilter(null)} />
-                  <Stack activeTech={techFilter} onSelectTech={selectTech} />
-                  <Education />
-                  <Contact />
-                </Suspense>
+                {mainContent}
                 <p className="py-4 text-center font-mono text-xs text-stone-500 dark:text-neutral-500">
                   © {new Date().getFullYear()} {personalInfo.name}
                 </p>
