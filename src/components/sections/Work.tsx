@@ -23,13 +23,28 @@ const featured = brief.projectSummaries.flatMap((summary) => {
   return project ? [toCaseStudy(project)] : []
 })
 
+// ⚡ Bolt: Cache derived project computations at the module level.
+// This prevents expensive O(N) filtering and object allocations on every render
+// when unrelated state changes in the parent component.
+const projectsByTechCache = new Map<string, ReturnType<typeof toCaseStudy>[]>()
+
+const getProjectsByTech = (tech: string) => {
+  if (!projectsByTechCache.has(tech)) {
+    projectsByTechCache.set(
+      tech,
+      projects.filter((project) => usesTech(project.tech, tech)).map(toCaseStudy)
+    )
+  }
+  return projectsByTechCache.get(tech)!
+}
+
 type WorkProps = {
   techFilter: string | null
   onClearFilter: () => void
 }
 
 export default function Work({ techFilter, onClearFilter }: WorkProps) {
-  const shown = techFilter ? projects.filter((project) => usesTech(project.tech, techFilter)).map(toCaseStudy) : featured
+  const shown = techFilter ? getProjectsByTech(techFilter) : featured
 
   return (
     <BriefSection id="work" index="03" title="Selected work">
