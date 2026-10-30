@@ -59,6 +59,11 @@ function App() {
     <Stack activeTech={techFilter} onSelectTech={selectTech} />
   ), [techFilter, selectTech])
 
+  const memoizedSummary = useMemo(() => <Summary />, [])
+  const memoizedExperience = useMemo(() => <Experience />, [])
+  const memoizedEducation = useMemo(() => <Education />, [])
+  const memoizedContact = useMemo(() => <Contact />, [])
+
   return (
     <HelmetProvider>
       <ThemeProvider>
@@ -73,13 +78,13 @@ function App() {
                 <Suspense fallback={null}>
                   {memoizedChatAssistant}
                 </Suspense>
-                <Summary />
+                {memoizedSummary}
                 <Suspense fallback={<div className="h-32" />}>
-                  <Experience />
+                  {memoizedExperience}
                   {memoizedWork}
                   {memoizedStack}
-                  <Education />
-                  <Contact />
+                  {memoizedEducation}
+                  {memoizedContact}
                 </Suspense>
                 <p className="py-4 text-center font-mono text-xs text-stone-500 dark:text-neutral-500">
                   © {new Date().getFullYear()} {personalInfo.name}
