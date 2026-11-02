@@ -26,18 +26,23 @@ type IdentityPanelProps = {
   onToggleChat: () => void
 }
 
-export default function IdentityPanel({ chatOpen, onToggleChat }: IdentityPanelProps) {
-  const { theme, toggleTheme } = useTheme()
-  const [showCV, setShowCV] = useState(false)
-  const [showBar, setShowBar] = useState(false)
+function LocalTime() {
   const [time, setTime] = useState(kandyTime)
-  const actionsRef = useRef<HTMLDivElement>(null)
-  const role = experience[0]
 
   useEffect(() => {
     const timer = window.setInterval(() => setTime(kandyTime()), 30000)
     return () => window.clearInterval(timer)
   }, [])
+
+  return <>{time}</>
+}
+
+export default function IdentityPanel({ chatOpen, onToggleChat }: IdentityPanelProps) {
+  const { theme, toggleTheme } = useTheme()
+  const [showCV, setShowCV] = useState(false)
+  const [showBar, setShowBar] = useState(false)
+  const actionsRef = useRef<HTMLDivElement>(null)
+  const role = experience[0]
 
   useEffect(() => {
     const actions = actionsRef.current
@@ -70,6 +75,7 @@ export default function IdentityPanel({ chatOpen, onToggleChat }: IdentityPanelP
             alt={personalInfo.name}
             width={72}
             height={72}
+            fetchPriority="high"
             className="h-[72px] w-[72px] shrink-0 rounded-2xl bg-stone-100 object-cover dark:bg-neutral-800"
           />
           <div className="min-w-0">
@@ -88,7 +94,7 @@ export default function IdentityPanel({ chatOpen, onToggleChat }: IdentityPanelP
           </p>
           <p className="flex items-center gap-2 text-stone-600 dark:text-neutral-400">
             <MapPin size={14} className="shrink-0" />
-            {personalInfo.location} · {time} local time
+            {personalInfo.location} · <LocalTime /> local time
           </p>
         </div>
 

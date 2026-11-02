@@ -70,6 +70,7 @@ export default function Work({ techFilter, onClearFilter }: WorkProps) {
               src={project.images[0]}
               alt={`${project.title} cover`}
               loading="lazy"
+              decoding="async"
               width={480}
               height={270}
               className="aspect-video w-full rounded-xl border border-stone-200 object-cover dark:border-neutral-800"
