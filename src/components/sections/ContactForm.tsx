@@ -92,13 +92,13 @@ export default function ContactForm() {
 
             const templateParams = {
                 from_name: sanitizeHtml(formData.name.trim()),
-                from_email: formData.email.trim(),
+                from_email: sanitizeHtml(formData.email.trim()),
                 company: 'Not given',
                 role: 'Not given',
                 subject: sanitizeHtml(`Portfolio inquiry from ${formData.name.trim()}`),
                 message: sanitizeHtml(formData.message.trim()),
                 to_name: 'Sahla Baanu',
-                reply_to: formData.email.trim(),
+                reply_to: sanitizeHtml(formData.email.trim()),
                 sent_at: new Date().toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Colombo' })
             }
 
