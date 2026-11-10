@@ -6,7 +6,7 @@
   ],
   "headers": [
     {
-      "source": "/assets/(.*)",
+      "source": "/assets/:file",
       "headers": [
         {
           "key": "Cache-Control",

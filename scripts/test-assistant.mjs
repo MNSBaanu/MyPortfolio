@@ -17,7 +17,7 @@ function load(relative) {
   })
   vm.runInNewContext(outputText, {
     exports,
-    require: (specifier) => load(path.resolve(path.dirname(filename), `${specifier}.ts`)),
+    require: (specifier) => load(path.resolve(path.dirname(filename), `${specifier.replace(/\.js$/, '')}.ts`)),
     URL, AbortSignal, console,
     process: { env: { GEMINI_API_KEY: 'test-placeholder' } },
     fetch: async (_url, options) => {

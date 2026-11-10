@@ -1,4 +1,4 @@
-import { about, brief, certifications, education, experience, personalInfo, projectContext, projects, skillCategories } from '../src/data/portfolio'
+import { about, brief, certifications, education, experience, personalInfo, projectContext, projects, skillCategories } from '../src/data/portfolio.js'
 
 const link = (url: string) => (url && url !== '#' ? url : 'not available')
 
