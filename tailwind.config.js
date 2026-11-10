@@ -7,12 +7,9 @@ export default {
   ],
   theme: {
     extend: {
-      screens: {
-        'xs': '475px',
-      },
       fontFamily: {
         'sans': ['Inter Variable', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'sans-serif'],
-        'mono': ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
+        'mono': ['Consolas', 'monospace'],
       },
     },
   },

@@ -5,7 +5,7 @@ import { useTheme } from '../../context/ThemeContext'
 
 const CVViewer = lazy(() => import('../overlays/CVViewer'))
 
-export const briefSections = [
+const briefSections = [
   { id: 'summary', title: 'Summary' },
   { id: 'experience', title: 'Experience' },
   { id: 'work', title: 'Selected work' },
