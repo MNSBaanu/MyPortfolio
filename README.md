@@ -47,7 +47,7 @@ Fill in `.env` with your EmailJS keys. `GEMINI_API_KEY` is only read by the `api
 
 The assistant uses confirmed project status and contribution details from `projectContext` in `src/data/portfolio.ts`. Its local fallback supports project follow-ups, technology queries and job-description skill matching. Answers include clickable URLs, and the reset button starts a fresh conversation. Unlisted project statuses remain unspecified.
 
-Other scripts: `npm run build`, `npm run preview`, `npm run typecheck`, `npm run test:assistant` (local answer checks and a stubbed API request), `npm run security-check` (scans for leaked secrets and unsafe patterns), `npm run audit`. `src/registerSW.ts` registers the service worker for offline caching. CI (`.github/workflows/ci.yml`) runs typecheck and build on every push and PR.
+Other scripts: `npm run build`, `npm run preview`, `npm run typecheck`, `npm run test:assistant` (local answer checks and a stubbed API request), `npm run audit`. `src/registerSW.ts` registers the service worker for offline caching. CI (`.github/workflows/ci.yml`) runs typecheck and build on every push and PR.
 
 After changing CV content in `src/data/portfolio.ts`, run `npm run cv` to regenerate `public/assets/cv/MNSBaanu_CV.pdf` (needs Chrome or Edge installed), then commit the PDF.
 
